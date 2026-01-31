@@ -362,9 +362,9 @@
             <h2>Nuestros Programas</h2>
         </div>
 
-        <div class="courses-grid">
+        <div class="courses-grid" id="gridProgramas">
             
-            <!-- Card 1: Lógica -->
+            <!-- Card: React (Actual) -->
             <article class="course-card">
                 <div class="card-img-container">
                     <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=600" alt="Desarrollo Web">
@@ -383,13 +383,15 @@
                     <div class="card-divider"></div>
                     <div class="card-actions">
                         <a href="react.html" class="btn-main">Ver material del curso</a>
-                        <a href="https://wa.me/59173488941?text=Hola%20Ruben,%20me%20gustaría%20solicitar%20una%20clase%20por%20Meet%20del%20curso%20de%20Desarrollo%20Frontend%20y%20React." 
+                        <a href="https://wa.me/59173488941?text=Hola%20Ing. Darío,%20me%20gustaría%20solicitar%20una%20clase%20por%20Meet." 
                            target="_blank" rel="noopener noreferrer" class="btn-meet">
-                            Solicitar clase en Meet
+                             Solicitar clase en Meet
                         </a>
                     </div>
                 </div>
             </article>
+
+            <!-- Nota: Puedes copiar el bloque <article> arriba para añadir más cursos y se reflejarán en el formulario -->
         </div>
 
         <!-- Sección Formulario de Contacto -->
@@ -407,9 +409,7 @@
                     <label for="interes">Programa de interés</label>
                     <select id="interes">
                         <option value="General">Consulta General</option>
-                        <option value="Lógica">Lógica de Programación</option>
-                        <option value="Ofimática">Ofimática / Excel</option>
-                        <option value="Frontend">Desarrollo Web / React</option>
+                        <!-- Los cursos se cargarán aquí automáticamente mediante JS -->
                     </select>
                 </div>
 
@@ -430,7 +430,34 @@
     </footer>
 
     <script>
-        // Script para manejar el envío del formulario a WhatsApp abriendo en nueva pestaña
+        /**
+         * FUNCIÓN PARA CARGAR CURSOS DINÁMICAMENTE EN EL SELECT
+         * Esta función busca todos los h3 dentro de las cards de cursos y los añade al select.
+         */
+        function actualizarSelectCursos() {
+            const selectInteres = document.getElementById('interes');
+            const gridProgramas = document.getElementById('gridProgramas');
+            const titulosCursos = gridProgramas.querySelectorAll('.course-card h3');
+
+            // Limpiamos opciones previas excepto la primera (Consulta General)
+            while (selectInteres.options.length > 1) {
+                selectInteres.remove(1);
+            }
+
+            // Añadimos cada título encontrado como una nueva opción
+            titulosCursos.forEach(titulo => {
+                const nombreCurso = titulo.innerText;
+                const option = document.createElement('option');
+                option.value = nombreCurso;
+                option.text = nombreCurso;
+                selectInteres.appendChild(option);
+            });
+        }
+
+        // Ejecutar la actualización al cargar la página
+        window.addEventListener('DOMContentLoaded', actualizarSelectCursos);
+
+        // Script para manejar el envío del formulario a WhatsApp
         document.getElementById('waForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -439,7 +466,7 @@
             const mensaje = document.getElementById('mensaje').value;
             const telefono = "59173488941";
             
-            const texto = `Hola Ruben, mi nombre es *${nombre}*.%0AEstoy interesado en: *${interes}*.%0A%0A*Consulta:* ${mensaje}`;
+            const texto = `Hola Darío, mi nombre es *${nombre}*.%0AEstoy interesado en: *${interes}*.%0A%0A*Consulta:* ${mensaje}`;
             
             window.open(`https://wa.me/${telefono}?text=${texto}`, '_blank');
         });
