@@ -465,7 +465,7 @@
             const mensaje = document.getElementById('mensaje').value.toLowerCase();
             const telefono = "59173488941";
             
-            const texto = `Hola, mi nombre es *${nombre}*.%0AEstoy interesado en: *${interes}*.%0A%0A*Consulta:* ${mensaje}`;
+            const texto = `Hola, mi nombre es ${nombre}, estoy interesado en: *${interes}*.%0A%0A*Consulta:* ${mensaje}`;
             
             window.open(`https://wa.me/${telefono}?text=${texto}`, '_blank');
         });
