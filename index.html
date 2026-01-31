@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sossa Tech | Formación Profesional Integral</title>
+    <style>
+        /* ESTILO INSPIRADO EN SITEC Y EL DISEÑO DE CARDS SOLICITADO */
+        :root {
+            --primary: #ff8c00; /* Naranja SITEC */
+            --secondary: #0b1120; /* Azul muy oscuro / Negro */
+            --card-bg: #0f172a; /* Fondo de la card (oscuro) */
+            --accent-cyan: #4ade80; 
+            --btn-cyan: #22d3ee; 
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --white: #ffffff;
+            --border: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #05080f; 
+            color: var(--text-light);
+            scroll-behavior: smooth;
+        }
+
+        /* Header Estilo SITEC */
+        header {
+            background-color: var(--secondary);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .logo span { color: var(--primary); }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--primary); }
+
+        /* Disclaimer */
+        .disclaimer-strip {
+            background-color: var(--primary);
+            color: var(--secondary);
+            text-align: center;
+            padding: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(11, 17, 32, 0.95), rgba(30, 41, 59, 0.8)), 
+                        url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=1470');
+            background-size: cover;
+            background-position: center;
+            padding: 80px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            font-weight: 900;
+        }
+
+        .hero h1 span { color: var(--primary); }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text-muted);
+        }
+
+        /* Contenedor General */
+        .container {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            color: var(--white);
+        }
+
+        /* Grid de Cursos */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 25px;
+            margin-bottom: 80px;
+        }
+
+        /* Estilo de la Card */
+        .course-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s;
+        }
+
+        .course-card:hover { transform: translateY(-5px); }
+
+        .card-img-container {
+            position: relative;
+            height: 200px;
+            width: 100%;
+        }
+
+        .card-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .badges {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-orange { background: #431407; color: #f97316; border: 1px solid #9a3412; }
+        .badge-green { background: #064e3b; color: #34d399; border: 1px solid #065f46; }
+
+        .card-content {
+            padding: 24px;
+            flex-grow: 1;
+        }
+
+        .card-content h3 {
+            font-size: 1.3rem;
+            margin: 0 0 15px 0;
+            line-height: 1.3;
+            color: var(--white);
+        }
+
+        .card-details {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .card-details li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .card-details .schedule-info {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .card-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 15px 0;
+        }
+
+        /* Botones de la Card */
+        .card-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-main {
+            background: linear-gradient(to right, #22d3ee, #06b6d4);
+            color: #0b1120;
+            text-align: center;
+            text-decoration: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-meet {
+            background: #1e293b;
+            color: var(--white);
+            text-align: center;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: background 0.3s;
+        }
+
+        .btn-meet:hover { background: #334155; border-color: var(--primary); }
+
+        /* Sección Formulario de Contacto */
+        .form-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 50px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-section h2 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        .form-section p {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            background: #1e293b;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px;
+            color: var(--white);
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-submit {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-top: 10px;
+            transition: opacity 0.3s;
+        }
+
+        .btn-submit:hover { opacity: 0.9; }
+
+        footer {
+            background-color: #020617;
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+            margin-top: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .form-section { padding: 30px 20px; }
+            .courses-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">RUBEN<span>SOSSA</span></div>
+            <div class="nav-links">
+                <a href="#inicio">INICIO</a>
+                <a href="#cursos">CURSOS</a>
+                <a href="https://wa.me/59173488941" target="_blank" rel="noopener noreferrer">CONTACTO</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="disclaimer-strip">
+        ⚠️ IMPORTANTE: FORMACIÓN TÉCNICA PROFESIONAL SIN EMISIÓN DE CERTIFICADOS OFICIALES
+    </div>
+
+    <section class="hero" id="inicio">
+        <h1>Capacitación <span>Profesional</span> Integral</h1>
+        <p>Acceso libre a recursos, guías y material especializado para tu crecimiento profesional.</p>
+    </section>
+
+    <div class="container">
+        
+        <div id="cursos" class="section-header">
+            <h2>Nuestros Programas</h2>
+            <p>Conoce los horarios y enfoques de cada programa diseñado para el mundo real.</p>
+        </div>
+
+        <div class="courses-grid">
+            
+            <!-- Card 1: Lógica -->
+            <article class="course-card">
+                <div class="card-img-container">
+                    <img src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&fit=crop&q=80&w=600" alt="Lógica de Programación">
+                    <div class="badges">
+                        <span class="badge badge-orange">Contenido Libre</span>
+                        <span class="badge badge-green">Especializado</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h3>Arquitectura de Pensamiento y Lógica</h3>
+                    <ul class="card-details">
+                        <li>5 Unidades Temáticas</li>
+                        <li>Mentor: Ruben Sossa</li>
+                        <li class="schedule-info">🕒 Lun - Mié - Vie (08:00 PM a 09:30 PM)</li>
+                    </ul>
+                    <div class="card-divider"></div>
+                    <div class="card-actions">
+                        <a href="#" class="btn-main">Ver material del curso</a>
+                        <a href="https://wa.me/59173488941?text=Hola%20Ruben,%20me%20gustaría%20solicitar%20una%20clase%20por%20Meet%20del%20curso%20de%20Lógica%20de%20Programación." 
+                           target="_blank" rel="noopener noreferrer" class="btn-meet">
+                            Solicitar clase en Meet
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 2: Ofimática -->
+            <article class="course-card">
+                <div class="card-img-container">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600" alt="Ofimática Profesional">
+                    <div class="badges">
+                        <span class="badge badge-orange">Recursos Gratis</span>
+                        <span class="badge badge-green">Productividad</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h3>Ofimática Profesional e Inteligencia de Datos</h3>
+                    <ul class="card-details">
+                        <li>5 Unidades Temáticas</li>
+                        <li>Mentor: Ruben Sossa</li>
+                        <li class="schedule-info">🕒 Mar - Jue - Sáb (04:00 PM a 05:30 PM)</li>
+                    </ul>
+                    <div class="card-divider"></div>
+                    <div class="card-actions">
+                        <a href="#" class="btn-main">Ver material del curso</a>
+                        <a href="https://wa.me/59173488941?text=Hola%20Ruben,%20me%20gustaría%20solicitar%20una%20clase%20por%20Meet%20del%20curso%20de%20Ofimática%20Profesional." 
+                           target="_blank" rel="noopener noreferrer" class="btn-meet">
+                            Solicitar clase en Meet
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 3: Desarrollo -->
+            <article class="course-card">
+                <div class="card-img-container">
+                    <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=600" alt="Desarrollo Web">
+                    <div class="badges">
+                        <span class="badge badge-orange">Open Source</span>
+                        <span class="badge badge-green">Frontend</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h3>Desarrollo Frontend & React Moderno</h3>
+                    <ul class="card-details">
+                        <li>5 Unidades Temáticas</li>
+                        <li>Mentor: Ruben Sossa</li>
+                        <li class="schedule-info">🕒 Mar - Jue - Sáb (06:00 PM a 07:30 PM)</li>
+                    </ul>
+                    <div class="card-divider"></div>
+                    <div class="card-actions">
+                        <a href="#" class="btn-main">Ver material del curso</a>
+                        <a href="https://wa.me/59173488941?text=Hola%20Ruben,%20me%20gustaría%20solicitar%20una%20clase%20por%20Meet%20del%20curso%20de%20Desarrollo%20Frontend%20y%20React." 
+                           target="_blank" rel="noopener noreferrer" class="btn-meet">
+                            Solicitar clase en Meet
+                        </a>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <!-- Sección Formulario de Contacto -->
+        <section id="contacto" class="form-section">
+            <h2>Consultas Directas</h2>
+            <p>Completa los datos y hablemos por WhatsApp para resolver tus dudas.</p>
+            
+            <form class="contact-form" id="waForm">
+                <div class="form-group">
+                    <label for="nombre">Nombre completo</label>
+                    <input type="text" id="nombre" placeholder="Ej. Juan Pérez" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="interes">Programa de interés</label>
+                    <select id="interes">
+                        <option value="General">Consulta General</option>
+                        <option value="Lógica">Lógica de Programación</option>
+                        <option value="Ofimática">Ofimática / Excel</option>
+                        <option value="Frontend">Desarrollo Web / React</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="mensaje">Tu mensaje</label>
+                    <textarea id="mensaje" rows="4" placeholder="Cuéntame en qué puedo ayudarte..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Enviar consulta a WhatsApp</button>
+            </form>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Ruben Dario Sossa | Profesional & Mentor Tecnológico<br>
+        Tarija - Bolivia | WhatsApp: <a href="https://wa.me/59173488941" target="_blank" rel="noopener noreferrer" style="color:var(--primary); text-decoration:none;">+591 73488941</a></p>
+    </footer>
+
+    <script>
+        // Script para manejar el envío del formulario a WhatsApp abriendo en nueva pestaña
+        document.getElementById('waForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nombre = document.getElementById('nombre').value;
+            const interes = document.getElementById('interes').value;
+            const mensaje = document.getElementById('mensaje').value;
+            const telefono = "59173488941";
+            
+            const texto = `Hola Ruben, mi nombre es *${nombre}*.%0AEstoy interesado en: *${interes}*.%0A%0A*Consulta:* ${mensaje}`;
+            
+            window.open(`https://wa.me/${telefono}?text=${texto}`, '_blank');
+        });
+    </script>
+
+</body>
+</html>
