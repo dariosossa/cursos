@@ -377,13 +377,13 @@
                     <h3>Curso de React</h3>
                     <ul class="card-details">
                         <li>45 Unidades Temáticas</li>
-                        <li>Mentor: Ruben Sossa</li>
+                        <li>Mentor: Ing. Darío Sossa</li>
                         <li class="schedule-info">🕒 Mar - Jue - Sáb (06:00 PM a 07:30 PM)</li>
                     </ul>
                     <div class="card-divider"></div>
                     <div class="card-actions">
                         <a href="react.html" class="btn-main">Ver material del curso</a>
-                        <a href="https://wa.me/59173488941?text=Hola%20Ing. Darío,%20me%20gustaría%20solicitar%20una%20clase%20por%20Meet." 
+                        <a href="https://wa.me/59173488941?text=Hola,%20me%20gustaría%20solicitar%20una%20clase%20por%20Meet." 
                            target="_blank" rel="noopener noreferrer" class="btn-meet">
                              Solicitar clase en Meet
                         </a>
@@ -408,7 +408,6 @@
                 <div class="form-group">
                     <label for="interes">Programa de interés</label>
                     <select id="interes">
-                        <option value="General">Consulta General</option>
                         <!-- Los cursos se cargarán aquí automáticamente mediante JS -->
                     </select>
                 </div>
@@ -425,7 +424,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2026 Ruben Dario Sossa | Profesional & Mentor Tecnológico<br>
+        <p>&copy; 2026 Ing. Dario Sossa | Profesional & Mentor Tecnológico<br>
         Tarija - Bolivia | WhatsApp: <a href="https://wa.me/59173488941" target="_blank" rel="noopener noreferrer" style="color:var(--primary); text-decoration:none;">+591 73488941</a></p>
     </footer>
 
@@ -461,12 +460,12 @@
         document.getElementById('waForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const nombre = document.getElementById('nombre').value;
-            const interes = document.getElementById('interes').value;
-            const mensaje = document.getElementById('mensaje').value;
+            const nombre = document.getElementById('nombre').value.toLowerCase();
+            const interes = document.getElementById('interes').value.toLowerCase();
+            const mensaje = document.getElementById('mensaje').value.toLowerCase();
             const telefono = "59173488941";
             
-            const texto = `Hola Darío, mi nombre es *${nombre}*.%0AEstoy interesado en: *${interes}*.%0A%0A*Consulta:* ${mensaje}`;
+            const texto = `Hola, mi nombre es *${nombre}*.%0AEstoy interesado en: *${interes}*.%0A%0A*Consulta:* ${mensaje}`;
             
             window.open(`https://wa.me/${telefono}?text=${texto}`, '_blank');
         });
