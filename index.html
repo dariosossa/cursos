@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formación Profesional Integral</title>
+    <title>Sossa Tech | Formación Profesional Integral</title>
     <style>
         /* ESTILO INSPIRADO EN SITEC Y EL DISEÑO DE CARDS SOLICITADO */
         :root {
@@ -99,6 +99,53 @@
             max-width: 1200px;
             margin: 60px auto;
             padding: 0 20px;
+        }
+
+        /* Estilos Tutorial TikTok - OCULTO POR DEFECTO */
+        #tiktokTutorial {
+            background: rgba(255, 140, 0, 0.1);
+            border: 2px dashed var(--primary);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 40px;
+            display: none; /* Se activa por JS solo en TikTok */
+            align-items: center;
+            gap: 20px;
+            text-align: left;
+        }
+
+        .tiktok-tutorial .icon-step {
+            background: var(--primary);
+            color: var(--secondary);
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .tiktok-tutorial-content h3 {
+            margin: 0 0 10px 0;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .tiktok-tutorial-content p {
+            margin: 0;
+            line-height: 1.5;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .tiktok-tutorial-content strong {
+            color: var(--white);
+            background: #1e293b;
+            padding: 2px 6px;
+            border-radius: 4px;
         }
 
         .section-header {
@@ -326,6 +373,7 @@
             .hero h1 { font-size: 2.2rem; }
             .form-section { padding: 30px 20px; }
             .courses-grid { grid-template-columns: 1fr; }
+            #tiktokTutorial { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
@@ -347,6 +395,15 @@
     </section>
 
     <div class="container">
+
+        <!-- Tutorial para usuarios de TikTok (Solo visible mediante JS) -->
+        <div id="tiktokTutorial" class="tiktok-tutorial">
+            <div class="icon-step">!</div>
+            <div class="tiktok-tutorial-content">
+                <h3>¿Vienes desde TikTok?</h3>
+                <p>Para disfrutar de todas las funciones y descargar material sin restricciones, presiona los <strong>3 puntos (⋮)</strong> en la esquina superior derecha y selecciona <strong>"Abrir en el navegador"</strong>.</p>
+            </div>
+        </div>
         
         <div id="cursos" class="section-header">
             <h2>Nuestros Programas</h2>
@@ -373,7 +430,6 @@
                     <div class="card-divider"></div>
                     <div class="card-actions">
                         <a href="react.html" class="btn-main">Ver material del curso</a>
-                        <!-- Botón Meet con clase especial para JS -->
                         <a href="https://wa.me/59173488941?text=Hola%20Ing.%20Darío,%20me%20gustaría%20solicitar%20una%20clase%20por%20Meet." 
                            class="btn-meet btn-whatsapp-direct">
                              Solicitar clase en Meet
@@ -420,6 +476,20 @@
 
     <script>
         /**
+         * DETECCIÓN DE TIKTOK
+         * Muestra el tutorial solo si el User Agent contiene "TikTok"
+         */
+        function verificarTikTok() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            const esTikTok = /TikTok/i.test(ua);
+            const tutorial = document.getElementById('tiktokTutorial');
+            
+            if (esTikTok && tutorial) {
+                tutorial.style.display = 'flex';
+            }
+        }
+
+        /**
          * FUNCIÓN PARA CARGAR CURSOS DINÁMICAMENTE EN EL SELECT
          */
         function actualizarSelectCursos() {
@@ -440,19 +510,18 @@
             });
         }
 
-        window.addEventListener('DOMContentLoaded', actualizarSelectCursos);
+        window.addEventListener('DOMContentLoaded', () => {
+            actualizarSelectCursos();
+            verificarTikTok(); // Llama a la detección
+        });
 
         /**
          * FUNCIÓN MAESTRA DE ESCAPE (PARA TIKTOK)
-         * Usa window.location.replace para forzar la salida hacia la app externa
          */
         function forzarWhatsApp(url) {
-            // TikTok y otras redes sociales bloquean window.open. 
-            // Usar location.replace "pisa" la sesión del navegador interno con la URL de la app.
             window.location.replace(url);
         }
 
-        // 1. Manejo de clics directos en enlaces de WhatsApp
         document.addEventListener('click', function(e) {
             const target = e.target.closest('.btn-whatsapp-direct');
             if (target) {
@@ -461,18 +530,14 @@
             }
         });
 
-        // 2. Manejo del envío del formulario
         document.getElementById('waForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
             const nombre = document.getElementById('nombre').value;
             const interes = document.getElementById('interes').value;
             const mensaje = document.getElementById('mensaje').value;
             const telefono = "59173488941";
-            
             const texto = `Hola Ing. Darío, mi nombre es *${nombre}*.%0AEstoy interesado en: *${interes}*.%0A%0A*Consulta:* ${mensaje}`;
             const waUrl = `https://wa.me/${telefono}?text=${texto}`;
-
             forzarWhatsApp(waUrl);
         });
     </script>
