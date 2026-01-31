@@ -430,10 +430,13 @@
             }
 
             .step-text,
+            code,
             p {
                 font-size: 1rem;
                 margin: 10px;
             }
+
+
 
             img {
                 border-radius: 2px;
@@ -501,12 +504,21 @@
             display: none;
         }
 
-        .terminal-body {
+        code {
             /* altura visible */
             overflow-y: auto;
             /* scroll vertical automático */
             overflow-x: hidden;
             /* evita scroll horizontal */
+        }
+
+        .terminal-body {
+            overflow-x: scroll;
+            /* barra horizontal SIEMPRE visible */
+            overflow-y: hidden;
+            /* no afecta el alto */
+            white-space: nowrap;
+            /* evita que el código se parta */
         }
     </style>
 </head>
