@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sossa Tech | Formación Profesional Integral</title>
+    <title>Formación Profesional Integral</title>
     <style>
         /* ESTILO INSPIRADO EN SITEC Y EL DISEÑO DE CARDS SOLICITADO */
         :root {
@@ -101,14 +101,14 @@
             padding: 0 20px;
         }
 
-        /* Estilos Tutorial TikTok - OCULTO POR DEFECTO */
-        #tiktokTutorial {
+        /* Estilos Tutorial TikTok - SIEMPRE VISIBLE */
+        .tiktok-tutorial {
             background: rgba(255, 140, 0, 0.1);
             border: 2px dashed var(--primary);
             border-radius: 20px;
             padding: 25px;
             margin-bottom: 40px;
-            display: none; /* Se activa por JS solo en TikTok */
+            display: flex; /* Cambiado a flex para que sea siempre visible */
             align-items: center;
             gap: 20px;
             text-align: left;
@@ -373,7 +373,7 @@
             .hero h1 { font-size: 2.2rem; }
             .form-section { padding: 30px 20px; }
             .courses-grid { grid-template-columns: 1fr; }
-            #tiktokTutorial { flex-direction: column; text-align: center; }
+            .tiktok-tutorial { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
@@ -396,8 +396,8 @@
 
     <div class="container">
 
-        <!-- Tutorial para usuarios de TikTok (Solo visible mediante JS) -->
-        <div id="tiktokTutorial" class="tiktok-tutorial">
+        <!-- Tutorial TikTok: Siempre visible -->
+        <div class="tiktok-tutorial">
             <div class="icon-step">!</div>
             <div class="tiktok-tutorial-content">
                 <h3>¿Vienes desde TikTok?</h3>
@@ -476,20 +476,6 @@
 
     <script>
         /**
-         * DETECCIÓN DE TIKTOK
-         * Muestra el tutorial solo si el User Agent contiene "TikTok"
-         */
-        function verificarTikTok() {
-            const ua = navigator.userAgent || navigator.vendor || window.opera;
-            const esTikTok = /TikTok/i.test(ua);
-            const tutorial = document.getElementById('tiktokTutorial');
-            
-            if (esTikTok && tutorial) {
-                tutorial.style.display = 'flex';
-            }
-        }
-
-        /**
          * FUNCIÓN PARA CARGAR CURSOS DINÁMICAMENTE EN EL SELECT
          */
         function actualizarSelectCursos() {
@@ -512,7 +498,6 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             actualizarSelectCursos();
-            verificarTikTok(); // Llama a la detección
         });
 
         /**
