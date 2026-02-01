@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +8,14 @@
     <style>
         /* ESTILO INSPIRADO EN SITEC Y EL DISEÑO DE CARDS SOLICITADO */
         :root {
-            --primary: #ff8c00; /* Naranja SITEC */
-            --secondary: #0b1120; /* Azul muy oscuro / Negro */
-            --card-bg: #0f172a; /* Fondo de la card (oscuro) */
-            --accent-cyan: #4ade80; 
-            --btn-cyan: #22d3ee; 
+            --primary: #ff8c00;
+            /* Naranja SITEC */
+            --secondary: #0b1120;
+            /* Azul muy oscuro / Negro */
+            --card-bg: #0f172a;
+            /* Fondo de la card (oscuro) */
+            --accent-cyan: #4ade80;
+            --btn-cyan: #22d3ee;
             --text-light: #f8fafc;
             --text-muted: #94a3b8;
             --white: #ffffff;
@@ -22,7 +26,7 @@
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #05080f; 
+            background-color: #05080f;
             color: var(--text-light);
             scroll-behavior: smooth;
         }
@@ -34,7 +38,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
             border-bottom: 1px solid var(--border);
         }
 
@@ -54,7 +58,9 @@
             text-transform: uppercase;
         }
 
-        .logo span { color: var(--primary); }
+        .logo span {
+            color: var(--primary);
+        }
 
         /* Disclaimer */
         .disclaimer-strip {
@@ -70,8 +76,8 @@
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, rgba(11, 17, 32, 0.95), rgba(30, 41, 59, 0.8)), 
-                        url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=1470');
+            background: linear-gradient(135deg, rgba(11, 17, 32, 0.95), rgba(30, 41, 59, 0.8)),
+                url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=1470');
             background-size: cover;
             background-position: center;
             padding: 80px 20px;
@@ -85,7 +91,9 @@
             font-weight: 900;
         }
 
-        .hero h1 span { color: var(--primary); }
+        .hero h1 span {
+            color: var(--primary);
+        }
 
         .hero p {
             font-size: 1.2rem;
@@ -171,7 +179,9 @@
             transition: transform 0.3s;
         }
 
-        .course-card:hover { transform: translateY(-5px); }
+        .course-card:hover {
+            transform: translateY(-5px);
+        }
 
         .card-img-container {
             position: relative;
@@ -201,8 +211,17 @@
             text-transform: uppercase;
         }
 
-        .badge-orange { background: #431407; color: #f97316; border: 1px solid #9a3412; }
-        .badge-green { background: #064e3b; color: #34d399; border: 1px solid #065f46; }
+        .badge-orange {
+            background: #431407;
+            color: #f97316;
+            border: 1px solid #9a3412;
+        }
+
+        .badge-green {
+            background: #064e3b;
+            color: #34d399;
+            border: 1px solid #065f46;
+        }
 
         .card-content {
             padding: 24px;
@@ -281,7 +300,10 @@
             cursor: pointer;
         }
 
-        .btn-meet:hover { background: #334155; border-color: var(--primary); }
+        .btn-meet:hover {
+            background: #334155;
+            border-color: var(--primary);
+        }
 
         /* Sección Formulario de Contacto */
         .form-section {
@@ -322,7 +344,9 @@
             color: var(--text-muted);
         }
 
-        .form-group input, .form-group select, .form-group textarea {
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
             background: #1e293b;
             border: 1px solid var(--border);
             border-radius: 10px;
@@ -333,7 +357,9 @@
             transition: border-color 0.3s;
         }
 
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
             border-color: var(--primary);
         }
 
@@ -351,7 +377,9 @@
             transition: opacity 0.3s;
         }
 
-        .btn-submit:hover { opacity: 0.9; }
+        .btn-submit:hover {
+            opacity: 0.9;
+        }
 
         footer {
             background-color: #020617;
@@ -364,13 +392,26 @@
         }
 
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.2rem; }
-            .form-section { padding: 30px 20px; }
-            .courses-grid { grid-template-columns: 1fr; }
-            .tutorial { flex-direction: column; text-align: center; }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .form-section {
+                padding: 30px 20px;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tutorial {
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <header>
@@ -393,20 +434,53 @@
         <div class="tutorial">
             <div class="icon-step">!</div>
             <div class="tutorial-content">
-                <p>Si no te permite copiar o abrir enlaces correctamente, presiona los <strong>3 puntos (⋮)</strong> en la esquina superior derecha y selecciona <strong>"Abrir en el navegador"</strong>.</p>
+                <p>Si no te permite copiar o abrir enlaces correctamente, presiona los <strong>3 puntos (⋮)</strong> en
+                    la esquina superior derecha y selecciona <strong>"Abrir en el navegador"</strong>.</p>
             </div>
         </div>
-        
+
         <div id="cursos" class="section-header">
             <h2>Nuestros Programas</h2>
         </div>
 
         <div class="courses-grid" id="gridProgramas">
-            
+
+            <!-- Card: Marketing de Servicios -->
+            <article class="course-card">
+                <div class="card-img-container">
+                    <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=600"
+                        alt="Marketing de Servicios">
+                    <div class="badges">
+                        <span class="badge badge-green">Material Académico</span>
+                    </div>
+                </div>
+
+                <div class="card-content">
+                    <h3>Marketing de Servicios</h3>
+
+                    <ul class="card-details">
+                        <li>6 Unidades Temáticas</li>
+                        <li>Docente: Ing. Darío Sossa</li>
+                        <li class="schedule-info">🕒 Modalidad flexible</li>
+                    </ul>
+
+                    <div class="card-divider"></div>
+
+                    <div class="card-actions">
+                        <a href="marketing-servicios.html" class="btn-main">
+                            Ver material del curso
+                        </a>
+                        <a href="#" class="btn-meet btn-whatsapp-direct">
+                            Solicitar información
+                        </a>
+                    </div>
+                </div>
+            </article>
             <!-- Card: React -->
             <article class="course-card">
                 <div class="card-img-container">
-                    <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=600" alt="Desarrollo Web">
+                    <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=600"
+                        alt="Desarrollo Web">
                     <div class="badges">
                         <span class="badge badge-green">Material Gratuito</span>
                     </div>
@@ -432,7 +506,7 @@
         <section id="contacto" class="form-section">
             <h2>Consultas Directas</h2>
             <p>Completa los datos y hablemos por WhatsApp para resolver tus dudas.</p>
-            
+
             <form class="contact-form" id="waForm">
                 <div class="form-group">
                     <label for="nombre">Nombre completo</label>
@@ -458,7 +532,8 @@
 
     <footer>
         <p>&copy; 2026 Ing. Dario Sossa | Profesional & Mentor Tecnológico<br>
-        Tarija - Bolivia | WhatsApp: <a href="https://wa.me/59173488941" class="btn-whatsapp-direct" style="color:var(--primary); text-decoration:none;">+591 73488941</a></p>
+            Tarija - Bolivia | WhatsApp: <a href="https://wa.me/59173488941" class="btn-whatsapp-direct"
+                style="color:var(--primary); text-decoration:none;">+591 73488941</a></p>
     </footer>
 
     <script>
@@ -481,9 +556,9 @@
             cards.forEach(card => {
                 const tituloH3 = card.querySelector('h3');
                 if (!tituloH3) return;
-                
+
                 const nombreCurso = tituloH3.innerText;
-                
+
                 // 1. Añadir al Select del Formulario
                 const option = document.createElement('option');
                 option.value = nombreCurso;
@@ -512,7 +587,7 @@
         window.addEventListener('DOMContentLoaded', inicializarContenidoDinamico);
 
         // Intercepción global de clics en elementos de WhatsApp para asegurar la salida de TikTok
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             const target = e.target.closest('.btn-whatsapp-direct');
             if (target) {
                 e.preventDefault();
@@ -521,18 +596,19 @@
         });
 
         // Manejo del envío del formulario de contacto
-        document.getElementById('waForm').addEventListener('submit', function(e) {
+        document.getElementById('waForm').addEventListener('submit', function (e) {
             e.preventDefault();
             const nombre = document.getElementById('nombre').value;
             const interes = document.getElementById('interes').value;
             const mensaje = document.getElementById('mensaje').value;
-            
+
             const texto = `Mi nombre es *${nombre}* . %0AEstoy interesado en: *${interes}* . %0A%0A*Consulta:* ${mensaje}`;
             const waUrl = `https://wa.me/${TELEFONO_CONTACTO}?text=${texto}`;
-            
+
             forzarWhatsApp(waUrl);
         });
     </script>
 
 </body>
+
 </html>
