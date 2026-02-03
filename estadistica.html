@@ -9,10 +9,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@700&display=swap"
         rel="stylesheet">
-    <style>
-        /* ==========================================================================
-   1. VARIABLES Y CONFIGURACIÓN (:root)
-   ========================================================================== */
+   <style>
         :root {
             --primary: #0f172a;
             --accent: #1e40af;
@@ -24,9 +21,6 @@
             --sidebar-width: 300px;
         }
 
-        /* ==========================================================================
-   2. ESTILOS GLOBALES Y RESET
-   ========================================================================== */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -42,38 +36,7 @@
             display: flex;
         }
 
-        .hidden {
-            display: none;
-        }
-
-        /* Tipografía general */
-        h2,
-        h3 {
-            font-size: 2rem;
-            color: var(--primary);
-            text-transform: uppercase;
-            text-decoration: underline;
-            text-decoration-thickness: 2px;
-            text-underline-offset: 11px;
-        }
-
-        p,
-        th,
-        td {
-            font-size: 1.8rem;
-            margin-bottom: 32px;
-        }
-
-        ul>li {
-            font-size: 1.8rem;
-            margin-left: 20px;
-        }
-
-        /* ==========================================================================
-   3. LAYOUT (Estructura Principal)
-   ========================================================================== */
-
-        /* Menú Lateral (Sidebar) */
+        /* --- MENÚ LATERAL (SIDEBAR) --- */
         .sidebar {
             width: var(--sidebar-width);
             height: 100vh;
@@ -89,12 +52,6 @@
             flex-direction: column;
         }
 
-        nav {
-            height: 100vh;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
         .sidebar-brand {
             margin-bottom: 40px;
             padding-bottom: 20px;
@@ -106,29 +63,8 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             color: var(--primary);
-            text-decoration: none;
-            /* Reset para el header del sidebar */
         }
 
-        /* Contenido Principal */
-        .main-content {
-            flex-grow: 1;
-            margin-left: var(--sidebar-width);
-            width: 100%;
-            transition: margin-left 0.3s ease;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 60px 40px;
-        }
-
-        /* ==========================================================================
-   4. COMPONENTES
-   ========================================================================== */
-
-        /* Navegación y Botones */
         .nav-links {
             display: flex;
             flex-direction: column;
@@ -152,35 +88,18 @@
             color: var(--accent);
         }
 
-        .nav-btn {
-            display: block;
-            margin-top: 12px;
-            padding: 12px 16px;
-            background: linear-gradient(135deg, #087ea4, #0ea5e9);
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 600;
-            border-radius: 10px;
+        .clock-btn {
+            background: var(--primary);
+            color: white !important;
             text-align: center;
-            cursor: pointer;
-            transition: all 0.25s ease;
+            margin-top: 20px;
         }
 
-        .nav-btn:hover {
-            background: linear-gradient(135deg, #0ea5e9, #087ea4);
-            box-shadow: 0 6px 16px rgba(14, 165, 233, 0.35);
+        .clock-btn:hover {
+            background: var(--accent) !important;
         }
 
-        .nav-btn:active {
-            transform: scale(0.97);
-        }
-
-        .nav-btn:focus {
-            outline: none;
-        }
-
-        /* Controles Flotantes */
+        /* --- BOTÓN TOGGLE (HAMBURGUESA) --- */
         #menu-toggle-btn {
             position: fixed;
             top: 20px;
@@ -196,6 +115,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
+        /* --- RELOJ FLOTANTE --- */
         .floating-clock {
             position: fixed;
             top: 20px;
@@ -216,18 +136,15 @@
             display: block;
         }
 
-        .clock-btn {
-            background: var(--primary);
-            color: white !important;
-            text-align: center;
-            margin-top: 20px;
+        /* --- CONTENIDO PRINCIPAL --- */
+        .main-content {
+            flex-grow: 1;
+            margin-left: var(--sidebar-width);
+            width: 100%;
+            transition: margin-left 0.3s ease;
         }
 
-        .clock-btn:hover {
-            background: var(--accent) !important;
-        }
-
-        /* Hero Section */
+        /* --- HERO SECTION --- */
         .hero {
             height: 60vh;
             position: relative;
@@ -257,11 +174,28 @@
             padding: 0 20px;
         }
 
-        /* Cards y Secciones */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
         .section-header {
             margin-bottom: 40px;
             border-bottom: 1px solid var(--border);
             padding-bottom: 10px;
+        }
+
+        h2,
+        h3 {
+            font-size: 2rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            /* Grosor de la línea */
+            text-underline-offset: 11px;
+            /* Distancia bajo el texto [7, 11] */
         }
 
         .card {
@@ -271,19 +205,7 @@
             margin-bottom: 40px;
         }
 
-        .question-card {
-            padding: 30px;
-            border: 1px solid var(--border);
-            background: var(--white);
-            border-left: 5px solid var(--accent);
-        }
-
-        .question-card h3 {
-            margin-bottom: 10px;
-            color: var(--primary);
-        }
-
-        /* Tablas */
+        /* --- TABLA --- */
         .comparison-table {
             width: 100%;
             border-collapse: collapse;
@@ -303,31 +225,7 @@
             border: 1px solid var(--border);
         }
 
-        .tabla-frecuencias thead {
-            background-color: #0f172a;
-            color: #ffffff;
-        }
-
-        .tabla-frecuencias th,
-        .tabla-frecuencias td {
-            padding: 14px 18px;
-            text-align: center;
-        }
-
-        .tabla-frecuencias th {
-            font-weight: 600;
-        }
-
-        .tabla-frecuencias tbody tr:nth-child(even) {
-            background-color: #f8fafc;
-        }
-
-        .tabla-frecuencias tbody tr:hover {
-            background-color: #e0f2fe;
-            transition: background-color 0.2s ease;
-        }
-
-        /* Imágenes */
+        /* --- IMÁGENES --- */
         .img-box {
             margin: 30px 0;
             border: 1px solid var(--border);
@@ -348,77 +246,38 @@
             font-style: italic;
         }
 
-        /* Terminal Window */
-        .terminal-window {
-            background: #1e1e1e;
-            border-radius: 14px;
-            margin: 40px 0;
-            overflow: hidden;
-            border: 1px solid #333;
-            box-shadow: 0 18px 40px rgba(0, 0, 0, .35);
-            position: relative;
-        }
-
-        .terminal-header {
-            background: #2a2a2a;
-            padding: 10px 16px;
+        /* --- DEBATE --- */
+        .debate-grid {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        .terminal-tabs {
-            display: flex;
-            gap: 12px;
+        .question-card {
+            padding: 30px;
+            border: 1px solid var(--border);
+            background: var(--white);
+            border-left: 5px solid var(--accent);
         }
 
-        .terminal-tab {
-            color: #ccc;
-            font-size: 0.9rem;
+        .question-card h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
         }
 
-        .terminal-tab.active {
-            color: #fff;
-            border-bottom: 2px solid #fff;
+        ul>li {
+            font-size: 1.8rem;
+            margin-left: 20px;
         }
 
-        .copy-btn {
-            background: transparent;
-            border: 1px solid #555;
-            color: #ddd;
-            padding: 6px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.85rem;
+        th,
+        td,
+        p {
+            font-size: 1.8rem;
+            margin-bottom: 32px;
         }
 
-        .copy-btn:hover {
-            background: #444;
-            color: #fff;
-        }
-
-        .copy-btn.copied {
-            background: #22c55e;
-            color: #000;
-            border-color: #22c55e;
-        }
-
-        .terminal-body {
-            padding: 26px;
-            font-family: Consolas, Monaco, monospace;
-            font-size: 1.6rem;
-            color: #e5e7eb;
-            line-height: 1.6;
-            white-space: nowrap;
-            overflow-x: auto;
-            overflow-y: hidden;
-        }
-
-        /* ==========================================================================
-   5. MEDIA QUERIES (Responsividad)
-   ========================================================================== */
-
-        /* Tablet / Laptop pequeño */
+        /* --- RESPONSIVE --- */
         @media (max-width: 1200px) {
             .sidebar {
                 transform: translateX(-100%);
@@ -438,9 +297,17 @@
             }
         }
 
-        /* Móvil General */
+        .hidden {
+            display: none;
+        }
+
+        /* ========================= */
+        /* AJUSTES GENERALES MÓVILES */
+        /* ========================= */
         @media (max-width: 768px) {
 
+
+            /* Sidebar ocupa toda la pantalla */
             .sidebar {
                 width: 100%;
                 padding: 30px 20px;
@@ -457,11 +324,13 @@
                 text-align: center;
             }
 
+            /* Contenido principal */
             .main-content {
                 margin-left: 0;
                 width: 100%;
             }
 
+            /* Hero */
             .hero {
                 height: 40vh;
             }
@@ -472,10 +341,12 @@
                 line-height: 1.3;
             }
 
+            /* Contenedor */
             .container {
                 padding: 40px 20px;
             }
 
+            /* Títulos */
             h2,
             h3 {
                 font-size: 1.6rem;
@@ -483,6 +354,7 @@
                 text-underline-offset: 8px;
             }
 
+            /* Texto */
             p,
             li,
             th,
@@ -491,11 +363,16 @@
                 line-height: 1.6;
             }
 
-            .card,
+            /* Cards */
+            .card {
+                padding: 25px;
+            }
+
             .question-card {
                 padding: 25px;
             }
 
+            /* Tablas con scroll horizontal */
             .comparison-table {
                 display: block;
                 overflow-x: auto;
@@ -508,19 +385,24 @@
                 padding: 12px;
             }
 
+            /* Botón menú */
             #menu-toggle-btn {
                 padding: 10px 14px;
                 font-size: 1rem;
             }
 
+            /* Reloj */
             .floating-clock {
                 font-size: 1.4rem;
                 padding: 10px 16px;
             }
         }
 
-        /* Smartphone Pequeño */
+        /* ============================== */
+        /* CELULARES PEQUEÑOS (≤ 480px) */
+        /* ============================== */
         @media (max-width: 480px) {
+
             .hero {
                 height: 35vh;
             }
@@ -558,6 +440,43 @@
             .floating-clock {
                 font-size: 1.2rem;
             }
+        }
+
+        nav {
+            height: 100vh;
+            /* Nunca más alto que la ventana */
+            overflow-y: auto;
+            /* Scroll vertical automático */
+            overflow-x: hidden;
+            /* Evita scroll horizontal */
+        }
+
+        .nav-btn {
+            display: block;
+            margin-top: 12px;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #087ea4, #0ea5e9);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(135deg, #0ea5e9, #087ea4);
+            box-shadow: 0 6px 16px rgba(14, 165, 233, 0.35);
+        }
+
+        .nav-btn:active {
+            transform: scale(0.97);
+        }
+
+        .nav-btn:focus {
+            outline: none;
         }
     </style>
 
