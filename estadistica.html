@@ -10,6 +10,9 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@700&display=swap"
         rel="stylesheet">
     <style>
+        /* ==========================================================================
+   1. VARIABLES Y CONFIGURACIÓN (:root)
+   ========================================================================== */
         :root {
             --primary: #0f172a;
             --accent: #1e40af;
@@ -21,6 +24,9 @@
             --sidebar-width: 300px;
         }
 
+        /* ==========================================================================
+   2. ESTILOS GLOBALES Y RESET
+   ========================================================================== */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -36,7 +42,38 @@
             display: flex;
         }
 
-        /* --- MENÚ LATERAL (SIDEBAR) --- */
+        .hidden {
+            display: none;
+        }
+
+        /* Tipografía general */
+        h2,
+        h3 {
+            font-size: 2rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 11px;
+        }
+
+        p,
+        th,
+        td {
+            font-size: 1.8rem;
+            margin-bottom: 32px;
+        }
+
+        ul>li {
+            font-size: 1.8rem;
+            margin-left: 20px;
+        }
+
+        /* ==========================================================================
+   3. LAYOUT (Estructura Principal)
+   ========================================================================== */
+
+        /* Menú Lateral (Sidebar) */
         .sidebar {
             width: var(--sidebar-width);
             height: 100vh;
@@ -52,6 +89,12 @@
             flex-direction: column;
         }
 
+        nav {
+            height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
         .sidebar-brand {
             margin-bottom: 40px;
             padding-bottom: 20px;
@@ -63,8 +106,29 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             color: var(--primary);
+            text-decoration: none;
+            /* Reset para el header del sidebar */
         }
 
+        /* Contenido Principal */
+        .main-content {
+            flex-grow: 1;
+            margin-left: var(--sidebar-width);
+            width: 100%;
+            transition: margin-left 0.3s ease;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        /* ==========================================================================
+   4. COMPONENTES
+   ========================================================================== */
+
+        /* Navegación y Botones */
         .nav-links {
             display: flex;
             flex-direction: column;
@@ -86,372 +150,6 @@
         .nav-links a:hover {
             background: #f1f5f9;
             color: var(--accent);
-        }
-
-        .clock-btn {
-            background: var(--primary);
-            color: white !important;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .clock-btn:hover {
-            background: var(--accent) !important;
-        }
-
-        /* --- BOTÓN TOGGLE (HAMBURGUESA) --- */
-        #menu-toggle-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1200;
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 18px;
-            font-size: 1.2rem;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        /* --- RELOJ FLOTANTE --- */
-        .floating-clock {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--white);
-            color: var(--primary);
-            padding: 12px 20px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 1.8rem;
-            font-weight: 800;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            z-index: 1200;
-            display: none;
-        }
-
-        .floating-clock.active {
-            display: block;
-        }
-
-        /* --- CONTENIDO PRINCIPAL --- */
-        .main-content {
-            flex-grow: 1;
-            margin-left: var(--sidebar-width);
-            width: 100%;
-            transition: margin-left 0.3s ease;
-        }
-
-        /* --- HERO SECTION --- */
-        .hero {
-            height: 60vh;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.6);
-        }
-
-        .hero h1 {
-            position: relative;
-            z-index: 2;
-            font-family: 'Playfair Display', serif;
-            font-size: 4rem;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 10px;
-            text-align: center;
-            padding: 0 20px;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 60px 40px;
-        }
-
-        .section-header {
-            margin-bottom: 40px;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 10px;
-        }
-
-        h2,
-        h3 {
-            font-size: 2rem;
-            color: var(--primary);
-            text-transform: uppercase;
-            text-decoration: underline;
-            text-decoration-thickness: 2px;
-            /* Grosor de la línea */
-            text-underline-offset: 11px;
-            /* Distancia bajo el texto [7, 11] */
-        }
-
-        .card {
-            background: var(--white);
-            padding: 40px;
-            border: 1px solid var(--border);
-            margin-bottom: 40px;
-        }
-
-        /* --- TABLA --- */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        .comparison-table th {
-            background: var(--primary);
-            color: white;
-            padding: 15px;
-            text-align: left;
-            text-transform: uppercase;
-        }
-
-        .comparison-table td {
-            padding: 15px;
-            border: 1px solid var(--border);
-        }
-
-        /* --- IMÁGENES --- */
-        .img-box {
-            margin: 30px 0;
-            border: 1px solid var(--border);
-        }
-
-        .img-box img {
-            width: 100%;
-            max-height: 400px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .caption {
-            padding: 10px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            background: #f1f5f9;
-            font-style: italic;
-        }
-
-        /* --- DEBATE --- */
-        .debate-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .question-card {
-            padding: 30px;
-            border: 1px solid var(--border);
-            background: var(--white);
-            border-left: 5px solid var(--accent);
-        }
-
-        .question-card h3 {
-            margin-bottom: 10px;
-            color: var(--primary);
-        }
-
-        ul>li {
-            font-size: 1.8rem;
-            margin-left: 20px;
-        }
-
-        th,
-        td,
-        p {
-            font-size: 1.8rem;
-            margin-bottom: 32px;
-        }
-
-        /* --- RESPONSIVE --- */
-        @media (max-width: 1200px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-
-            .sidebar.active {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-                letter-spacing: 5px;
-            }
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        /* ========================= */
-        /* AJUSTES GENERALES MÓVILES */
-        /* ========================= */
-        @media (max-width: 768px) {
-
-            body {
-                flex-direction: column;
-            }
-
-            /* Sidebar ocupa toda la pantalla */
-            .sidebar {
-                width: 100%;
-                padding: 30px 20px;
-            }
-
-            .sidebar-brand h2 {
-                font-size: 1rem;
-                text-align: center;
-            }
-
-            .nav-links a {
-                font-size: 1.1rem;
-                padding: 14px;
-                text-align: center;
-            }
-
-            /* Contenido principal */
-            .main-content {
-                margin-left: 0;
-                width: 100%;
-            }
-
-            /* Hero */
-            .hero {
-                height: 40vh;
-            }
-
-            .hero h1 {
-                font-size: 2.2rem;
-                letter-spacing: 3px;
-                line-height: 1.3;
-            }
-
-            /* Contenedor */
-            .container {
-                padding: 40px 20px;
-            }
-
-            /* Títulos */
-            h2,
-            h3 {
-                font-size: 1.6rem;
-                text-align: center;
-                text-underline-offset: 8px;
-            }
-
-            /* Texto */
-            p,
-            li,
-            th,
-            td {
-                font-size: 1.5rem;
-                line-height: 1.6;
-            }
-
-            /* Cards */
-            .card {
-                padding: 25px;
-            }
-
-            .question-card {
-                padding: 25px;
-            }
-
-            /* Tablas con scroll horizontal */
-            .comparison-table {
-                display: block;
-                overflow-x: auto;
-                white-space: nowrap;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                font-size: 1.4rem;
-                padding: 12px;
-            }
-
-            /* Botón menú */
-            #menu-toggle-btn {
-                padding: 10px 14px;
-                font-size: 1rem;
-            }
-
-            /* Reloj */
-            .floating-clock {
-                font-size: 1.4rem;
-                padding: 10px 16px;
-            }
-        }
-
-        /* ============================== */
-        /* CELULARES PEQUEÑOS (≤ 480px) */
-        /* ============================== */
-        @media (max-width: 480px) {
-
-            .hero {
-                height: 35vh;
-            }
-
-            .hero h1 {
-                font-size: 1.8rem;
-                letter-spacing: 2px;
-            }
-
-            .container {
-                padding: 30px 15px;
-            }
-
-            h2,
-            h3 {
-                font-size: 1.4rem;
-            }
-
-            p,
-            li,
-            th,
-            td {
-                font-size: 1.3rem;
-            }
-
-            .card,
-            .question-card {
-                padding: 20px;
-            }
-
-            .nav-links a {
-                font-size: 1rem;
-            }
-
-            .floating-clock {
-                font-size: 1.2rem;
-            }
-        }
-
-        nav {
-            height: 100vh;
-            /* Nunca más alto que la ventana */
-            overflow-y: auto;
-            /* Scroll vertical automático */
-            overflow-x: hidden;
-            /* Evita scroll horizontal */
         }
 
         .nav-btn {
@@ -482,8 +180,175 @@
             outline: none;
         }
 
-        /* ================= TERMINAL WINDOW (CÓDIGO COPIABLE) ================= */
+        /* Controles Flotantes */
+        #menu-toggle-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1200;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
 
+        .floating-clock {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--white);
+            color: var(--primary);
+            padding: 12px 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1200;
+            display: none;
+        }
+
+        .floating-clock.active {
+            display: block;
+        }
+
+        .clock-btn {
+            background: var(--primary);
+            color: white !important;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .clock-btn:hover {
+            background: var(--accent) !important;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 60vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+        }
+
+        .hero h1 {
+            position: relative;
+            z-index: 2;
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        /* Cards y Secciones */
+        .section-header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 40px;
+            border: 1px solid var(--border);
+            margin-bottom: 40px;
+        }
+
+        .question-card {
+            padding: 30px;
+            border: 1px solid var(--border);
+            background: var(--white);
+            border-left: 5px solid var(--accent);
+        }
+
+        .question-card h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        /* Tablas */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            text-transform: uppercase;
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .tabla-frecuencias thead {
+            background-color: #0f172a;
+            color: #ffffff;
+        }
+
+        .tabla-frecuencias th,
+        .tabla-frecuencias td {
+            padding: 14px 18px;
+            text-align: center;
+        }
+
+        .tabla-frecuencias th {
+            font-weight: 600;
+        }
+
+        .tabla-frecuencias tbody tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .tabla-frecuencias tbody tr:hover {
+            background-color: #e0f2fe;
+            transition: background-color 0.2s ease;
+        }
+
+        /* Imágenes */
+        .img-box {
+            margin: 30px 0;
+            border: 1px solid var(--border);
+        }
+
+        .img-box img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .caption {
+            padding: 10px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            background: #f1f5f9;
+            font-style: italic;
+        }
+
+        /* Terminal Window */
         .terminal-window {
             background: #1e1e1e;
             border-radius: 14px;
@@ -538,73 +403,167 @@
             border-color: #22c55e;
         }
 
-        /* CUERPO DEL CÓDIGO */
         .terminal-body {
             padding: 26px;
             font-family: Consolas, Monaco, monospace;
             font-size: 1.6rem;
             color: #e5e7eb;
             line-height: 1.6;
-
-            /* CLAVE PARA TU PROBLEMA 👇 */
             white-space: nowrap;
             overflow-x: auto;
             overflow-y: hidden;
         }
 
-        <section class="exercise-card" id="tabla-frecuencias-absolutas"><div class="section-header"><h2>Tablas de Frecuencias Absolutas</h2></div><div class="card"><p>Una <strong>tabla de frecuencias absolutas</strong>es una forma sencilla de organizar datos para saber <strong>cuántas veces se repite</strong>una respuesta,
-        categoría o valor. </p><p>La <strong>frecuencia absoluta</strong>es simplemente el <strong>número de veces</strong>que aparece una categoría en los datos. No se hacen divisiones ni porcentajes,
-        solo se cuenta. </p><p>Este tipo de tabla se usa mucho cuando se trabaja con <strong>datos cualitativos</strong>,
-        como opiniones,
-        respuestas o clasificaciones. </p><p>Por ejemplo,
-        se consulta a estudiantes su opinión sobre un servicio,
-        y las respuestas posibles son: “Buena”,
-        “Regular” y “Mala”. </p><p>Supongamos que las respuestas fueron: Buena: 18 veces,
-        Regular: 22 veces,
-        Mala: 10 veces. </p><table class="tabla-frecuencias"><thead><tr><th>Opinión</th><th>Frecuencia Absoluta</th></tr></thead><tbody><tr><td>Buena</td><td>18</td></tr><tr><td>Regular</td><td>22</td></tr><tr><td>Mala</td><td>10</td></tr></tbody></table><p>Para analizar la tabla,
-        se observa qué categoría tiene la <strong>mayor frecuencia</strong>y cuál la menor. </p><p>En este ejemplo,
-        la opinión “Regular” es la más frecuente,
-        lo que indica que la mayoría de los estudiantes tiene una percepción intermedia del servicio. </p><p>En resumen,
-        una tabla de frecuencias absolutas sirve para <strong>ordenar datos,
-        contar respuestas y facilitar el análisis</strong>. </p></div></section><style>.tabla-frecuencias {
-            width: 100%;
-            max-width: 520px;
-            margin: 20px auto;
-            border-collapse: collapse;
-            font-family: 'Inter', 'Segoe UI', sans-serif;
-            font-size: 1rem;
-            background-color: #ffffff;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        /* ==========================================================================
+   5. MEDIA QUERIES (Responsividad)
+   ========================================================================== */
+
+        /* Tablet / Laptop pequeño */
+        @media (max-width: 1200px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+                letter-spacing: 5px;
+            }
         }
 
-        .tabla-frecuencias thead {
-            background-color: #0f172a;
-            color: #ffffff;
+        /* Móvil General */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 30px 20px;
+            }
+
+            .sidebar-brand h2 {
+                font-size: 1rem;
+                text-align: center;
+            }
+
+            .nav-links a {
+                font-size: 1.1rem;
+                padding: 14px;
+                text-align: center;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .hero {
+                height: 40vh;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+                letter-spacing: 3px;
+                line-height: 1.3;
+            }
+
+            .container {
+                padding: 40px 20px;
+            }
+
+            h2,
+            h3 {
+                font-size: 1.6rem;
+                text-align: center;
+                text-underline-offset: 8px;
+            }
+
+            p,
+            li,
+            th,
+            td {
+                font-size: 1.5rem;
+                line-height: 1.6;
+            }
+
+            .card,
+            .question-card {
+                padding: 25px;
+            }
+
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                font-size: 1.4rem;
+                padding: 12px;
+            }
+
+            #menu-toggle-btn {
+                padding: 10px 14px;
+                font-size: 1rem;
+            }
+
+            .floating-clock {
+                font-size: 1.4rem;
+                padding: 10px 16px;
+            }
         }
 
-        .tabla-frecuencias th,
-        .tabla-frecuencias td {
-            padding: 14px 18px;
-            text-align: center;
-        }
+        /* Smartphone Pequeño */
+        @media (max-width: 480px) {
+            .hero {
+                height: 35vh;
+            }
 
-        .tabla-frecuencias th {
-            font-weight: 600;
-        }
+            .hero h1 {
+                font-size: 1.8rem;
+                letter-spacing: 2px;
+            }
 
-        .tabla-frecuencias tbody tr:nth-child(even) {
-            background-color: #f8fafc;
-        }
+            .container {
+                padding: 30px 15px;
+            }
 
-        .tabla-frecuencias tbody tr:hover {
-            background-color: #e0f2fe;
-            transition: background-color 0.2s ease;
+            h2,
+            h3 {
+                font-size: 1.4rem;
+            }
+
+            p,
+            li,
+            th,
+            td {
+                font-size: 1.3rem;
+            }
+
+            .card,
+            .question-card {
+                padding: 20px;
+            }
+
+            .nav-links a {
+                font-size: 1rem;
+            }
+
+            .floating-clock {
+                font-size: 1.2rem;
+            }
         }
     </style>
 
-    </style>
 </head>
 
 <body>
@@ -12821,7 +12780,7 @@
 
                 const link = document.createElement('a');
                 link.textContent = titulo.textContent;
-                link.style.textAlign="left";
+                link.style.textAlign = "left";
                 link.onclick = () => goTo(sec.id);
 
                 nav.insertBefore(link, nav.lastElementChild);
