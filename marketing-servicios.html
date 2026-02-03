@@ -7275,6 +7275,7 @@ APLICACIÓN DEL MARKETING DE SERVICIOS
 
                 const link = document.createElement('a');
                 link.textContent = titulo.textContent;
+                link.style.textAlign = "left";
                 link.onclick = () => goTo(sec.id);
 
                 nav.insertBefore(link, nav.lastElementChild);
