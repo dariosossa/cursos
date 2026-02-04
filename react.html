@@ -38,7 +38,7 @@
             /* Escala de fuentes para contenido (Lectura Lejana) */
             --fs-base: 1.6rem;
             --fs-title: 3.5rem;
-            --fs-subtitle: 2.8rem;
+            --fs-subtitle: 2rem;
             --fs-code: 1.8rem;
             --fs-clock: 3.2rem;
 
@@ -194,7 +194,7 @@
         }
 
         .card-title {
-            font-size: var(--fs-subtitle);
+            max-width: 400px;
             font-weight: 900;
             margin-bottom: 40px;
             color: var(--white);
@@ -228,7 +228,6 @@
 
         .step-text {
             line-height: 1.4;
-            font-size: 1.8rem;
             color: var(--text-main);
         }
 
@@ -368,6 +367,10 @@
             /* evita que el código se parta */
 
         }
+
+        h3 {
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -389,7 +392,7 @@
         <div style="margin-top: 20px; padding: 0 10px;">
             <a href="index.html" class="sidebar-link"
                 style="background: #f8fafc; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; gap: 10px;">
-                ⬅️ Volver al Inicio
+                Volver al Inicio
             </a>
         </div>
         <nav id="nav-list"></nav>
@@ -6091,10 +6094,21 @@ export default Contador
             <p>
                 Usaremos una API pública:
             </p>
+            REVISA
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="terminal-tabs">
+                        <div class="terminal-tab active">API</div>
+                    </div>
+                    <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                </div>
 
-            <p>
-                https://jsonplaceholder.typicode.com/users
-            </p>
+                <div class="terminal-body">
+                    <pre><code>
+https://jsonplaceholder.typicode.com/users
+</code></pre>
+                </div>
+            </div>
 
             <!-- ===================== -->
             <!-- CONTEXTO -->
@@ -7190,9 +7204,20 @@ createRoot(document.getElementById('root')).render(
                 Usaremos una API pública de pruebas:
             </p>
 
-            <p>
-                https://jsonplaceholder.typicode.com/posts
-            </p>
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="terminal-tabs">
+                        <div class="terminal-tab active">API</div>
+                    </div>
+                    <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                </div>
+
+                <div class="terminal-body">
+                    <pre><code>
+https://jsonplaceholder.typicode.com/posts
+</code></pre>
+                </div>
+            </div>
 
             <!-- ===================== -->
             <!-- COMPONENTE -->
