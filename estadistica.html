@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marketing de Servicios - Portal Académico</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -12,14 +11,31 @@
         rel="stylesheet">
     <style>
         :root {
-            --primary: #0f172a;
-            --accent: #1e40af;
-            --text-main: #1e293b;
-            --text-muted: #475569;
-            --bg-light: #f8fafc;
+            /* PALETA DE COLORES SITEC APLICADA */
+            --primary-color: #22d3ee;
+            --primary-dark: #0b1120;
+            --primary-light: #1e293b;
+            --bg-body: #0b1120;
+            --bg-card: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
+            --accent-cyan: #4ade80;
+            --btn-cyan: #22d3ee;
             --white: #ffffff;
-            --border: #e2e8f0;
-            --sidebar-width: 300px;
+
+            /* Estructura */
+            --card-radius: 30px;
+            --sidebar-width: 320px;
+            --transition-speed: 0.3s;
+
+            /* Escala de fuentes (Lectura Lejana) */
+            --fs-base: 1.6rem;
+            --fs-title: 3.5rem;
+            --fs-subtitle: 2rem;
+            --fs-code: 1.8rem;
+            --fs-clock: 3.2rem;
+            --fs-sidebar: 1rem;
         }
 
         * {
@@ -30,40 +46,43 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-light);
+            background-color: var(--bg-body);
             color: var(--text-main);
             line-height: 1.7;
             scroll-behavior: smooth;
             display: flex;
+            font-size: var(--fs-base);
         }
 
         /* --- MENÚ LATERAL (SIDEBAR) --- */
         .sidebar {
             width: var(--sidebar-width);
             height: 100vh;
-            background: var(--white);
-            border-right: 1px solid var(--border);
+            background: var(--primary-dark);
+            border-right: 1px solid var(--border-color);
             position: fixed;
             left: 0;
             top: 0;
             z-index: 1100;
             padding: 40px 20px;
-            transition: transform 0.3s ease;
+            transition: transform var(--transition-speed) ease;
             display: flex;
             flex-direction: column;
+            overflow-y: auto;
         }
 
         .sidebar-brand {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             padding-bottom: 20px;
-            border-bottom: 2px solid var(--primary);
+            border-bottom: 2px solid var(--primary-color);
         }
 
         .sidebar-brand h2 {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: var(--primary);
+            color: var(--primary-color);
+            text-align: center;
         }
 
         .nav-links {
@@ -76,44 +95,58 @@
         .nav-links a {
             text-decoration: none;
             color: var(--text-main);
-            font-size: 1rem;
+            font-size: var(--fs-sidebar);
             font-weight: 600;
             padding: 12px 15px;
-            border-radius: 6px;
+            border-radius: 12px;
             transition: 0.2s;
             cursor: pointer;
+            border: 1px solid transparent;
         }
 
         .nav-links a:hover {
-            background: #f1f5f9;
-            color: var(--accent);
+            background: var(--primary-light);
+            color: var(--primary-color);
+            border-color: var(--primary-color);
         }
 
         .clock-btn {
-            background: var(--primary);
-            color: white !important;
+            background: var(--primary-color);
+            color: var(--primary-dark) !important;
             text-align: center;
             margin-top: 20px;
+            border-radius: 12px;
+            font-weight: 800 !important;
         }
 
-        .clock-btn:hover {
-            background: var(--accent) !important;
+        /* --- BOTONES --- */
+        .nav-btn {
+            display: block;
+            margin-bottom: 20px;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary-color), #0891b2);
+            color: var(--primary-dark);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 800;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
         }
 
-        /* --- BOTÓN TOGGLE (HAMBURGUESA) --- */
         #menu-toggle-btn {
             position: fixed;
             top: 20px;
             left: 20px;
             z-index: 1200;
-            background: var(--primary);
-            color: white;
+            background: var(--primary-color);
+            color: var(--primary-dark);
             border: none;
             padding: 12px 18px;
-            font-size: 1.2rem;
-            border-radius: 8px;
+            font-size: 1.5rem;
+            border-radius: 12px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(34, 211, 238, 0.3);
         }
 
         /* --- RELOJ FLOTANTE --- */
@@ -121,14 +154,14 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: var(--white);
-            color: var(--primary);
-            padding: 12px 20px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 1.8rem;
+            background: var(--bg-card);
+            color: var(--primary-color);
+            padding: 15px 30px;
+            border: 2px solid var(--primary-color);
+            border-radius: 20px;
+            font-size: var(--fs-clock);
             font-weight: 800;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.2);
             z-index: 1200;
             display: none;
         }
@@ -142,146 +175,95 @@
             flex-grow: 1;
             margin-left: var(--sidebar-width);
             width: 100%;
-            transition: margin-left 0.3s ease;
+            transition: margin-left var(--transition-speed) ease;
         }
 
-        /* --- HERO SECTION --- */
         .hero {
-            height: 60vh;
+            height: 50vh;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop');
+            background: linear-gradient(rgba(11, 17, 32, 0.8), rgba(11, 17, 32, 0.8)), url('https://images.unsplash.com/photo-1551288049-bbbda536339a?q=80&w=1600&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.6);
+            border-bottom: 1px solid var(--primary-color);
         }
 
         .hero h1 {
-            position: relative;
-            z-index: 2;
             font-family: 'Playfair Display', serif;
-            font-size: 4rem;
-            color: white;
+            font-size: var(--fs-title);
+            color: var(--primary-color);
             text-transform: uppercase;
-            letter-spacing: 10px;
+            letter-spacing: 8px;
             text-align: center;
-            padding: 0 20px;
+            text-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
         }
 
         .container {
-            max-width: 1000px;
             margin: 0 auto;
-            padding: 60px 40px;
+            padding: 60px 10px;
         }
 
-        .section-header {
-            margin-bottom: 40px;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 10px;
-        }
-
-        h2,
-        h3 {
-            font-size: 2rem;
-            color: var(--primary);
+        h2 {
+            font-size: var(--fs-subtitle);
+            color: var(--primary-color);
             text-transform: uppercase;
-            text-decoration: underline;
-            text-decoration-thickness: 2px;
-            /* Grosor de la línea */
-            text-underline-offset: 11px;
-            /* Distancia bajo el texto [7, 11] */
+            margin-bottom: 30px;
+            border-left: 8px solid var(--primary-color);
+            padding-left: 20px;
         }
 
         .card {
-            background: var(--white);
-            padding: 40px;
-            border: 1px solid var(--border);
-            margin-bottom: 40px;
-        }
-
-        /* --- TABLA --- */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        .comparison-table th {
-            background: var(--primary);
-            color: white;
-            padding: 15px;
-            text-align: left;
-            text-transform: uppercase;
-        }
-
-        .comparison-table td {
-            padding: 15px;
-            border: 1px solid var(--border);
-        }
-
-        /* --- IMÁGENES --- */
-        .img-box {
-            margin: 30px 0;
-            border: 1px solid var(--border);
-        }
-
-        .img-box img {
-            width: 100%;
-            max-height: 400px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .caption {
+            background: var(--bg-card);
             padding: 10px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            background: #f1f5f9;
-            font-style: italic;
+            border-radius: var(--card-radius);
+            border: 1px solid var(--border-color);
+            margin-bottom: 60px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        /* --- DEBATE --- */
-        .debate-grid {
+        p {
+            margin-bottom: 25px;
+        }
+
+        /* --- ELEMENTOS TÉCNICOS --- */
+        .terminal-window {
+            background: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 30px 0;
+            border: 1px solid var(--primary-color);
+        }
+
+        .terminal-header {
+            background: #1e293b;
+            padding: 10px 20px;
             display: flex;
-            flex-direction: column;
-            gap: 20px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .terminal-body {
+            padding: 25px;
+            color: var(--accent-cyan);
+            font-family: 'Courier New', Courier, monospace;
+            font-size: var(--fs-code);
         }
 
         .question-card {
             padding: 30px;
-            border: 1px solid var(--border);
-            background: var(--white);
-            border-left: 5px solid var(--accent);
-        }
-
-        .question-card h3 {
-            margin-bottom: 10px;
-            color: var(--primary);
-        }
-
-        ul>li {
-            font-size: 1.8rem;
-            margin-left: 20px;
-        }
-
-        th,
-        td,
-        p {
-            font-size: 1.8rem;
-            margin-bottom: 32px;
+            background: var(--primary-light);
+            border-left: 6px solid var(--btn-cyan);
+            border-radius: 15px;
+            margin-bottom: 20px;
         }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 1200px) {
             .sidebar {
                 transform: translateX(-100%);
+                width: 100%;
             }
 
             .sidebar.active {
@@ -294,196 +276,121 @@
 
             .hero h1 {
                 font-size: 2.5rem;
-                letter-spacing: 5px;
             }
         }
 
-        .hidden {
-            display: none;
+        /* ============================= */
+        /* CONTENEDOR DE TABLA (SCROLL) */
+        /* ============================= */
+
+        .table-scroll {
+            display: block;
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 12px;
         }
 
-        /* ========================= */
-        /* AJUSTES GENERALES MÓVILES */
-        /* ========================= */
+        /* ============================= */
+        /* TABLA BASE */
+        /* ============================= */
+
+        .table-scroll table {
+            width: 100%;
+            min-width: 720px;
+            /* fuerza scroll en móvil */
+            border-collapse: collapse;
+            background-color: #0f172a;
+            color: #e5e7eb;
+            font-size: 0.95rem;
+        }
+
+        /* ============================= */
+        /* CABECERA */
+        /* ============================= */
+
+        .table-scroll thead {
+            background-color: #020617;
+        }
+
+        .table-scroll th {
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 600;
+            white-space: nowrap;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        /* ============================= */
+        /* CUERPO */
+        /* ============================= */
+
+        .table-scroll td {
+            padding: 14px 16px;
+            vertical-align: top;
+            line-height: 1.5;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+            /* clave para textos largos */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
+        /* ============================= */
+        /* FILAS */
+        /* ============================= */
+
+        .table-scroll tbody tr:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        /* ============================= */
+        /* TABLET */
+        /* ============================= */
+
         @media (max-width: 768px) {
-
-
-            /* Sidebar ocupa toda la pantalla */
-            .sidebar {
-                width: 100%;
-                padding: 30px 20px;
+            .table-scroll table {
+                min-width: 620px;
+                font-size: 0.9rem;
             }
 
-            .sidebar-brand h2 {
-                font-size: 1rem;
-                text-align: center;
-            }
-
-            .nav-links a {
-                font-size: 1.1rem;
-                padding: 14px;
-                text-align: center;
-            }
-
-            /* Contenido principal */
-            .main-content {
-                margin-left: 0;
-                width: 100%;
-            }
-
-            /* Hero */
-            .hero {
-                height: 40vh;
-            }
-
-            .hero h1 {
-                font-size: 2.2rem;
-                letter-spacing: 3px;
-                line-height: 1.3;
-            }
-
-            /* Contenedor */
-            .container {
-                padding: 40px 20px;
-            }
-
-            /* Títulos */
-            h2,
-            h3 {
-                font-size: 1.6rem;
-                text-align: center;
-                text-underline-offset: 8px;
-            }
-
-            /* Texto */
-            p,
-            li,
-            th,
-            td {
-                font-size: 1.5rem;
-                line-height: 1.6;
-            }
-
-            /* Cards */
-            .card {
-                padding: 25px;
-            }
-
-            .question-card {
-                padding: 25px;
-            }
-
-            /* Tablas con scroll horizontal */
-            .comparison-table {
-                display: block;
-                overflow-x: auto;
-                white-space: nowrap;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                font-size: 1.4rem;
+            .table-scroll th,
+            .table-scroll td {
                 padding: 12px;
             }
-
-            /* Botón menú */
-            #menu-toggle-btn {
-                padding: 10px 14px;
-                font-size: 1rem;
-            }
-
-            /* Reloj */
-            .floating-clock {
-                font-size: 1.4rem;
-                padding: 10px 16px;
-            }
         }
 
-        /* ============================== */
-        /* CELULARES PEQUEÑOS (≤ 480px) */
-        /* ============================== */
+        /* ============================= */
+        /* CELULAR */
+        /* ============================= */
+
         @media (max-width: 480px) {
-
-            .hero {
-                height: 35vh;
+            .table-scroll table {
+                min-width: 520px;
+                font-size: 0.85rem;
             }
 
-            .hero h1 {
-                font-size: 1.8rem;
-                letter-spacing: 2px;
-            }
-
-            .container {
-                padding: 30px 15px;
-            }
-
-            h2,
-            h3 {
-                font-size: 1.4rem;
-            }
-
-            p,
-            li,
-            th,
-            td {
-                font-size: 1.3rem;
-            }
-
-            .card,
-            .question-card {
-                padding: 20px;
-            }
-
-            .nav-links a {
-                font-size: 1rem;
-            }
-
-            .floating-clock {
-                font-size: 1.2rem;
+            .table-scroll th,
+            .table-scroll td {
+                padding: 10px;
             }
         }
 
-        nav {
-            height: 100vh;
-            /* Nunca más alto que la ventana */
-            overflow-y: auto;
-            /* Scroll vertical automático */
-            overflow-x: hidden;
-            /* Evita scroll horizontal */
+        li {
+            margin-left: 30px;
         }
 
-        .nav-btn {
-            display: block;
-            margin-top: 12px;
-            padding: 12px 16px;
-            background: linear-gradient(135deg, #087ea4, #0ea5e9);
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 600;
-            border-radius: 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.25s ease;
-        }
-
-        .nav-btn:hover {
-            background: linear-gradient(135deg, #0ea5e9, #087ea4);
-            box-shadow: 0 6px 16px rgba(14, 165, 233, 0.35);
-        }
-
-        .nav-btn:active {
-            transform: scale(0.97);
-        }
-
-        .nav-btn:focus {
-            outline: none;
+        .formula {
+            max-width: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
+            font-family: monospace;
         }
     </style>
 </head>
 
 <body>
-
 
 
     <button id="menu-toggle-btn" onclick="toggleSidebar()">☰</button>
@@ -1463,6 +1370,7 @@
                     </p>
                 </div>
             </section>
+
 
             <section class="exercise-card" id="sec-importancia-recoleccion">
                 <div class="section-header">
@@ -3951,6 +3859,7 @@
                         La distribución será la siguiente:
                     </p>
 
+
                     <p>
                         Personas del 1 al 2000 → <strong>Zona Central</strong><br>
                         Personas del 2001 al 3500 → <strong>Zona Norte</strong><br>
@@ -3962,15 +3871,17 @@
                         En la <strong>celda B2</strong> escribe exactamente esta fórmula:
                     </p>
 
-                    <p>
-                        <strong>=SI(A2<=2000,"Zona Central",SI(A2<=3500,"Zona Norte",SI(A2<=4500,"Zona Sur","Zona
-                                Rural")))</strong>
+                    <p class="formula">
+                        <strong>=SI(A2&lt;=2000,"Zona Central",SI(A2&lt;=3500,"Zona Norte",SI(A2&lt;=4500,"Zona
+                            Sur","Zona Rural")))</strong>
                     </p>
 
                     <p>
                         Presiona <strong>Enter</strong> y luego arrastra la fórmula hacia abajo
-                        hasta llegar a la fila <strong>5001</strong>.
+                        hasta llegar a la fila <strong>5001</strong>
                     </p>
+
+
 
                     <p>
                         Excel asignará automáticamente la zona correcta a cada persona.
@@ -4172,7 +4083,7 @@
 
                 </div>
             </section>
-            <section class="exercise-card" id="cantidad-muestreo-no-probabilistico">
+             <section class="exercise-card" id="cantidad-muestreo-no-probabilistico">
                 <div class="section-header">
                     <h2>¿Cómo se determina la cantidad de personas en el muestreo no probabilístico?</h2>
                 </div>
@@ -5035,7 +4946,8 @@
                         entrevistas sobre el <strong>transporte público</strong>.
                     </p>
 
-                    <table border="1" cellspacing="0" cellpadding="8" style="width:100%; border-collapse:collapse;">
+                    <table class="table-scroll" border="1" cellspacing="0" cellpadding="8"
+                        style="width:100%; border-collapse:collapse;">
                         <thead>
                             <tr>
                                 <th>Categoría</th>
@@ -5409,7 +5321,7 @@
                     </p>
 
                     <p>
-                        Razón (favorable : desfavorable): ______________________
+                        Razón (favorable : desfavorable): __________
                     </p>
 
                     <p>
@@ -5428,7 +5340,7 @@
                     </p>
 
                     <p>
-                        Proporción de opinión favorable: ______________________
+                        Proporción de opinión favorable: __________
                     </p>
 
                     <p>
@@ -5446,7 +5358,7 @@
                     </p>
 
                     <p>
-                        Porcentaje de opinión favorable: ______________________ %
+                        Porcentaje de opinión favorable: __________ %
                     </p>
 
                     <p>
@@ -5518,7 +5430,7 @@
                         Mala: 10 veces.
                     </p>
 
-                    <table class="tabla-frecuencias" style="width: 100%;">
+                    <table class="table-scroll" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th>Opinión</th>
@@ -5602,7 +5514,7 @@
                         Mala: 10 ÷ 50 = 0,20.
                     </p>
 
-                    <table class="tabla-frecuencias">
+                    <table class="table-scroll">
                         <thead>
                             <tr>
                                 <th>Opinión</th>
@@ -5684,7 +5596,7 @@
                         Mala: 0,20 × 100 = 20%.
                     </p>
 
-                    <table class="tabla-frecuencias">
+                    <table class="table-scroll">
                         <thead>
                             <tr>
                                 <th>Opinión</th>
@@ -5950,7 +5862,7 @@
                         aparece cada uno.
                     </p>
 
-                    <table class="tabla-frecuencias">
+                    <table class="table-scroll">
                         <thead>
                             <tr>
                                 <th>Horas de estudio</th>
@@ -6057,7 +5969,7 @@
                         2 ÷ 20 = 0,10.
                     </p>
 
-                    <table class="tabla-frecuencias">
+                    <table class="table-scroll">
                         <thead>
                             <tr>
                                 <th>Horas de estudio</th>
@@ -6168,7 +6080,7 @@
                         Anota los valores distintos
                         que aparecen en los datos
                         (horas de estudio):
-                        ______________________________________
+                        ________
                     </p>
 
                     <p>
@@ -6181,7 +6093,7 @@
                         y completa la tabla.
                     </p>
 
-                    <table class="tabla-frecuencias">
+                    <table class="table-scroll">
                         <thead>
                             <tr>
                                 <th>Horas de estudio</th>
@@ -6227,7 +6139,7 @@
                         y completa la columna.
                     </p>
 
-                    <table class="tabla-frecuencias">
+                    <table class="table-scroll">
                         <thead>
                             <tr>
                                 <th>Horas de estudio</th>
@@ -6272,7 +6184,7 @@
                         y escribe el porcentaje correspondiente.
                     </p>
 
-                    <table class="tabla-frecuencias">
+                    <table class="table-scroll">
                         <thead>
                             <tr>
                                 <th>Horas de estudio</th>
@@ -6318,7 +6230,7 @@
                     <p>
                         ¿Qué cantidad de horas
                         es la más frecuente?
-                        ______________________________________
+                        ________
                     </p>
 
                     <p>
@@ -6326,7 +6238,7 @@
                         puedes obtener
                         sobre el tiempo de estudio
                         de los estudiantes?
-                        ______________________________________
+                        ________
                     </p>
                 </div>
             </section>
@@ -6657,7 +6569,7 @@
                         en la siguiente tabla:
                     </p>
 
-                    <table class="tabla-frecuencias">
+                    <table class="table-scroll">
                         <thead>
                             <tr>
                                 <th>Horas de estudio</th>
@@ -6812,19 +6724,19 @@
                     <p>
                         ¿Qué cantidad de horas
                         es la más frecuente?
-                        ____________________________________
+                        _____________
                     </p>
 
                     <p>
                         ¿Qué gráfico te permitió
                         comparar mejor los datos?
-                        ____________________________________
+                        _____________
                     </p>
 
                     <p>
                         ¿Qué gráfico muestra mejor
                         la distribución del total?
-                        ____________________________________
+                        _____________
                     </p>
                 </div>
             </section>
@@ -7181,7 +7093,7 @@
                     </p>
 
                     <p>
-                        ____________________________________________
+                        ______________
                     </p>
                 </div>
             </section>
@@ -7378,7 +7290,7 @@
                     </p>
 
                     <p>
-                        ______________________________________
+                        ________
                     </p>
                 </div>
             </section>
@@ -7639,7 +7551,7 @@
                     </p>
 
                     <p>
-                        ______________________________________
+                        ________
                     </p>
 
                     <p>
@@ -7678,7 +7590,7 @@
                     </p>
 
                     <p>
-                        ______________________________________
+                        ________
                     </p>
 
                     <p>
@@ -7698,7 +7610,7 @@
                     </p>
 
                     <p>
-                        ______________________________________
+                        ________
                     </p>
 
                     <p>
@@ -8209,7 +8121,7 @@
                     </p>
 
                     <p>
-                        ______________________________________
+                        ________
                     </p>
 
                     <p>
@@ -8222,7 +8134,7 @@
                         y completa la siguiente tabla:
                     </p>
 
-                    <table class="tabla-frecuencias">
+                    <table class="table-scroll">
                         <thead>
                             <tr>
                                 <th>Valor</th>
@@ -8834,7 +8746,7 @@
                     </p>
 
                     <p>
-                        ______________________________________
+                        ________
                     </p>
 
                 </div>
@@ -9492,7 +9404,7 @@
                         Completa la siguiente tabla:
                     </p>
 
-                    <table class="tabla-frecuencias">
+                    <table class="table-scroll">
                         <thead>
                             <tr>
                                 <th>Dato</th>
@@ -9531,7 +9443,7 @@
                         Completa la siguiente tabla:
                     </p>
 
-                    <table class="tabla-frecuencias">
+                    <table class="table-scroll">
                         <thead>
                             <tr>
                                 <th>Dato</th>
@@ -9596,7 +9508,7 @@
                     </p>
 
                     <p>
-                        ______________________________________
+                        ________
                     </p>
                 </div>
             </section>
@@ -9912,7 +9824,7 @@
                     </p>
 
                     <p>
-                        ______________________________________
+                        ________
                     </p>
 
                     <p>
@@ -9950,7 +9862,7 @@
                     </p>
 
                     <p>
-                        ______________________________________
+                        ________
                     </p>
                 </div>
             </section>
@@ -10245,7 +10157,7 @@
                     </p>
 
                     <p>
-                        ______________________________________
+                        ________
                     </p>
 
                 </div>
@@ -10573,7 +10485,7 @@
                     </p>
 
                     <p>
-                        ______________________________________
+                        ________
                     </p>
                 </div>
             </section>
@@ -10739,7 +10651,7 @@
                         y nota obtenida (y):
                     </p>
 
-                    <table class="tabla-frecuencias">
+                    <table class="table-scroll">
                         <thead>
                             <tr>
                                 <th>Estudiante</th>
@@ -10890,7 +10802,7 @@
                         Nota obtenida en un examen (y)
                     </p>
 
-                    <table class="tabla-frecuencias">
+                    <table class="table-scroll">
                         <thead>
                             <tr>
                                 <th>Estudiante</th>
@@ -10979,7 +10891,7 @@
                         Nota obtenida en el examen (y)
                     </p>
 
-                    <table class="tabla-frecuencias">
+                    <table class="table-scroll">
                         <thead>
                             <tr>
                                 <th>Estudiante</th>
@@ -11786,8 +11698,8 @@
                     </p>
 
                     <p>
-                        Variable x: _______________________________<br>
-                        Variable y: _______________________________
+                        Variable x: ________<br>
+                        Variable y: ________
                     </p>
 
                     <p>
@@ -11796,12 +11708,12 @@
 
                     <p>
                         Promedio de x:
-                        __________________________________________
+                        ____________
                     </p>
 
                     <p>
                         Promedio de y:
-                        __________________________________________
+                        ____________
                     </p>
 
                     <p>
@@ -11842,14 +11754,14 @@
                     </p>
 
                     <p>
-                        (2 , 60): ____________________<br>
-                        (4 , 70): ____________________<br>
-                        (6 , 80): ____________________
+                        (2 , 60): ________<br>
+                        (4 , 70): ________<br>
+                        (6 , 80): ________
                     </p>
 
                     <p>
                         Suma de los productos:
-                        _____________________________
+                        ________
                     </p>
 
                     <p>
@@ -11863,12 +11775,12 @@
 
                     <p>
                         (x − x̄)² para x:<br>
-                        _____________________________
+                        ________
                     </p>
 
                     <p>
                         Suma de (x − x̄)²:
-                        _____________________________
+                        ________
                     </p>
 
                     <p>
@@ -11878,12 +11790,12 @@
 
                     <p>
                         (y − ȳ)² para y:<br>
-                        _____________________________
+                        ________
                     </p>
 
                     <p>
                         Suma de (y − ȳ)²:
-                        _____________________________
+                        ________
                     </p>
 
                     <p>
@@ -11892,12 +11804,12 @@
 
                     <p>
                         r =
-                        __________________________________________
+                        ____________
                     </p>
 
                     <p>
                         Valor final de r:
-                        _____________________________
+                        ________
                     </p>
 
                     <p>
@@ -11921,7 +11833,7 @@
                     </p>
 
                     <p>
-                        __________________________________________
+                        ____________
                     </p>
 
                 </div>
@@ -11958,123 +11870,123 @@
 
                     <p><strong>Caso 1: Horas de estudio y nota</strong></p>
                     <p>(2, 60) &nbsp; (4, 70) &nbsp; (6, 80)</p>
-                    <p>Valor de r: ______________________</p>
+                    <p>Valor de r: __________</p>
                     <p>r está cerca de: ☐ +1 ☐ −1 ☐ 0</p>
-                    <p>Interpretación: ______________________________________</p>
+                    <p>Interpretación: ________</p>
 
                     <p><strong>Caso 2: Uso del celular y atención</strong></p>
                     <p>(1, 90) &nbsp; (3, 70) &nbsp; (5, 50)</p>
-                    <p>Valor de r: ______________________</p>
+                    <p>Valor de r: __________</p>
                     <p>r está cerca de: ☐ +1 ☐ −1 ☐ 0</p>
-                    <p>Interpretación: ______________________________________</p>
+                    <p>Interpretación: ________</p>
 
                     <p><strong>Caso 3: Días de asistencia y calificación</strong></p>
                     <p>(10, 65) &nbsp; (15, 75) &nbsp; (20, 90)</p>
-                    <p>Valor de r: ______________________</p>
+                    <p>Valor de r: __________</p>
                     <p>r está cerca de: ☐ +1 ☐ −1 ☐ 0</p>
-                    <p>Interpretación: ______________________________________</p>
+                    <p>Interpretación: ________</p>
 
                     <p><strong>Caso 4: Número de lista y nota</strong></p>
                     <p>(1, 80) &nbsp; (2, 60) &nbsp; (3, 90)</p>
-                    <p>Valor de r: ______________________</p>
+                    <p>Valor de r: __________</p>
                     <p>r está cerca de: ☐ +1 ☐ −1 ☐ 0</p>
-                    <p>Interpretación: ______________________________________</p>
+                    <p>Interpretación: ________</p>
 
                     <p><strong>Caso 5: Horas de sueño y rendimiento</strong></p>
                     <p>(4, 60) &nbsp; (6, 75) &nbsp; (8, 85)</p>
-                    <p>Valor de r: ______________________</p>
+                    <p>Valor de r: __________</p>
                     <p>r está cerca de: ☐ +1 ☐ −1 ☐ 0</p>
-                    <p>Interpretación: ______________________________________</p>
+                    <p>Interpretación: ________</p>
 
                     <p><strong>Caso 6: Edad y nota</strong></p>
                     <p>(18, 70) &nbsp; (19, 71) &nbsp; (20, 70)</p>
-                    <p>Valor de r: ______________________</p>
+                    <p>Valor de r: __________</p>
                     <p>r está cerca de: ☐ +1 ☐ −1 ☐ 0</p>
-                    <p>Interpretación: ______________________________________</p>
+                    <p>Interpretación: ________</p>
 
                     <p><strong>Caso 7: Tiempo de lectura y comprensión</strong></p>
                     <p>(10, 60) &nbsp; (20, 75) &nbsp; (30, 90)</p>
-                    <p>Valor de r: ______________________</p>
+                    <p>Valor de r: __________</p>
                     <p>r está cerca de: ☐ +1 ☐ −1 ☐ 0</p>
-                    <p>Interpretación: ______________________________________</p>
+                    <p>Interpretación: ________</p>
 
                     <p><strong>Caso 8: Número de asiento y nota</strong></p>
                     <p>(5, 85) &nbsp; (10, 70) &nbsp; (15, 90)</p>
-                    <p>Valor de r: ______________________</p>
+                    <p>Valor de r: __________</p>
                     <p>r está cerca de: ☐ +1 ☐ −1 ☐ 0</p>
-                    <p>Interpretación: ______________________________________</p>
+                    <p>Interpretación: ________</p>
 
                     <p><strong>Caso 9: Participación y evaluación</strong></p>
                     <p>(1, 60) &nbsp; (3, 75) &nbsp; (5, 90)</p>
-                    <p>Valor de r: ______________________</p>
+                    <p>Valor de r: __________</p>
                     <p>r está cerca de: ☐ +1 ☐ −1 ☐ 0</p>
-                    <p>Interpretación: ______________________________________</p>
+                    <p>Interpretación: ________</p>
 
                     <p><strong>Caso 10: Uso del celular y concentración</strong></p>
                     <p>(10, 85) &nbsp; (20, 70) &nbsp; (30, 55)</p>
-                    <p>Valor de r: ______________________</p>
+                    <p>Valor de r: __________</p>
                     <p>r está cerca de: ☐ +1 ☐ −1 ☐ 0</p>
-                    <p>Interpretación: ______________________________________</p>
+                    <p>Interpretación: ________</p>
 
                     <p><strong>Caso 11: Libros leídos y vocabulario</strong></p>
                     <p>(1, 60) &nbsp; (3, 75) &nbsp; (5, 90)</p>
-                    <p>Valor de r: ______________________</p>
+                    <p>Valor de r: __________</p>
                     <p>r está cerca de: ☐ +1 ☐ −1 ☐ 0</p>
-                    <p>Interpretación: ______________________________________</p>
+                    <p>Interpretación: ________</p>
 
                     <p><strong>Caso 12: Número de cuaderno y nota</strong></p>
                     <p>(2, 70) &nbsp; (4, 85) &nbsp; (6, 65)</p>
-                    <p>Valor de r: ______________________</p>
+                    <p>Valor de r: __________</p>
                     <p>r está cerca de: ☐ +1 ☐ −1 ☐ 0</p>
-                    <p>Interpretación: ______________________________________</p>
+                    <p>Interpretación: ________</p>
 
                     <p><strong>Caso 13: Horas de práctica y desempeño</strong></p>
                     <p>(2, 65) &nbsp; (5, 80) &nbsp; (8, 92)</p>
-                    <p>Valor de r: ______________________</p>
+                    <p>Valor de r: __________</p>
                     <p>r está cerca de: ☐ +1 ☐ −1 ☐ 0</p>
-                    <p>Interpretación: ______________________________________</p>
+                    <p>Interpretación: ________</p>
 
                     <p><strong>Caso 14: Tiempo de estudio y resultado</strong></p>
                     <p>(1, 55) &nbsp; (4, 75) &nbsp; (7, 88)</p>
-                    <p>Valor de r: ______________________</p>
+                    <p>Valor de r: __________</p>
                     <p>r está cerca de: ☐ +1 ☐ −1 ☐ 0</p>
-                    <p>Interpretación: ______________________________________</p>
+                    <p>Interpretación: ________</p>
 
                     <p><strong>Caso 15: Color del cuaderno y nota</strong></p>
                     <p>(1, 80) &nbsp; (2, 70) &nbsp; (3, 90)</p>
-                    <p>Valor de r: ______________________</p>
+                    <p>Valor de r: __________</p>
                     <p>r está cerca de: ☐ +1 ☐ −1 ☐ 0</p>
-                    <p>Interpretación: ______________________________________</p>
+                    <p>Interpretación: ________</p>
 
                     <p><strong>Caso 16: Número de hermanos y nota</strong></p>
                     <p>(1, 75) &nbsp; (2, 70) &nbsp; (3, 78)</p>
-                    <p>Valor de r: ______________________</p>
+                    <p>Valor de r: __________</p>
                     <p>r está cerca de: ☐ +1 ☐ −1 ☐ 0</p>
-                    <p>Interpretación: ______________________________________</p>
+                    <p>Interpretación: ________</p>
 
                     <p><strong>Caso 17: Simulacro y examen real</strong></p>
                     <p>(60, 65) &nbsp; (70, 75) &nbsp; (80, 85)</p>
-                    <p>Valor de r: ______________________</p>
+                    <p>Valor de r: __________</p>
                     <p>r está cerca de: ☐ +1 ☐ −1 ☐ 0</p>
-                    <p>Interpretación: ______________________________________</p>
+                    <p>Interpretación: ________</p>
 
                     <p><strong>Caso 18: Práctica en laboratorio y desempeño</strong></p>
                     <p>(2, 68) &nbsp; (4, 80) &nbsp; (6, 90)</p>
-                    <p>Valor de r: ______________________</p>
+                    <p>Valor de r: __________</p>
                     <p>r está cerca de: ☐ +1 ☐ −1 ☐ 0</p>
-                    <p>Interpretación: ______________________________________</p>
+                    <p>Interpretación: ________</p>
 
                     <p><strong>Caso 19: Número de computadora y nota</strong></p>
                     <p>(1, 85) &nbsp; (2, 60) &nbsp; (3, 90)</p>
-                    <p>Valor de r: ______________________</p>
+                    <p>Valor de r: __________</p>
                     <p>r está cerca de: ☐ +1 ☐ −1 ☐ 0</p>
-                    <p>Interpretación: ______________________________________</p>
+                    <p>Interpretación: ________</p>
 
                     <p><strong>Caso 20: Preparación previa y seguridad</strong></p>
                     <p>(1, 60) &nbsp; (3, 75) &nbsp; (5, 90)</p>
-                    <p>Valor de r: ______________________</p>
+                    <p>Valor de r: __________</p>
                     <p>r está cerca de: ☐ +1 ☐ −1 ☐ 0</p>
-                    <p>Interpretación: ______________________________________</p>
+                    <p>Interpretación: ________</p>
                 </div>
             </section>
             <section class="exercise-card" id="regresion-lineal-ingresos">
@@ -12355,7 +12267,7 @@
                     </p>
 
                     <p>
-                        x̄ = ______________________
+                        x̄ = __________
                     </p>
 
                     <p>
@@ -12363,7 +12275,7 @@
                     </p>
 
                     <p>
-                        ȳ = ______________________
+                        ȳ = __________
                     </p>
 
                     <p>
@@ -12383,7 +12295,7 @@
                     </p>
 
                     <p>
-                        b = ______________________
+                        b = __________
                     </p>
 
                     <p>
@@ -12399,7 +12311,7 @@
                     </p>
 
                     <p>
-                        a = ______________________
+                        a = __________
                     </p>
 
                     <p>
@@ -12411,7 +12323,7 @@
                     </p>
 
                     <p>
-                        y = ______________________
+                        y = __________
                     </p>
 
                     <p>
@@ -12428,7 +12340,7 @@
                     </p>
 
                     <p>
-                        ______________________
+                        __________
                     </p>
 
                     <p>
@@ -12442,7 +12354,7 @@
                     </p>
 
                     <p>
-                        ______________________
+                        __________
                     </p>
 
                 </div>
@@ -12459,86 +12371,87 @@
 
                     <p><strong>Caso 1</strong></p>
                     <p>Año 1: 40.000 &nbsp; Año 2: 50.000 &nbsp; Año 3: 60.000</p>
-                    <p>Ingreso estimado Año 4: ______________________</p>
+                    <p>Ingreso estimado Año 4: __________</p>
 
                     <p><strong>Caso 2</strong></p>
                     <p>Año 1: 30.000 &nbsp; Año 2: 45.000 &nbsp; Año 3: 55.000</p>
-                    <p>Ingreso estimado Año 4: ______________________</p>
+                    <p>Ingreso estimado Año 4: __________</p>
 
                     <p><strong>Caso 3</strong></p>
                     <p>Año 1: 70.000 &nbsp; Año 2: 75.000 &nbsp; Año 3: 80.000</p>
-                    <p>Ingreso estimado Año 4: ______________________</p>
+                    <p>Ingreso estimado Año 4: __________</p>
 
                     <p><strong>Caso 4</strong></p>
                     <p>Año 1: 50.000 &nbsp; Año 2: 48.000 &nbsp; Año 3: 46.000</p>
-                    <p>Ingreso estimado Año 4: ______________________</p>
+                    <p>Ingreso estimado Año 4: __________</p>
 
                     <p><strong>Caso 5</strong></p>
                     <p>Año 1: 20.000 &nbsp; Año 2: 30.000 &nbsp; Año 3: 40.000</p>
-                    <p>Ingreso estimado Año 4: ______________________</p>
+                    <p>Ingreso estimado Año 4: __________</p>
 
                     <p><strong>Caso 6</strong></p>
                     <p>Año 1: 90.000 &nbsp; Año 2: 85.000 &nbsp; Año 3: 80.000</p>
-                    <p>Ingreso estimado Año 4: ______________________</p>
+                    <p>Ingreso estimado Año 4: __________</p>
 
                     <p><strong>Caso 7</strong></p>
                     <p>Año 1: 60.000 &nbsp; Año 2: 62.000 &nbsp; Año 3: 64.000</p>
-                    <p>Ingreso estimado Año 4: ______________________</p>
+                    <p>Ingreso estimado Año 4: __________</p>
 
                     <p><strong>Caso 8</strong></p>
                     <p>Año 1: 35.000 &nbsp; Año 2: 45.000 &nbsp; Año 3: 65.000</p>
-                    <p>Ingreso estimado Año 4: ______________________</p>
+                    <p>Ingreso estimado Año 4: __________</p>
 
                     <p><strong>Caso 9</strong></p>
                     <p>Año 1: 55.000 &nbsp; Año 2: 55.000 &nbsp; Año 3: 55.000</p>
-                    <p>Ingreso estimado Año 4: ______________________</p>
+                    <p>Ingreso estimado Año 4: __________</p>
 
                     <p><strong>Caso 10</strong></p>
                     <p>Año 1: 25.000 &nbsp; Año 2: 35.000 &nbsp; Año 3: 45.000</p>
-                    <p>Ingreso estimado Año 4: ______________________</p>
+                    <p>Ingreso estimado Año 4: __________</p>
 
                     <p><strong>Caso 11</strong></p>
                     <p>Año 1: 80.000 &nbsp; Año 2: 90.000 &nbsp; Año 3: 100.000</p>
-                    <p>Ingreso estimado Año 4: ______________________</p>
+                    <p>Ingreso estimado Año 4: __________</p>
 
                     <p><strong>Caso 12</strong></p>
                     <p>Año 1: 60.000 &nbsp; Año 2: 58.000 &nbsp; Año 3: 56.000</p>
-                    <p>Ingreso estimado Año 4: ______________________</p>
+                    <p>Ingreso estimado Año 4: __________</p>
 
                     <p><strong>Caso 13</strong></p>
                     <p>Año 1: 45.000 &nbsp; Año 2: 50.000 &nbsp; Año 3: 55.000</p>
-                    <p>Ingreso estimado Año 4: ______________________</p>
+                    <p>Ingreso estimado Año 4: __________</p>
 
                     <p><strong>Caso 14</strong></p>
                     <p>Año 1: 100.000 &nbsp; Año 2: 95.000 &nbsp; Año 3: 90.000</p>
-                    <p>Ingreso estimado Año 4: ______________________</p>
+                    <p>Ingreso estimado Año 4: __________</p>
 
                     <p><strong>Caso 15</strong></p>
                     <p>Año 1: 10.000 &nbsp; Año 2: 20.000 &nbsp; Año 3: 30.000</p>
-                    <p>Ingreso estimado Año 4: ______________________</p>
+                    <p>Ingreso estimado Año 4: __________</p>
 
                     <p><strong>Caso 16</strong></p>
                     <p>Año 1: 70.000 &nbsp; Año 2: 72.000 &nbsp; Año 3: 74.000</p>
-                    <p>Ingreso estimado Año 4: ______________________</p>
+                    <p>Ingreso estimado Año 4: __________</p>
 
                     <p><strong>Caso 17</strong></p>
                     <p>Año 1: 65.000 &nbsp; Año 2: 60.000 &nbsp; Año 3: 55.000</p>
-                    <p>Ingreso estimado Año 4: ______________________</p>
+                    <p>Ingreso estimado Año 4: __________</p>
 
                     <p><strong>Caso 18</strong></p>
                     <p>Año 1: 30.000 &nbsp; Año 2: 40.000 &nbsp; Año 3: 50.000</p>
-                    <p>Ingreso estimado Año 4: ______________________</p>
+                    <p>Ingreso estimado Año 4: __________</p>
 
                     <p><strong>Caso 19</strong></p>
                     <p>Año 1: 85.000 &nbsp; Año 2: 85.000 &nbsp; Año 3: 85.000</p>
-                    <p>Ingreso estimado Año 4: ______________________</p>
+                    <p>Ingreso estimado Año 4: __________</p>
 
                     <p><strong>Caso 20</strong></p>
                     <p>Año 1: 55.000 &nbsp; Año 2: 65.000 &nbsp; Año 3: 75.000</p>
-                    <p>Ingreso estimado Año 4: ______________________</p>
+                    <p>Ingreso estimado Año 4: __________</p>
 
                 </div>
             </section>
+
 
 
 
