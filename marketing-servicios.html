@@ -215,16 +215,21 @@
             margin-top: 4px;
         }
 
-        /* --- BÚSQUEDA --- */
+        /* --- BÚSQUEDA / MENÚ --- */
         dialog#search {
             position: fixed;
             top: auto;
             bottom: 0;
             left: 0;
-            right: 0;
-            margin: 0;
-            width: 100%;
+            /* Usamos vw para asegurar el ancho total de la ventana */
+            width: 100vw;
+            max-width: 100vw;
             height: 70vh;
+            margin: 0;
+
+            /* Importante para que el padding no "empuje" el ancho hacia afuera */
+            box-sizing: border-box;
+
             border: none;
             background: var(--surface);
             border-radius: 28px 28px 0 0;
@@ -232,10 +237,16 @@
             display: none;
             flex-direction: column;
             padding: 20px;
+
+            /* Asegura que si hay mucho contenido, se pueda deslizar */
+            overflow-y: auto;
+            overflow-x: hidden;
+
             transform: translateY(100%);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* El resto se mantiene igual */
         dialog#search[open] {
             display: flex;
         }
@@ -315,6 +326,62 @@
             td,
             th {
                 font-size: 2.1rem;
+            }
+        }
+
+        /* --- ADAPTACIÓN PARA MÓVILES PEQUEÑOS --- */
+        @media screen and (max-width: 480px) {
+
+            /* Ocultamos el encabezado original */
+            thead {
+                display: none;
+            }
+
+            /* Cada fila se convierte en una tarjeta independiente */
+            tr {
+                display: block;
+                margin-bottom: 20px;
+                border: 1px solid #444;
+                border-radius: 8px;
+                background-color: #25252d;
+            }
+
+            /* Formateamos cada celda */
+            td {
+                display: block;
+                text-align: left;
+                /* Espacio para el label */
+                position: relative;
+                font-size: 0.9rem;
+            }
+
+            /* Estilo para los títulos de la izquierda (Labels) */
+            td::before {
+                content: attr(data-label);
+                /* Toma el nombre de la columna del HTML */
+                position: absolute;
+                left: 15px;
+                width: 35%;
+                font-weight: bold;
+                color: #888;
+                /* Color gris para diferenciar del contenido */
+                text-transform: uppercase;
+                font-size: 0.75rem;
+            }
+
+            /* Estilo especial para la primera celda (Título de la ventaja) */
+            td:first-child {
+                background-color: #2d2d3a;
+                color: #00d1ff;
+                /* Un azul resaltado para el nombre de la ventaja */
+                font-weight: bold;
+                text-align: center;
+                padding-left: 15px;
+            }
+
+            td:first-child::before {
+                display: none;
+                /* No mostrar etiqueta en el título principal */
             }
         }
     </style>
@@ -3207,378 +3274,378 @@
         </section>
         <section id="Unidad6">
             <h2>Unidad 6: ANÁLISIS APLICADO DEL SERVICIO EN EMPRESAS LOCALES </h2>
-                <p>
-                    El diagnóstico estratégico de servicios es un proceso de análisis que permite evaluar cómo está
-                    funcionando un servicio en relación con el cliente, los procesos internos y el entorno competitivo.
-                </p>
-                <p>
-                    Su objetivo principal es identificar fortalezas, debilidades, oportunidades de mejora y riesgos,
-                    para tomar decisiones estratégicas orientadas a mejorar la calidad del servicio y la experiencia del
-                    cliente.
-                </p>
-                <h3>¿Qué es un diagnóstico estratégico?</h3>
-                <p>
-                    Un diagnóstico estratégico es una evaluación integral de la situación actual del servicio.
-                </p>
-                <p>
-                    No se limita a detectar problemas visibles, sino que analiza las causas internas y externas que
-                    influyen en el desempeño del servicio.
-                </p>
-                <p>
-                    En los servicios, este diagnóstico se centra especialmente en la percepción del cliente, la
-                    coherencia entre promesa y realidad y la eficiencia de los procesos.
-                </p>
-                <h3>Importancia del diagnóstico</h3>
-                <p>
-                    El diagnóstico permite conocer si el servicio realmente está cumpliendo con las expectativas del
-                    cliente y si la organización está preparada para sostener esa promesa en el tiempo.
-                </p>
-                <p>
-                    Sin un diagnóstico, las decisiones se basan en suposiciones y no en información real.
-                </p>
-                <h3>Elementos que se analizan en el diagnóstico</h3>
-                <p>
-                    En el diagnóstico de servicios se analizan, entre otros aspectos, la experiencia del cliente, la
-                    calidad percibida, los procesos internos, el desempeño del personal y la evidencia física del
-                    servicio.
-                </p>
-                <p>
-                    También se considera el entorno competitivo y la coherencia entre lo que se promete y lo que
-                    realmente se entrega.
-                </p>
-                <h3>Enfoque interno y enfoque externo</h3>
-                <p>
-                    El enfoque interno analiza los recursos, procesos, personas y cultura de servicio de la
-                    organización.
-                </p>
-                <p>
-                    El enfoque externo se centra en el cliente, el mercado, la competencia y las tendencias del entorno.
-                </p>
-                <p>
-                    Ambos enfoques son complementarios y necesarios para un diagnóstico estratégico completo.
-                </p>
-                <h3>CASO:</h3>
-                <p>
-                    En un servicio educativo, el diagnóstico estratégico puede incluir la evaluación de la satisfacción
-                    de los estudiantes, el funcionamiento de la plataforma, la calidad de la enseñanza y la coherencia
-                    entre lo prometido en la publicidad y la experiencia real.
-                </p>
-                <p>
-                    Este análisis permite identificar qué aspectos fortalecen el servicio y cuáles requieren mejoras
-                    urgentes.
-                </p>
-                <h3>Beneficios del diagnóstico</h3>
-                <p>
-                    Un buen diagnóstico permite tomar decisiones informadas, mejorar la calidad del servicio, reducir
-                    reclamos y fortalecer la competitividad.
-                </p>
-                <p>
-                    Además, facilita la planificación de acciones de mejora y la alineación de toda la organización
-                    hacia el cliente.
-                </p>
-                <h3>Responde las siguientes preguntas:</h3>
-                <p>
-                    1. ¿Por qué es necesario realizar un diagnóstico?
-                </p>
-                <p>
-                    2. ¿Qué riesgos existen cuando una empresa no analiza su servicio?
-                </p>
-                <p>
-                    3. En un servicio educativo, ¿qué aspectos considerarías prioritarios en un diagnóstico?
-                </p>
-                <p>
-                    4. ¿Cómo puede el diagnóstico estratégico ayudar a mejorar la competitividad?
-                </p>
-                <p>
-                    5. ¿Cómo realizarias un diagnóstico?
-                </p>
-                <h3>Propuesta de Mejora Operativa</h3>
-                <p>
-                    La propuesta de mejora operativa consiste en convertir los hallazgos del diagnóstico estratégico en
-                    acciones concretas que permitan mejorar el funcionamiento del servicio y la experiencia del cliente.
-                </p>
-                <p>
-                    No se trata solo de identificar problemas, sino de actuar de manera planificada para generar valor
-                    real y sostenible.
-                </p>
-                <h3>¿Qué es una propuesta de mejora operativa?</h3>
-                <p>
-                    Es un conjunto de acciones específicas orientadas a corregir fallas, optimizar procesos y fortalecer
-                    los puntos críticos del servicio.
-                </p>
-                <p>
-                    Estas acciones se enfocan en el cómo se presta el servicio y en cómo mejorar su ejecución diaria.
-                </p>
-                <h3>Buenas Prácticas de Servicio</h3>
-                <p>
-                    Las buenas prácticas de servicio son acciones, comportamientos y formas de trabajo que han
-                    demostrado generar experiencias positivas para el cliente y resultados sostenibles para la
-                    organización.
-                </p>
-                <p>
-                    No son acciones improvisadas, sino prácticas que se aplican de manera constante y coherente en todos
-                    los puntos de contacto con el cliente.
-                </p>
-                <h3>¿Qué son las buenas prácticas de servicio?</h3>
-                <p>
-                    Son formas correctas y efectivas de atender, comunicar y resolver las necesidades del cliente,
-                    alineadas con la cultura de servicio y los objetivos de la organización.
-                </p>
-                <p>
-                    Se basan en la experiencia, la observación del cliente y la mejora continua de los procesos.
-                </p>
-                <h3>Enfoque en el cliente</h3>
-                <p>
-                    Una buena práctica fundamental es poner al cliente en el centro de las decisiones. Esto implica
-                    comprender sus necesidades, expectativas y emociones.
-                </p>
-                <p>
-                    Escuchar activamente y responder con empatía mejora la relación y fortalece la confianza.
-                </p>
-                <h3>Comunicación clara y honesta</h3>
-                <p>
-                    Informar con claridad qué se ofrece, cómo funciona el servicio y qué puede esperar el cliente evita
-                    malentendidos y reclamos.
-                </p>
-                <p>
-                    La honestidad en la comunicación refuerza la coherencia entre promesa y realidad.
-                </p>
+            <p>
+                El diagnóstico estratégico de servicios es un proceso de análisis que permite evaluar cómo está
+                funcionando un servicio en relación con el cliente, los procesos internos y el entorno competitivo.
+            </p>
+            <p>
+                Su objetivo principal es identificar fortalezas, debilidades, oportunidades de mejora y riesgos,
+                para tomar decisiones estratégicas orientadas a mejorar la calidad del servicio y la experiencia del
+                cliente.
+            </p>
+            <h3>¿Qué es un diagnóstico estratégico?</h3>
+            <p>
+                Un diagnóstico estratégico es una evaluación integral de la situación actual del servicio.
+            </p>
+            <p>
+                No se limita a detectar problemas visibles, sino que analiza las causas internas y externas que
+                influyen en el desempeño del servicio.
+            </p>
+            <p>
+                En los servicios, este diagnóstico se centra especialmente en la percepción del cliente, la
+                coherencia entre promesa y realidad y la eficiencia de los procesos.
+            </p>
+            <h3>Importancia del diagnóstico</h3>
+            <p>
+                El diagnóstico permite conocer si el servicio realmente está cumpliendo con las expectativas del
+                cliente y si la organización está preparada para sostener esa promesa en el tiempo.
+            </p>
+            <p>
+                Sin un diagnóstico, las decisiones se basan en suposiciones y no en información real.
+            </p>
+            <h3>Elementos que se analizan en el diagnóstico</h3>
+            <p>
+                En el diagnóstico de servicios se analizan, entre otros aspectos, la experiencia del cliente, la
+                calidad percibida, los procesos internos, el desempeño del personal y la evidencia física del
+                servicio.
+            </p>
+            <p>
+                También se considera el entorno competitivo y la coherencia entre lo que se promete y lo que
+                realmente se entrega.
+            </p>
+            <h3>Enfoque interno y enfoque externo</h3>
+            <p>
+                El enfoque interno analiza los recursos, procesos, personas y cultura de servicio de la
+                organización.
+            </p>
+            <p>
+                El enfoque externo se centra en el cliente, el mercado, la competencia y las tendencias del entorno.
+            </p>
+            <p>
+                Ambos enfoques son complementarios y necesarios para un diagnóstico estratégico completo.
+            </p>
+            <h3>CASO:</h3>
+            <p>
+                En un servicio educativo, el diagnóstico estratégico puede incluir la evaluación de la satisfacción
+                de los estudiantes, el funcionamiento de la plataforma, la calidad de la enseñanza y la coherencia
+                entre lo prometido en la publicidad y la experiencia real.
+            </p>
+            <p>
+                Este análisis permite identificar qué aspectos fortalecen el servicio y cuáles requieren mejoras
+                urgentes.
+            </p>
+            <h3>Beneficios del diagnóstico</h3>
+            <p>
+                Un buen diagnóstico permite tomar decisiones informadas, mejorar la calidad del servicio, reducir
+                reclamos y fortalecer la competitividad.
+            </p>
+            <p>
+                Además, facilita la planificación de acciones de mejora y la alineación de toda la organización
+                hacia el cliente.
+            </p>
+            <h3>Responde las siguientes preguntas:</h3>
+            <p>
+                1. ¿Por qué es necesario realizar un diagnóstico?
+            </p>
+            <p>
+                2. ¿Qué riesgos existen cuando una empresa no analiza su servicio?
+            </p>
+            <p>
+                3. En un servicio educativo, ¿qué aspectos considerarías prioritarios en un diagnóstico?
+            </p>
+            <p>
+                4. ¿Cómo puede el diagnóstico estratégico ayudar a mejorar la competitividad?
+            </p>
+            <p>
+                5. ¿Cómo realizarias un diagnóstico?
+            </p>
+            <h3>Propuesta de Mejora Operativa</h3>
+            <p>
+                La propuesta de mejora operativa consiste en convertir los hallazgos del diagnóstico estratégico en
+                acciones concretas que permitan mejorar el funcionamiento del servicio y la experiencia del cliente.
+            </p>
+            <p>
+                No se trata solo de identificar problemas, sino de actuar de manera planificada para generar valor
+                real y sostenible.
+            </p>
+            <h3>¿Qué es una propuesta de mejora operativa?</h3>
+            <p>
+                Es un conjunto de acciones específicas orientadas a corregir fallas, optimizar procesos y fortalecer
+                los puntos críticos del servicio.
+            </p>
+            <p>
+                Estas acciones se enfocan en el cómo se presta el servicio y en cómo mejorar su ejecución diaria.
+            </p>
+            <h3>Buenas Prácticas de Servicio</h3>
+            <p>
+                Las buenas prácticas de servicio son acciones, comportamientos y formas de trabajo que han
+                demostrado generar experiencias positivas para el cliente y resultados sostenibles para la
+                organización.
+            </p>
+            <p>
+                No son acciones improvisadas, sino prácticas que se aplican de manera constante y coherente en todos
+                los puntos de contacto con el cliente.
+            </p>
+            <h3>¿Qué son las buenas prácticas de servicio?</h3>
+            <p>
+                Son formas correctas y efectivas de atender, comunicar y resolver las necesidades del cliente,
+                alineadas con la cultura de servicio y los objetivos de la organización.
+            </p>
+            <p>
+                Se basan en la experiencia, la observación del cliente y la mejora continua de los procesos.
+            </p>
+            <h3>Enfoque en el cliente</h3>
+            <p>
+                Una buena práctica fundamental es poner al cliente en el centro de las decisiones. Esto implica
+                comprender sus necesidades, expectativas y emociones.
+            </p>
+            <p>
+                Escuchar activamente y responder con empatía mejora la relación y fortalece la confianza.
+            </p>
+            <h3>Comunicación clara y honesta</h3>
+            <p>
+                Informar con claridad qué se ofrece, cómo funciona el servicio y qué puede esperar el cliente evita
+                malentendidos y reclamos.
+            </p>
+            <p>
+                La honestidad en la comunicación refuerza la coherencia entre promesa y realidad.
+            </p>
 
-                <h3>Consistencia en el servicio</h3>
+            <h3>Consistencia en el servicio</h3>
 
-                <p>
-                    Brindar el mismo nivel de atención y calidad en cada interacción es una buena práctica clave.
-                </p>
-                <p>
-                    La consistencia genera confianza y seguridad en el cliente.
-                </p>
-                <h3>Capacitación del personal</h3>
-                <p>
-                    Invertir en capacitación permite que el personal actúe con seguridad, criterio y orientación al
-                    cliente.
-                </p>
-                <p>
-                    Un personal capacitado responde mejor ante problemas y fallas del servicio.
-                </p>
-                <h3>Gestión adecuada de reclamos</h3>
-                <p>
-                    Tratar los reclamos como oportunidades de mejora es una buena práctica esencial en los servicios.
-                </p>
-                <p>
-                    Responder con rapidez, respeto y soluciones claras mejora la percepción del servicio.
-                </p>
-                <h3>CASO:</h3>
-                <p>
-                    En un servicio educativo, buenas prácticas incluyen informar claramente el contenido del curso,
-                    responder dudas a tiempo, acompañar al estudiante y mantener procesos organizados.
-                </p>
-                <p>
-                    Estas prácticas generan satisfacción, confianza y recomendación del servicio.
-                </p>
-                <h3>Importancia de las buenas prácticas</h3>
-                <p>
-                    Aplicar buenas prácticas permite mejorar la experiencia del cliente, reducir errores y fortalecer la
-                    imagen de la organización.
-                </p>
-                <p>
-                    Además, facilitan la mejora continua y la sostenibilidad del servicio en el tiempo.
-                </p>
-                <h3>Responde las siguientes preguntas</h3>
-                <p>
-                    1. ¿Por qué las buenas prácticas de servicio deben aplicarse de forma constante?
-                </p>
-                <p>
-                    2. ¿Cómo influye la comunicación clara en la satisfacción del cliente?
-                </p>
-                <p>
-                    3. ¿Por qué los reclamos pueden verse como oportunidades de mejora?
-                </p>
-                <p>
-                    4. ¿Cómo ayudan las buenas prácticas a diferenciar un servicio de otro?
-                </p>
-                <p>
-                    5. En un servicio educativo, ¿qué buena práctica consideras más importante?
-                </p>
-                <h3>Ética y Responsabilidad</h3>
-                <p>
-                    La ética y la responsabilidad en los servicios representan el compromiso moral que asume una
-                    organización frente a sus clientes cada vez que realiza una promesa de servicio.
-                </p>
-                <p>
-                    No se trata solo de cumplir normas, sino de actuar correctamente, con honestidad y respeto, incluso
-                    cuando el cliente no puede verificar todo lo que ocurre detrás del servicio.
-                </p>
-                <h3>¿Qué es la ética en los servicios?</h3>
-                <p>
-                    La ética en los servicios se refiere a actuar de manera justa, transparente y honesta en cada
-                    interacción con el cliente.
-                </p>
-                <p>
-                    Implica no engañar, no exagerar promesas y no aprovecharse de la confianza del cliente.
-                </p>
-                <h3>¿Qué es la responsabilidad en los servicios?</h3>
-                <p>
-                    La responsabilidad implica asumir las consecuencias de las acciones de la empresa, especialmente
-                    cuando se comete un error en la prestación del servicio.
-                </p>
-                <p>
-                    Una empresa responsable reconoce fallas, corrige errores y busca soluciones sin evadir su compromiso
-                    con el cliente.
-                </p>
-                <h3>Ética y promesa de servicio</h3>
-                <p>
-                    Cada mensaje publicitario, oferta o explicación al cliente constituye una promesa de servicio.
-                </p>
-                <p>
-                    La ética exige que estas promesas sean realistas y coherentes con la capacidad real de la
-                    organización.
-                </p>
-                <h3>Responsabilidad y confianza del cliente</h3>
-                <p>
-                    La confianza del cliente se construye cuando la empresa actúa con responsabilidad, incluso en
-                    situaciones difíciles.
-                </p>
-                <p>
-                    Cumplir compromisos y responder ante errores fortalece la relación y la lealtad del cliente.
-                </p>
-                <h3>Consecuencias de la falta de ética</h3>
-                <p>
-                    La falta de ética genera desconfianza, reclamos, mala reputación y pérdida de clientes.
-                </p>
-                <p>
-                    A largo plazo, afecta la imagen de la marca y la sostenibilidad del servicio.
-                </p>
-                <h3>CASO:</h3>
-                <p>
-                    Un curso promete acompañamiento permanente y contenidos actualizados.
-                </p>
-                <p>
-                    Actuar éticamente implica cumplir con ese acompañamiento y no abandonar al estudiante una vez
-                    realizada la inscripción.
-                </p>
-                <p>
-                    La responsabilidad se refleja al responder dudas, corregir errores y mejorar el servicio cuando algo
-                    no funciona como se esperaba.
-                </p>
-                <h3>La ética como base de la calidad del servicio</h3>
-                <p>
-                    Un servicio puede ser técnicamente correcto, pero sin ética pierde valor y credibilidad.
-                </p>
-                <p>
-                    La ética sostiene la coherencia entre promesa, acción y resultado.
-                </p>
-                <h3>Resonde las siguientes preguntas:</h3>
-                <p>
-                    1. ¿Por qué la ética es fundamental en la prestación de servicios?
-                </p>
-                <p>
-                    2. ¿Cómo se relaciona la ética con la promesa de servicio?
-                </p>
-                <p>
-                    3. ¿Qué significa actuar con responsabilidad ante una falla del servicio?
-                </p>
-                <p>
-                    4. ¿Cómo influyen la ética y la responsabilidad en la lealtad del cliente?
-                </p>
-                <p>
-                    5. ¿Por qué la ética no debe depender de la supervisión?
-                </p>}
-                <h3>Proyecto Final: Marketing de Servicios</h3>
-                <p>
-                    El presente proyecto tiene como objetivo demostrar de forma práctica que el estudiante comprende y
-                    sabe aplicar los conceptos del marketing de servicios en una empresa real o en una marca personal.
-                </p>
-                <p>
-                    El trabajo debe basarse en un servicio existente o en uno que el estudiante conozca bien, analizando
-                    su funcionamiento actual y proponiendo mejoras concretas.
-                </p>
-                <h3>1. Elección de la empresa o marca personal</h3>
-                <p>
-                    Selecciona una empresa de servicios o una marca personal real. Puede ser un negocio local, un
-                    emprendimiento digital, un profesional independiente o un proyecto propio.
-                </p>
-                <p>
-                    Describe brevemente:
-                </p>
-                <ul>
-                    <li>Nombre del servicio o marca.</li>
-                    <li>Tipo de servicio que ofrece.</li>
-                    <li>Público objetivo.</li>
-                </ul>
-                <h3>2. Descripción del servicio</h3>
-                <p>
-                    Explica claramente en qué consiste el servicio, cómo se presta y cuál es su propuesta de valor.
-                </p>
-                <p>
-                    Incluye:
-                </p>
-                <ul>
-                    <li>Qué problema resuelve el servicio.</li>
-                    <li>Cómo se entrega al cliente.</li>
-                    <li>Qué lo diferencia de otros servicios similares.</li>
-                </ul>
-                <h3>3. Análisis del servicio</h3>
-                <p>
-                    Analiza el servicio elegido considerando:
-                </p>
-                <ul>
-                    <li>Intangibilidad.</li>
-                    <li>Inseparabilidad.</li>
-                    <li>Variabilidad.</li>
-                    <li>Perecibilidad.</li>
-                </ul>
-                <p>
-                    Explica cómo se manifiesta cada característica en el servicio seleccionado.
-                </p>
-                <h3>4. Personas, procesos y evidencia física</h3>
-                <p>
-                    Describe:
-                </p>
-                <p>
-                    <b>Personas:</b> <br>
-                    quiénes prestan el servicio y cómo influyen en la experiencia del cliente.
-                </p>
-                <p>
-                    <b>Procesos:</b> <br>
-                    pasos que sigue el cliente desde el primer contacto hasta la finalización del servicio.
-                </p>
-                <p>
-                    <b>Evidencia física:</b>
-                    elementos tangibles que utiliza el cliente para evaluar el servicio.
-                </p>
-                <h3>5. Recorrido del servicio</h3>
-                <p>
-                    Describe el Customer Journey del servicio:
-                </p>
-                <ul>
-                    <li>Primer contacto con el servicio.</li>
-                    <li>Proceso de contratación.</li>
-                    <li>Prestación del servicio.</li>
-                    <li>Cierre y seguimiento.</li>
-                </ul>
-                <p>
-                    Identifica los momentos clave y posibles puntos de fricción.
-                </p>
-                <h3>6. Identificación de fallas del servicio</h3>
-                <p>
-                    Analiza posibles fallas en:
-                </p>
-                <ul>
-                    <li>Atención al cliente.</li>
-                    <li>Procesos internos.</li>
-                    <li> Comunicación.</li>
-                    <li>Evidencia física.</li>
-                </ul>
-                <p>
-                    Describe cómo estas fallas afectan la percepción del cliente.
-                </p>
-                <h3>7. Gestión de reclamos y recuperación</h3>
-                <p>
-                    Explica cómo la empresa o marca maneja actualmente los reclamos y qué tan efectiva es su respuesta.
-                </p>
-                <p>
-                    Indica cómo debería actuar ante una falla para recuperar la confianza del cliente.
-                </p>
+            <p>
+                Brindar el mismo nivel de atención y calidad en cada interacción es una buena práctica clave.
+            </p>
+            <p>
+                La consistencia genera confianza y seguridad en el cliente.
+            </p>
+            <h3>Capacitación del personal</h3>
+            <p>
+                Invertir en capacitación permite que el personal actúe con seguridad, criterio y orientación al
+                cliente.
+            </p>
+            <p>
+                Un personal capacitado responde mejor ante problemas y fallas del servicio.
+            </p>
+            <h3>Gestión adecuada de reclamos</h3>
+            <p>
+                Tratar los reclamos como oportunidades de mejora es una buena práctica esencial en los servicios.
+            </p>
+            <p>
+                Responder con rapidez, respeto y soluciones claras mejora la percepción del servicio.
+            </p>
+            <h3>CASO:</h3>
+            <p>
+                En un servicio educativo, buenas prácticas incluyen informar claramente el contenido del curso,
+                responder dudas a tiempo, acompañar al estudiante y mantener procesos organizados.
+            </p>
+            <p>
+                Estas prácticas generan satisfacción, confianza y recomendación del servicio.
+            </p>
+            <h3>Importancia de las buenas prácticas</h3>
+            <p>
+                Aplicar buenas prácticas permite mejorar la experiencia del cliente, reducir errores y fortalecer la
+                imagen de la organización.
+            </p>
+            <p>
+                Además, facilitan la mejora continua y la sostenibilidad del servicio en el tiempo.
+            </p>
+            <h3>Responde las siguientes preguntas</h3>
+            <p>
+                1. ¿Por qué las buenas prácticas de servicio deben aplicarse de forma constante?
+            </p>
+            <p>
+                2. ¿Cómo influye la comunicación clara en la satisfacción del cliente?
+            </p>
+            <p>
+                3. ¿Por qué los reclamos pueden verse como oportunidades de mejora?
+            </p>
+            <p>
+                4. ¿Cómo ayudan las buenas prácticas a diferenciar un servicio de otro?
+            </p>
+            <p>
+                5. En un servicio educativo, ¿qué buena práctica consideras más importante?
+            </p>
+            <h3>Ética y Responsabilidad</h3>
+            <p>
+                La ética y la responsabilidad en los servicios representan el compromiso moral que asume una
+                organización frente a sus clientes cada vez que realiza una promesa de servicio.
+            </p>
+            <p>
+                No se trata solo de cumplir normas, sino de actuar correctamente, con honestidad y respeto, incluso
+                cuando el cliente no puede verificar todo lo que ocurre detrás del servicio.
+            </p>
+            <h3>¿Qué es la ética en los servicios?</h3>
+            <p>
+                La ética en los servicios se refiere a actuar de manera justa, transparente y honesta en cada
+                interacción con el cliente.
+            </p>
+            <p>
+                Implica no engañar, no exagerar promesas y no aprovecharse de la confianza del cliente.
+            </p>
+            <h3>¿Qué es la responsabilidad en los servicios?</h3>
+            <p>
+                La responsabilidad implica asumir las consecuencias de las acciones de la empresa, especialmente
+                cuando se comete un error en la prestación del servicio.
+            </p>
+            <p>
+                Una empresa responsable reconoce fallas, corrige errores y busca soluciones sin evadir su compromiso
+                con el cliente.
+            </p>
+            <h3>Ética y promesa de servicio</h3>
+            <p>
+                Cada mensaje publicitario, oferta o explicación al cliente constituye una promesa de servicio.
+            </p>
+            <p>
+                La ética exige que estas promesas sean realistas y coherentes con la capacidad real de la
+                organización.
+            </p>
+            <h3>Responsabilidad y confianza del cliente</h3>
+            <p>
+                La confianza del cliente se construye cuando la empresa actúa con responsabilidad, incluso en
+                situaciones difíciles.
+            </p>
+            <p>
+                Cumplir compromisos y responder ante errores fortalece la relación y la lealtad del cliente.
+            </p>
+            <h3>Consecuencias de la falta de ética</h3>
+            <p>
+                La falta de ética genera desconfianza, reclamos, mala reputación y pérdida de clientes.
+            </p>
+            <p>
+                A largo plazo, afecta la imagen de la marca y la sostenibilidad del servicio.
+            </p>
+            <h3>CASO:</h3>
+            <p>
+                Un curso promete acompañamiento permanente y contenidos actualizados.
+            </p>
+            <p>
+                Actuar éticamente implica cumplir con ese acompañamiento y no abandonar al estudiante una vez
+                realizada la inscripción.
+            </p>
+            <p>
+                La responsabilidad se refleja al responder dudas, corregir errores y mejorar el servicio cuando algo
+                no funciona como se esperaba.
+            </p>
+            <h3>La ética como base de la calidad del servicio</h3>
+            <p>
+                Un servicio puede ser técnicamente correcto, pero sin ética pierde valor y credibilidad.
+            </p>
+            <p>
+                La ética sostiene la coherencia entre promesa, acción y resultado.
+            </p>
+            <h3>Resonde las siguientes preguntas:</h3>
+            <p>
+                1. ¿Por qué la ética es fundamental en la prestación de servicios?
+            </p>
+            <p>
+                2. ¿Cómo se relaciona la ética con la promesa de servicio?
+            </p>
+            <p>
+                3. ¿Qué significa actuar con responsabilidad ante una falla del servicio?
+            </p>
+            <p>
+                4. ¿Cómo influyen la ética y la responsabilidad en la lealtad del cliente?
+            </p>
+            <p>
+                5. ¿Por qué la ética no debe depender de la supervisión?
+            </p>}
+            <h3>Proyecto Final: Marketing de Servicios</h3>
+            <p>
+                El presente proyecto tiene como objetivo demostrar de forma práctica que el estudiante comprende y
+                sabe aplicar los conceptos del marketing de servicios en una empresa real o en una marca personal.
+            </p>
+            <p>
+                El trabajo debe basarse en un servicio existente o en uno que el estudiante conozca bien, analizando
+                su funcionamiento actual y proponiendo mejoras concretas.
+            </p>
+            <h3>1. Elección de la empresa o marca personal</h3>
+            <p>
+                Selecciona una empresa de servicios o una marca personal real. Puede ser un negocio local, un
+                emprendimiento digital, un profesional independiente o un proyecto propio.
+            </p>
+            <p>
+                Describe brevemente:
+            </p>
+            <ul>
+                <li>Nombre del servicio o marca.</li>
+                <li>Tipo de servicio que ofrece.</li>
+                <li>Público objetivo.</li>
+            </ul>
+            <h3>2. Descripción del servicio</h3>
+            <p>
+                Explica claramente en qué consiste el servicio, cómo se presta y cuál es su propuesta de valor.
+            </p>
+            <p>
+                Incluye:
+            </p>
+            <ul>
+                <li>Qué problema resuelve el servicio.</li>
+                <li>Cómo se entrega al cliente.</li>
+                <li>Qué lo diferencia de otros servicios similares.</li>
+            </ul>
+            <h3>3. Análisis del servicio</h3>
+            <p>
+                Analiza el servicio elegido considerando:
+            </p>
+            <ul>
+                <li>Intangibilidad.</li>
+                <li>Inseparabilidad.</li>
+                <li>Variabilidad.</li>
+                <li>Perecibilidad.</li>
+            </ul>
+            <p>
+                Explica cómo se manifiesta cada característica en el servicio seleccionado.
+            </p>
+            <h3>4. Personas, procesos y evidencia física</h3>
+            <p>
+                Describe:
+            </p>
+            <p>
+                <b>Personas:</b> <br>
+                quiénes prestan el servicio y cómo influyen en la experiencia del cliente.
+            </p>
+            <p>
+                <b>Procesos:</b> <br>
+                pasos que sigue el cliente desde el primer contacto hasta la finalización del servicio.
+            </p>
+            <p>
+                <b>Evidencia física:</b>
+                elementos tangibles que utiliza el cliente para evaluar el servicio.
+            </p>
+            <h3>5. Recorrido del servicio</h3>
+            <p>
+                Describe el Customer Journey del servicio:
+            </p>
+            <ul>
+                <li>Primer contacto con el servicio.</li>
+                <li>Proceso de contratación.</li>
+                <li>Prestación del servicio.</li>
+                <li>Cierre y seguimiento.</li>
+            </ul>
+            <p>
+                Identifica los momentos clave y posibles puntos de fricción.
+            </p>
+            <h3>6. Identificación de fallas del servicio</h3>
+            <p>
+                Analiza posibles fallas en:
+            </p>
+            <ul>
+                <li>Atención al cliente.</li>
+                <li>Procesos internos.</li>
+                <li> Comunicación.</li>
+                <li>Evidencia física.</li>
+            </ul>
+            <p>
+                Describe cómo estas fallas afectan la percepción del cliente.
+            </p>
+            <h3>7. Gestión de reclamos y recuperación</h3>
+            <p>
+                Explica cómo la empresa o marca maneja actualmente los reclamos y qué tan efectiva es su respuesta.
+            </p>
+            <p>
+                Indica cómo debería actuar ante una falla para recuperar la confianza del cliente.
+            </p>
 
         </section>
 
@@ -3628,59 +3695,66 @@
         </div>
         <p style="text-align: center;user-select: none;color: var(--accent);">UNIDADES TEMATICAS</p>
         <ul id="results"></ul>
-        <input type="text" id="query" placeholder="Buscar unidad..." oninput="filter()">
     </dialog>
 
     <script>
         lucide.createIcons();
 
-        // Reloj
+        // Reloj - Configurado para Tarija, Bolivia
         const clock = document.getElementById('clock');
         function tick() { clock.textContent = new Date().toLocaleTimeString('es-BO', { hour12: false }); }
         setInterval(tick, 1000); tick();
         function toggleClock() { clock.classList.toggle('visible'); }
 
         // Navegación
-        function goHome() { window.location.href = 'index.html'; closeSearch(); }
+        function goHome() { window.location.href = 'index.html'; }
 
-        // Búsqueda
+        // Menú de Navegación (Antes Búsqueda)
         const diag = document.getElementById('search');
         const list = document.getElementById('results');
 
         function openSearch() {
-            list.innerHTML = '';
+            list.innerHTML = ''; // Limpiamos la lista previa
+
+            // Generamos el menú basado en los títulos H2 de tus secciones
             document.querySelectorAll('section').forEach(s => {
-                const li = document.createElement('li');
-                li.innerHTML = `${s.querySelector('h2').textContent}`;
-                li.style.fontSize ="1.2rem";
-                li.onclick = () => { s.scrollIntoView({ behavior: 'smooth' }); closeSearch(); };
-                list.appendChild(li);
+                const titleElement = s.querySelector('h2');
+                if (titleElement) {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<i data-lucide="chevron-right"></i> ${titleElement.textContent}`;
+                    li.style.fontSize = "0.8rem";
+                    li.style.cursor = "pointer";
+                    li.style.display = "flex";
+                    li.style.alignItems = "center";
+                    li.style.gap = "10px";
+
+                    li.onclick = () => {
+                        s.scrollIntoView({ behavior: 'smooth' });
+                        closeSearch();
+                    };
+                    list.appendChild(li);
+                }
             });
-            lucide.createIcons();
+
+            lucide.createIcons(); // Genera los iconos de Lucide dentro del menú
             diag.showModal();
             setTimeout(() => diag.classList.add('visible'), 10);
-            document.getElementById('query').focus();
         }
 
         function closeSearch() {
             diag.classList.remove('visible');
             setTimeout(() => diag.close(), 300);
-            document.getElementById('query').value = "";
         }
 
+        // Cerrar al hacer clic fuera del contenido
         diag.addEventListener('click', (e) => {
             const rect = diag.getBoundingClientRect();
-            if (e.clientY < rect.top) closeSearch();
+            if (e.clientY < rect.top || e.clientY > rect.bottom || e.clientX < rect.left || e.clientX > rect.right) {
+                closeSearch();
+            }
         });
 
-        function filter() {
-            const v = document.getElementById('query').value.toLowerCase();
-            document.querySelectorAll('#results li').forEach(li => {
-                li.style.display = li.textContent.toLowerCase().includes(v) ? 'flex' : 'none';
-            });
-        }
-
-        // Header Dinámico
+        // Header Dinámico (Cambia el título al hacer scroll)
         const topBarH1 = document.querySelector('header#top-bar h1');
         const observerOptions = {
             root: null,
@@ -3705,7 +3779,7 @@
             }
         });
 
-        // Copiar
+        // Copiar al portapapeles
         async function copy(btn) {
             const code = btn.nextElementSibling.innerText;
             try {
