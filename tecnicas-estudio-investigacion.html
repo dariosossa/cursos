@@ -4,13 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TECNICAS DE ESTUDIO</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap"
-        rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="module">
+        import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: "base",
+            themeVariables: {
+                background: "#ffffff",
+
+                /* Cajas */
+                primaryColor: "#9ecbff",
+                primaryTextColor: "#000000",
+                primaryBorderColor: "#1e3a8a",
+
+                /* Líneas */
+                lineColor: "#ffffff",
+
+                /* Texto */
+                fontFamily: "Arial, Helvetica, sans-serif",
+                fontSize: "14px"
+            }
+        });
+    </script>
     <style>
         :root {
             /* Paleta: Gris oscuro refinado */
@@ -314,6 +330,7 @@
 
         li {
             margin-left: 20px;
+            margin-bottom: 20px;
         }
 
         /* --- 3. TAMAÑOS PARA PC (Pantallas mayores a 1024px) --- */
@@ -399,45 +416,48 @@
         <section>
             <h2>UNIDAD 1: <br> METODOS Y TECNICAS DE ESTUDIO</h2>
             <p>
-                Estudiar es la acción que realiza una persona para aprender. Consiste en leer, repasar, practicar y
+                Estudiar es la acción que realiza una persona para aprender.
+            </p>
+            <p>
+                Consiste en leer, repasar, practicar y
                 esforzarse por entender un tema. Es un proceso voluntario y consciente.
             </p>
             <h3 id="¿Cuáles son los elementos importantes del estudio?">¿Cuáles son los elementos importantes del
                 estudio?</h3>
             <p>
                 <b>Motivación</b><br>
-                Para poder estudiar, debes tener ganas de estudiar.
-                <b>Pregunta:</b> ¿Por qué crees que es importante tener ganas de estudiar para aprender mejor?<br>
+                Para poder estudiar, debes tener ganas de estudiar. <br><br>
+                <b>Pregunta:</b> <br>¿Por qué crees que es importante tener ganas de estudiar para aprender mejor?<br>
             </p>
             <p>
                 <b>Atención</b> <br>
-                Estudiar requiere estar concentrado y no distraerse. <br>
-                <b>Pregunta:</b> ¿Qué cosas pueden distraerte cuando estás estudiando?
+                Estudiar requiere estar concentrado y no distraerse. <br> <br>
+                <b>Pregunta:</b> <br>¿Qué cosas pueden distraerte cuando estás estudiando?
             </p>
             <p>
                 <b>Comprensión</b> <br>
-                No basta con leer, es necesario entender lo que se estudia. <br>
-                <b>Pregunta:</b> ¿Qué pasa si solo memorizas y no entiendes el tema?
+                No basta con leer, es necesario entender lo que se estudia. <br> <br>
+                <b>Pregunta:</b> <br> ¿Qué pasa si solo memorizas y no entiendes el tema?
             </p>
             <p>
                 <b>Memoria</b> <br>
-                El estudio también implica recordar lo aprendido. <br>
-                <b>Pregunta:</b> ¿Por qué es importante recordar lo que estudiaste?
+                El estudio también implica recordar lo aprendido. <br> <br>
+                <b>Pregunta:</b> <br> ¿Por qué es importante recordar lo que estudiaste?
             </p>
             <p>
                 <b>Método de estudio</b> <br>
-                Estudiar con un orden ayuda a aprender mejor. <br>
-                <b>Pregunta:</b> ¿Qué ventajas tiene estudiar siguiendo un orden o método?
+                Estudiar con un orden ayuda a aprender mejor. <br><br>
+                <b>Pregunta:</b> <br> ¿Qué ventajas tiene estudiar siguiendo un orden o método?
             </p>
             <p>
                 <b>Tiempo de estudio</b> <br>
-                Estudiar con tiempo evita el estrés y el apuro. <br>
-                <b>Pregunta:</b> ¿Qué ocurre cuando dejas el estudio para el último momento?
+                Estudiar con tiempo evita el estrés y el apuro. <br><br>
+                <b>Pregunta:</b> <br> ¿Qué ocurre cuando dejas el estudio para el último momento?
             </p>
             <p>
                 <b>Lugar de estudio</b> <br>
-                Un lugar tranquilo ayuda a concentrarse mejor.
-                <b>Pregunta:</b> ¿Cómo debería ser un buen lugar para estudiar?
+                Un lugar tranquilo ayuda a concentrarse mejor. <br><br>
+                <b>Pregunta:</b> <br> ¿Cómo debería ser un buen lugar para estudiar?
             </p>
 
         </section>
@@ -447,7 +467,10 @@
         <section>
             <h2 id="UNIDAD 2">UNIDAD 2: <br> APRENDIZAJE</h2>
             <p>
-                El aprendizaje es el resultado del estudio y de la experiencia. Ocurre cuando la persona comprende,
+                El aprendizaje es el resultado del estudio y de la experiencia.
+            </p>
+            <p>
+                Ocurre cuando la persona comprende,
                 recuerda y aplica lo que ha estudiado, produciendo un cambio en sus conocimientos o habilidades.
             </p>
             <h3 id="Fases del aprendizaje">Fases del aprendizaje</h3>
@@ -458,23 +481,24 @@
             <ol>
                 <li>
                     <b>Recepción de la información:</b> <br>
-                    La persona recibe la información a través de la lectura, la escucha o la observación. <br>
-                    <b>Pregunta:</b> ¿Cómo te gusta recibir la información?
+                    La persona recibe la información a través de la lectura, la escucha o la observación. <br><br>
+                    <b>Pregunta:</b><br> ¿Cómo te gusta recibir la información?
                 </li>
                 <li>
                     <b>Comprensión </b> <br>
-                    La información se analiza y se entiende. Aquí el estudiante le da significado a lo que aprende. <br>
-                    <b>Pregunta:</b> ¿Qué haces para entender mejor lo que estudiaste?
+                    La información se analiza y se entiende. Aquí el estudiante le da significado a lo que aprende.
+                    <br><br>
+                    <b>Pregunta:</b><br> ¿Qué haces para entender mejor lo que estudiaste?
                 </li>
                 <li>
                     <b>Retención</b> <br>
-                    Lo aprendido se guarda en la memoria para poder recordarlo después. <br>
-                    <b>Pregunta:</b> ¿Qué haces para recordar lo que estudiaste?
+                    Lo aprendido se guarda en la memoria para poder recordarlo después. <br><br>
+                    <b>Pregunta:</b><br> ¿Qué haces para recordar lo que estudiaste?
                 </li>
                 <li>
                     <b>Aplicación</b>
-                    La persona utiliza lo aprendido en situaciones reales, ejercicios o problemas. <br>
-                    <b>Pregunta:</b> ¿Cómo aplicas lo que aprendes en tu vida diaria?
+                    La persona utiliza lo aprendido en situaciones reales, ejercicios o problemas. <br><br>
+                    <b>Pregunta:</b><br> ¿Cómo aplicas lo que aprendes en tu vida diaria?
                 </li>
             </ol>
             <h3 id="Etapas del aprendizaje">Etapas del aprendizaje</h3>
@@ -482,92 +506,95 @@
                 Las <b>etapas del aprendizaje</b> hacen referencia al <b>nivel de dominio</b> que alcanza una persona
                 sobre un conocimiento o habilidad.
             </p>
-            <ul>
+            <ol>
                 <li>
                     <b>Aprendizaje inicial</b> <br>
-                    El estudiante conoce el tema por primera vez. <br>
-                    <b>Pregunta:</b> ¿Cómo te sientes cuando aprendes algo nuevo por primera vez?
+                    El estudiante conoce el tema por primera vez. <br><br>
+                    <b>Pregunta:</b><br> ¿Cómo te sientes cuando aprendes algo nuevo por primera vez?
                 </li>
                 <li>
                     <b>Aprendizaje en desarrollo</b> <br>
-                    El estudiante practica, comete errores y mejora poco a poco. <br>
-                    <b>Pregunta:</b> ¿Qué haces cuando cometes errores al aprender algo nuevo?
+                    El estudiante practica, comete errores y mejora poco a poco. <br><br>
+                    <b>Pregunta:</b><br> ¿Qué haces cuando cometes errores al aprender algo nuevo?
                 </li>
                 <li>
                     <b>Aprendizaje consolidado</b>
-                    El conocimiento se domina y se aplica con seguridad. <br>
-                    <b>Pregunta:</b> ¿Cómo sabes que has dominado un tema o habilidad?
+                    El conocimiento se domina y se aplica con seguridad. <br><br>
+                    <b>Pregunta:</b><br> ¿Cómo sabes que has dominado un tema o habilidad?
                 </li>
-            </ul>
+            </ol>
             <h3 id="Leyes del aprendizaje">Leyes del aprendizaje</h3>
             <p>
-                Las <b>leyes del aprendizaje</b> explican las condiciones que favorecen el aprendizaje.
+                Las leyes del aprendizaje explican las condiciones que favorecen el aprendizaje.
             </p>
-            <p>
-                <b>Ley de la motivación</b> <br>
-                Se aprende mejor cuando existe interés y deseo de aprender. <br>
-                <b>Pregunta:</b> ¿Qué cosas te motivan a estudiar y aprender?
-            </p>
-            <p>
-                <b>Ley del ejercicio o la práctica</b> <br>
-                La repetición y la práctica fortalecen el aprendizaje. <br>
-                <b>Pregunta:</b> ¿Cómo te organizas para practicar lo que estudiaste?
-            </p>
-            <p>
-                <b>Ley del efecto</b> <br>
-                Cuando una experiencia es positiva, el aprendizaje se refuerza. <br>
-                <b>Pregunta:</b> ¿Cómo puedes hacer que tu experiencia de estudio sea más positiva?
-            </p>
-            <p>
-                <b>Ley de la atención</b>
-                Sin atención no hay aprendizaje efectivo. <br>
-                <b>Pregunta:</b> ¿Qué haces para mantener tu atención cuando estudias?
-            </p>
+            <ul>
+                <li>
+                    <b>Ley de la motivación</b> <br>
+                    Se aprende mejor cuando existe interés y deseo de aprender. <br><br>
+                    <b>Pregunta:</b><br> ¿Qué cosas te motivan a estudiar y aprender?
+                </li>
+                <li>
+                    <b>Ley del ejercicio o la práctica</b> <br>
+                    La repetición y la práctica fortalecen el aprendizaje. <br><br>
+                    <b>Pregunta:</b><br> ¿Cómo te organizas para practicar lo que estudiaste?
+                </li>
+                <li>
+                    <b>Ley del efecto</b> <br>
+                    Cuando una experiencia es positiva, el aprendizaje se refuerza. <br><br>
+                    <b>Pregunta:</b><br> ¿Cómo puedes hacer que tu experiencia de estudio sea más positiva?
+                </li>
+                <li>
+                    <b>Ley de la atención</b>
+                    Sin atención no hay aprendizaje efectivo. <br><br>
+                    <b>Pregunta:</b><br> ¿Qué haces para mantener tu atención cuando estudias?
+                </li>
+            </ul>
+
             <h3 id="Factores que influyen en el aprendizaje">Factores que influyen en el aprendizaje</h3>
             <p>
                 Existen distintos factores que afectan el aprendizaje:
             </p>
-            <p>
-                <b>Factores personales</b> <br>
-                Motivación, atención, memoria y estado emocional. <br>
-                <b>Pregunta:</b> ¿Cómo te afectan estos factores en tu aprendizaje?
-            </p>
-            <p>
-                <b>Factores familiares y sociales</b> <br>
-                Apoyo familiar, entorno social y cultural. <br>
-                <b>Pregunta:</b> ¿Cómo influye tu familia y amigos en tu forma de aprender?
-            </p>
-            <p>
-                <b>Factores escolares</b> <br>
-                Métodos de enseñanza, recursos didácticos y ambiente de estudio. <br>
-                <b>Pregunta:</b> ¿Qué aspectos te ayudan o dificultan el aprendizaje?
-            </p>
+            <ul>
+                <li>
+                    <b>Factores personales</b> <br>
+                    Motivación, atención, memoria y estado emocional. <br><br>
+                    <b>Pregunta:</b><br> ¿Cómo te afectan estos factores en tu aprendizaje?
+                </li>
+                <li>
+                    <b>Factores familiares y sociales</b> <br>
+                    Apoyo familiar, entorno social y cultural. <br><br>
+                    <b>Pregunta:</b><br> ¿Cómo influye tu familia y amigos en tu forma de aprender?
+                </li>
+                <li>
+                    <b>Factores escolares</b> <br>
+                    Métodos de enseñanza, recursos didácticos y ambiente de estudio. <br><br>
+                    <b>Pregunta:</b><br> ¿Qué aspectos te ayudan o dificultan el aprendizaje?
+                </li>
+            </ul>
+
+
             <h3 id="Elementos para un aprendizaje significativo">Elementos para un aprendizaje significativo</h3>
             <p>
                 El <b>aprendizaje significativo</b> ocurre cuando el estudiante comprende y relaciona lo nuevo con lo
                 que ya sabe.
             </p>
-            <p>
-                <b>Conocimientos previos</b> <br>
-                Relacionar lo nuevo con lo que ya se conoce facilita el aprendizaje. <br>
-                <b>Pregunta:</b> ¿Cómo puedes conectar lo que estás aprendiendo con lo que ya sabes?
-            </p>
-            <p>
-                <b>Motivación</b> <br>
-                El interés y la curiosidad impulsan el aprendizaje significativo. <br>
-                <b>Pregunta:</b> ¿Qué temas te resultan más interesantes para aprender?
-
-            </p>
-            <p>
-                <b>Comprensión del contenido</b> <br>
-                Entender el significado de lo que se estudia es clave para un aprendizaje profundo. <br>
-                <b>Pregunta:</b> ¿Qué haces para asegurarte de que entiendes lo que estás estudiando?
-            </p>
-            <p>
-                <b>Aplicación práctica</b> <br>
-                Usar lo aprendido en situaciones reales refuerza el aprendizaje significativo. <br>
-                <b>Pregunta:</b> ¿Cómo puedes aplicar lo que aprendes en tu vida diaria o en tus estudios?
-            </p>
+            <ul>
+                <li>
+                    <b>Conocimientos previos</b> <br>
+                    Relacionar lo nuevo con lo que ya se conoce facilita el aprendizaje. <br><br>
+                    <b>Pregunta:</b><br> ¿Cómo puedes conectar lo que estás aprendiendo con lo que ya sabes?
+                </li>
+                <li>
+                    <b>Comprensión del contenido</b> <br>
+                    Entender el significado de lo que se estudia es clave para un aprendizaje profundo. <br><br>
+                    <b>Pregunta:</b><br> ¿Qué haces para asegurarte de que entiendes lo que estás estudiando?
+                </li>
+                <li>
+                    <b>Aplicación práctica</b> <br>
+                    Usar lo aprendido en situaciones reales refuerza el aprendizaje significativo. <br><br>
+                    <b>Pregunta:</b><br> ¿Cómo puedes aplicar lo que aprendes en tu vida diaria o en tus estudios?
+                </li>
+            </ul>
 
         </section>
 
@@ -585,12 +612,12 @@
             </p>
             <h3 id="Finalidad del razonamiento">Finalidad del razonamiento</h3>
             <p>
-                La finalidad del razonamiento es:
+                La finalidad del razonamiento:
             </p>
             <ol>
-                <li>Comprender mejor una situación.</li>
-                <li>Tomar decisiones correctas.</li>
-                <li>Resolver problemas de forma lógica.</li>
+                <li>Comprender mejor.</li>
+                <li>Tomar decisiones.</li>
+                <li>Resolver problemas.</li>
                 <li>Llegar a conclusiones.</li>
             </ol>
             <h3 id="Tipos de razonamiento">Tipos de razonamiento</h3>
@@ -600,35 +627,44 @@
             <p>
                 El <b>razonamiento deductivo</b> es una forma de pensar en la que se <b>parte de verdades o reglas
                     generales</b> que ya se aceptan como ciertas y, a partir de ellas, se llega a una
-                <b></b>conclusión</b> lógica para un caso particular. <br>
+                <b></b>conclusión</b> lógica para un caso particular.
+            </p>
+            <p>
                 No busca comprobar ni investigar, sino aplicar la lógica.
             </p>
-            <b>Ejemplo:</b><br>
+            <b>Ejemplo:</b><br><br>
             <ol>
-                <li>Si todos los humanos son mortales y Sócrates es humano, entonces Sócrates es mortal.</li>
-                <li>Todos los seres humanos necesitan alimentarse. Ana es un ser humano. Por lo tanto, Ana necesita
+                <li>Si todos los humanos son mortales. <br><br>Sócrates es humano. <br><br> Entonces Sócrates es mortal.
+                </li>
+                <li>Todos los seres humanos necesitan alimentarse. <br><br> Ana es un ser humano. <br><br>Por lo tanto,
+                    Ana necesita
                     alimentarse.</li>
-                <li>Todas las personas que practican leen mejor.
-                    Luis practica lectura todos los días.
+                <li>Todas las personas que practican leen mejor. <br><br>
+                    Luis practica lectura todos los días. <br><br>
                     Por lo tanto, Luis lee mejor.</li>
             </ol>
 
             <p>
-                <b>Razonamiento inductivo: </b> <br>
+                <b>Razonamiento inductivo: </b> <br><br>
                 Parte de casos particulares para llegar a una idea general.
             </p>
             <p>
                 En el razonamiento inductivo se recogen varios casos, hechos o pruebas y, al observar lo que más se
-                repite, se llega a una conclusión general. <br>
+                repite, se llega a una conclusión general.
+            </p>
+            <p>
                 La conclusión no es segura al 100 %, pero es probable.
             </p>
-            <b>Ejemplo:</b>
+            <b>Ejemplo:</b><br><br>
             <ol>
-                <li>Observamos que todos los cisnes que hemos visto son blancos. Luego, concluimos que todos los cisnes
+                <li>Observamos que todos los cisnes que hemos visto son blancos. <br><br>Luego, concluimos que todos los
+                    cisnes
                     son blancos.</li>
-                <li>En varias ocasiones, hemos visto que el sol sale por el este. Por lo tanto, concluimos que el sol
+                <li>En varias ocasiones, hemos visto que el sol sale por el este. <br><br> Por lo tanto, concluimos que
+                    el sol
                     siempre sale por el este.</li>
-                <li>Cada vez que estudio en la biblioteca, me concentro mejor. Entonces, concluyo que estudiar en la
+                <li>Cada vez que estudio en la biblioteca, me concentro mejor. <br><br> Entonces, concluyo que estudiar
+                    en la
                     biblioteca me ayuda a concentrarme.</li>
             </ol>
             <h3>Actividad</h3>
@@ -636,51 +672,74 @@
                 Indica si el razonamiento es deductivo o inductivo y explica brevemente por qué.
             </p>
             <ol>
-                <li>Todos los estudiantes que estudian aprueban. Carlos estudia. Por lo tanto, Carlos aprueba.</li>
-                <li>María, Juan y Ana estudiaron antes del examen y aprobaron. Esto ocurre con frecuencia. Por lo tanto,
+                <li>Todos los estudiantes que estudian aprueban. <br><br>Carlos estudia. <br><br> Por lo tanto, Carlos
+                    aprueba.</li>
+                <li>María, Juan y Ana estudiaron antes del examen y aprobaron. <br><br> Esto ocurre con frecuencia.
+                    <br><br> Por lo tanto,
                     estudiar antes del examen ayuda a aprobar.</li>
-                <li>Todos los seres humanos necesitan dormir. Pedro es un ser humano. Por lo tanto, Pedro necesita
+                <li>Todos los seres humanos necesitan dormir. <br><br>Pedro es un ser humano. <br><br>Por lo tanto,
+                    Pedro necesita
                     dormir.</li>
-                <li>Cada vez que practico matemáticas, resuelvo mejor los ejercicios. Concluyo que practicar matemáticas
+                <li>Cada vez que practico matemáticas, resuelvo mejor los ejercicios. <br><br>Concluyo que practicar
+                    matemáticas
                     mejora el rendimiento.</li>
-                <li>Todas las personas deben respetar las normas. Luis es una persona. Por lo tanto, Luis debe respetar
+                <li>Todas las personas deben respetar las normas. Luis es una persona. <br><br>Por lo tanto, Luis debe
+                    respetar
                     las normas.</li>
-                <li>He observado que cuando leo en silencio comprendo mejor. Esto se repite muchas veces. Entonces, leer
+                <li>He observado que cuando leo en silencio comprendo mejor. <br><br>Esto se repite muchas veces.
+                    <br><br>Entonces, leer
                     en silencio ayuda a comprender.</li>
-                <li>Todos los alimentos saludables aportan energía. La fruta es un alimento saludable. Por lo tanto, la
+                <li>Todos los alimentos saludables aportan energía. <br><br>La fruta es un alimento saludable.
+                    <br><br>Por lo tanto, la
                     fruta aporta energía.</li>
-                <li>En varias ocasiones he visto que el transporte llega tarde cuando llueve. Concluyo que la lluvia
+                <li>En varias ocasiones he visto que el transporte llega tarde cuando llueve. <br><br>Concluyo que la
+                    lluvia
                     retrasa el transporte.</li>
-                <li>Todos los estudiantes inscritos deben asistir a clases. Ana está inscrita. Por lo tanto, Ana debe
+                <li>Todos los estudiantes inscritos deben asistir a clases. <br><br>Ana está inscrita. Por lo tanto, Ana
+                    debe
                     asistir a clases.</li>
-                <li>Cada vez que duermo poco me siento cansado al día siguiente. Concluyo que dormir poco provoca
+                <li>Cada vez que duermo poco me siento cansado al día siguiente. <br><br>Concluyo que dormir poco
+                    provoca
                     cansancio.</li>
-                <li>Todas las personas que practican deporte mejoran su condición física. Juan practica deporte. Por lo
+                <li>Todas las personas que practican deporte mejoran su condición física. <br><br>Juan practica deporte.
+                    <br><br>Por lo
                     tanto, Juan mejora su condición física.</li>
-                <li>He notado que cuando organizo mi tiempo termino mis tareas. Concluyo que organizar el tiempo ayuda a
+                <li>He notado que cuando organizo mi tiempo termino mis tareas. <br><br>Concluyo que organizar el tiempo
+                    ayuda a
                     cumplir tareas.</li>
-                <li>Todos los exámenes tienen una fecha límite. Este examen es parte del curso. Por lo tanto, tiene una
+                <li>Todos los exámenes tienen una fecha límite. <br><br>Este examen es parte del curso. <br><br>Por lo
+                    tanto, tiene una
                     fecha límite.</li>
-                <li>Varias veces he visto que estudiar en grupo ayuda a entender mejor. Concluyo que estudiar en grupo
+                <li>Varias veces he visto que estudiar en grupo ayuda a entender mejor. <br><br>Concluyo que estudiar en
+                    grupo
                     facilita el aprendizaje.</li>
-                <li>Todos los ciudadanos deben cumplir las leyes. María es ciudadana. Por lo tanto, María debe cumplir
+                <li>Todos los ciudadanos deben cumplir las leyes. <br><br>María es ciudadana. <br><br>Por lo tanto,
+                    María debe cumplir
                     las leyes.</li>
-                <li>Cada vez que practico lectura, leo con mayor facilidad. Concluyo que la práctica mejora la lectura.
+                <li>Cada vez que practico lectura, leo con mayor facilidad. <br><br>Concluyo que la práctica mejora la
+                    lectura.
                 </li>
-                <li>Todos los objetos que se dejan caer caen al suelo. Esta pelota se deja caer. Por lo tanto, cae al
+                <li>Todos los objetos que se dejan caer caen al suelo. <br><br>Esta pelota se deja caer. <br><br>Por lo
+                    tanto, cae al
                     suelo.</li>
-                <li>He observado que cuando desayuno me concentro mejor en clases. Concluyo que desayunar ayuda a la
+                <li>He observado que cuando desayuno me concentro mejor en clases. <br><br>Concluyo que desayunar ayuda
+                    a la
                     concentración.</li>
-                <li>Todas las personas que respetan las normas evitan sanciones. Luis respeta las normas. Por lo tanto,
+                <li>Todas las personas que respetan las normas evitan sanciones. <br><br>Luis respeta las normas.
+                    <br><br>Por lo tanto,
                     Luis evita sanciones.</li>
-                <li>En muchas ocasiones, al estudiar con anticipación, obtuve mejores resultados. Concluyo que estudiar
+                <li>En muchas ocasiones, al estudiar con anticipación, obtuve mejores resultados. <br><br>Concluyo que
+                    estudiar
                     con anticipación mejora los resultados.</li>
 
             </ol>
             <h3 id="Error en el razonamiento">Error en el razonamiento</h3>
             <p>
                 El <b>error en el razonamiento</b> ocurre cuando se llega a una conclusión incorrecta por falta de
-                información, mala interpretación o ideas mal relacionadas. Estos errores se conocen como <b>falacias</b>
+                información, mala interpretación o ideas mal relacionadas.
+            </p>
+            <p>
+                Estos errores se conocen como <b>falacias</b>
                 y pueden llevar a decisiones equivocadas.
             </p>
             <p>
@@ -738,7 +797,10 @@
             <h2 id="UNIDAD 4">UNIDAD 4: <br> ANALISIS DE SINTESIS</h2>
             <p>
                 El análisis es la capacidad de descomponer un tema o problema en partes más pequeñas para entenderlo
-                mejor. Permite identificar las ideas principales, las relaciones entre ellas y los detalles importantes.
+                mejor.
+            </p>
+            <p>
+                Permite identificar las ideas principales, las relaciones entre ellas y los detalles importantes.
             </p>
             <h3>¿Cómo se realiza el análisis?</h3>
             <p>
@@ -754,17 +816,29 @@
                 Primero, se lee el texto, luego se realiza un análisis identificando las ideas principales, secundarias
                 y finalmente se llega a una conclusión.
             </p>
-            <p>
+            <p style="color: var(--accent);">
                 Aquí tienes un texto para leer:
             </p>
             <p>
-                "El estudio es fundamental para el aprendizaje. Sin embargo, no basta con estudiar, es necesario
-                aprender a estudiar. Esto implica tener motivación, atención, comprensión y memoria. Además, es
-                importante seguir un método de estudio y organizar el tiempo de manera adecuada. Un buen lugar de
-                estudio también contribuye a la concentración. Por lo tanto, para aprender de manera efectiva, es
-                necesario no solo estudiar, sino también aprender a estudiar."
+                El estudio es fundamental para el aprendizaje. Sin embargo, no basta con estudiar, es necesario
+                aprender a estudiar.
             </p>
             <p>
+                Esto implica tener motivación, atención, comprensión y memoria.
+            </p>
+            <p>
+                Además, es
+                importante seguir un método de estudio y organizar el tiempo de manera adecuada.
+            </p>
+            <p>
+                Un buen lugar de
+                estudio también contribuye a la concentración.
+            </p>
+            <p>
+                Por lo tanto, para aprender de manera efectiva, es
+                necesario no solo estudiar, sino también aprender a estudiar.
+            </p>
+            <p style="color: var(--accent);">
                 Después de leer el texto, se identifican las ideas principales, que son:
             </p>
             <ul>
@@ -777,7 +851,7 @@
             <p>
                 Recuerda que las ideas principales son las que expresan el mensaje central del texto.
             </p>
-            <p>
+            <p style="color: var(--accent);">
                 Las ideas secundarias son:
             </p>
             <ul>
@@ -790,7 +864,7 @@
                 Las ideas secundarias son las que apoyan o explican las ideas principales, pero no son el mensaje
                 central del texto.
             </p>
-            <p>
+            <p style="color: var(--accent);">
                 Finalmente, se llega a la conclusión:
             </p>
             <p>
@@ -809,30 +883,41 @@
             </p>
             <ol>
                 <li>
-                    "El aprendizaje es un proceso complejo que requiere de varios factores para ser efectivo. La
-                    motivación es fundamental, ya que sin ella no hay interés por aprender. La atención también es
-                    crucial, porque sin concentración no se puede asimilar la información. Además, la comprensión y la
-                    memoria son esenciales para retener lo aprendido. Seguir un método de estudio y organizar el tiempo
-                    de manera adecuada también contribuyen al éxito del aprendizaje. Por último, un buen lugar de
-                    estudio ayuda a mantener la concentración. En conclusión, el aprendizaje efectivo depende de una
+                    El aprendizaje es un proceso complejo que requiere de varios factores para ser efectivo. <br><br>La
+                    motivación es fundamental, ya que sin ella no hay interés por aprender. <br><br>La atención también
+                    es
+                    crucial, porque sin concentración no se puede asimilar la información. <br><br>Además, la
+                    comprensión y la
+                    memoria son esenciales para retener lo aprendido. <br><br>Seguir un método de estudio y organizar el
+                    tiempo
+                    de manera adecuada también contribuyen al éxito del aprendizaje. <br><br>Por último, un buen lugar
+                    de
+                    estudio ayuda a mantener la concentración. <br><br>En conclusión, el aprendizaje efectivo depende de
+                    una
                     combinación de motivación, atención, comprensión, memoria, método de estudio, organización del
-                    tiempo y un buen ambiente de estudio."
+                    tiempo y un buen ambiente de estudio.
                 </li>
                 <li>
-                    "El razonamiento es la capacidad de pensar de manera lógica y llegar a conclusiones basadas en la
-                    información disponible. Existen diferentes tipos de razonamiento, como el deductivo, que parte de
+                    El razonamiento es la capacidad de pensar de manera lógica y llegar a conclusiones basadas en la
+                    información disponible. <br><br>Existen diferentes tipos de razonamiento, como el deductivo, que
+                    parte de
                     premisas generales para llegar a una conclusión específica, y el inductivo, que parte de casos
-                    particulares para llegar a una conclusión general. El razonamiento también puede ser erróneo cuando
+                    particulares para llegar a una conclusión general. <br><br>El razonamiento también puede ser erróneo
+                    cuando
                     se cometen falacias, como sacar conclusiones sin pruebas, generalizar a partir de un solo caso o
-                    confundir opiniones con hechos. Para evitar estos errores, es importante analizar la información de
-                    manera crítica y asegurarse de contar con pruebas sólidas antes de llegar a una conclusión."
+                    confundir opiniones con hechos. <br><br>Para evitar estos errores, es importante analizar la
+                    información de
+                    manera crítica y asegurarse de contar con pruebas sólidas antes de llegar a una conclusión.
                 </li>
 
             </ol>
             <h3 id="¿Qué es la síntesis?">¿Qué es la síntesis?</h3>
             <p>
                 La síntesis es un proceso mental que consiste en reunir las ideas más importantes de un texto o tema y
-                expresarlas de forma breve, clara y ordenada, usando palabras propias. No se trata de copiar toda la
+                expresarlas de forma breve, clara y ordenada, usando palabras propias.
+            </p>
+            <p>
+                No se trata de copiar toda la
                 información, sino de rescatar lo esencial después de haber comprendido el contenido.
             </p>
             <h3>Importancia de la critica</h3>
@@ -858,20 +943,32 @@
 
             <h3>Ejemplo de síntesis</h3>
 
-            <p>
+            <p style="color: var(--accent);">
                 Primero se lee el texto original para comprender su contenido general:
             </p>
 
             <p>
-                “El estudio es fundamental para el aprendizaje. Sin embargo, no basta con estudiar,
-                es necesario aprender a estudiar. Esto implica tener motivación, atención,
-                comprensión y memoria. Además, es importante seguir un método de estudio y
-                organizar el tiempo de manera adecuada. Un buen lugar de estudio también
-                contribuye a la concentración. Por lo tanto, para aprender de manera efectiva,
-                es necesario no solo estudiar, sino también aprender a estudiar.”
+                El estudio es fundamental para el aprendizaje. Sin embargo, no basta con estudiar,
+                es necesario aprender a estudiar.
+            </p>
+            <p>
+                Esto implica tener motivación, atención,
+                comprensión y memoria.
+            </p>
+            <p>
+                Además, es importante seguir un método de estudio y
+                organizar el tiempo de manera adecuada.
+            </p>
+            <p>
+                Un buen lugar de estudio también
+                contribuye a la concentración.
+            </p>
+            <p>
+                Por lo tanto, para aprender de manera efectiva,
+                es necesario no solo estudiar, sino también aprender a estudiar.
             </p>
 
-            <p>
+            <p style="color: var(--accent);">
                 Luego se identifican fragmentos importantes del texto:
             </p>
 
@@ -883,13 +980,16 @@
                 <li>“Un buen lugar de estudio también contribuye a la concentración.”</li>
             </ul>
 
-            <p>
+            <p style="color: var(--accent);">
                 Finalmente, se redacta la síntesis usando palabras propias:
             </p>
 
             <p>
                 Para lograr un aprendizaje efectivo no basta con estudiar, sino que es necesario
-                aprender a estudiar. Esto requiere motivación, atención, comprensión y memoria,
+                aprender a estudiar.
+            </p>
+            <p>
+                Esto requiere motivación, atención, comprensión y memoria,
                 además de aplicar un método de estudio, organizar el tiempo y contar con un lugar
                 adecuado que favorezca la concentración.
             </p>
@@ -900,23 +1000,31 @@
             </p>
             <ol>
                 <li>
-                    “El aprendizaje es un proceso complejo que requiere de varios factores para ser efectivo. La
-                    motivación es fundamental, ya que sin ella no hay interés por aprender. La atención también es
-                    crucial, porque sin concentración no se puede asimilar la información. Además, la comprensión y la
-                    memoria son esenciales para retener lo aprendido. Seguir un método de estudio y organizar el tiempo
-                    de manera adecuada también contribuyen al éxito del aprendizaje. Por último, un buen lugar de
-                    estudio ayuda a mantener la concentración. En conclusión, el aprendizaje efectivo depende de una
+                    El aprendizaje es un proceso complejo que requiere de varios factores para ser efectivo. <br><br>La
+                    motivación es fundamental, ya que sin ella no hay interés por aprender. <br><br>La atención también
+                    es
+                    crucial, porque sin concentración no se puede asimilar la información. <br><br>Además, la
+                    comprensión y la
+                    memoria son esenciales para retener lo aprendido. <br><br>Seguir un método de estudio y organizar el
+                    tiempo
+                    de manera adecuada también contribuyen al éxito del aprendizaje. <br><br>Por último, un buen lugar
+                    de
+                    estudio ayuda a mantener la concentración. <br><br>En conclusión, el aprendizaje efectivo depende de
+                    una
                     combinación de motivación, atención, comprensión, memoria, método de estudio, organización del
-                    tiempo y un buen ambiente de estudio.”
+                    tiempo y un buen ambiente de estudio.
                 </li>
                 <li>
-                    “El razonamiento es la capacidad de pensar de manera lógica y llegar a conclusiones basadas en la
-                    información disponible. Existen diferentes tipos de razonamiento, como el deductivo, que parte de
+                    El razonamiento es la capacidad de pensar de manera lógica y llegar a conclusiones basadas en la
+                    información disponible. <br><br>Existen diferentes tipos de razonamiento, como el deductivo, que
+                    parte de
                     premisas generales para llegar a una conclusión específica, y el inductivo, que parte de casos
-                    particulares para llegar a una conclusión general. El razonamiento también puede ser erróneo cuando
+                    particulares para llegar a una conclusión general. <br><br>El razonamiento también puede ser erróneo
+                    cuando
                     se cometen falacias, como sacar conclusiones sin pruebas, generalizar a partir de un solo caso o
-                    confundir opiniones con hechos. Para evitar estos errores, es importante analizar la información de
-                    manera crítica y asegurarse de contar con pruebas sólidas antes de llegar a una conclusión.”
+                    confundir opiniones con hechos. <br><br>Para evitar estos errores, es importante analizar la
+                    información de
+                    manera crítica y asegurarse de contar con pruebas sólidas antes de llegar a una conclusión.
                 </li>
             </ol>
 
@@ -928,7 +1036,10 @@
             <h2 id="UNIDAD 5">UNIDAD 5: <br> LA CRITICA</h2>
             <p>
                 La crítica es la capacidad de analizar, reflexionar y valorar una idea, texto o situación de manera
-                razonada. No se trata de atacar ni de opinar sin fundamento, sino de examinar la información, reconocer
+                razonada.
+            </p>
+            <p>
+                No se trata de atacar ni de opinar sin fundamento, sino de examinar la información, reconocer
                 sus aciertos y limitaciones, y emitir un juicio con argumentos.
             </p>
             <p>
@@ -941,7 +1052,7 @@
                 <li>Emitir un juicio crítico con argumentos sólidos.</li>
             </ul>
             <h3>Ejemplo de crítica</h3>
-            <p>
+            <p style="color: var(--accent);">
                 <b>Primero, lee el ensayo con atención.</b>
             </p>
             <p>
@@ -976,10 +1087,10 @@
                 Aunque la empresa ha implementado programas de reciclaje y campañas de consumo responsable, estas
                 acciones no siempre son conocidas por toda la población.
             </p>
-            <p>
+            <p style="color: var(--accent);">
                 <b>Ahora, se identifica los puntos fuertes y débiles.</b>
             </p>
-            <p>
+            <p style="color: var(--accent);">
                 Puntos fuertes:
             </p>
             <ul>
@@ -988,7 +1099,7 @@
                 <li>Amplia red de distribución.</li>
                 <li>Campañas publicitarias efectivas.</li>
             </ul>
-            <p>
+            <p style="color: var(--accent);">
                 Puntos débiles:
             </p>
             <ul>
@@ -996,24 +1107,36 @@
                 <li>Uso de envases de vidrio y plástico que afecta el medio ambiente.</li>
                 <li>Consumo de agua en procesos productivos, un recurso sensible en Tarija.</li>
             </ul>
-            <p>
+            <p style="color: var(--accent);">
                 <b>Reflexión sobre el impacto o relevancia:</b>
             </p>
             <p>
                 La presencia de la Cervecería Boliviana Nacional en Tarija tiene un impacto importante en el desarrollo
-                económico local, ya que genera empleo y dinamiza distintas actividades comerciales. Al mismo tiempo, su
+                económico local, ya que genera empleo y dinamiza distintas actividades comerciales.
+            </p>
+            <p>
+                Al mismo tiempo, su
                 influencia cultural es significativa, pues la marca Taquiña forma parte de festividades y tradiciones
-                regionales. Sin embargo, este impacto positivo convive con desafíos sociales y ambientales,
+                regionales.
+            </p>
+            <p>
+                Sin embargo, este impacto positivo convive con desafíos sociales y ambientales,
                 especialmente en relación con el consumo de bebidas alcohólicas y el uso de recursos naturales como el
                 agua, lo que plantea la necesidad de un equilibrio entre desarrollo económico y responsabilidad social.
             </p>
-            <p>
+            <p style="color: var(--accent);">
                 <b>Juicio critico:</b>
             </p>
             <p>
                 Considero que la Cervecería Boliviana Nacional es una empresa relevante para Tarija y que sus aportes
-                económicos y culturales son innegables. No obstante, pienso que la empresa debería reforzar y
-                visibilizar con mayor claridad sus acciones de sostenibilidad ambiental y consumo responsable. Si bien
+                económicos y culturales son innegables.
+            </p>
+            <p>
+                No obstante, pienso que la empresa debería reforzar y
+                visibilizar con mayor claridad sus acciones de sostenibilidad ambiental y consumo responsable.
+            </p>
+            <p>
+                Si bien
                 existen iniciativas en estos ámbitos, su impacto podría ser mayor si se comunicaran mejor y se aplicaran
                 de forma más constante, lo que permitiría fortalecer la confianza de la comunidad y mejorar su imagen a
                 largo plazo.
@@ -1023,7 +1146,7 @@
                 Lee el siguientes textos y realiza una crítica identificando los puntos fuertes y débiles, reflexionando
                 sobre su impacto o relevancia, y emitiendo un juicio crítico con argumentos sólidos.
             </p>
-            <p>
+            <p style="color: var(--accent);">
                 <b>Empresa PIL Andina</b>
             </p>
             <p>
@@ -1046,7 +1169,7 @@
                 Además, el sector enfrenta retos vinculados a la sostenibilidad ambiental y al uso eficiente del agua en
                 los procesos productivos.
             </p>
-            <p>
+            <p style="color: var(--accent);">
                 <b>Empresa SETAR</b>
             </p>
             <p>
@@ -1076,7 +1199,10 @@
         <section>
             <h2 id="UNIDAD 6">UNIDAD 6: <br> LA LECTURA</h2>
             <p>
-                La lectura es el proceso mediante el cual una persona interpreta y comprende un texto escrito. A través
+                La lectura es el proceso mediante el cual una persona interpreta y comprende un texto escrito.
+            </p>
+            <p>
+                A través
                 de la lectura se reconocen palabras, se entiende su significado y se relacionan las ideas para obtener
                 información, aprender y reflexionar.
             </p>
@@ -1087,7 +1213,10 @@
             <h3>¿Qué es un hábito de lectura?</h3>
             <p>
                 Un hábito de lectura es la práctica regular y voluntaria de leer textos, ya sean libros, artículos o
-                cualquier otro tipo de contenido escrito. Establecer este hábito fortalece la capacidad de comprensión
+                cualquier otro tipo de contenido escrito.
+            </p>
+            <p>
+                Establecer este hábito fortalece la capacidad de comprensión
                 lectora y enriquece el conocimiento personal.
             </p>
             <h3>Importancia de la lectura</h3>
@@ -1114,22 +1243,32 @@
                 Existen varios tipos de lectura según el propósito y la forma de interpretar el texto:
             </p>
             <ul>
-                <li><b>Lectura informativa:</b> se enfoca en obtener información específica.</li>
-                <li><b>Lectura crítica:</b> implica analizar y evaluar el contenido del texto.</li>
-                <li><b>Lectura recreativa:</b> se realiza por placer o entretenimiento.</li>
-                <li><b>Lectura analítica:</b> permite profundizar en los temas y comprender su estructura.</li>
+                <li><b>Lectura informativa:</b><br> se enfoca en obtener información específica.</li>
+                <li><b>Lectura crítica:</b><br> implica analizar y evaluar el contenido del texto.</li>
+                <li><b>Lectura recreativa:</b><br> se realiza por placer o entretenimiento.</li>
+                <li><b>Lectura analítica:</b> <br>permite profundizar en los temas y comprender su estructura.</li>
             </ul>
             <h3>Actividad</h3>
-            <p>
+            <p style="color: var(--accent);">
                 Lee el siguiente texto y responde las preguntas:
             </p>
             <p>
-                "La lectura es una herramienta poderosa que nos permite acceder a un mundo de conocimientos y
-                experiencias. A través de la lectura, podemos viajar a lugares lejanos, conocer diferentes culturas y
-                aprender sobre una amplia variedad de temas. Además, la lectura estimula nuestra mente, mejora nuestra
-                concentración y nos ayuda a desarrollar habilidades de pensamiento crítico. Por estas razones, es
-                importante fomentar el hábito de la lectura desde una edad temprana y mantenerlo a lo largo de la vida."
+                La lectura es una herramienta poderosa que nos permite acceder a un mundo de conocimientos y
+                experiencias.
             </p>
+            <p>
+                A través de la lectura, podemos viajar a lugares lejanos, conocer diferentes culturas y
+                aprender sobre una amplia variedad de temas.
+            </p>
+            <p>
+                Además, la lectura estimula nuestra mente, mejora nuestra
+                concentración y nos ayuda a desarrollar habilidades de pensamiento crítico.
+            </p>
+            <p>
+                Por estas razones, es
+                importante fomentar el hábito de la lectura desde una edad temprana y mantenerlo a lo largo de la vida.
+            </p>
+            <p style="color: var(--accent);">Responde las siguientes preguntas:</p>
             <ol>
                 <li>¿Cuál es la importancia de la lectura según el texto?</li>
                 <li>¿Qué beneficios se mencionan sobre la lectura?</li>
@@ -1140,11 +1279,12 @@
                 Existen diferentes tipos de lectores según sus hábitos y preferencias:
             </p>
             <ul>
-                <li><b>Lector ocasional:</b> lee de vez en cuando, generalmente por necesidad o interés puntual.</li>
-                <li><b>Lector habitual:</b> tiene el hábito de leer regularmente y disfruta de la lectura.</li>
-                <li><b>Lector crítico:</b> analiza y evalúa los textos que lee, buscando comprender su significado
+                <li><b>Lector ocasional:</b><br> lee de vez en cuando, generalmente por necesidad o interés puntual.
+                </li>
+                <li><b>Lector habitual:</b><br> tiene el hábito de leer regularmente y disfruta de la lectura.</li>
+                <li><b>Lector crítico:</b><br> analiza y evalúa los textos que lee, buscando comprender su significado
                     profundo.</li>
-                <li><b>Lector recreativo:</b> lee principalmente por placer y entretenimiento.</li>
+                <li><b>Lector recreativo:</b><br> lee principalmente por placer y entretenimiento.</li>
             </ul>
             <h3>Actividad</h3>
             <p>
@@ -1157,10 +1297,11 @@
             </ol>
             <h3>¿Cuáles son los defectos más comunes en la lectura?</h3>
             <ul>
-                <li><b>Falta de concentración:</b> dificultad para mantener la atención durante la lectura.</li>
-                <li><b>Comprensión limitada:</b> no entender el significado de los textos leídos.</li>
-                <li><b>Escaso vocabulario:</b> dificultad para comprender palabras desconocidas.</li>
-                <li><b>Falta de motivación:</b> no tener interés en leer o encontrar el tiempo necesario para hacerlo.
+                <li><b>Falta de concentración:</b><br> dificultad para mantener la atención durante la lectura.</li>
+                <li><b>Comprensión limitada:</b><br> no entender el significado de los textos leídos.</li>
+                <li><b>Escaso vocabulario:</b><br> dificultad para comprender palabras desconocidas.</li>
+                <li><b>Falta de motivación:</b><br> no tener interés en leer o encontrar el tiempo necesario para
+                    hacerlo.
                 </li>
             </ul>
             <h3>Actividad</h3>
@@ -1173,12 +1314,15 @@
                 Para mejorar la lectura, se pueden aplicar diversas estrategias:
             </p>
             <ul>
-                <li><b>Establecer metas claras:</b> definir objetivos de lectura específicos y alcanzables.</li>
-                <li><b>Crear hábitos de lectura:</b> dedicar tiempo diario a la lectura, incluso si es solo 15 minutos.
+                <li><b>Establecer metas claras:</b><br> definir objetivos de lectura específicos y alcanzables.</li>
+                <li><b>Crear hábitos de lectura:</b><br> dedicar tiempo diario a la lectura, incluso si es solo 15
+                    minutos.
                 </li>
-                <li><b>Buscar textos adecuados:</b> elegir libros o artículos que sean relevantes y que te interesen.
+                <li><b>Buscar textos adecuados:</b><br> elegir libros o artículos que sean relevantes y que te
+                    interesen.
                 </li>
-                <li><b>Practicar técnicas de comprensión:</b> usar técnicas como resumen, preguntas y visualización para
+                <li><b>Practicar técnicas de comprensión:</b><br> usar técnicas como resumen, preguntas y visualización
+                    para
                     mejorar la comprensión.</li>
             </ul>
             <h3>¿Cómo mejorar la velocidad de lectura?</h3>
@@ -1187,33 +1331,59 @@
                 comprensión:
             </p>
             <ul>
-                <li><b>Evitar subvocalización:</b> no pronunciar en voz baja las palabras mientras lees.</li>
-                <li><b>Usar técnicas de lectura rápida:</b> como la lectura por bloques o líneas.</li>
-                <li><b>Evitar regresiones:</b> no volver a leer las mismas frases una y otra vez.</li>
+                <li><b>Evitar subvocalización:</b><br> no pronunciar en voz baja las palabras mientras lees.</li>
+                <li><b>Usar técnicas de lectura rápida:</b><br> como la lectura por bloques o líneas.</li>
+                <li><b>Evitar regresiones:</b><br> no volver a leer las mismas frases una y otra vez.</li>
             </ul>
             <h3>¿Cómo leer por lineas?</h3>
             <p>
                 Leer por líneas implica enfocar la vista en grupos de palabras en lugar de leer palabra por palabra.
+            </p>
+            <p>
                 Esto se puede lograr practicando la lectura en bloques y utilizando guías visuales, como un dedo o una
                 tarjeta, para seguir el texto.
             </p>
             <h3>Ejemplifica</h3>
             <p>
-                Por ejemplo, en lugar de leer "La lectura es una herramienta poderosa", se puede enfocar la vista en "La
-                lectura" y luego en "es una herramienta poderosa", lo que permite captar más palabras a la vez y
+                Por ejemplo, en lugar de leer
+            </p>
+            <p>
+                "La lectura es una herramienta poderosa".
+            </p>
+            <p>
+                Se puede enfocar la vista en "La
+                lectura" y luego en "es una herramienta poderosa".
+            </p>
+            <p>
+                Lo que permite captar más palabras a la vez y
                 aumentar la velocidad de lectura.
             </p>
             <h3>¿Cómo leer por bloques?</h3>
             <p>
                 Leer por bloques implica enfocar la vista en grupos de palabras o frases completas, en lugar de leer
-                palabra por palabra. Esto se puede lograr practicando la lectura en bloques y utilizando guías visuales,
+                palabra por palabra.
+            </p>
+            <p>
+                Esto se puede lograr practicando la lectura en bloques y utilizando guías visuales,
                 como un dedo o una tarjeta, para seguir el texto.
             </p>
             <h3>Ejemplifica</h3>
             <p>
-                Por ejemplo, en lugar de leer "El aprendizaje es un proceso complejo que requiere de varios factores
-                para ser efectivo", se puede enfocar la vista en "El aprendizaje es un proceso complejo" y luego en "que
-                requiere de varios factores para ser efectivo", lo que permite captar más palabras a la vez y aumentar
+                Por ejemplo, en lugar de leer
+            </p>
+            <p>
+                "El aprendizaje es un proceso complejo que requiere de varios factores
+                para ser efectivo".
+            </p>
+            <p>
+                Se puede enfocar la vista en
+            </p>
+            <p>
+                "El aprendizaje es un proceso complejo" y luego en "que
+                requiere de varios factores para ser efectivo"
+            </p>
+            <p>
+                Lo que permite captar más palabras a la vez y aumentar
                 la velocidad de lectura.
             </p>
             <h3>Actividad</h3>
@@ -1221,13 +1391,22 @@
                 Practica la lectura por líneas y por bloques con el siguiente texto:
             </p>
             <p>
-                "La lectura es una habilidad fundamental que nos permite acceder a un mundo de conocimientos y
-                experiencias. A través de la lectura, podemos aprender sobre diferentes culturas, explorar nuevas ideas
-                y desarrollar nuestro pensamiento crítico. Además, la lectura nos ayuda a mejorar nuestro vocabulario y
-                nuestras habilidades de comunicación. Por estas razones, es importante fomentar el hábito de la lectura
-                desde una edad temprana y mantenerlo a lo largo de la vida."
+                La lectura es una habilidad fundamental que nos permite acceder a un mundo de conocimientos y
+                experiencias.
             </p>
             <p>
+                A través de la lectura, podemos aprender sobre diferentes culturas, explorar nuevas ideas
+                y desarrollar nuestro pensamiento crítico.
+            </p>
+            <p>
+                Además, la lectura nos ayuda a mejorar nuestro vocabulario y
+                nuestras habilidades de comunicación.
+            </p>
+            <p>
+                Por estas razones, es importante fomentar el hábito de la lectura
+                desde una edad temprana y mantenerlo a lo largo de la vida.
+            </p>
+            <p style="color: var(--accent);">
                 Despues de leer explica cual es la diferencia que notaste al leer por lineas y por bloques.
             </p>
 
@@ -1278,31 +1457,43 @@
                 Existen varios tipos de subrayado, entre los cuales se destacan:
             </p>
             <ul>
-                <li><b>Subrayado lineal:</b> consiste en trazar una línea debajo de las palabras o frases clave.</li>
-                <li><b>Subrayado lateral:</b> consiste en trazar una línea vertical a la izquierda de las palabras o
+                <li><b>Subrayado lineal:</b><br> consiste en trazar una línea debajo de las palabras o frases clave.
+                </li>
+                <li><b>Subrayado lateral:</b><br> consiste en trazar una línea vertical a la izquierda de las palabras o
                     frases clave.</li>
-                <li><b>Subrayado estructural:</b> consiste en subrayar las ideas principales y secundarias de manera
+                <li><b>Subrayado estructural:</b><br> consiste en subrayar las ideas principales y secundarias de manera
                     jerárquica, resaltando la estructura del texto.</li>
-                <li><b>Subrayado con símbolos:</b> consiste en utilizar símbolos como asteriscos, flechas o números para
+                <li><b>Subrayado con símbolos:</b><br> consiste en utilizar símbolos como asteriscos, flechas o números
+                    para
                     resaltar diferentes tipos de información.
                 </li>
-                <li><b>Subrayado selectivo:</b> consiste en subrayar solo las ideas más importantes del texto, evitando
+                <li><b>Subrayado selectivo:</b><br> consiste en subrayar solo las ideas más importantes del texto,
+                    evitando
                     marcar demasiado contenido.</li>
             </ul>
             <h3>Ejempllificación</h3>
-            <p>
-                Por ejemplo, en un texto sobre el estudio, se podría subrayar de la siguiente manera:
+            <p style="color: var(--accent);">
+                Por ejemplo, en un texto sobre el estudio:
             </p>
             <p>
                 El estudio es una actividad esencial en la vida académica, ya que permite adquirir conocimientos,
-                desarrollar habilidades y formar el pensamiento crítico. Sin embargo, estudiar no significa únicamente
-                leer un texto varias veces o memorizar información sin comprenderla. Para que el estudio sea realmente
+                desarrollar habilidades y formar el pensamiento crítico.
+            </p>
+            <p>
+                Sin embargo, estudiar no significa únicamente
+                leer un texto varias veces o memorizar información sin comprenderla.
+            </p>
+            <p>
+                Para que el estudio sea realmente
                 efectivo, es necesario aplicar técnicas de estudio adecuadas que faciliten la comprensión y la retención
                 de los contenidos.
             </p>
             <p>
                 Uno de los primeros aspectos que se debe considerar es la motivación, ya que un estudiante motivado
-                muestra mayor interés por aprender y se esfuerza más por alcanzar sus objetivos académicos. La
+                muestra mayor interés por aprender y se esfuerza más por alcanzar sus objetivos académicos.
+            </p>
+            <p>
+                La
                 motivación puede estar influida por metas personales, el interés por la materia o la importancia que se
                 le atribuye al aprendizaje para el futuro profesional.
             </p>
@@ -1329,7 +1520,7 @@
                 sino de la forma en que se estudia. Aplicar técnicas adecuadas, mantener la motivación, organizar el
                 tiempo y contar con un buen ambiente de estudio son factores que contribuyen al éxito académico.
             </p>
-            <p>
+            <p style="color: var(--accent);">
                 En este texto, se podrían subrayar las siguientes ideas principales:
             </p>
             <ul>
@@ -1351,38 +1542,66 @@
             </p>
             <p>
                 En la actualidad, las redes sociales forman parte de la vida cotidiana de la mayoría de los jóvenes.
+            </p>
+            <p>
                 Plataformas digitales como Instagram, TikTok o WhatsApp se utilizan diariamente para comunicarse,
-                entretenerse, informarse y compartir experiencias. Estas herramientas tecnológicas han transformado la
+                entretenerse, informarse y compartir experiencias.
+            </p>
+            <p> Estas herramientas tecnológicas han transformado la
                 manera en que los jóvenes se relacionan entre sí y con el mundo que los rodea.
             </p>
             <p>
-                Uno de los principales beneficios de las redes sociales es que facilitan la comunicación inmediata. A
-                través de mensajes, llamadas y videos, los jóvenes pueden mantenerse en contacto con amigos y familiares
-                sin importar la distancia. Además, las redes sociales permiten crear comunidades con intereses comunes,
+                Uno de los principales beneficios de las redes sociales es que facilitan la comunicación inmediata.
+            </p>
+            <p>
+                A través de mensajes, llamadas y videos, los jóvenes pueden mantenerse en contacto con amigos y
+                familiares
+                sin importar la distancia.
+            </p>
+            <p>
+                Además, las redes sociales permiten crear comunidades con intereses comunes,
                 lo que favorece la interacción social y el intercambio de ideas.
             </p>
             <p>
                 Sin embargo, el uso excesivo de las redes sociales también puede generar efectos negativos. Pasar
                 demasiadas horas frente a una pantalla puede afectar el rendimiento académico, ya que reduce el tiempo
-                dedicado al estudio y a otras actividades importantes. Asimismo, el uso constante del celular puede
+                dedicado al estudio y a otras actividades importantes.
+            </p>
+            <p>
+                Asimismo, el uso constante del celular puede
                 provocar distracciones, dificultando la concentración y la atención en clases o durante el estudio en
                 casa.
             </p>
             <p>
-                Otro aspecto relevante es la influencia emocional que ejercen las redes sociales. Muchos jóvenes
+                Otro aspecto relevante es la influencia emocional que ejercen las redes sociales.
+            </p>
+            <p>
+                Muchos jóvenes
                 comparan su vida con la imagen que otras personas muestran en internet, lo que puede generar
-                inseguridad, baja autoestima o frustración. Es importante recordar que gran parte del contenido que se
+                inseguridad, baja autoestima o frustración.
+            </p>
+            <p>
+                Es importante recordar que gran parte del contenido que se
                 publica en redes sociales no refleja completamente la realidad.
             </p>
             <p>
                 A pesar de estos riesgos, las redes sociales también pueden ser una herramienta positiva para el
-                aprendizaje. Existen cuentas educativas, tutoriales y espacios de información que ayudan a reforzar
-                conocimientos, aprender nuevas habilidades y mantenerse actualizados sobre distintos temas. El uso
+                aprendizaje.
+            </p>
+            <p>
+                Existen cuentas educativas, tutoriales y espacios de información que ayudan a reforzar
+                conocimientos, aprender nuevas habilidades y mantenerse actualizados sobre distintos temas.
+            </p>
+            <p>
+                El uso
                 responsable de estas plataformas permite aprovechar sus ventajas sin afectar el bienestar personal.
             </p>
             <p>
                 En conclusión, las redes sociales no son buenas ni malas por sí mismas, sino que su impacto depende del
-                uso que los jóvenes hagan de ellas. Mantener un equilibrio entre el tiempo en redes, el estudio, el
+                uso que los jóvenes hagan de ellas.
+            </p>
+            <p>
+                Mantener un equilibrio entre el tiempo en redes, el estudio, el
                 descanso y la convivencia personal es fundamental para lograr un desarrollo saludable y un buen
                 rendimiento académico.
             </p>
@@ -1396,13 +1615,20 @@
             <h2 id="UNIDAD 8">UNIDAD 8: <br> LOS ESQUEMAS</h2>
             <p>
                 Los esquemas son representaciones gráficas u organizadas de ideas que permiten resumir, ordenar y
-                relacionar información de forma clara y jerárquica. Su función principal es facilitar la comprensión, el
+                relacionar información de forma clara y jerárquica.
+            </p>
+
+            <p>
+                Su función principal es facilitar la comprensión, el
                 estudio y la memorización de un contenido, mostrando solo las ideas esenciales y cómo se conectan entre
                 sí.
             </p>
             <p>
                 Desde el ámbito educativo, un esquema ayuda a identificar ideas principales y secundarias, evitando
-                información innecesaria y presentando el contenido de manera visual y estructurada. Por ello, se utiliza
+                información innecesaria y presentando el contenido de manera visual y estructurada.
+            </p>
+            <p>
+                Por ello, se utiliza
                 con frecuencia para estudiar temas complejos, preparar exposiciones o sintetizar textos extensos.
             </p>
             <h3>¿Qué tipos de esquemas existen?</h3>
@@ -1410,11 +1636,12 @@
                 Existen varios tipos de esquemas, entre los cuales se destacan:
             </p>
             <ul>
-                <li><b>Esquema de llaves:</b> organiza la información en forma de llaves, mostrando la relación
+                <li><b>Esquema de llaves:</b><br> organiza la información en forma de llaves, mostrando la relación
                     jerárquica entre ideas principales y secundarias.</li>
-                <li><b>Esquema de mapa mental:</b> representa las ideas de forma radial, partiendo de un concepto
+                <li><b>Esquema de mapa mental:</b><br> representa las ideas de forma radial, partiendo de un concepto
                     central y ramificándose hacia ideas secundarias.</li>
-                <li><b>Esquemas conceptuales:</b> representan ideas o conceptos de manera visual y jerárquica, mostrando
+                <li><b>Esquemas de mapa conceptual:</b><br> representan ideas o conceptos de manera visual y jerárquica,
+                    mostrando
                     cómo se relacionan entre sí.</li>
             </ul>
             <h3>¿Cómo se realiza un buen esquema de llaves?</h3>
@@ -1457,37 +1684,66 @@
             <h3>Actividad</h3>
             <p>
                 Elabora un esquema de llaves contemplando el siguiente texto, organizando la información de forma clara
-                y jerárquica. Parte del tema principal y divide las ideas en conceptos y subtemas, utilizando palabras
+                y jerárquica.
+            </p>
+            <p>
+                Parte del tema principal y divide las ideas en conceptos y subtemas, utilizando palabras
                 clave y evitando oraciones extensas.
             </p>
             <p>
                 <b>Turismo</b> <br>
 
                 El turismo es la actividad que consiste en desplazarse a otros lugares con fines de descanso, diversión,
-                aventura o interés cultural. Para los jóvenes, el turismo no solo significa viajar, sino vivir
+                aventura o interés cultural.
+            </p>
+            <p>
+                Para los jóvenes, el turismo no solo significa viajar, sino vivir
                 experiencias, conocer personas nuevas y salir de la rutina diaria.
             </p>
             <p>
                 <b>Tipos de turismo preferidos por los jóvenes</b>
-
+            </p>
+            <p>
                 El turismo de aventura se relaciona con actividades al aire libre, deportes extremos y contacto directo
-                con la naturaleza. El turismo cultural se enfoca en conocer costumbres, tradiciones, historia y
-                festividades de distintos lugares. El turismo gastronómico consiste en viajar para probar comidas y
-                bebidas típicas de cada región. El turismo urbano se basa en recorrer ciudades, asistir a eventos,
+                con la naturaleza.
+            </p>
+            <p>
+                El turismo cultural se enfoca en conocer costumbres, tradiciones, historia y
+                festividades de distintos lugares.
+            </p>
+            <p>
+                El turismo gastronómico consiste en viajar para probar comidas y
+                bebidas típicas de cada región.
+            </p>
+            <p>
+                El turismo urbano se basa en recorrer ciudades, asistir a eventos,
                 conciertos y disfrutar de la vida nocturna.
             </p>
             <p>
-                <b>Beneficios del turismo</b> <br>
-
-                El turismo permite a los jóvenes descansar y recrearse, lo que ayuda a reducir el estrés. También
-                favorece el aprendizaje cultural, ya que permite conocer nuevas costumbres y formas de vida. Además,
+                <b>Beneficios del turismo</b>
+            </p>
+            <p>
+                El turismo permite a los jóvenes descansar y recrearse, lo que ayuda a reducir el estrés.
+            </p>
+            <p>
+                También
+                favorece el aprendizaje cultural, ya que permite conocer nuevas costumbres y formas de vida.
+            </p>
+            <p>
+                Además,
                 contribuye al desarrollo personal, fortaleciendo la independencia y la responsabilidad, y mejora la
                 convivencia social al fomentar la amistad y el intercambio de experiencias.
             </p>
             <p>
                 <b>Importancia del turismo</b>
 
-                El turismo es importante porque conecta personas de distintos lugares y culturas. Impulsa el crecimiento
+            </p>
+            <p>
+                El turismo es importante porque conecta personas de distintos lugares y culturas.
+
+            </p>
+            <p>
+                Impulsa el crecimiento
                 económico mediante la generación de empleo e ingresos locales, ofrece oportunidades laborales para los
                 jóvenes y contribuye a la formación personal al ampliar la visión del mundo y la experiencia de vida.
             </p>
@@ -1514,6 +1770,8 @@
 
             <p>
                 A partir del concepto central surgen varias ramas principales.
+            </p>
+            <p>
                 Una de ellas es <b>Usos</b>, donde se agrupan palabras clave
                 como consumo, riego y limpieza.
             </p>
@@ -1627,30 +1885,50 @@
             </p>
             <p>
                 <b>Medios de transporte turístico</b>
-
+            </p>
+            <p>
                 Los medios de transporte turístico son los sistemas que permiten a las personas desplazarse de un lugar
-                a otro con fines de viaje. Son fundamentales para el turismo, ya que facilitan el acceso a destinos
+                a otro con fines de viaje.
+            </p>
+            <p>
+                Son fundamentales para el turismo, ya que facilitan el acceso a destinos
                 cercanos y lejanos, permitiendo a los viajeros organizar mejor su tiempo y su experiencia.
             </p>
             <p>
                 <b>Transporte terrestre</b>
-
-                El transporte terrestre incluye medios como buses, autos, trenes y motocicletas. Es uno de los más
+            </p>
+            <p>
+                El transporte terrestre incluye medios como buses, autos, trenes y motocicletas.
+            </p>
+            <p>
+                Es uno de los más
                 utilizados por los jóvenes debido a su accesibilidad, menor costo y facilidad para viajar en grupo.
+            </p>
+            <p>
                 Además, permite mayor contacto con el entorno durante el recorrido.
             </p>
             <p>
                 <b>Transporte aéreo</b>
-
-                El transporte aéreo se realiza mediante aviones y es el más rápido para recorrer largas distancias. Es
+            </p>
+            <p>
+                El transporte aéreo se realiza mediante aviones y es el más rápido para recorrer largas distancias.
+            </p>
+            <p>
+                Es
                 muy usado para viajes nacionales e internacionales, especialmente cuando el destino se encuentra lejos.
+            </p>
+            <p>
                 Para los jóvenes, representa rapidez y la posibilidad de conocer otros países.
             </p>
             <p>
                 <b>Transporte marítimo y fluvial</b>
-
+            </p>
+            <p>
                 El transporte marítimo y fluvial se realiza por mares, ríos y lagos, utilizando barcos, ferris o
-                lanchas. Se asocia principalmente al turismo recreativo, como cruceros o paseos turísticos, y permite
+                lanchas.
+            </p>
+            <p>
+                Se asocia principalmente al turismo recreativo, como cruceros o paseos turísticos, y permite
                 disfrutar del paisaje durante el viaje.
             </p>
 
@@ -1687,31 +1965,46 @@
                 Elabora un mapa conceptual.
             </p>
             <p>
-                <b>Exclusión social</b> <br>
-
+                <b>Exclusión social</b>
+            </p>
+            <p>
                 La exclusión social es una situación en la que personas o grupos quedan fuera de las oportunidades
-                básicas de la sociedad, como la educación, el trabajo, la salud y la participación social. Ocurre cuando
+                básicas de la sociedad, como la educación, el trabajo, la salud y la participación social.
+            </p>
+            <p>
+                Ocurre cuando
                 no existen las mismas condiciones para todos y se generan desigualdades que limitan el desarrollo
                 personal y colectivo.
             </p>
             <p>
                 <b>Características de la exclusión social</b>
-
+            </p>
+            <p>
                 La exclusión social se manifiesta a través de la falta de acceso a servicios básicos, la pobreza, la
-                discriminación y la marginación. Las personas excluidas suelen tener menos oportunidades para mejorar su
+                discriminación y la marginación.
+            </p>
+            <p>
+                Las personas excluidas suelen tener menos oportunidades para mejorar su
                 calidad de vida y participar activamente en la sociedad.
             </p>
             <p>
                 <b>Causas de la exclusión social</b>
-
+            </p>
+            <p>
                 La exclusión social puede ser causada por la pobreza, el desempleo, la falta de educación, la
-                discriminación por género, edad o etnia, y la desigualdad económica. También influyen factores
+                discriminación por género, edad o etnia, y la desigualdad económica.
+            </p>
+            <p>
+                También influyen factores
                 familiares, sociales y políticos que dificultan la integración social.
             </p>
             <p>
                 <b>Consecuencias de la exclusión social</b>
-
+            </p>
+            <p>
                 La exclusión social genera desigualdad, conflictos sociales y limitaciones en el desarrollo humano.
+            </p>
+            <p>
                 Puede provocar baja autoestima, falta de oportunidades, problemas de salud y dificultades para acceder a
                 una vida digna.
             </p>
@@ -1731,65 +2024,104 @@
             </p>
             <p>
                 Desde el enfoque pedagógico, un examen permite valorar conocimientos, habilidades y competencias, y
-                sirve tanto al docente como al estudiante para identificar el nivel de comprensión alcanzado. Puede
+                sirve tanto al docente como al estudiante para identificar el nivel de comprensión alcanzado.
+            </p>
+            <p>
+                Puede
                 presentarse en distintas formas, como preguntas escritas, pruebas orales, ejercicios prácticos o
                 evaluaciones objetivas, dependiendo del objetivo de aprendizaje que se quiera medir.
             </p>
             <h3>Momentos de evaluación</h3>
             <p>
                 Los momentos de evaluación son las etapas del proceso educativo en las que se aplica la evaluación para
-                recoger información sobre el aprendizaje de los estudiantes. Tradicionalmente se reconocen tres momentos
+                recoger información sobre el aprendizaje de los estudiantes.
+            </p>
+            <p>
+                Tradicionalmente se reconocen tres momentos
                 claramente diferenciados:
             </p>
             <p>
-                <b>Evaluación diagnóstica</b> <br>
-
-                Se realiza antes de iniciar un curso, unidad o tema. Su finalidad es conocer los saberes previos,
+                <b>Evaluación diagnóstica</b>
+            </p>
+            <p>
+                Se realiza antes de iniciar un curso, unidad o tema.
+            </p>
+            <p>
+                Su finalidad es conocer los saberes previos,
                 habilidades y dificultades del estudiante, para ajustar la planificación y las estrategias de enseñanza.
             </p>
             <p>
                 No suele tener calificación, ya que su función principal es orientadora.
             </p>
             <p>
-                <b>Evaluación formativa</b> <br>
-
-                Se aplica durante el proceso de enseñanza-aprendizaje. Permite monitorear el progreso, detectar errores
-                a tiempo y retroalimentar continuamente al estudiante. Este momento busca mejorar el aprendizaje, no
+                <b>Evaluación formativa</b>
+            </p>
+            <p>
+                Se aplica durante el proceso de enseñanza-aprendizaje.
+            </p>
+            <p>
+                Permite monitorear el progreso, detectar errores
+                a tiempo y retroalimentar continuamente al estudiante.
+            </p>
+            <p>
+                Este momento busca mejorar el aprendizaje, no
                 solo medirlo, y puede incluir actividades, prácticas, controles, trabajos y participación.
             </p>
             <p>
-                <b>Evaluación sumativa</b> <br>
-
-                Se desarrolla al final de un período educativo (unidad, módulo o curso). Su objetivo es valorar los
-                resultados finales del aprendizaje y generalmente se expresa mediante una calificación. Sirve para
+                <b>Evaluación sumativa</b>
+            </p>
+            <p>
+                Se desarrolla al final de un período educativo (unidad, módulo o curso).
+            </p>
+            <p>
+                Su objetivo es valorar los
+                resultados finales del aprendizaje y generalmente se expresa mediante una calificación.
+            </p>
+            <p>
+                Sirve para
                 certificar si se alcanzaron los objetivos o competencias establecidas.
             </p>
             <h3>Causas del fracaso en los exámenes</h3>
             <p>
                 Las causas del fracaso en los exámenes son múltiples y no siempre están relacionadas únicamente con la
-                falta de estudio. En el ámbito educativo, este fenómeno suele explicarse por la combinación de factores
+                falta de estudio.
+            </p>
+            <p>
+                En el ámbito educativo, este fenómeno suele explicarse por la combinación de factores
                 personales, pedagógicos y contextuales.
             </p>
             <p>
-                En primer lugar, una causa frecuente es la insuficiente comprensión de los contenidos. Cuando el
+                En primer lugar, una causa frecuente es la insuficiente comprensión de los contenidos.
+            </p>
+            <p>
+                Cuando el
                 aprendizaje se basa solo en la memorización y no en la comprensión, el estudiante tiene dificultades
                 para aplicar lo aprendido en situaciones evaluativas, especialmente en exámenes que exigen análisis o
                 resolución de problemas.
             </p>
             <p>
-                Otra causa importante es la ansiedad y el estrés ante los exámenes. El miedo a equivocarse, la presión
+                Otra causa importante es la ansiedad y el estrés ante los exámenes.
+            </p>
+            <p>
+                El miedo a equivocarse, la presión
                 por obtener buenas calificaciones o experiencias previas negativas pueden bloquear el razonamiento,
                 afectar la concentración y disminuir el rendimiento, aun cuando el estudiante conoce la materia.
             </p>
             <p>
-                También influye la inadecuada planificación del estudio. Estudiar a última hora, no organizar el tiempo
+                También influye la inadecuada planificación del estudio.
+            </p>
+            <p>
+                Estudiar a última hora, no organizar el tiempo
                 o no utilizar técnicas de estudio adecuadas reduce la retención de la información y dificulta su
                 recuperación durante el examen.
             </p>
             <p>
                 Desde el punto de vista pedagógico, el fracaso puede deberse a evaluaciones mal diseñadas, que no
                 guardan coherencia con los contenidos enseñados, los objetivos planteados o las metodologías utilizadas
-                en clase. Esto genera una desconexión entre lo aprendido y lo evaluado.
+                en clase.
+            </p>
+            <p>
+                Esto genera una desconexión entre lo aprendido y lo evaluado.
             </p>
             <p>
                 Finalmente, existen factores externos como problemas familiares, económicos, de salud o emocionales, que
@@ -1798,26 +2130,44 @@
             <h3>Reglas generales para rendir un examen</h3>
             <p>
                 Las reglas generales para rendir un examen son orientaciones básicas que ayudan a garantizar un
-                desempeño adecuado, responsable y ordenado durante el proceso de evaluación. Estas reglas favorecen
+                desempeño adecuado, responsable y ordenado durante el proceso de evaluación.
+            </p>
+            <p>
+                Estas reglas favorecen
                 tanto la equidad como la correcta medición del aprendizaje.
             </p>
             <p>
                 Antes del examen, es fundamental prepararse con anticipación, revisando los contenidos estudiados y
-                organizando el tiempo de repaso. También se recomienda descansar adecuadamente, ya que el sueño influye
-                directamente en la concentración y la memoria. Asimismo, el estudiante debe presentarse puntualmente y
+                organizando el tiempo de repaso.
+            </p>
+            <p>
+                También se recomienda descansar adecuadamente, ya que el sueño influye
+                directamente en la concentración y la memoria.
+            </p>
+            <p>
+                Asimismo, el estudiante debe presentarse puntualmente y
                 llevar los materiales permitidos (bolígrafo, lápiz, calculadora, entre otros), según las indicaciones
                 del docente.
             </p>
             <p>
                 Durante el examen, se debe leer cuidadosamente las instrucciones y cada pregunta, evitando responder de
-                manera apresurada. Es importante administrar el tiempo, comenzando por las preguntas que resulten más
-                claras y dejando las más complejas para el final. Mantener la calma, concentrarse en la evaluación y
+                manera apresurada.
+            </p>
+            <p>
+                Es importante administrar el tiempo, comenzando por las preguntas que resulten más
+                claras y dejando las más complejas para el final.
+            </p>
+            <p>
+                Mantener la calma, concentrarse en la evaluación y
                 respetar las normas de honestidad académica, evitando cualquier forma de copia o fraude, es una regla
                 esencial.
             </p>
             <p>
                 Después de finalizar, se aconseja revisar las respuestas si el tiempo lo permite, para corregir posibles
-                errores de interpretación u omisiones. Finalmente, el estudiante debe entregar el examen conforme a las
+                errores de interpretación u omisiones.
+            </p>
+            <p>
+                Finalmente, el estudiante debe entregar el examen conforme a las
                 indicaciones y mantener una actitud respetuosa hasta la conclusión del proceso evaluativo.
             </p>
             <p>
@@ -1837,57 +2187,88 @@
             <h3>Tipos de preguntas</h3>
             <p>
                 En los procesos de evaluación educativa, las preguntas se diseñan según el tipo de aprendizaje que se
-                desea medir (conocimiento, comprensión, análisis o aplicación). A continuación, se presentan los
+                desea medir (conocimiento, comprensión, análisis o aplicación).
+            </p>
+            <p>
+                A continuación, se presentan los
                 principales tipos de preguntas, con una breve explicación de cada uno.
             </p>
             <p>
                 <b>Preguntas de opción múltiple</b>
-
+            </p>
+            <p>
                 Presentan una pregunta o enunciado acompañado de varias alternativas, de las cuales solo una es
                 correcta.
+            </p>
+            <p>
                 Se utilizan para evaluar conocimientos, comprensión y, en algunos casos, aplicación de conceptos.
+            </p>
+            <p>
                 Permiten una corrección objetiva y rápida.
             </p>
             <p>
                 El objetivo de las preguntas de opción múltiple es evaluar el nivel de conocimiento y comprensión del
                 estudiante sobre un contenido específico, permitiendo identificar si reconoce conceptos correctos,
-                diferencia ideas similares y aplica nociones básicas en situaciones concretas. También buscan garantizar
+                diferencia ideas similares y aplica nociones básicas en situaciones concretas.
+            </p>
+            <p>
+                También buscan garantizar
                 objetividad y uniformidad en la calificación, reduciendo la subjetividad del evaluador.
             </p>
             <p>
                 <b>Preguntas de verdadero o falso</b>
-
+            </p>
+            <p>
                 Consisten en afirmaciones que el estudiante debe identificar como correctas o incorrectas.
+            </p>
+            <p>
                 Evalúan el reconocimiento de conceptos, definiciones o hechos específicos.
+            </p>
+            <p>
                 Su principal limitación es que no permiten profundizar en el razonamiento del estudiante.
             </p>
             <p>
                 El objetivo de las preguntas de verdadero o falso es verificar el reconocimiento rápido de hechos,
-                conceptos o afirmaciones previamente estudiadas. Se utilizan para comprobar si el estudiante distingue
+                conceptos o afirmaciones previamente estudiadas.
+            </p>
+            <p>
+                Se utilizan para comprobar si el estudiante distingue
                 entre información correcta e incorrecta, especialmente en contenidos conceptuales y definiciones
                 básicas.
             </p>
             <p>
                 <b>Preguntas de emparejamiento</b>
-
+            </p>
+            <p>
                 Requieren relacionar elementos de una columna con los de otra.
+            </p>
+            <p>
                 Se emplean para evaluar asociaciones entre conceptos, definiciones, fechas, autores o ejemplos.
             </p>
             <p>
                 El objetivo de las preguntas de emparejamiento es evaluar la capacidad del estudiante para relacionar
-                conceptos, ideas, definiciones, autores o ejemplos. Este tipo de pregunta permite medir la comprensión
+                conceptos, ideas, definiciones, autores o ejemplos.
+            </p>
+            <p>
+                Este tipo de pregunta permite medir la comprensión
                 de vínculos lógicos entre elementos de un mismo tema de manera estructurada y ordenada.
             </p>
             <p>
                 <b>Preguntas orales</b>
-
+            </p>
+            <p>
                 Se realizan de forma verbal y permiten evaluar el dominio del tema, la claridad de ideas y la expresión
                 oral.
+            </p>
+            <p>
                 Son frecuentes en defensas, exposiciones o evaluaciones individuales.
             </p>
             <p>
                 El objetivo de las preguntas orales es evaluar el dominio del contenido, la capacidad de expresión
-                verbal, la claridad de ideas y el razonamiento inmediato del estudiante. Además, permiten valorar la
+                verbal, la claridad de ideas y el razonamiento inmediato del estudiante.
+            </p>
+            <p>
+                Además, permiten valorar la
                 seguridad, argumentación y comprensión profunda del tema, así como la habilidad para responder y
                 explicar en tiempo real.
             </p>
@@ -1896,29 +2277,44 @@
                 Responde las siguientes preguntas:
             </p>
             <ul>
-                <li>Cuál de estos tipos de preguntas consideras más adecuado?</li>
+                <li>¿Cuál de estos tipos de preguntas consideras más adecuado?</li>
                 <li>Menciona dos ventajas y una desventajas</li>
                 <li>Elige un tema de una materia que estés estudiando y redacta un examen</li>
             </ul>
             <h3>Ansiedad y estrés en los exámenes</h3>
             <p>
                 La ansiedad es una respuesta emocional caracterizada por preocupación, miedo o nerviosismo ante una
-                situación percibida como amenazante, como un examen. En el contexto educativo, la ansiedad ante los
+                situación percibida como amenazante, como un examen.
+            </p>
+            <p>
+                En el contexto educativo, la ansiedad ante los
                 exámenes puede provocar dificultades de concentración, bloqueo mental, olvidos temporales y disminución
-                del rendimiento académico, incluso cuando el estudiante ha estudiado adecuadamente. Diversos estudios
+                del rendimiento académico, incluso cuando el estudiante ha estudiado adecuadamente.
+            </p>
+            <p>
+                Diversos estudios
                 señalan que niveles altos de ansiedad interfieren con los procesos de memoria y atención necesarios para
                 responder correctamente una evaluación.
             </p>
             <p>
                 El estrés es una respuesta física y psicológica del organismo ante demandas excesivas o presión, como la
-                carga académica, el tiempo limitado para estudiar o la importancia de una calificación. Un nivel
+                carga académica, el tiempo limitado para estudiar o la importancia de una calificación.
+            </p>
+            <p>
+                Un nivel
                 moderado de estrés puede ser positivo y motivador, pero cuando es intenso o prolongado afecta
                 negativamente el aprendizaje, el estado emocional y el desempeño en los exámenes, generando cansancio,
                 irritabilidad y dificultad para razonar.
             </p>
             <p>
-                La ansiedad y el estrés están estrechamente relacionados. El estrés académico constante puede aumentar
-                la ansiedad ante los exámenes, y esta ansiedad, a su vez, intensifica la percepción de estrés. Ambos
+                La ansiedad y el estrés están estrechamente relacionados.
+            </p>
+            <p>
+                El estrés académico constante puede aumentar
+                la ansiedad ante los exámenes, y esta ansiedad, a su vez, intensifica la percepción de estrés.
+            </p>
+            <p>
+                Ambos
                 factores influyen directamente en el fracaso académico si no se gestionan adecuadamente, aun cuando el
                 estudiante tenga conocimientos suficientes.
             </p>
@@ -1927,23 +2323,38 @@
                 emocionales que ayuden al estudiante a sentirse más seguro y preparado.
             </p>
             <p>
-                Una de las formas más eficaces es estudiar con anticipación y de manera organizada. Planificar el
+                Una de las formas más eficaces es estudiar con anticipación y de manera organizada.
+            </p>
+            <p>
+                Planificar el
                 estudio, distribuir los contenidos en varios días y comprender los temas, en lugar de memorizarlos,
                 genera mayor confianza y disminuye el miedo al examen.
             </p>
             <p>
-                El uso adecuado del tiempo evita la presión de último momento. Establecer horarios de estudio, descansos
+                El uso adecuado del tiempo evita la presión de último momento.
+            </p>
+            <p>
+                Establecer horarios de estudio, descansos
                 y repaso permite reducir la sobrecarga mental y el estrés acumulado, factores directamente relacionados
                 con la ansiedad.
             </p>
             <p>
-                Practicar respiraciones profundas antes y durante el examen ayuda a controlar los nervios. La
+                Practicar respiraciones profundas antes y durante el examen ayuda a controlar los nervios.
+            </p>
+            <p>
+                La
                 respiración lenta y consciente reduce la activación física asociada a la ansiedad, facilitando la
                 concentración y el razonamiento.
             </p>
             <p>
-                Dormir bien antes del examen es fundamental. La falta de sueño aumenta la ansiedad, afecta la memoria y
-                reduce la capacidad de atención. También es importante mantener una alimentación adecuada y evitar el
+                Dormir bien antes del examen es fundamental.
+            </p>
+            <p>
+                La falta de sueño aumenta la ansiedad, afecta la memoria y
+                reduce la capacidad de atención.
+            </p>
+            <p>
+                También es importante mantener una alimentación adecuada y evitar el
                 consumo excesivo de cafeína.
             </p>
         </section>
@@ -1959,58 +2370,65 @@
             </p>
             <p>
                 Desde el ámbito académico y científico, la investigación permite comprender la realidad, generar
-                explicaciones válidas y aportar soluciones basadas en evidencias. No se trata solo de buscar
+                explicaciones válidas y aportar soluciones basadas en evidencias.
+            </p>
+            <p>
+                No se trata solo de buscar
                 información, sino de formular preguntas, aplicar métodos adecuados y analizar resultados para llegar a
                 conclusiones confiables.
             </p>
             <h3>Etapas del método científico</h3>
             <p>
                 El método científico es un conjunto de etapas ordenadas que permiten investigar fenómenos de manera
-                objetiva, sistemática y verificable. Sus etapas aseguran que el conocimiento obtenido sea válido y
+                objetiva, sistemática y verificable.
+            </p>
+            <p>
+                Sus etapas aseguran que el conocimiento obtenido sea válido y
                 confiable.
             </p>
             <ol>
                 <li>
-                    <b>Observación</b> <br>
+                    <b>Observación</b> <br><br>
 
                     Se observa un hecho, situación o fenómeno de la realidad que llama la atención y genera interés por
                     ser estudiado.
                 </li>
                 <li>
-                    <b>Planteamiento del problema</b> <br>
+                    <b>Planteamiento del problema</b> <br><br>
 
                     En esta etapa se explica el problema.
+                    <br><br>
                     Se describe qué está ocurriendo, en qué contexto se presenta, a quiénes afecta y por qué es
-                    importante investigarlo.
+                    importante investigarlo. <br><br>
                     Aquí se delimita y se expone el problema, pero no se formulan respuestas ni explicaciones, solo se
                     presenta la situación que se quiere estudiar.
                 </li>
                 <li>
-                    <b>Formulación de la pregunta de investigación</b> <br>
+                    <b>Formulación de la pregunta de investigación</b> <br><br>
 
                     A partir del problema explicado, se formula la pregunta de investigación, la cual orienta todo el
                     estudio y define qué se desea conocer o resolver.
                 </li>
                 <li>
-                    <b>Recolección de datos</b> <br>
+                    <b>Recolección de datos</b> <br><br>
 
                     Se realiza encuestas, entrevistas,
                     observaciones, mediciones o experimentos.
                 </li>
                 <li>
-                    <b>Análisis de los datos</b> <br>
+                    <b>Análisis de los datos</b> <br><br>
 
                     Los datos recolectados se organizan y analizan para determinar si apoyan o no la hipótesis
                     planteada.
                 </li>
                 <li>
-                    <b>Conclusiones</b> <br>
+                    <b>Conclusiones</b> <br><br>
 
                     Se interpretan los resultados y se establecen conclusiones, indicando si la hipótesis fue aceptada o
                     rechazada, y qué se aprendió del estudio.
                 </li>
                 <li>
-                    <b>Comunicación de resultados</b> <br>
+                    <b>Comunicación de resultados</b> <br><br>
 
                     Finalmente, los resultados se presentan mediante informes, trabajos académicos, exposiciones o
                     artículos, compartiendo el conocimiento obtenido.
@@ -2020,16 +2438,21 @@
             <p>
                 El método científico puede clasificarse de acuerdo con la forma de razonamiento
             </p>
-            <p>
-                <b>Método inductivo</b> <br>
-                Parte de la observación de hechos particulares para llegar a conclusiones generales. Se utiliza cuando,
-                a partir de casos específicos, se formulan leyes o principios generales.
-            </p>
-            <p>
-                <b>Método deductivo</b> <br>
-                Parte de principios o teorías generales para analizar casos particulares. Permite comprobar si una
-                teoría se cumple en situaciones concretas.
-            </p>
+            <ul>
+                <li>
+                    <b>Método inductivo</b> <br><br>
+                    Parte de la observación de hechos particulares para llegar a conclusiones generales. <br><br>Se
+                    utiliza cuando,
+                    a partir de casos específicos, se formulan leyes o principios generales.
+                </li>
+                <li>
+                    <b>Método deductivo</b> <br><br>
+                    Parte de principios o teorías generales para analizar casos particulares. <br><br> Permite comprobar
+                    si una
+                    teoría se cumple en situaciones concretas.
+                </li>
+            </ul>
+
             <h3>Actividad</h3>
             <p>
                 Responde las siguientes preguntas:
@@ -2048,28 +2471,40 @@
             <p>
                 La recopilación de datos es una etapa fundamental del proceso de investigación científica, ya que
                 permite obtener la información necesaria para responder a la pregunta de investigación y comprobar la
-                hipótesis. Los datos deben recogerse de manera ordenada, objetiva y planificada.
+                hipótesis. 
+            </p>
+            <p>
+                Los datos deben recogerse de manera ordenada, objetiva y planificada.
             </p>
             <p>
                 <b>Observación</b>
-
+            </p>
+            <p>
                 La observación consiste en registrar de manera directa hechos, conductas o situaciones tal como ocurren
                 en la realidad.
+            </p>
+            <p>
                 Puede ser estructurada (con una guía previa) o no estructurada, y se usa cuando el investigador necesita
                 ver el fenómeno en su contexto real.
             </p>
             <p>
                 <b>Encuestas</b>
-
+            </p>
+            <p>
                 Las encuestas consisten en aplicar un conjunto de preguntas a un grupo de personas para conocer
                 opiniones, comportamientos o características.
+            </p>
+            <p>
                 Se utilizan principalmente en investigaciones sociales y educativas, y permiten recopilar información de
                 forma rápida y sistemática.
             </p>
             <p>
                 <b>Entrevistas</b>
-
+            </p>
+            <p>
                 La entrevista es una técnica que se basa en el diálogo directo entre el investigador y el participante.
+            </p>
+            <p>
                 Permite obtener información más profunda y detallada, ya que el entrevistado puede explicar sus
                 respuestas con mayor amplitud.
             </p>
@@ -2077,26 +2512,44 @@
             <p>
                 El análisis de datos es la etapa del proceso de investigación científica en la que la información
                 recopilada se organiza, examina e interpreta con el fin de responder a la pregunta de investigación.
+            </p>
+            <p>
                 Este análisis debe realizarse de manera ordenada, objetiva y coherente.
             </p>
             <p>
-                <b>Organización de los datos</b> <br>
+                <b>Organización de los datos</b>
+            </p>
+            <p>
 
-                En primer lugar, los datos se ordenan y clasifican. Esto puede implicar agrupar respuestas, tabular
-                información, elaborar cuadros o registrar los datos en tablas o bases de datos. La organización permite
+                En primer lugar, los datos se ordenan y clasifican.
+            </p>
+            <p>
+                Esto puede implicar agrupar respuestas, tabular
+                información, elaborar cuadros o registrar los datos en tablas o bases de datos.
+            </p>
+            <p>
+                La organización permite
                 que la información sea clara y comprensible.
             </p>
             <p>
-                <b>Depuración de los datos</b> <br>
-
-                En esta etapa se revisan los datos para detectar errores, datos incompletos o inconsistencias. Se
+                <b>Depuración de los datos</b>
+            </p>
+            <p>
+                En esta etapa se revisan los datos para detectar errores, datos incompletos o inconsistencias. 
+            </p>
+            <p>
+                Se
                 eliminan o corrigen aquellos datos que no cumplen con los criterios establecidos en la investigación.
             </p>
             <p>
-                <b>Análisis descriptivo</b> <br>
-
+                <b>Análisis descriptivo</b>
+            </p>
+            <p>
                 El análisis descriptivo consiste en resumir los datos mediante frecuencias, porcentajes, promedios,
-                gráficos o descripciones narrativas. Su objetivo es mostrar cómo se comportan los datos sin explicar aún
+                gráficos o descripciones narrativas. 
+            </p>
+            <p>
+                Su objetivo es mostrar cómo se comportan los datos sin explicar aún
                 las causas.
             </p>
             <h3>Actividad</h3>
@@ -2116,12 +2569,16 @@
             </h3>
             <p>
                 Las fichas documentales de trabajo son instrumentos usados en la investigación para registrar, organizar
-                y analizar información obtenida de fuentes como libros, artículos, leyes o páginas web. Su finalidad es
+                y analizar información obtenida de fuentes como libros, artículos, leyes o páginas web.
+            </p>
+            <p>
+                Su finalidad es
                 facilitar el estudio y respaldar el trabajo académico con fuentes confiables.
             </p>
             <p>
-                <b>Identificar la fuente</b> <br>
-
+                <b>Identificar la fuente</b>
+            </p>
+            <p>
                 Antes de escribir la ficha, se debe definir claramente de dónde proviene la información:
             </p>
             <ul>
@@ -2132,18 +2589,22 @@
                 <li>Página web académica</li>
             </ul>
             <p>
-                <b>Estructura básica de una ficha documental</b> <br>
+                <b>Estructura básica de una ficha documental</b>
+            </p>
+            <p>
 
-                Toda ficha documental debe contener: <br>
+                Toda ficha documental debe contener:
+            </p>
+            <p>
 
                 <b>a) Encabezado </b> <br>
-                Tema o subtema de investigación. <br>
+                Tema o subtema de investigación. <br><br>
 
                 <b>b) Referencia de la fuente </b> <br>
-                Datos completos del autor, año, título y editorial (según normas APA). <br>
+                Datos completos del autor, año, título y editorial (según normas APA). <br><br>
 
                 <b>c) Contenido </b> <br>
-                Información relevante (resumen, cita o comentario). <br>
+                Información relevante (resumen, cita o comentario). <br><br>
 
                 <b>d) Observaciones (opcional) </b> <br>
                 Aclaraciones o relación con otros temas del trabajo.
@@ -2154,19 +2615,24 @@
                 y uniformidad en el trabajo de investigación, facilitando su lectura y organización.
             </p>
             <p>
-                <b>Dimensión de las fichas </b> <br>
+                <b>Dimensión de las fichas </b>
+            </p>
+            <p>
 
                 Tradicionalmente, las fichas se elaboran en cartulina o papel, aunque hoy también pueden realizarse en
-                formato digital. Los tamaños más utilizados son:
+                formato digital.
+                
+            </p>
+            <p>
+                Los tamaños más utilizados son:
             </p>
             <ul>
                 <li>
-                    <b>12,5 cm × 7,5 cm </b> <br>
-                    Es el tamaño más común. Se usa para fichas bibliográficas y de resumen por ser práctica y fácil de
+                    <b>12,5 cm × 7,5 cm </b> <br><br>Se usa para fichas bibliográficas y de resumen por ser práctica y fácil de
                     archivar.
                 </li>
                 <li>
-                    <b>15 cm × 10 cm </b> <br>
+                    <b>15 cm × 10 cm </b> <br><br>
                     Se emplea cuando el contenido es más extenso, como en fichas textuales o de comentario.
                 </li>
             </ul>
@@ -2181,12 +2647,12 @@
             <p>
 
 
-                <b>Tema: </b> Marketing Digital <br>
-                <b>Fuente: </b> Kotler, P., & Keller, K. (2016). Dirección de marketing. Pearson. <br>
+                <b>Tema: </b> Marketing Digital <br><br>
+                <b>Fuente: </b> Kotler, P., & Keller, K. (2016). Dirección de marketing. Pearson. <br><br>
                 <b>Contenido: </b> <br>
                 El marketing digital permite a las empresas interactuar directamente con los consumidores mediante
                 plataformas digitales, facilitando la segmentación, medición de resultados y personalización de
-                estrategias. <br>
+                estrategias. <br><br>
                 <b>Observación: </b> <br>
                 Útil para fundamentar el capítulo teórico sobre marketing digital.
             </p>
@@ -2199,7 +2665,10 @@
             <p>
                 El marco teórico es la parte del trabajo de investigación en la que se presentan, explican y fundamentan
                 los conceptos, teorías, antecedentes y enfoques científicos que sirven de base para comprender y
-                analizar el problema de estudio. Su función principal es sustentar teóricamente la investigación y
+                analizar el problema de estudio. 
+            </p>
+            <p>
+                Su función principal es sustentar teóricamente la investigación y
                 demostrar que el estudio se apoya en conocimientos científicos previos.
             </p>
             <p>
@@ -2219,22 +2688,31 @@
             </ul>
             <h3>¿Cómo redactar una cita y referencia parafraseada?</h3>
             <p>
-                <b>Existen dos formas correctas: </b> <br><br>
-
-                <b>a) Cita narrativa</b> <br>
-
-                El autor se integra en la redacción del texto. <br>
-
-                <b>Ejemplo: </b> <br>
+                <b>Existen dos formas correctas:</b>
+            </p>
+            <p>
+                <b>a) Cita narrativa</b>
+            </p>
+            <p>
+                El autor se integra en la redacción del texto.
+            </p>
+            <p>
+                <b>Ejemplo: </b>
+            </p>
+            <p>
                 Hernández Sampieri (2014) señala que el marco teórico permite fundamentar científicamente una
-                investigación mediante la revisión sistemática de la literatura existente. <br> <br>
-
-
-                <b>b) Cita parentética </b> <br>
-
-                El autor se coloca al final del texto, entre paréntesis. <br>
-
-                <b>Ejemplo: </b> <br>
+                investigación mediante la revisión sistemática de la literatura existente.
+            </p>
+            <p>
+                <b>b) Cita parentética </b>
+            </p>
+            <p>
+                El autor se coloca al final del texto, entre paréntesis.
+            </p>
+            <p>
+                <b>Ejemplo: </b>
+            </p>
+            <p>
                 El marco teórico cumple la función de sustentar conceptualmente una investigación a partir de estudios
                 previos (Hernández Sampieri, 2014).
             </p>
@@ -2255,11 +2733,11 @@
             </ol>
             <h3>Formato general de la carátula</h3>
             <ul>
-                <li>Tamaño de papel: <b>A4</b></li>
-                <li>Márgenes: <b> 2,54 cm en todos los lados </b></li>
-                <li>Fuente: <b> Times New Roman 12, Arial 11 o Calibri 11 </b></li>
-                <li>Interlineado: <b> doble espacio </b></li>
-                <li>Alineación: <b> centrado </b></li>
+                <li>Tamaño de papel: <br><b>A4</b></li>
+                <li>Márgenes: <br><b> 2,54 cm en todos los lados </b></li>
+                <li>Fuente: <br><b> Times New Roman 12, <br>Arial 11 o Calibri 11</b></li>
+                <li>Interlineado: <br><b> doble espacio </b></li>
+                <li>Alineación: <br><b> centrado </b></li>
             </ul>
 
         </section>
