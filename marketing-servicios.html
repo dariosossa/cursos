@@ -402,7 +402,6 @@
     <main>
         <section id="Unidad1">
             <h2>Unidad 1: FUNDAMENTOS DEL MARKETING DE SERVICIOS</h2>
-            <h3>¿Qué es un Servicio?</h3>
             <p>El servicio es una experiencia diseñada para resolver necesidades específicas.</p>
             <h3>Bien VS Servicio</h3>
             <table>
@@ -1060,7 +1059,6 @@
         </section>
         <section id="Unidad2">
             <h2>Unidad 2: CARACTERÍSTICAS Y GESTIÓN DEL SERVICIO </h2>
-            <h3>Las 4 características del servicio</h3>
             <p>
                 El servicio se fundamenta en cuatro características que explican la naturaleza de los servicios y los
                 diferencian de los bienes tangibles.
@@ -2089,7 +2087,6 @@
         </section>
         <section id="Unidad3">
             <h2>Unidad 3: EL CLIENTE EN EL MARKETING DE SERVICIOS</h2>
-            <h3>El Rol del Cliente en el Servicio</h3>
             <p>
                 En el marketing de servicios, el cliente no es un sujeto pasivo que solo recibe el servicio, sino que
                 participa activamente en su desarrollo.
@@ -2521,7 +2518,6 @@
         </section>
         <section id="Unidad4">
             <h2>Unidad 4: CALIDAD DEL SERVICIO</h2>
-            <h3>Calidad del Servicio</h3>
             <p>
                 La calidad del servicio no se define únicamente por lo que la empresa cree que ofrece, sino por la
                 evaluación que realiza el cliente después de vivir la experiencia.
@@ -3709,20 +3705,18 @@
         // Navegación
         function goHome() { window.location.href = 'index.html'; }
 
-        // Menú de Navegación (Antes Búsqueda)
+        // Menú de Navegación
         const diag = document.getElementById('search');
         const list = document.getElementById('results');
 
         function openSearch() {
-            list.innerHTML = ''; // Limpiamos la lista previa
-
-            // Generamos el menú basado en los títulos H2 de tus secciones
+            list.innerHTML = '';
             document.querySelectorAll('section').forEach(s => {
                 const titleElement = s.querySelector('h2');
                 if (titleElement) {
                     const li = document.createElement('li');
                     li.innerHTML = `<i data-lucide="chevron-right"></i> ${titleElement.textContent}`;
-                    li.style.fontSize = "0.8rem";
+                    li.style.fontSize = "0.9rem";
                     li.style.cursor = "pointer";
                     li.style.display = "flex";
                     li.style.alignItems = "center";
@@ -3736,7 +3730,7 @@
                 }
             });
 
-            lucide.createIcons(); // Genera los iconos de Lucide dentro del menú
+            lucide.createIcons();
             diag.showModal();
             setTimeout(() => diag.classList.add('visible'), 10);
         }
@@ -3746,7 +3740,6 @@
             setTimeout(() => diag.close(), 300);
         }
 
-        // Cerrar al hacer clic fuera del contenido
         diag.addEventListener('click', (e) => {
             const rect = diag.getBoundingClientRect();
             if (e.clientY < rect.top || e.clientY > rect.bottom || e.clientX < rect.left || e.clientX > rect.right) {
@@ -3754,32 +3747,30 @@
             }
         });
 
-        // Header Dinámico (Cambia el título al hacer scroll)
+        // --- HEADER DINÁMICO (Lógica de IDs y Secciones) ---
         const topBarH1 = document.querySelector('header#top-bar h1');
         const observerOptions = {
             root: null,
-            rootMargin: '-20% 0px -70% 0px',
+            // Ajustamos para que el cambio ocurra cuando el elemento llega a la barra superior
+            rootMargin: '-10% 0px -85% 0px',
             threshold: 0
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const title = entry.target.querySelector('h2').textContent;
-                    topBarH1.textContent = title;
+                    const titleElement = entry.target.querySelector('h2');
+                    if (titleElement) {
+                        topBarH1.textContent = titleElement.textContent;
+                    }
                 }
             });
         }, observerOptions);
 
-        document.querySelectorAll('section').forEach(section => observer.observe(section));
+        // Observamos todas las secciones Y también el header hero inicial
+        document.querySelectorAll('section, header.hero').forEach(el => observer.observe(el));
 
-        window.addEventListener('scroll', () => {
-            if (window.scrollY < 100) {
-                topBarH1.textContent = 'Marketing de Servicios';
-            }
-        });
-
-        // Copiar al portapapeles
+        // Copiar
         async function copy(btn) {
             const code = btn.nextElementSibling.innerText;
             try {
