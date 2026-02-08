@@ -80,7 +80,7 @@
                 url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=1470');
             background-size: cover;
             background-position: center;
-            padding: 80px 20px;
+            padding: 60px 20px;
             text-align: center;
             border-bottom: 1px solid var(--border);
         }
@@ -105,8 +105,46 @@
         /* Contenedor General */
         .container {
             max-width: 1200px;
-            margin: 60px auto;
+            margin: 40px auto;
             padding: 0 20px;
+        }
+
+        /* Buscador */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+            position: relative;
+        }
+
+        .search-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            color: var(--white);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(255, 140, 0, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            fill: var(--text-muted);
+            width: 20px;
+            height: 20px;
         }
 
         /* Estilos Tutorial - SIEMPRE VISIBLE */
@@ -176,7 +214,7 @@
             border: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s;
+            transition: transform 0.3s, opacity 0.3s;
         }
 
         .course-card:hover {
@@ -391,6 +429,15 @@
             margin-top: 80px;
         }
 
+        /* No results message */
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            grid-column: 1 / -1;
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.2rem;
@@ -438,6 +485,17 @@
                     la esquina superior derecha y selecciona <strong>"Abrir en el navegador"</strong>.</p>
             </div>
         </div>
+        <!-- Buscador de cursos -->
+        <div class="search-container">
+            <div class="search-wrapper">
+                <svg class="search-icon" viewBox="0 0 24 24">
+                    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+                <input type="text" id="courseSearch" class="search-input" placeholder="Buscar un programa o curso...">
+            </div>
+        </div>
+
+        
 
         <div id="cursos" class="section-header">
             <h2>Nuestros Programas</h2>
@@ -481,7 +539,7 @@
             <article class="course-card">
                 <div class="card-img-container">
                     <img src="https://cms.usanmarcos.ac.cr/sites/default/files/styles/large/public/2024-10/cuales-on_-as-ramas-de-la-estadistic.png?itok=R72HmjQ7"
-                        alt="Marketing de Servicios">
+                        alt="Estadística">
                     <div class="badges">
                         <span class="badge badge-green">Material Académico</span>
                     </div>
@@ -508,6 +566,7 @@
                     </div>
                 </div>
             </article>
+
             <!-- Card: React -->
             <article class="course-card">
                 <div class="card-img-container">
@@ -532,6 +591,35 @@
                 </div>
             </article>
 
+            <!-- NUEVA Card: Técnicas de Estudio e Investigación -->
+            <article class="course-card">
+                <div class="card-img-container">
+                    <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=600"
+                        alt="Técnicas de Estudio">
+                    <div class="badges">
+                        <span class="badge badge-green">Material Académico</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h3>Técnicas de Estudio e Investigación</h3>
+                    <ul class="card-details">
+                        <li>12 Unidades Temáticas</li>
+                        <li>Docente: Ing. Darío Sossa</li>
+                        <li class="schedule-info">🕒 Modalidad flexible</li>
+                    </ul>
+                    <div class="card-divider"></div>
+                    <div class="card-actions">
+                        <a href="tecnicas-estudio-investigacion.html" class="btn-main">Ver material del curso</a>
+                        <a href="#" class="btn-meet btn-whatsapp-direct">Solicitar información</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Mensaje cuando no hay resultados -->
+            <div id="noResults" class="no-results">
+                No se encontraron cursos que coincidan con tu búsqueda.
+            </div>
+
         </div>
 
         <!-- Sección Formulario de Contacto -->
@@ -548,6 +636,7 @@
                 <div class="form-group">
                     <label for="interes">Programa de interés</label>
                     <select id="interes">
+                        <option value="" disabled selected>Selecciona un programa</option>
                     </select>
                 </div>
 
@@ -573,7 +662,6 @@
 
         /**
          * FUNCIÓN PARA CARGAR CURSOS Y OPTIMIZAR ENLACES DE LAS CARDS
-         * Detecta automáticamente el curso de la tarjeta y configura el botón de WhatsApp
          */
         function inicializarContenidoDinamico() {
             const selectInteres = document.getElementById('interes');
@@ -597,28 +685,62 @@
                 option.text = nombreCurso;
                 selectInteres.appendChild(option);
 
-                // 2. Optimizar botón de WhatsApp de la Card (Solicitar clase en Meet)
+                // 2. Optimizar botón de WhatsApp de la Card
                 const btnMeet = card.querySelector('.btn-meet');
                 if (btnMeet) {
                     const mensaje = `Quisiera inscribirme: *${nombreCurso}*.`;
-                    // Configuramos el href con el mensaje codificado
                     btnMeet.href = `https://wa.me/${TELEFONO_CONTACTO}?text=${encodeURIComponent(mensaje)}`;
                 }
             });
         }
 
         /**
-         * FUNCIÓN MAESTRA DE ESCAPE (PARA TIKTOK)
-         * Evita bloqueos del navegador interno de redes sociales
+         * BUSCADOR EN TIEMPO REAL (Resistente a Acentos y Mayúsculas)
+         */
+        function configurarBuscador() {
+            const searchInput = document.getElementById('courseSearch');
+            const cards = document.querySelectorAll('.course-card');
+            const noResults = document.getElementById('noResults');
+
+            // Función auxiliar para normalizar texto (quitar acentos)
+            const normalizarTexto = (texto) => {
+                return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+            };
+
+            searchInput.addEventListener('input', (e) => {
+                const term = normalizarTexto(e.target.value.trim());
+                let hasResults = false;
+
+                cards.forEach(card => {
+                    const titleElement = card.querySelector('h3');
+                    const title = normalizarTexto(titleElement.innerText);
+                    
+                    if (title.includes(term)) {
+                        card.style.display = 'flex';
+                        hasResults = true;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                noResults.style.display = hasResults ? 'none' : 'block';
+            });
+        }
+
+        /**
+         * FUNCIÓN PARA SALTAR EL NAVEGADOR DE TIKTOK/REDES
          */
         function forzarWhatsApp(url) {
             window.location.replace(url);
         }
 
         // Ejecución al cargar la página
-        window.addEventListener('DOMContentLoaded', inicializarContenidoDinamico);
+        window.addEventListener('DOMContentLoaded', () => {
+            inicializarContenidoDinamico();
+            configurarBuscador();
+        });
 
-        // Intercepción global de clics en elementos de WhatsApp para asegurar la salida de TikTok
+        // Intercepción global de clics en elementos de WhatsApp
         document.addEventListener('click', function (e) {
             const target = e.target.closest('.btn-whatsapp-direct');
             if (target) {
@@ -633,6 +755,11 @@
             const nombre = document.getElementById('nombre').value;
             const interes = document.getElementById('interes').value;
             const mensaje = document.getElementById('mensaje').value;
+
+            if(!interes) {
+                // Pequeña validación manual para el select
+                return;
+            }
 
             const texto = `Mi nombre es *${nombre}* . %0AEstoy interesado en: *${interes}* . %0A%0A*Consulta:* ${mensaje}`;
             const waUrl = `https://wa.me/${TELEFONO_CONTACTO}?text=${texto}`;
