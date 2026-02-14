@@ -21,7 +21,6 @@
             --text-dim: #94a3b8;
             --border: #2d3343;
             --nav-h: 72px;
-            --header-h: 60px;
         }
 
         * {
@@ -52,7 +51,6 @@
             position: fixed;
             top: 0;
             width: 100%;
-            height: var(--header-h);
             background: rgba(18, 20, 28, 0.85);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border);
@@ -60,6 +58,7 @@
             align-items: center;
             padding: 0 20px;
             z-index: 1100;
+            flex-direction: column;
         }
 
         header#top-bar h1 {
@@ -71,17 +70,6 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-        }
-
-        /* --- HERO --- */
-        header.hero {
-            height: 25vh;
-            background: linear-gradient(135deg, rgba(18, 20, 28, 0.95), rgba(30, 58, 138, 0.4)),
-                url('https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=800&auto=format&fit=crop') center/cover;
-            display: grid;
-            place-items: center;
-            text-align: center;
-            margin-bottom: 24px;
         }
 
         header.hero h2 {
@@ -316,6 +304,10 @@
             margin-left: 20px;
         }
 
+        details ul li {
+            margin-left: 45px;
+        }
+
         /* --- 3. TAMAÑOS PARA PC (Pantallas mayores a 1024px) --- */
         @media screen and (min-width: 824px) {
 
@@ -384,6 +376,52 @@
                 /* No mostrar etiqueta en el título principal */
             }
         }
+
+        /* Estilo para el contenedor del desplegable */
+        details {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            padding: 12px;
+            transition: all 0.3s ease;
+        }
+
+        /* Estilo para el título (lo que siempre es visible) */
+        summary {
+            font-weight: 600;
+            color: var(--accent);
+            /* Tu color azul #60a5fa */
+            cursor: pointer;
+            list-style: none;
+            /* Oculta la flecha por defecto en algunos navegadores */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        summary::before {
+            content: '➔';
+            /* Un icono simple para indicar que se abre */
+            transition: transform 0.3s;
+        }
+
+        details[open] summary::before {
+            transform: rotate(90deg);
+            /* Gira el icono al abrir */
+        }
+
+        /* Estilo para el contenido oculto */
+        details p {
+            margin-top: 15px;
+            padding-left: 25px;
+            color: var(--text-dim);
+            border-left: 2px solid var(--border);
+        }
+
+        b {
+            color: #95c4ff;
+        }
     </style>
 </head>
 
@@ -395,45 +433,31 @@
 
     <time id="clock">00:00:00</time>
 
-    <header class="hero">
-        <h2>Marketing de Servicios</h2>
-    </header>
+
 
     <main>
         <section id="Unidad1">
             <h2>Unidad 1: FUNDAMENTOS DEL MARKETING DE SERVICIOS</h2>
-            <p>El servicio es una experiencia diseñada para resolver necesidades específicas.</p>
-            <h3>Bien VS Servicio</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Bien</th>
-                        <th>Servicio</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Tangible</td>
-                        <td>Intangible</td>
-                    </tr>
-                    <tr>
-                        <td>Estandarizado</td>
-                        <td>Variable</td>
-                    </tr>
-                    <tr>
-                        <td>Almacenable</td>
-                        <td>No Almacenable</td>
-                    </tr>
-                    <tr>
-                        <td>Se puede devolver el bien adquirido.</td>
-                        <td>No se puede devolver el servicio</td>
-                    </tr>
-                    <tr>
-                        <td>El cliente es un receptor pasivo.</td>
-                        <td>El cliente es un participante activo</td>
-                    </tr>
-                </tbody>
-            </table>
+            <p>Un servicio es una actividad o acción que una persona o empresa realiza para satisfacer una necesidad de
+                otra persona.</p>
+            <h3>¿Cuál es la diferencia entre un bien y un servicio?</h3>
+            <p>
+                Un bien es tangible, es decir, se puede ver y tocar, como un libro o un celular.
+                Generalmente es estandarizado, se puede almacenar y también se puede devolver después de haberlo
+                comprado.
+                En la adquisición de un bien, el cliente suele ser un receptor pasivo, ya que simplemente recibe el
+                producto terminado.
+            </p>
+            <p>
+                En cambio, un servicio es intangible, no se puede ver ni tocar físicamente.
+                Es variable porque puede cambiar según quién lo preste y cómo se realice.
+                No es almacenable, ya que se produce y se consume al mismo tiempo, y tampoco se puede devolver una vez
+                recibido.
+                Además, en la prestación del servicio, el cliente es un participante activo, porque su interacción forma
+                parte de la experiencia.
+            </p>
+
+
             <h3>¿Qué es el Sector Terciario?</h3>
             <p>
                 El sector terciario está conformado por todas las actividades económicas que no producen bienes
@@ -444,74 +468,9 @@
                 Dentro de este sector se encuentran actividades como el comercio, transporte, turismo, educación, salud,
                 banca, comunicaciones, servicios públicos y servicios profesionales.
             </p>
-            <p>
-                Su importancia radica en que permite que la economía funcione de manera continua, facilitando el
-                intercambio, la atención a las personas y el desarrollo social.
-            </p>
-            <h3>Impacto del sector terciario</h3>
-            <p>
-                En Bolivia, el sector terciario representa la mayor participación dentro del Producto Interno Bruto
-                (PIB).
-            </p>
-            <p>
-                Según datos oficiales, las actividades de servicios concentran una parte significativa del empleo
-                urbano, convirtiéndose en una de las principales fuentes de trabajo del país.
-            </p>
-            <p>
-                El crecimiento del sector terciario en Bolivia está relacionado con el aumento de la población urbana,
-                la expansión del comercio interno, el desarrollo del sistema financiero y la creciente demanda de
-                servicios educativos, de salud y transporte.
-            </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Cómo describiría la forma en que fue atendido en los locales o empresas de Tarija que ha visitado
-                recientemente?
-            </p>
-            <p>
-                2. ¿Cómo percibe el tiempo que normalmente debe esperar para ser atendido en los locales o empresas de
-                Tarija?
-            </p>
-            <p>
-                3. ¿Qué aspectos del proceso de atención considera que funcionan bien en los locales o empresas de
-                Tarija?
-            </p>
-            <p>
-                4. ¿Qué dificultades ha experimentado durante la atención en locales o empresas de Tarija?
-            </p>
-            <p>
-                5. ¿Cómo evalúa el nivel de preparación y conocimiento del personal que atiende en los locales o
-                empresas
-                de Tarija?
-            </p>
-            <p>
-                6. ¿Qué tan clara considera que es la información que brindan los locales o empresas de Tarija sobre sus
-                servicios?
-            </p>
-            <p>
-                7. ¿Qué opinión tiene sobre el estado y cuidado de los espacios donde atienden al cliente los locales o
-                empresas de Tarija?
-            </p>
-            <p>
-                8. ¿Cómo percibe la relación entre el precio que paga y el servicio que recibe en los locales o empresas
-                de
-                Tarija?
-            </p>
-            <p>
-                9. ¿Qué elementos del servicio influyen más en su decisión de volver a un local o empresa de Tarija?
-            </p>
-            <p>
-                10. ¿Qué aspectos considera prioritarios para mejorar el servicio al cliente en los locales o empresas
-                de
-                Tarija?
-            </p>
             <h3>Clasificación de los Servicios</h3>
             <p>
-                Los servicios pueden clasificarse de distintas maneras según su finalidad, el tipo de cliente al que se
-                dirigen y la forma en que se prestan.
-            </p>
-            <p>
-                Esta clasificación permite comprender mejor cómo funcionan dentro del sector terciario y cómo aportan al
-                desarrollo económico.
+                Los servicios pueden clasificarse de distintas maneras:
             </p>
             <h3>
                 Clasificación de los Servicios según el tipo de destinatario
@@ -545,178 +504,83 @@
                     </tr>
                 </tbody>
             </table>
-            <h3>Selecciona la respuesta correcta y explica por qué la elegiste.</h3>
-            <p>
-                1. Una familia contrata un servicio de internet para su hogar. <br> <br>
+            <details>
+                <summary>
+                    A1 - Selecciona la respuesta correcta y explica por qué la elegiste.
+                </summary>
+                <p>
+                    1. Una familia contrata un servicio de internet para su hogar. <br> <br>
 
-                a) Servicio público <br>
-                b) Servicio a las empresas <br>
-                c) Servicio al consumidor <br>
-            </p>
-            <p>
-                2. Una empresa de Tarija contrata una agencia de publicidad para promocionar sus productos. <br> <br>
+                    a) Servicio público <br>
+                    b) Servicio a las empresas <br>
+                    c) Servicio al consumidor <br>
+                </p>
+                <p>
+                    2. Una empresa de Tarija contrata una agencia de publicidad para promocionar sus productos. <br>
+                    <br>
 
-                a) Servicio público <br>
-                b) Servicio a las empresas <br>
-                c) Servicio al consumidor <br>
-            </p>
-            <p>
-                3. El servicio de recolección de basura es organizado por el gobierno municipal. <br> <br>
+                    a) Servicio público <br>
+                    b) Servicio a las empresas <br>
+                    c) Servicio al consumidor <br>
+                </p>
+                <p>
+                    3. El servicio de recolección de basura es organizado por el gobierno municipal. <br> <br>
 
-                a) Servicio público <br>
-                b) Servicio a las empresas <br>
-                c) Servicio al consumidor <br>
-            </p>
-            <p>
-                4. Una persona paga una consulta médica particular. <br> <br>
+                    a) Servicio público <br>
+                    b) Servicio a las empresas <br>
+                    c) Servicio al consumidor <br>
+                </p>
+                <p>
+                    4. Una persona paga una consulta médica particular. <br> <br>
 
-                a) Servicio público <br>
-                b) Servicio a las empresas <br>
-                c) Servicio al consumidor <br>
-            </p>
-            <p>
-                5. Una industria contrata seguridad privada para sus instalaciones. <br> <br>
+                    a) Servicio público <br>
+                    b) Servicio a las empresas <br>
+                    c) Servicio al consumidor <br>
+                </p>
+                <p>
+                    5. Una industria contrata seguridad privada para sus instalaciones. <br> <br>
 
-                a) Servicio público <br>
-                b) Servicio a las empresas <br>
-                c) Servicio al consumidor <br>
-            </p>
-            <p>
-                6. El Estado brinda educación pública gratuita. <br> <br>
+                    a) Servicio público <br>
+                    b) Servicio a las empresas <br>
+                    c) Servicio al consumidor <br>
+                </p>
+                <p>
+                    6. El Estado brinda educación pública gratuita. <br> <br>
 
-                a) Servicio público <br>
-                b) Servicio a las empresas <br>
-                c) Servicio al consumidor <br>
-            </p>
-            <p>
-                7. Un emprendedor contrata un servicio de hosting web para su negocio. <br> <br>
+                    a) Servicio público <br>
+                    b) Servicio a las empresas <br>
+                    c) Servicio al consumidor <br>
+                </p>
+                <p>
+                    7. Un emprendedor contrata un servicio de hosting web para su negocio. <br> <br>
 
-                a) Servicio público <br>
-                b) Servicio a las empresas <br>
-                c) Servicio al consumidor <br>
-            </p>
-            <p>
-                8. Una persona utiliza transporte público para movilizarse a su trabajo. <br> <br>
+                    a) Servicio público <br>
+                    b) Servicio a las empresas <br>
+                    c) Servicio al consumidor <br>
+                </p>
+                <p>
+                    8. Una persona utiliza transporte público para movilizarse a su trabajo. <br> <br>
 
-                a) Servicio público <br>
-                b) Servicio a las empresas <br>
-                c) Servicio al consumidor <br>
-            </p>
-            <p>
-                9. Una empresa contrata asesoría legal permanente. <br> <br>
+                    a) Servicio público <br>
+                    b) Servicio a las empresas <br>
+                    c) Servicio al consumidor <br>
+                </p>
+                <p>
+                    9. Una empresa contrata asesoría legal permanente. <br> <br>
 
-                a) Servicio público <br>
-                b) Servicio a las empresas <br>
-                c) Servicio al consumidor <br>
-            </p>
-            <p>
-                10. Una familia paga un servicio de televisión por cable. <br> <br>
+                    a) Servicio público <br>
+                    b) Servicio a las empresas <br>
+                    c) Servicio al consumidor <br>
+                </p>
+                <p>
+                    10. Una familia paga un servicio de televisión por cable. <br> <br>
 
-                a) Servicio público <br>
-                b) Servicio a las empresas <br>
-                c) Servicio al consumidor <br>
-            </p>
-            <h3>Clasificación de los Servicios según la naturaleza del servicio</h3>
-            <p>
-                Esta clasificación se basa en el grado de contacto con el cliente y el tipo de actividad que se realiza.
-            </p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Tipo de Servicio</th>
-                        <th>Características</th>
-                        <th>Ejemplos</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Servicios personales</td>
-                        <td>Requieren contacto directo entre el prestador y el cliente.</td>
-                        <td>Atención médica, peluquerías, enseñanza.</td>
-                    </tr>
-                    <tr>
-                        <td>Servicios técnicos o profesionales</td>
-                        <td>Exigen conocimientos especializados o técnicos.</td>
-                        <td>Ingeniería, informática, asesoría legal.</td>
-                    </tr>
-                    <tr>
-                        <td>Servicios de mantenimiento</td>
-                        <td>Se orientan a conservar o reparar bienes.</td>
-                        <td>Mecánica, electricidad, soporte técnico.</td>
-                    </tr>
-                </tbody>
-            </table>
-            <h3>Selecciona la respuesta correcta y explica por qué la elegiste.</h3>
-            <p>
-                1. Un ingeniero brinda asesoramiento técnico para la construcción de un edificio. <br> <br>
+                    a) Servicio público <br>
+                    b) Servicio a las empresas <br>
+                    c) Servicio al consumidor <br>
+                </p>
+            </details>
 
-                a) Servicio personal <br>
-                b) Servicio de mantenimiento <br>
-                c) Servicio técnico o profesional <br>
-            </p>
-            <p>
-                2. Una peluquería atiende directamente a sus clientes. <br> <br>
-
-                a) Servicio personal <br>
-                b) Servicio de mantenimiento <br>
-                c) Servicio técnico o profesional <br>
-            </p>
-            <p>
-                3. Un electricista repara la instalación eléctrica de una vivienda. <br> <br>
-
-                a) Servicio personal <br>
-                b) Servicio de mantenimiento <br>
-                c) Servicio técnico o profesional <br>
-            </p>
-            <p>
-                4. Un médico atiende pacientes en su consultorio. <br> <br>
-
-                a) Servicio personal <br>
-                b) Servicio de mantenimiento <br>
-                c) Servicio técnico o profesional <br>
-            </p>
-            <p>
-                5. Un mecánico realiza el cambio de piezas en un vehículo. <br> <br>
-
-                a) Servicio personal <br>
-                b) Servicio de mantenimiento <br>
-                c) Servicio técnico o profesional <br>
-            </p>
-            <p>
-                6. Un contador elabora estados financieros para una empresa. <br> <br>
-
-                a) Servicio personal <br>
-                b) Servicio de mantenimiento <br>
-                c) Servicio técnico o profesional <br>
-            </p>
-            <p>
-                7. Un profesor dicta clases presenciales. <br> <br>
-
-                a) Servicio personal <br>
-                b) Servicio de mantenimiento <br>
-                c) Servicio técnico o profesional <br>
-            </p>
-            <p>
-                8. Un taller realiza afinación de motores. <br> <br>
-
-                a) Servicio personal <br>
-                b) Servicio de mantenimiento <br>
-                c) Servicio técnico o profesional <br>
-            </p>
-            <p>
-                9. Un diseñador gráfico crea el logo de una empresa. <br> <br>
-
-                a) Servicio personal <br>
-                b) Servicio de mantenimiento <br>
-                c) Servicio técnico o profesional <br>
-            </p>
-            <p>
-                10. Un plomero repara una fuga de agua. <br> <br>
-
-                a) Servicio personal <br>
-                b) Servicio de mantenimiento <br>
-                c) Servicio técnico o profesional <br>
-            </p>
             <h3>Clasificación de los Servicios según el grado de participación del cliente</h3>
             <p>
                 El nivel de participación del cliente influye directamente en la calidad percibida del servicio.
@@ -743,77 +607,81 @@
                     </tr>
                 </tbody>
             </table>
-            <h3>Selecciona la respuesta correcta y explica por qué la elegiste.</h3>
-            <p>
-                1. Un estudiante participa activamente en clases presenciales. <br> <br>
+            <details>
+                <summary>
+                    A2 - Selecciona la respuesta correcta y explica por qué la elegiste.
+                </summary>
+                <p>
+                    1. Un estudiante participa activamente en clases presenciales. <br> <br>
 
-                a) Alta participación <br>
-                b) Participación media <br>
-                c) Baja participación <br>
-            </p>
-            <p>
-                2. Un cliente asiste a una consulta médica. <br> <br>
+                    a) Alta participación <br>
+                    b) Participación media <br>
+                    c) Baja participación <br>
+                </p>
+                <p>
+                    2. Un cliente asiste a una consulta médica. <br> <br>
 
-                a) Alta participación <br>
-                b) Participación media <br>
-                c) Baja participación <br>
-            </p>
-            <p>
-                3. Un usuario compra comida en un restaurante. <br> <br>
+                    a) Alta participación <br>
+                    b) Participación media <br>
+                    c) Baja participación <br>
+                </p>
+                <p>
+                    3. Un usuario compra comida en un restaurante. <br> <br>
 
-                a) Alta participación <br>
-                b) Participación media <br>
-                c) Baja participación <br>
-            </p>
-            <p>
-                4. Un cliente usa banca por internet. <br> <br>
+                    a) Alta participación <br>
+                    b) Participación media <br>
+                    c) Baja participación <br>
+                </p>
+                <p>
+                    4. Un cliente usa banca por internet. <br> <br>
 
-                a) Alta participación <br>
-                b) Participación media <br>
-                c) Baja participación <br>
-            </p>
-            <p>
-                5. Un alumno realiza actividades prácticas durante una capacitación. <br> <br>
+                    a) Alta participación <br>
+                    b) Participación media <br>
+                    c) Baja participación <br>
+                </p>
+                <p>
+                    5. Un alumno realiza actividades prácticas durante una capacitación. <br> <br>
 
-                a) Alta participación <br>
-                b) Participación media <br>
-                c) Baja participación <br>
-            </p>
-            <p>
-                6. Un pasajero viaja en transporte interdepartamental. <br> <br>
+                    a) Alta participación <br>
+                    b) Participación media <br>
+                    c) Baja participación <br>
+                </p>
+                <p>
+                    6. Un pasajero viaja en transporte interdepartamental. <br> <br>
 
-                a) Alta participación <br>
-                b) Participación media <br>
-                c) Baja participación <br>
-            </p>
-            <p>
-                7. Un cliente solicita un corte de cabello. <br> <br>
+                    a) Alta participación <br>
+                    b) Participación media <br>
+                    c) Baja participación <br>
+                </p>
+                <p>
+                    7. Un cliente solicita un corte de cabello. <br> <br>
 
-                a) Alta participación <br>
-                b) Participación media <br>
-                c) Baja participación <br>
-            </p>
-            <p>
-                8. Un usuario paga servicios básicos mediante una app. <br> <br>
+                    a) Alta participación <br>
+                    b) Participación media <br>
+                    c) Baja participación <br>
+                </p>
+                <p>
+                    8. Un usuario paga servicios básicos mediante una app. <br> <br>
 
-                a) Alta participación <br>
-                b) Participación media <br>
-                c) Baja participación <br>
-            </p>
-            <p>
-                9. Un paciente sigue instrucciones durante una terapia. <br> <br>
+                    a) Alta participación <br>
+                    b) Participación media <br>
+                    c) Baja participación <br>
+                </p>
+                <p>
+                    9. Un paciente sigue instrucciones durante una terapia. <br> <br>
 
-                a) Alta participación <br>
-                b) Participación media <br>
-                c) Baja participación <br>
-            </p>
-            <p>
-                10. Un cliente utiliza un cajero automático. <br> <br>
+                    a) Alta participación <br>
+                    b) Participación media <br>
+                    c) Baja participación <br>
+                </p>
+                <p>
+                    10. Un cliente utiliza un cajero automático. <br> <br>
 
-                a) Alta participación <br>
-                b) Participación media <br>
-                c) Baja participación <br>
-            </p>
+                    a) Alta participación <br>
+                    b) Participación media <br>
+                    c) Baja participación <br>
+                </p>
+            </details>
             <h3>Servicio y Competitividad</h3>
             <p>
                 El servicio se ha convertido en un factor clave de la competitividad empresarial.
@@ -823,116 +691,16 @@
                 las organizaciones posicionarse mejor frente a sus competidores.
             </p>
             <p>
-                De acuerdo con Porter (2008), las empresas logran ventajas competitivas cuando desarrollan actividades
+                Las empresas logran ventajas competitivas cuando desarrollan actividades
                 que generan mayor valor para el cliente, y el servicio es una de las más importantes dentro de esa
                 cadena de valor.
             </p>
-            <h3>Relación entre servicio y competitividad</h3>
-            <p>
-                Un buen servicio no solo satisface necesidades inmediatas, sino que también fortalece la imagen de la
-                empresa, fomenta la fidelización y reduce la probabilidad de que el cliente migre hacia la competencia.
-            </p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Elemento del Servicio</th>
-                        <th>Aporte a la Competitividad</th>
-                        <th>Resultado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Calidad en la atención</td>
-                        <td>Mejora la experiencia del cliente</td>
-                        <td>Mayor preferencia por la empresa</td>
-                    </tr>
-                    <tr>
-                        <td>Rapidez y eficiencia</td>
-                        <td>Reduce tiempos y costos percibidos</td>
-                        <td>Satisfacción y recompra</td>
-                    </tr>
-                    <tr>
-                        <td>Personal capacitado</td>
-                        <td>Soluciona problemas con mayor precisión</td>
-                        <td>Confianza del cliente</td>
-                    </tr>
-                    <tr>
-                        <td>Uso de tecnología</td>
-                        <td>Optimiza procesos de servicio</td>
-                        <td>Ventaja frente a competidores</td>
-                    </tr>
-                </tbody>
-            </table>
             <h3>Servicio como ventaja competitiva</h3>
             <p>
-                Según Kotler y Keller (2016), las empresas que logran diferenciarse por su servicio crean una ventaja
+                Las empresas que logran diferenciarse por su servicio crean una ventaja
                 competitiva sostenible, ya que el servicio es difícil de imitar y depende en gran medida del factor
                 humano y de la cultura organizacional.
             </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué consideras que el servicio al cliente puede marcar la diferencia entre una empresa y su
-                competencia?
-            </p>
-            <p>
-                2. ¿Cómo influye la calidad del servicio en la decisión de compra de un cliente?
-            </p>
-            <p>
-                3. Desde tu experiencia, ¿qué efectos genera una mala atención al cliente en un negocio?
-            </p>
-            <p>
-                4. ¿Crees que una empresa puede ser competitiva solo por el precio si descuida el servicio? Explica tu
-                opinión.
-            </p>
-            <p>
-                5. ¿De qué manera la capacitación del personal impacta en la competitividad de una empresa?
-            </p>
-            <p>
-                6. ¿Cómo aporta la tecnología al mejoramiento del servicio y la competitividad?
-            </p>
-            <p>
-                7. ¿Por qué la experiencia del cliente es tan importante para que una empresa se mantenga en el mercado?
-            </p>
-            <p>
-                8. ¿Qué relación existe entre la satisfacción del cliente y la fidelización?
-            </p>
-            <p>
-                9. En tu opinión, ¿qué tipo de servicio genera mayor ventaja competitiva y por qué?
-            </p>
-            <p>
-                10. ¿Cómo afecta la imagen de una empresa cuando el servicio no cumple con las expectativas del cliente?
-            </p>
-            <p>
-                11. ¿Consideras que el buen servicio puede reemplazar a la publicidad tradicional? Explica.
-            </p>
-            <p>
-                12. ¿De qué forma el trato personalizado influye en la percepción del cliente?
-            </p>
-            <p>
-                13. ¿Por qué el servicio es considerado una ventaja competitiva difícil de imitar?
-            </p>
-            <p>
-                14. ¿Qué papel cumple el factor humano en la competitividad basada en el servicio?
-            </p>
-            <p>
-                15. ¿Cómo influye el servicio en la confianza que un cliente deposita en una empresa?
-            </p>
-            <p>
-                16. ¿Crees que un cliente satisfecho puede convertirse en un promotor de la empresa? ¿Por qué?
-            </p>
-            <p>
-                17. ¿Qué consecuencias puede tener para una empresa ignorar los reclamos de sus clientes?
-            </p>
-            <p>
-                18. ¿Cómo puede el servicio contribuir a que una empresa se diferencie en mercados competitivos?
-            </p>
-            <p>
-                19. ¿Qué relación observas entre calidad del servicio y permanencia de la empresa en el mercado?
-            </p>
-            <p>
-                20. Desde tu punto de vista, ¿por qué el servicio debe ser considerado una inversión y no un gasto?
-            </p>
-            <h3>La Ventaja Competitiva</h3>
             <p>
                 La ventaja competitiva se refiere a aquello que permite a una empresa destacarse frente a sus
                 competidores y lograr un mejor desempeño en el mercado. No se trata solo de vender más, sino de ofrecer
@@ -942,131 +710,41 @@
                 Una empresa posee ventaja competitiva cuando es capaz de realizar sus actividades de forma diferente o
                 más eficiente que sus competidores, generando beneficios sostenibles en el tiempo.
             </p>
-            <h3>Fuentes de la ventaja competitiva</h3>
             <p>
-                La ventaja competitiva puede originarse en distintos factores.
-            </p>
-            <p>
-                Entre los más comunes se encuentran el costo, la diferenciación y el enfoque hacia un segmento
-                específico del mercado.
-            </p>
-            <p>
-                Estas fuentes permiten a la empresa definir su posición estratégica.
-            </p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Tipo de Ventaja</th>
-                        <th>Descripción</th>
-                        <th>Ejemplos</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Liderazgo en costos</td>
-                        <td>Ofrecer productos o servicios a menor costo que la competencia.</td>
-                        <td>Empresas con procesos eficientes y economías de escala.</td>
-                    </tr>
-                    <tr>
-                        <td>Diferenciación</td>
-                        <td>Ofrecer algo único que sea valorado por el cliente.</td>
-                        <td>Calidad superior, marca fuerte, excelente servicio.</td>
-                    </tr>
-                    <tr>
-                        <td>Enfoque</td>
-                        <td>Atender de manera especializada a un segmento específico.</td>
-                        <td>Mercados de nicho o públicos específicos.</td>
-                    </tr>
-                </tbody>
-            </table>
-            <h3>Ventaja competitiva y valor para el cliente</h3>
-            <p>
-                La ventaja competitiva está estrechamente relacionada con el valor que la empresa entrega al cliente.
+                La ventaja competitiva puede originarse en distintos factores,está estrechamente relacionada con el
+                valor que la empresa entrega al cliente.
             </p>
             <p>
                 Este valor puede manifestarse en mejor atención, mayor calidad, menor precio o una experiencia más
                 satisfactoria en comparación con otras opciones del mercado.
             </p>
-            <h3>Sostenibilidad de la ventaja competitiva</h3>
-            <p>
-                No toda ventaja competitiva es permanente.
-            </p>
             <p>
                 Para que sea sostenible, la empresa debe protegerla mediante innovación constante, mejora continua y
                 adaptación a los cambios del entorno económico y social.
             </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Qué entiendes por ventaja competitiva en el contexto empresarial?
-            </p>
-            <p>
-                2. ¿Por qué consideras que la ventaja competitiva es clave para el éxito de una empresa?
-            </p>
-            <p>
-                3. Desde tu opinión, ¿qué diferencia a una empresa competitiva de una que no lo es?
-            </p>
-            <p>
-                4. ¿Crees que todas las empresas pueden desarrollar una ventaja competitiva? ¿Por qué?
-            </p>
-            <p>
-                5. ¿Cuál consideras que es la fuente de ventaja competitiva más importante hoy en día?
-            </p>
-            <p>
-                6. ¿Cómo influye el servicio al cliente en la generación de ventaja competitiva?
-            </p>
-            <p>
-                7. ¿Qué relación observas entre calidad y ventaja competitiva?
-            </p>
-            <p>
-                8. ¿Por qué una estrategia de bajos costos puede ser riesgosa para algunas empresas?
-            </p>
-            <p>
-                9. ¿De qué manera la diferenciación permite a una empresa destacarse en el mercado?
-            </p>
-            <p>
-                10. ¿Qué ventajas y desventajas ves en enfocarse en un nicho de mercado?
-            </p>
-            <p>
-                11. ¿Cómo aporta la innovación a la sostenibilidad de la ventaja competitiva?
-            </p>
-            <p>
-                12. ¿Por qué una ventaja competitiva puede perderse con el tiempo?
-            </p>
-            <p>
-                13. ¿Qué papel cumple el factor humano en la construcción de una ventaja competitiva?
-            </p>
-            <p>
-                14. ¿Cómo influye la imagen de marca en la ventaja competitiva?
-            </p>
-            <p>
-                15. ¿Crees que la tecnología es una fuente suficiente de ventaja competitiva? Explica.
-            </p>
-            <p>
-                16. ¿De qué forma el valor percibido por el cliente impacta en la competitividad?
-            </p>
-            <p>
-                17. ¿Qué relación existe entre estrategia empresarial y ventaja competitiva?
-            </p>
-            <p>
-                18. ¿Cómo puede una empresa mantener su ventaja competitiva frente a nuevos competidores?
-            </p>
-            <p>
-                19. ¿Por qué la mejora continua es clave para sostener la ventaja competitiva?
-            </p>
-            <p>
-                20. Desde tu punto de vista, ¿por qué la ventaja competitiva debe adaptarse a los cambios del mercado?
-            </p>
+            <details>
+                <summary>
+                    A3 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Qué entiendes por ventaja competitiva?
+                </p>
+                <p>
+                    2. ¿La ventaja competitiva es clave para el éxito de una empresa?
+                </p>
+                <p>
+                    3. ¿Por qué una estrategia de bajos costos puede ser riesgosa para algunas empresas?
+                </p>
+                <p>
+                    4. ¿Qué ventajas y desventajas ves en enfocarse en un nicho de mercado?
+                </p>
+                <p>
+                    5. ¿Por qué una ventaja competitiva puede perderse con el tiempo?
+                </p>
+            </details>
         </section>
         <section id="Unidad2">
             <h2>Unidad 2: CARACTERÍSTICAS Y GESTIÓN DEL SERVICIO </h2>
-            <p>
-                El servicio se fundamenta en cuatro características que explican la naturaleza de los servicios y los
-                diferencian de los bienes tangibles.
-            </p>
-            <p>
-                Estas influyen directamente en la forma en que los servicios son diseñados, ofrecidos y evaluados por
-                los clientes.
-            </p>
             <p>
                 Las 4 Características del servicio son:
             </p>
@@ -1076,6 +754,7 @@
                 <li>Variabilidad</li>
                 <li>Perecibilidad</li>
             </ul>
+            <br>
             <h3>Intangibilidad</h3>
             <p>
                 La intangibilidad significa que los servicios no pueden verse, tocarse, probarse ni almacenarse antes de
@@ -1094,88 +773,61 @@
                 tangibles como instalaciones, equipos, uniformes, material informativo y testimonios de clientes, con el
                 fin de transmitir confianza y calidad.
             </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué crees que es más difícil evaluar un servicio que un producto antes de comprarlo?
-            </p>
-            <p>
-                2. ¿Cómo influye la intangibilidad del servicio en la decisión de compra del cliente?
-            </p>
-            <p>
-                3. Desde tu punto de vista, ¿qué riesgos percibe un cliente al contratar un servicio?
-            </p>
-            <p>
-                4. ¿Por qué la reputación de una empresa es tan importante en los servicios?
-            </p>
-            <p>
-                5. ¿De qué manera la experiencia previa del cliente reduce la incertidumbre del servicio?
-            </p>
-            <p>
-                6. ¿Cómo pueden las empresas hacer más “visible” un servicio que es intangible?
-            </p>
-            <p>
-                7. ¿Qué papel cumplen las recomendaciones y opiniones de otros clientes en los servicios?
-            </p>
-            <p>
-                8. ¿Crees que la intangibilidad obliga a las empresas a cuidar más su imagen? ¿Por qué?
-            </p>
-            <p>
-                9. ¿Qué elementos tangibles te generan mayor confianza al contratar un servicio?
-            </p>
-            <p>
-                10. Desde tu experiencia, ¿cómo influye la intangibilidad en tu nivel de satisfacción con un servicio?
-            </p>
+            <details>
+                <summary>
+                    A4 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Por qué crees que es más difícil evaluar un servicio que un producto?
+                </p>
+                <p>
+                    2. ¿Cómo influye la intangibilidad del servicio en la decisión de compra del cliente?
+                </p>
+                <p>
+                    3. Desde tu punto de vista, ¿qué riesgos percibe un cliente al contratar un servicio?
+                </p>
+                <p>
+                    4. ¿Por qué la reputación de una empresa es tan importante en los servicios?
+                </p>
+                <p>
+                    5. ¿De qué manera la experiencia previa del cliente reduce la incertidumbre del servicio?
+                </p>
+            </details>
             <h3>Inseparabilidad</h3>
             <p>
                 La inseparabilidad se refiere a que el servicio se produce y se consume al mismo tiempo.
             </p>
             <p>
-                A diferencia de los bienes físicos, los servicios no pueden separarse de quien los presta ni del momento
-                en que se ofrecen.
-            </p>
-            <p>
-                Esto significa que el proveedor del servicio y el cliente interactúan de manera directa durante la
-                prestación.
+                Esto significa que el proveedor del servicio y el cliente interactúan durante la prestación.
             </p>
             <p>
                 La calidad del servicio depende tanto del desempeño del personal como de la participación y actitud del
                 cliente.
             </p>
             <p>
-                Debido a la inseparabilidad, cualquier error o acierto ocurre frente al cliente, lo que hace fundamental
-                la capacitación del personal y una correcta gestión del contacto con el usuario.
+                Debido a la inseparabilidad, es fundamental
+                la capacitación del personal.
             </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué crees que en los servicios la producción y el consumo ocurren al mismo tiempo?
-            </p>
-            <p>
-                2. ¿Cómo influye la interacción entre el cliente y el personal en la calidad del servicio?
-            </p>
-            <p>
-                3. Desde tu punto de vista, ¿por qué el comportamiento del personal es clave en los servicios?
-            </p>
-            <p>
-                4. ¿De qué manera la actitud del cliente puede afectar el resultado del servicio?
-            </p>
-            <p>
-                5. ¿Por qué consideras que la capacitación del personal es fundamental en los servicios?
-            </p>
-            <p>
-                6. ¿Qué riesgos existen cuando el servicio se presta directamente frente al cliente?
-            </p>
-            <p>
-                7. ¿Cómo puede una empresa reducir errores durante la prestación del servicio?
-            </p>
-            <p>
-                8. ¿Crees que todos los servicios requieren el mismo nivel de contacto con el cliente? ¿Por qué?
-            </p>
-            <p>
-                9. ¿Qué ventajas y desventajas observas en la interacción directa entre cliente y proveedor?
-            </p>
-            <p>
-                10. Desde tu experiencia, ¿cómo influye la inseparabilidad en tu satisfacción con un servicio?
-            </p>
+            <details>
+                <summary>
+                    A5 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Por qué el comportamiento del personal es clave en los servicios?
+                </p>
+                <p>
+                    2. ¿De qué manera la actitud del cliente puede afectar el resultado del servicio?
+                </p>
+                <p>
+                    3. ¿Por qué consideras que la capacitación del personal es fundamental en los servicios?
+                </p>
+                <p>
+                    4. ¿Cómo puede una empresa reducir errores durante la prestación del servicio?
+                </p>
+                <p>
+                    5. ¿Cómo influye la inseparabilidad en tu satisfacción con un servicio?
+                </p>
+            </details>
             <h3>Variabilidad</h3>
             <p>
                 La variabilidad indica que la calidad de un servicio puede cambiar de una ocasión a otra, aun cuando sea
@@ -1195,39 +847,29 @@
             </p>
             <p>
                 Para reducir la variabilidad, las empresas implementan procesos estandarizados, capacitación continua y
-                controles de calidad que permitan ofrecer experiencias más consistentes a los clientes.
+                controles de calidad que permitan ofrecer experiencias más consistentes.
             </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué crees que un mismo servicio puede ser percibido de forma diferente por distintos clientes?
-            </p>
-            <p>
-                2. ¿Cómo influye el factor humano en la variabilidad del servicio?
-            </p>
-            <p>
-                3. Desde tu punto de vista, ¿por qué es difícil mantener una calidad constante en los servicios?
-            </p>
-            <p>
-                4. ¿Qué consecuencias puede tener la variabilidad en la satisfacción del cliente?
-            </p>
-            <p>
-                5. ¿De qué manera la capacitación del personal ayuda a reducir la variabilidad?
-            </p>
-            <p>
-                6. ¿Cómo pueden los procesos estandarizados mejorar la calidad del servicio?
-            </p>
-            <p>
-                7. ¿Crees que la variabilidad siempre es negativa? ¿Por qué?
-            </p>
-            <p>
-                8. ¿Qué relación observas entre variabilidad del servicio e imagen de la empresa?
-            </p>
-            <p>
-                9. Desde tu experiencia, ¿cómo afecta la variabilidad a tu confianza en una empresa?
-            </p>
-            <p>
-                10. ¿Qué acciones consideras necesarias para ofrecer un servicio más consistente?
-            </p>
+            <details>
+                <summary>
+                    A6 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Por qué el servicio puede ser percibido de forma diferente por distintos
+                    clientes?
+                </p>
+                <p>
+                    2. ¿Cómo influye el factor humano en la variabilidad del servicio?
+                </p>
+                <p>
+                    3. ¿Por qué es difícil mantener una calidad constante en los servicios?
+                </p>
+                <p>
+                    4. ¿Qué consecuencias puede tener la variabilidad en la satisfacción del cliente?
+                </p>
+                <p>
+                    5. ¿Qué acciones consideras necesarias para ofrecer un servicio más consistente?
+                </p>
+            </details>
             <h3>Perecibilidad</h3>
             <p>
                 La perecibilidad se refiere a que los servicios no pueden almacenarse para ser utilizados en otro
@@ -1248,114 +890,60 @@
                 utilizando estrategias como reservas, horarios flexibles, promociones o precios diferenciados para
                 equilibrar la oferta y la demanda.
             </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué consideras que los servicios no pueden almacenarse como los productos?
-            </p>
-            <p>
-                2. ¿Cómo afecta la perecibilidad a la planificación de las empresas de servicios?
-            </p>
-            <p>
-                3. Desde tu punto de vista, ¿qué riesgos genera la capacidad no utilizada?
-            </p>
-            <p>
-                4. ¿Por qué la gestión de la demanda es clave en los servicios?
-            </p>
-            <p>
-                5. ¿Qué estrategias pueden usar las empresas para reducir pérdidas por perecibilidad?
-            </p>
-            <p>
-                6. ¿Cómo influyen las reservas y los horarios en la prestación de servicios?
-            </p>
-            <p>
-                7. ¿Crees que la tecnología ayuda a manejar mejor la perecibilidad? ¿Por qué?
-            </p>
-            <p>
-                8. ¿Qué relación observas entre perecibilidad y rentabilidad del servicio?
-            </p>
-            <p>
-                9. Desde tu experiencia, ¿cómo afecta la disponibilidad del servicio a tu decisión de compra?
-            </p>
-            <p>
-                10. ¿Por qué la perecibilidad obliga a las empresas de servicios a ser más estratégicas?
-            </p>
+            <details>
+                <summary>
+                    A7 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Por qué los servicios no pueden almacenarse como los productos?
+                </p>
+                <p>
+                    2. ¿Cómo afecta la perecibilidad a la planificación de las empresas de servicios?
+                </p>
+                <p>
+                    3. ¿Por qué la gestión de la demanda es clave en los servicios?
+                </p>
+                <p>
+                    4. ¿Cómo la tecnología ayuda a reducir la perecibilidad?
+                </p>
+                <p>
+                    5. ¿Por qué la perecibilidad obliga a las empresas de servicios a ser más estratégicas?
+                </p>
+            </details>
             <h3>Implicaciones en la Gestión</h3>
             <p>
                 Las características propias de los servicios —intangibilidad, inseparabilidad, variabilidad y
                 perecibilidad— generan importantes implicaciones en la gestión de las organizaciones.
             </p>
             <p>
-                Gestionar servicios no es igual que gestionar productos, ya que el énfasis se encuentra en las personas,
-                los procesos y la experiencia del cliente.
-            </p>
-            <p>
                 La gestión de servicios exige una visión integral que permita coordinar al personal, estandarizar
                 procesos, administrar la capacidad y asegurar una experiencia de calidad en cada interacción con el
                 cliente.
             </p>
-            <h3>Gestión del personal</h3>
+            <h3>1. Gestión del personal</h3>
             <p>
                 Debido a la inseparabilidad y variabilidad, el personal cumple un rol central en la prestación del
-                servicio.
-            </p>
-            <p>
-                La actitud, el conocimiento y el comportamiento del trabajador influyen directamente en la percepción
+                servicio. La actitud, el conocimiento y el comportamiento del trabajador influyen directamente en la
+                percepción
                 del cliente.
             </p>
-            <h3>Gestión de los procesos</h3>
+            <h3>2. Gestión de los procesos</h3>
             <p>
                 Para reducir la variabilidad y mejorar la calidad, las empresas deben diseñar procesos claros,
-                estandarizados y orientados al cliente.
+                estandarizados y orientados al cliente. Una buena gestión de procesos permite ofrecer servicios más
+                consistentes y eficientes.
             </p>
+            <h3>3. Gestión de la demanda y la capacidad</h3>
             <p>
-                Una buena gestión de procesos permite ofrecer servicios más consistentes y eficientes.
-            </p>
-            <h3>Gestión de la demanda y la capacidad</h3>
-            <p>
-                La perecibilidad obliga a las empresas de servicios a planificar cuidadosamente su capacidad.
-            </p>
-            <p>
-                La gestión de horarios, reservas y flujos de clientes resulta fundamental para evitar pérdidas y mejorar
+                La perecibilidad obliga a las empresas de servicios a planificar cuidadosamente su capacidad. La gestión
+                de horarios, reservas y flujos de clientes resulta fundamental para evitar pérdidas y mejorar
                 la rentabilidad.
             </p>
-            <h3>Gestión de la experiencia del cliente</h3>
+            <h3>4. Gestión de la experiencia del cliente</h3>
             <p>
                 Dado que los servicios son intangibles, la experiencia del cliente se convierte en un elemento clave de
-                la gestión.
-            </p>
-            <p>
-                Cada punto de contacto influye en la satisfacción, la percepción de calidad y la fidelización.
-            </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Cómo influyen las características de los servicios en las decisiones gerenciales?
-            </p>
-            <p>
-                2. ¿Qué consecuencias puede tener una mala gestión del personal en los servicios?
-            </p>
-            <p>
-                3. ¿Cómo puede una empresa equilibrar la calidad del servicio y la eficiencia operativa?
-            </p>
-            <p>
-                4. ¿De qué manera la gestión de la demanda impacta en la rentabilidad del servicio?
-            </p>
-            <p>
-                5. ¿Por qué la experiencia del cliente debe ser una prioridad en la gestión?
-            </p>
-            <p>
-                6. Desde tu opinión, ¿qué decisiones de gestión influyen más en la satisfacción del cliente?
-            </p>
-            <p>
-                7. ¿Cómo puede una empresa mejorar su gestión a partir de la opinión de los clientes?
-            </p>
-            <p>
-                8. ¿Qué riesgos enfrenta una empresa que no adapta su gestión a la naturaleza del servicio?
-            </p>
-            <p>
-                9. ¿Por qué la capacitación continua es una herramienta clave en la gestión de servicios?
-            </p>
-            <p>
-                10. ¿Cómo influye la gestión interna en la percepción externa del servicio?
+                la gestión. Cada punto de contacto influye en la satisfacción, la percepción de calidad y la
+                fidelización.
             </p>
             <h3>¿Cómo se diseña un servicio?</h3>
             <p>
@@ -1363,7 +951,7 @@
                 cliente, desde el primer contacto hasta después de haber recibido el servicio.
             </p>
             <p>
-                No se trata solo de la idea del servicio, sino de definir cómo funcionará en la práctica.
+                <i>No se trata solo de la idea del servicio, sino de definir cómo funcionará en la práctica.</i>
             </p>
             <p>
                 A diferencia de los productos, los servicios no se pueden probar antes de comprarlos, por lo que su
@@ -1424,23 +1012,27 @@
                 Diseñar un servicio no es un proceso estático, sino continuo, ya que debe adaptarse a los cambios del
                 entorno y a las expectativas del cliente.
             </p>
-            <h3>Responde la siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué consideras importante identificar la necesidad del cliente antes de diseñar un servicio?
-            </p>
-            <p>
-                2. ¿Qué riesgos existen si un servicio no está claramente definido?
-            </p>
-            <p>
-                3. ¿Por qué la experiencia del cliente debe planificarse y no dejarse al azar?
-            </p>
-            <p>
-                4. ¿Cómo influyen los procesos internos en la percepción del cliente?
-            </p>
-            <p>
-                5. ¿Por qué el diseño del servicio debe revisarse y mejorarse continuamente?
-            </p>
-            <h3>Customer Journey</h3>
+            <details>
+                <summary>
+                    A8 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Por qué es importante identificar la necesidad del cliente antes de diseñar un servicio?
+                </p>
+                <p>
+                    2. ¿Qué riesgos existen si un servicio no está claramente definido?
+                </p>
+                <p>
+                    3. ¿Por qué la experiencia del cliente debe planificarse y no dejarse al azar?
+                </p>
+                <p>
+                    4. ¿Cómo influyen los procesos internos en la percepción del cliente?
+                </p>
+                <p>
+                    5. ¿Por qué el diseño del servicio debe revisarse y mejorarse continuamente?
+                </p>
+            </details>
+            <h3>Customer Journey (“Kás-tomer Yér-ni”)</h3>
             <p>
                 Para comprender cómo se aplica el Customer Journey, imaginemos el caso de una institución que ofrece
                 cursos de formación profesional.
@@ -1556,22 +1148,26 @@
                 Cada decisión tomada por la empresa tuvo como objetivo reducir la incertidumbre, generar confianza y
                 ofrecer una experiencia coherente.
             </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué el recorrido del cliente comienza antes de la compra del servicio?
-            </p>
-            <p>
-                2. ¿Qué errores podrían hacer que el cliente abandone el proceso en las primeras etapas?
-            </p>
-            <p>
-                3. ¿Cómo influye la atención recibida en la decisión final del cliente?
-            </p>
-            <p>
-                4. ¿Por qué la experiencia durante el curso es tan importante como la venta?
-            </p>
-            <p>
-                5. ¿De qué manera el seguimiento posterior fortalece la fidelización?
-            </p>
+            <details>
+                <summary>
+                    A9 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Por qué el recorrido del cliente comienza antes de la compra del servicio?
+                </p>
+                <p>
+                    2. ¿Qué errores podrían hacer que el cliente abandone el proceso?
+                </p>
+                <p>
+                    3. ¿Cómo influye la atención recibida en la decisión final del cliente?
+                </p>
+                <p>
+                    4. ¿Por qué la experiencia durante el curso es tan importante como la venta?
+                </p>
+                <p>
+                    5. ¿De qué manera el seguimiento posterior fortalece la fidelización?
+                </p>
+            </details>
             <h3>Puntos críticos con Customer Journey</h3>
             <p>
                 Una vez que el recorrido del cliente ha sido diseñado y comprendido, el siguiente paso es identificar
@@ -1608,18 +1204,39 @@
                 En el caso de los cursos, uno de los primeros puntos críticos aparece cuando el estudiante no encuentra
                 información clara sobre el contenido o la modalidad.
             </p>
-            <h3>Caso:</h3>
-            <p>
-                Juan ve el anuncio del curso, pero al ingresar a la página no entiende bien si el curso es para
-                principiantes o avanzados.
-            </p>
-            <p>
-                Esto genera inseguridad y puede hacer que abandone el proceso.
-            </p>
-            <p>
-                Aquí el Customer Journey permite detectar que la falta de claridad en la información es un punto de
-                dolor que debe corregirse.
-            </p>
+            <details>
+                <summary>
+                    Caso 1:
+                </summary>
+                <p>
+                    Ves un anuncio en internet sobre un curso que te interesa. El diseño es atractivo y el mensaje
+                    promete ayudarte a mejorar tus habilidades.
+                    Decides ingresar a la página porque realmente quieres aprender.
+                </p>
+
+                <p>
+                    Al comenzar a leer, encuentras información general, pero no queda claro si el curso es para
+                    principiantes o para personas con experiencia.
+                    Tampoco se explica con detalle qué contenidos incluye ni qué resultados concretos obtendrás.
+                </p>
+
+                <p>
+                    Empiezas a dudar. No sabes si el curso se adapta a tu nivel. Sientes interés, pero también
+                    inseguridad.
+                </p>
+                <ul>
+                    <li>¿Qué sentirías en esa situación? Explica por qué.</li>
+                    <li>¿Qué información te haría sentir más seguro para inscribirte?</li>
+                    <li>¿Qué mejorarías en la página para que el cliente no tenga dudas?</li>
+                    <li>Si fueras el dueño, ¿qué cambiarías para evitar que las personas abandonen la página?
+                    </li>
+                </ul>
+                <p>
+                    Este momento representa un punto de dolor dentro del Customer Journey, ya que la falta de claridad
+                    puede influir directamente en la decisión de compra.
+                </p>
+            </details>
+
             <h3>Paso 3: Analizar la etapa de compra</h3>
             <p>
                 La etapa de compra suele concentrar varios puntos críticos, ya que el cliente está a punto de tomar una
@@ -1628,20 +1245,38 @@
             <p>
                 Se analizan aspectos como facilidad de pago, tiempos de respuesta y claridad de las instrucciones.
             </p>
-            <h3>Caso:</h3>
-            <p>
-                Juan realiza el pago, pero no recibe inmediatamente el acceso al curso.
-            </p>
-            <p>
-                Pasan varias horas sin respuesta.
-            </p>
-            <p>
-                Aunque el curso sea bueno, esta demora genera ansiedad y desconfianza.
-            </p>
-            <p>
-                El Customer Journey permite identificar este momento como un punto crítico que afecta negativamente la
-                experiencia.
-            </p>
+            <details>
+                <summary>
+                    Caso 2:
+                </summary>
+                <p>
+                    Realizas el pago de un curso con entusiasmo. Estás motivado porque quieres comenzar lo antes
+                    posible.
+                </p>
+
+                <p>
+                    Después de pagar, revisas tu correo esperando el acceso. Pasan varios minutos. Luego una hora.
+                    Pasan varias horas y no recibes ninguna confirmación ni instrucciones claras.
+                </p>
+
+                <p>
+                    Empiezas a sentir inquietud. No sabes si el pago se registró correctamente o si hubo algún problema.
+                    Aunque el curso sea de buena calidad, la espera genera ansiedad y desconfianza.
+                </p>
+
+                <ul>
+                    <li>¿Qué sentirías en esta situación? Explica tu respuesta.</li>
+                    <li>¿Cómo influye la demora en tu confianza hacia la empresa?</li>
+                    <li>¿Qué debería hacer la empresa inmediatamente después del pago?</li>
+                    <li>¿Qué solución implementarías para mejorar esta experiencia?</li>
+                </ul>
+
+                <p>
+                    Este momento representa un punto crítico dentro del Customer Journey, ya que la falta de respuesta
+                    inmediata puede afectar negativamente la percepción del cliente.
+                </p>
+            </details>
+
             <h3>Paso 4: Analizar la experiencia del servicio</h3>
             <p>
                 Una vez iniciado el curso, se observa cómo el estudiante interactúa con el contenido, el docente y la
@@ -1651,16 +1286,37 @@
                 Los puntos críticos aquí suelen aparecer cuando el estudiante no entiende una clase, no recibe respuesta
                 a sus dudas o encuentra desorden en el contenido.
             </p>
-            <h3>CASO:</h3>
-            <p>
-                Juan intenta resolver una duda, pero no obtiene respuesta durante varios días.
-            </p>
-            <p>
-                Esto reduce su motivación y su percepción de calidad del servicio.
-            </p>
-            <p>
-                Este punto crítico indica la necesidad de mejorar el soporte y los tiempos de respuesta.
-            </p>
+            <details>
+                <summary>
+                    Caso 3:
+                </summary>
+                <p>
+                    Estás realizando el curso y surge una duda importante. Decides escribir al soporte para que te
+                    ayuden a continuar.
+                </p>
+
+                <p>
+                    Pasa un día y no recibes respuesta. Luego pasan varios días más y sigues esperando.
+                    Comienzas a sentir frustración porque no puedes avanzar con seguridad.
+                </p>
+
+                <p>
+                    Poco a poco, tu motivación disminuye y empiezas a cuestionar la calidad del servicio.
+                </p>
+
+                <ul>
+                    <li>¿Cómo te sentirías si no responden tu mensaje durante varios días?</li>
+                    <li>¿Seguirías con el curso o perderías interés? Explica por qué.</li>
+                    <li>¿Cómo afecta el soporte al valor que percibes del servicio?</li>
+                    <li>¿Qué debería hacer la empresa para evitar esta situación?</li>
+                </ul>
+
+                <p>
+                    Este momento representa un punto crítico dentro del Customer Journey, ya que la falta de respuesta
+                    afecta directamente la experiencia y la satisfacción del cliente.
+                </p>
+            </details>
+
             <h3>Paso 5: Detectar puntos de oportunidad</h3>
             <p>
                 No todos los puntos detectados son negativos.
@@ -1673,6 +1329,39 @@
                 Por ejemplo, un buen seguimiento al finalizar el curso puede transformar a un estudiante satisfecho en
                 un promotor del servicio.
             </p>
+            <details>
+                <summary>
+                    Caso 4:
+                </summary>
+                <p>
+                    Terminas el curso y recibes un mensaje personalizado agradeciendo tu participación.
+                    Además, te envían un certificado digital, recomendaciones para continuar aprendiendo y un descuento
+                    especial para el siguiente nivel.
+                </p>
+
+                <p>
+                    También te preguntan cómo fue tu experiencia y si deseas dejar una opinión para ayudar a otros
+                    estudiantes.
+                </p>
+
+                <p>
+                    Te sientes valorado y tomado en cuenta. No solo completaste el curso, sino que percibes que la
+                    institución se interesa por tu progreso.
+                </p>
+
+                <ul>
+                    <li>¿Cómo influye este seguimiento en tu percepción del servicio?</li>
+                    <li>¿Recomendarías el curso a otras personas? ¿Por qué?</li>
+                    <li>¿Qué emoción genera en ti recibir atención después de haber pagado?</li>
+                    <li>¿Cómo puede este momento convertirse en una oportunidad de fidelización?</li>
+                </ul>
+
+                <p>
+                    Este momento representa un punto de oportunidad dentro del Customer Journey, ya que fortalece la
+                    relación con el cliente y puede convertirlo en promotor del servicio.
+                </p>
+            </details>
+
             <h3>Resultado del análisis</h3>
             <p>
                 Al identificar puntos críticos y de oportunidad, la empresa puede tomar decisiones concretas para
@@ -1682,22 +1371,26 @@
                 De esta manera, el Customer Journey se convierte en una herramienta estratégica para mejorar resultados
                 y no solo en un diagrama teórico.
             </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué es importante analizar las emociones del cliente para detectar puntos críticos?
-            </p>
-            <p>
-                2. ¿Qué consecuencias puede tener ignorar un punto de dolor en el recorrido del cliente?
-            </p>
-            <p>
-                3. ¿Cómo ayuda el Customer Journey a reducir el abandono de un servicio educativo?
-            </p>
-            <p>
-                4. ¿Por qué los puntos de oportunidad son tan importantes como los puntos de dolor?
-            </p>
-            <p>
-                5. Desde tu punto de vista, ¿qué punto crítico consideras más peligroso en la venta de cursos?
-            </p>
+            <details>
+                <summary>
+                    A10 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Por qué es importante detectar puntos críticos?
+                </p>
+                <p>
+                    2. ¿Qué consecuencias puede tener ignorar un punto de dolor en el recorrido del cliente?
+                </p>
+                <p>
+                    3. ¿Cómo ayuda el Customer Journey a reducir el abandono de un servicio educativo?
+                </p>
+                <p>
+                    4. ¿Por qué los puntos de oportunidad son tan importantes como los puntos de dolor?
+                </p>
+                <p>
+                    5. ¿Qué punto crítico consideras más peligroso en la venta de cursos?
+                </p>
+            </details>
             <h3>Service Blueprint</h3>
             <p>
                 El Service Blueprint es una herramienta de diseño y gestión de servicios que permite representar de
@@ -1716,24 +1409,20 @@
             <p>
                 Cada etapa representa un nivel del servicio y permite visualizar su funcionamiento completo.
             </p>
-            <h3>Paso 1: Definir el servicio a analizar</h3>
+            <h3>Paso 1: Definir el servicio</h3>
             <p>
-                El primer paso consiste en definir con precisión qué servicio se va a analizar.
+                El primer paso consiste en definir con precisión qué servicio.
             </p>
             <p>
-                No se analiza la empresa completa, sino un servicio específico.
+                Se analiza un servicio específico.
             </p>
             <p>
-                Esto permite concentrarse en un proceso concreto y evitar confusiones durante el análisis.
+                Esto permite evitar confusiones durante el análisis.
             </p>
             <h3>Paso 2: Identificar las acciones del cliente</h3>
             <p>
                 En este paso se describen todas las acciones que realiza el cliente durante el servicio, desde el primer
                 contacto hasta el final.
-            </p>
-            <p>
-                Estas acciones se colocan en la parte superior del blueprint, ya que representan el punto de partida del
-                servicio.
             </p>
             <h3>Paso 3: Identificar las acciones del personal</h3>
             <p>
@@ -1743,15 +1432,7 @@
             <p>
                 Estas acciones influyen directamente en la percepción de calidad del cliente.
             </p>
-            <h3>Paso 4: Identificar las acciones internas</h3>
-            <p>
-                En este nivel se describen las actividades que el cliente no ve, pero que son necesarias para que el
-                servicio funcione.
-            </p>
-            <p>
-                Incluye tareas administrativas, coordinación interna, uso de sistemas y gestión de recursos.
-            </p>
-            <h3>Paso 5: Identificar los procesos de apoyo</h3>
+            <h3>Paso 4: Identificar los procesos de apoyo</h3>
             <p>
                 Los procesos de apoyo son aquellos que respaldan el servicio, como plataformas tecnológicas, sistemas de
                 pago, bases de datos o infraestructura.
@@ -1760,7 +1441,7 @@
                 Aunque no están en contacto directo con el cliente, su funcionamiento impacta directamente en la calidad
                 del servicio.
             </p>
-            <h3>Paso 6: Analizar y mejorar el servicio</h3>
+            <h3>Paso 5: Analizar y mejorar el servicio</h3>
             <p>
                 Una vez construido el Service Blueprint, se analizan los puntos donde pueden ocurrir errores, retrasos o
                 fallas de coordinación.
@@ -1769,116 +1450,41 @@
                 Este análisis permite rediseñar procesos, asignar responsabilidades y mejorar la experiencia del cliente
                 de manera concreta.
             </p>
-            <h3>Service Blueprint aplicado</h3>
-            <p>
-                Una vez que la institución identificó, mediante el Customer Journey, los puntos críticos en la
-                experiencia del estudiante, el siguiente paso fue utilizar el Service Blueprint para analizar qué estaba
-                ocurriendo internamente y cómo mejorar el servicio.
-            </p>
-            <p>
-                El Service Blueprint permite observar el servicio desde dentro, mostrando la relación entre el cliente,
-                el personal y los procesos internos que hacen posible la experiencia.
-            </p>
-            <h3>Nivel 1: Acciones del cliente</h3>
-            <p>
-                Juan, realiza varias acciones durante el servicio: ve la publicidad del curso, solicita información, se
-                inscribe, accede a la plataforma y participa en las clases.
-            </p>
-            <p>
-                Estas acciones son el punto de partida del Service Blueprint, ya que todo el servicio se organiza en
-                función de lo que hace el cliente.
-            </p>
-            <h3>Nivel 2: Acciones visibles del personal</h3>
-            <p>
-                Cuando Juan solicita información, una persona del área de atención responde sus consultas.
-            </p>
-            <p>
-                Durante la inscripción, el personal confirma el pago y brinda instrucciones de acceso.
-            </p>
-            <p>
-                Durante el curso, el docente imparte las clases y responde dudas.
-            </p>
-            <p>
-                Todas estas acciones son visibles para el estudiante y afectan directamente su percepción del servicio.
-            </p>
-            <p>
-                Si el personal responde tarde o de forma confusa, el cliente percibe una baja calidad, aunque los
-                procesos internos funcionen correctamente.
-            </p>
-            <h3>Nivel 3: Acciones internas</h3>
-            <p>
-                Detrás de la atención visible existen acciones que el cliente no ve.
-            </p>
-            <p>
-                Por ejemplo, el área administrativa valida los pagos, registra al estudiante en el sistema y habilita el
-                acceso a la plataforma.
-            </p>
-            <p>
-                El área académica carga los contenidos, organiza las clases y coordina con el docente.
-            </p>
-            <p>
-                Estas tareas no son visibles, pero cualquier falla afecta la experiencia final.
-            </p>
-            <p>
-                En el caso analizado, se detectó que los retrasos en el acceso al curso se debían a una mala
-                coordinación interna entre pagos y habilitación de usuarios.
-            </p>
-            <h3>Nivel 4: Procesos de apoyo y tecnología</h3>
-            <p>
-                El servicio educativo se apoya en plataformas digitales, sistemas de pago, bases de datos de estudiantes
-                y herramientas de comunicación.
-            </p>
-            <p>
-                Cuando estos sistemas no están integrados, se generan demoras, errores de registro o pérdida de
-                información.
-            </p>
-            <p>
-                El Service Blueprint permitió identificar que la falta de integración entre el sistema de pagos y la
-                plataforma educativa era la causa principal de varios puntos críticos.
-            </p>
             <h3>Corrección de los puntos críticos</h3>
             <p>
-                Gracias al Service Blueprint, la institución rediseñó sus procesos.
+                Gracias al Service Blueprint, la institución puede rediseñar sus procesos.
             </p>
             <p>
-                Se estableció un flujo claro: una vez confirmado el pago, el sistema habilita automáticamente el acceso
-                al curso.
-            </p>
-            <p>
-                Además, se definieron responsabilidades claras entre áreas y tiempos máximos de respuesta para atención
+                Además, se define responsabilidades claras entre áreas y tiempos máximos de respuesta para atención
                 y soporte.
-            </p>
-            <p>
-                Como resultado, el estudiante recibe acceso inmediato, respuestas oportunas y una experiencia más fluida
-                y coherente.
             </p>
             <h3>Resultado de aplicar el Service Blueprint</h3>
             <p>
-                El uso del Service Blueprint permitió transformar un servicio con fallas operativas en un servicio
+                El uso del Service Blueprint permite transformar un servicio con fallas operativas en un servicio
                 organizado, confiable y alineado con las expectativas del cliente.
             </p>
-            <p>
-                La experiencia del estudiante mejoró no porque se cambió el contenido del curso, sino porque se
-                optimizaron los procesos internos que lo sostienen.
-            </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué es importante analizar lo que ocurre detrás del servicio y no solo lo que ve el cliente?
-            </p>
-            <p>
-                2. ¿Cómo influyen los procesos internos en la percepción de calidad del servicio?
-            </p>
-            <p>
-                3. ¿Qué consecuencias puede tener una mala coordinación entre áreas internas?
-            </p>
-            <p>
-                4. ¿Por qué la tecnología es clave en la prestación de servicios educativos?
-            </p>
-            <p>
-                5. Desde tu punto de vista, ¿qué parte del Service Blueprint consideras más crítica para mejorar el
-                servicio?
-            </p>
-            <h3>Estandarización vs Personalización</h3>
+            <details>
+                <summary>
+                    A11 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Por qué es importante analizar lo que ocurre detrás del servicio?
+                </p>
+                <p>
+                    2. ¿Cómo influyen los procesos internos en la percepción de calidad del servicio?
+                </p>
+                <p>
+                    3. ¿Qué consecuencias puede tener una mala coordinación entre áreas internas?
+                </p>
+                <p>
+                    4. ¿Por qué la tecnología es clave en la prestación de servicios?
+                </p>
+                <p>
+                    5. ¿Qué parte del Service Blueprint consideras más crítica para mejorar el
+                    servicio?
+                </p>
+            </details>
+            <h3>¿Se debe Estandarizar o Personalizar el servicio?</h3>
             <p>
                 En la gestión de servicios, las empresas enfrentan una decisión constante: estandarizar el servicio para
                 hacerlo más eficiente o personalizarlo para adaptarlo a cada cliente.
@@ -1903,22 +1509,41 @@
                 La estandarización es especialmente útil cuando el servicio atiende a muchos clientes o cuando se
                 requiere eficiencia y rapidez.
             </p>
-            <h3>CASO:</h3>
-            <p>
-                En una institución de cursos, todos los estudiantes reciben el mismo proceso de inscripción: el mismo
-                formulario, los mismos pasos de pago y el mismo acceso a la plataforma.
-            </p>
-            <p>
-                Los contenidos del curso están organizados en módulos iguales para todos y las fechas de inicio y
-                evaluación son las mismas.
-            </p>
-            <p>
-                Esto permite a la institución atender a muchos estudiantes sin perder control.
-            </p>
-            <p>
-                Gracias a la estandarización, el servicio es predecible, ordenado y fácil de gestionar, aunque puede
-                sentirse poco flexible para algunos estudiantes.
-            </p>
+            <details>
+                <summary>
+                    Caso 5:
+                </summary>
+                <p>
+                    Te inscribes en un curso y notas que todo el proceso es exactamente igual para todos los
+                    estudiantes.
+                    El formulario es el mismo, los pasos de pago son los mismos y el acceso a la plataforma sigue un
+                    procedimiento estándar.
+                </p>
+
+                <p>
+                    Una vez dentro, observas que los contenidos están organizados en módulos iguales para todos.
+                    Las fechas de inicio, entrega de tareas y evaluaciones son las mismas sin excepción.
+                </p>
+
+                <p>
+                    Todo funciona de manera ordenada y predecible. No hay improvisaciones.
+                    Sin embargo, también sientes que no existe mucha flexibilidad si necesitas adaptaciones o apoyo
+                    adicional.
+                </p>
+
+                <ul>
+                    <li>¿Qué ventajas tiene que el servicio sea igual para todos?</li>
+                    <li>¿Qué desventajas podría generar la falta de flexibilidad?</li>
+                    <li>¿Prefieres un servicio estandarizado o uno más personalizado? Explica tu respuesta.</li>
+                    <li>¿Cómo podría la institución mantener el orden sin perder cercanía con el estudiante?</li>
+                </ul>
+
+                <p>
+                    Este caso permite analizar cómo la estandarización facilita la gestión del servicio, pero también
+                    puede influir en la percepción de personalización dentro del Customer Journey.
+                </p>
+            </details>
+
             <h3>Personalización del servicio</h3>
             <p>
                 La personalización implica adaptar el servicio a las características, necesidades o preferencias de cada
@@ -1935,22 +1560,40 @@
                 La personalización suele requerir mayor participación del personal, flexibilidad en los procesos y un
                 conocimiento más profundo del cliente.
             </p>
-            <h3>CASO:</h3>
-            <p>
-                En el mismo centro de formación, algunos estudiantes reciben orientación personalizada para elegir el
-                curso adecuado según su nivel y objetivos.
-            </p>
-            <p>
-                Durante el curso, el docente responde dudas específicas, adapta ejemplos y brinda retroalimentación
-                individual.
-            </p>
-            <p>
-                Incluso se sugieren cursos complementarios según el progreso del estudiante.
-            </p>
-            <p>
-                Esta personalización hace que el estudiante se sienta acompañado y valorado, aunque exige mayor esfuerzo
-                y coordinación interna.
-            </p>
+            <details>
+                <summary>
+                    Caso 6:
+                </summary>
+                <p>
+                    Te acercas a un centro de formación y antes de inscribirte, alguien analiza tu nivel y tus
+                    objetivos.
+                    No te ofrecen cualquier curso, sino el que realmente se adapta a lo que necesitas.
+                </p>
+
+                <p>
+                    Durante el desarrollo del curso, el docente responde tus dudas de manera específica,
+                    adapta los ejemplos a tu realidad y te brinda retroalimentación individual.
+                </p>
+
+                <p>
+                    A medida que avanzas, también te sugieren cursos complementarios según tu progreso.
+                    Sientes que no eres solo un número, sino una persona con metas propias.
+                </p>
+
+                <ul>
+                    <li>¿Cómo influye esta atención personalizada en tu motivación?</li>
+                    <li>¿Qué diferencia percibes entre este servicio y uno completamente estandarizado?</li>
+                    <li>¿Estarías dispuesto a pagar más por este tipo de acompañamiento? Explica por qué.</li>
+                    <li>¿Qué desafíos crees que enfrenta la institución al ofrecer este nivel de personalización?</li>
+                </ul>
+
+                <p>
+                    Este caso permite analizar cómo la personalización fortalece la experiencia del cliente dentro del
+                    Customer Journey,
+                    generando mayor satisfacción y fidelización, aunque implique mayor esfuerzo organizacional.
+                </p>
+            </details>
+
             <h3>El equilibrio entre estandarización y personalización</h3>
             <p>
                 En la práctica, las empresas de servicios no eligen una estrategia de manera absoluta.
@@ -1966,22 +1609,26 @@
             <p>
                 Este equilibrio permite mantener eficiencia sin sacrificar la experiencia del cliente.
             </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué la estandarización ayuda a mantener la calidad del servicio?
-            </p>
-            <p>
-                2. ¿Qué riesgos puede generar un servicio excesivamente estandarizado?
-            </p>
-            <p>
-                3. ¿Por qué la personalización aumenta la percepción de valor del cliente?
-            </p>
-            <p>
-                4. ¿Qué dificultades enfrenta una empresa al personalizar sus servicios?
-            </p>
-            <p>
-                5. ¿Por qué es necesario encontrar un equilibrio entre estandarización y personalización?
-            </p>
+            <details>
+                <summary>
+                    A12 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Por qué la estandarización ayuda a mantener la calidad del servicio?
+                </p>
+                <p>
+                    2. ¿Qué riesgos puede generar un servicio excesivamente estandarizado?
+                </p>
+                <p>
+                    3. ¿Por qué la personalización aumenta la percepción de valor del cliente?
+                </p>
+                <p>
+                    4. ¿Qué dificultades enfrenta una empresa al personalizar sus servicios?
+                </p>
+                <p>
+                    5. ¿Por qué es necesario encontrar un equilibrio entre estandarización y personalización?
+                </p>
+            </details>
             <h3>Los Procesos de Servicio</h3>
             <p>
                 Los procesos de servicio son el conjunto de actividades organizadas y relacionadas entre sí que permiten
@@ -2006,59 +1653,49 @@
                 Los procesos de servicio ayudan a coordinar al personal, la tecnología y los recursos, asegurando que
                 cada etapa del servicio funcione de manera ordenada.
             </p>
-            <h3>Tipos de procesos de servicio</h3>
-            <p>
-                Los procesos de servicio pueden clasificarse según su función dentro de la organización.
-            </p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Tipo de Proceso</th>
-                        <th>Descripción</th>
-                        <th>Ejemplos</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Procesos principales</td>
-                        <td>Son los que entregan directamente el servicio al cliente.</td>
-                        <td>Atención al cliente, dictado de clases, soporte.</td>
-                    </tr>
-                    <tr>
-                        <td>Procesos de apoyo</td>
-                        <td>Respaldan a los procesos principales.</td>
-                        <td>Administración, tecnología, gestión de pagos.</td>
-                    </tr>
-                    <tr>
-                        <td>Procesos de gestión</td>
-                        <td>Permiten planificar, controlar y mejorar el servicio.</td>
-                        <td>Evaluación de calidad, planificación, control.</td>
-                    </tr>
-                </tbody>
-            </table>
-            <h3>CASO:</h3>
-            <p>
-                En una institución que ofrece cursos de formación, el proceso de servicio comienza cuando el estudiante
-                solicita información y finaliza cuando concluye el curso y recibe su certificado.
-            </p>
-            <p>
-                Cada etapa del proceso está conectado.
-            </p>
-            <p>
-                Si una falla, el servicio completo se ve afectado.
-            </p>
-            <p>
-                El proceso principal incluye la atención inicial, la inscripción, el dictado del curso y el
-                acompañamiento al estudiante.
-            </p>
-            <p>
-                Los procesos de apoyo incluyen la gestión de la plataforma educativa, el control de pagos y el soporte
-                técnico.
-            </p>
-            <p>
-                Los procesos de gestión permiten evaluar la satisfacción del estudiante y mejorar continuamente el
-                servicio.
-            </p>
+            <details>
+                <summary>
+                    Caso 7:
+                </summary>
+                <p>
+                    Decides pedir información sobre un curso porque quieres mejorar tus habilidades.
+                    Desde el primer mensaje que envías, comienza tu experiencia con la institución.
+                </p>
+
+                <p>
+                    Recibes atención inicial, realizas tu inscripción, efectúas el pago y comienzas las clases.
+                    Durante el curso interactúas con el docente, utilizas la plataforma virtual y, al finalizar,
+                    recibes tu certificado.
+                </p>
+
+                <p>
+                    Cada etapa está conectada. Si la atención inicial es lenta, si la plataforma falla
+                    o si el soporte técnico no responde, toda tu percepción del servicio cambia,
+                    incluso si el contenido del curso es bueno.
+                </p>
+
+                <p>
+                    Detrás de tu experiencia existen distintos procesos:
+                    el proceso principal (atención, inscripción y dictado del curso),
+                    los procesos de apoyo (pagos, plataforma, soporte técnico)
+                    y los procesos de gestión (evaluación y mejora del servicio).
+                </p>
+
+                <ul>
+                    <li>¿En qué momento del proceso consideras que es más importante generar una buena experiencia?
+                        Explica por qué.</li>
+                    <li>¿Cómo puede una falla pequeña afectar todo el servicio?</li>
+                    <li>¿Qué proceso crees que es más visible para el estudiante?</li>
+                    <li>¿Por qué es importante evaluar la satisfacción al finalizar el curso?</li>
+                </ul>
+
+                <p>
+                    Este caso permite comprender que el servicio no es un momento aislado,
+                    sino un conjunto de procesos interrelacionados que influyen directamente
+                    en la experiencia del cliente dentro del Customer Journey.
+                </p>
+            </details>
+
             <h3>Mejora de los procesos de servicio</h3>
             <p>
                 Mejorar los procesos de servicio implica analizarlos, detectar fallas y rediseñarlos para ofrecer una
@@ -2068,22 +1705,47 @@
                 Herramientas como el Customer Journey y el Service Blueprint permiten visualizar el proceso completo y
                 tomar decisiones basadas en la experiencia del cliente y la eficiencia interna.
             </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué los procesos de servicio influyen directamente en la satisfacción del cliente?
-            </p>
-            <p>
-                2. ¿Qué consecuencias puede tener un proceso de servicio mal diseñado?
-            </p>
-            <p>
-                3. ¿Por qué es importante coordinar procesos principales y de apoyo?
-            </p>
-            <p>
-                4. ¿Cómo ayudan los procesos de servicio a mantener la calidad del servicio?
-            </p>
-            <p>
-                5. Desde tu punto de vista, ¿qué proceso es más crítico en un servicio educativo y por qué?
-            </p>
+            <details>
+                <summary>
+                    Caso 8:
+                </summary>
+                <p>
+                    Te inscribes en un curso y notas que el proceso es confuso.
+                    La información está en distintos lugares, el pago no se confirma de inmediato
+                    y la plataforma tarda en habilitarse.
+                </p>
+
+                <p>
+                    Aunque el contenido del curso es bueno, sientes que el proceso podría ser más claro y rápido.
+                    Algunos compañeros también comentan que tuvieron dificultades similares.
+                </p>
+
+                <p>
+                    La institución decide analizar todo el recorrido del estudiante,
+                    desde la solicitud de información hasta la entrega del certificado.
+                    Utiliza herramientas como el Customer Journey para identificar puntos de dolor
+                    y el Service Blueprint para revisar qué ocurre internamente en cada etapa.
+                </p>
+
+                <p>
+                    Después del análisis, simplifican el formulario, automatizan la confirmación de pago
+                    y mejoran la coordinación entre el área académica y el soporte técnico.
+                </p>
+
+                <ul>
+                    <li>¿Cómo influye la organización del proceso en tu percepción del servicio?</li>
+                    <li>¿Qué cambios consideras más importantes para mejorar la experiencia del estudiante?</li>
+                    <li>¿Por qué es importante analizar tanto la experiencia del cliente como los procesos internos?
+                    </li>
+                    <li>¿Qué podría ocurrir si la institución no revisa ni mejora sus procesos?</li>
+                </ul>
+
+                <p>
+                    Este caso muestra que mejorar los procesos de servicio no solo implica corregir errores,
+                    sino rediseñar la experiencia completa para generar mayor satisfacción y eficiencia.
+                </p>
+            </details>
+
         </section>
         <section id="Unidad3">
             <h2>Unidad 3: EL CLIENTE EN EL MARKETING DE SERVICIOS</h2>
@@ -2115,21 +1777,46 @@
             <p>
                 Si el cliente no cumple su rol, el servicio puede verse afectado.
             </p>
-            <h3>CASO:</h3>
-            <p>
-                En un curso de formación, el estudiante no solo recibe clases.
-            </p>
-            <p>
-                Debe asistir, participar, realizar actividades y seguir indicaciones.
-            </p>
-            <p>
-                Si el estudiante no cumple estas acciones, el servicio no genera el resultado esperado, aunque el
-                docente cumpla su parte.
-            </p>
-            <p>
-                En este sentido, el estudiante participa activamente en la producción del servicio educativo, influyendo
-                en su propio aprendizaje y en la dinámica del curso.
-            </p>
+            <details>
+                <summary>
+                    Caso 9:
+                </summary>
+                <p>
+                    Te inscribes en un curso con el objetivo de aprender y mejorar tus habilidades.
+                    El docente prepara las clases, organiza el contenido y explica los temas con claridad.
+                </p>
+
+                <p>
+                    Sin embargo, para que realmente aprendas, no basta con asistir.
+                    Debes participar, realizar las actividades, practicar y cumplir con las indicaciones.
+                </p>
+
+                <p>
+                    Si decides no intervenir en clase, no entregar tareas o no practicar lo aprendido,
+                    el resultado no será el esperado, aunque el docente haya cumplido correctamente su parte.
+                </p>
+
+                <p>
+                    En este caso, tú no eres solo receptor del servicio.
+                    Tu participación influye directamente en la calidad de tu aprendizaje
+                    y en la experiencia general del curso.
+                </p>
+
+                <ul>
+                    <li>¿Qué responsabilidad tiene el estudiante en el resultado del servicio educativo?</li>
+                    <li>¿Puede el servicio ser exitoso si el cliente no participa activamente? Explica tu respuesta.
+                    </li>
+                    <li>¿Cómo influye tu actitud en la dinámica del curso?</li>
+                    <li>¿Qué diferencia existe entre recibir información y participar en el aprendizaje?</li>
+                </ul>
+
+                <p>
+                    Este caso permite comprender que en muchos servicios, especialmente en educación,
+                    el cliente participa activamente en la producción del servicio,
+                    influyendo directamente en el resultado final.
+                </p>
+            </details>
+
             <h3>Implicaciones de considerar al cliente como parte del proceso</h3>
             <p>
                 Cuando se reconoce que el cliente cumple un rol activo, la empresa debe diseñar el servicio de manera
@@ -2150,29 +1837,33 @@
             <p>
                 Por ello, la gestión de servicios debe contemplar al cliente como un actor clave dentro del proceso.
             </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué el cliente no es un actor pasivo en los servicios?
-            </p>
-            <p>
-                2. ¿En qué sentido se puede decir que el cliente actúa como un “empleado parcial”?
-            </p>
-            <p>
-                3. ¿Qué consecuencias puede tener la falta de participación del cliente en un servicio?
-            </p>
-            <p>
-                4. ¿Cómo puede una empresa facilitar el rol activo del cliente en el servicio?
-            </p>
-            <p>
-                5. ¿Qué riesgos existen cuando el cliente no comprende su rol dentro del servicio?
-            </p>
+            <details>
+                <summary>
+                    A13 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Por qué el cliente no es un actor pasivo en los servicios?
+                </p>
+                <p>
+                    2. ¿En qué sentido se puede decir que el cliente actúa como un “empleado parcial”?
+                </p>
+                <p>
+                    3. ¿Qué consecuencias puede tener la falta de participación del cliente en un servicio?
+                </p>
+                <p>
+                    4. ¿Cómo puede una empresa facilitar el rol activo del cliente en el servicio?
+                </p>
+                <p>
+                    5. ¿Qué riesgos existen cuando el cliente no comprende su rol dentro del servicio?
+                </p>
+            </details>
             <h3>Expectativas y Percepción</h3>
             <p>
                 En los servicios, la satisfacción del cliente no depende únicamente de lo que la empresa ofrece, sino de
-                la comparación constante entre lo que el cliente espera y lo que realmente recibe.
+                la comparación constante entre <b> lo que el cliente espera</b> y <b>lo que realmente recibe.</b>
             </p>
             <p>
-                Esta comparación define la percepción final del servicio.
+                <b>Esta comparación define la percepción final del servicio.</b>
             </p>
             <p>
                 Cuando el servicio recibido cumple o supera las expectativas, el cliente se siente satisfecho.
@@ -2213,59 +1904,91 @@
                 La satisfacción del cliente surge de la comparación entre expectativas y percepción:
             </p>
             <ul>
-                <li>Si la percepción es mayor que la expectativa, el cliente queda muy satisfecho.</li>
-                <li>Si la percepción es igual a la expectativa, el cliente queda satisfecho.</li>
-                <li>Si la percepción es menor que la expectativa, el cliente queda insatisfecho.</li>
+                <li>Si <b>( percepción &gt; expectativa )</b>, el cliente queda muy satisfecho.</li>
+                <li>Si <b>( percepción == expectativa )</b>, el cliente queda satisfecho.</li>
+                <li>Si <b>( percepción &lt; expectativa )</b>, el cliente queda insatisfecho.</li>
             </ul>
-            <h3>CASO:</h3>
-            <p>
-                Un estudiante se inscribe en un curso esperando clases claras, acompañamiento del docente y acceso
-                sencillo al contenido.
-            </p>
-            <p>
-                Estas son sus expectativas.
-            </p>
-            <p>
-                Durante el curso, el estudiante evalúa si el contenido es comprensible, si recibe respuestas a sus dudas
-                y si la plataforma funciona correctamente.
-            </p>
-            <p>
-                Esa evaluación construye su percepción.
-            </p>
-            <p>
-                Si el curso cumple lo prometido y la experiencia es positiva, la percepción será alta.
-            </p>
-            <p>
-                Si el curso promete más de lo que realmente ofrece, la percepción será negativa, aunque el contenido sea
-                aceptable.
-            </p>
+            <br>
+            <details>
+                <summary>
+                    Caso 10:
+                </summary>
+                <p>
+                    Te inscribes en un curso porque el anuncio promete clases claras,
+                    acompañamiento constante del docente y acceso sencillo al contenido.
+                    Antes de comenzar, ya tienes una idea de cómo debería ser la experiencia.
+                </p>
+
+                <p>
+                    Esas son tus expectativas.
+                </p>
+
+                <p>
+                    Durante el curso, comienzas a evaluar todo:
+                    si el contenido es comprensible,
+                    si el docente responde tus dudas,
+                    si la plataforma funciona correctamente
+                    y si realmente estás aprendiendo.
+                </p>
+
+                <p>
+                    Poco a poco, comparas lo que esperabas con lo que estás viviendo.
+                    Esa comparación construye tu percepción del servicio.
+                </p>
+
+                <p>
+                    Si el curso cumple lo prometido y la experiencia es positiva,
+                    tu percepción será alta.
+                    Pero si el curso promete más de lo que realmente ofrece,
+                    tu percepción será negativa,
+                    incluso si el contenido es aceptable.
+                </p>
+
+                <ul>
+                    <li>¿Qué importancia tienen las expectativas antes de recibir un servicio?</li>
+                    <li>¿Cómo influyen las promesas del anuncio en la percepción final?</li>
+                    <li>¿Es mejor prometer menos y cumplir más? Explica tu respuesta.</li>
+                    <li>¿Qué relación existe entre expectativas, experiencia y satisfacción?</li>
+                </ul>
+
+                <p>
+                    Este caso permite comprender que la satisfacción del cliente
+                    no depende solo de la calidad técnica del servicio,
+                    sino de la comparación entre lo que esperaba y lo que realmente recibió.
+                </p>
+            </details>
+
             <h3>Gestión de expectativas</h3>
             <p>
                 Gestionar expectativas implica comunicar de manera clara y realista lo que el servicio puede ofrecer.
             </p>
             <p>
-                Prometer más de lo que se puede cumplir genera insatisfacción y pérdida de confianza.
+                Prometer más de lo que se puede cumplir <b>genera insatisfacción</b> y <b>pérdida de confianza.</b>
             </p>
             <p>
                 Una buena gestión de expectativas permite alinear lo que el cliente espera con lo que realmente
                 recibirá, aumentando la satisfacción.
             </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué las expectativas influyen tanto en la satisfacción del cliente?
-            </p>
-            <p>
-                2. ¿Qué factores crees que influyen más en la formación de expectativas?
-            </p>
-            <p>
-                3. ¿Por qué dos clientes pueden percibir de forma distinta el mismo servicio?
-            </p>
-            <p>
-                4. ¿Qué riesgos existen cuando una empresa promete más de lo que puede cumplir?
-            </p>
-            <p>
-                5. ¿Por qué la comunicación clara es clave en la gestión de expectativas?
-            </p>
+            <details>
+                <summary>
+                    A14 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Por qué las expectativas influyen en la satisfacción del cliente?
+                </p>
+                <p>
+                    2. ¿Qué influye en la formación de expectativas?
+                </p>
+                <p>
+                    3. ¿Por qué dos clientes pueden percibir de forma distinta el mismo servicio?
+                </p>
+                <p>
+                    4. ¿Qué riesgos existen cuando una empresa promete más de lo que puede cumplir?
+                </p>
+                <p>
+                    5. ¿Por qué la comunicación clara es clave en la gestión de expectativas?
+                </p>
+            </details>
             <h3>Momentos de Verdad y Comportamiento</h3>
             <p>
                 En los servicios, no toda la experiencia tiene el mismo impacto en el cliente.
@@ -2299,15 +2022,15 @@
             </p>
             <p>
                 <b>Momento de verdad inicial:</b> <br>
-                ocurre en el primer contacto del cliente con el servicio y genera la primera impresión.
+                Ocurre en el primer contacto del cliente con el servicio y genera la primera impresión.
             </p>
             <p>
                 <b>Momento de verdad de consumo:</b> <br>
-                se produce durante la prestación del servicio y se repite varias veces.
+                Se produce durante la prestación del servicio y se repite varias veces.
             </p>
             <p>
                 <b>Momento de verdad final:</b> <br>
-                ocurre al cierre del servicio y deja una impresión duradera.
+                Ocurre al cierre del servicio y deja una impresión duradera.
             </p>
             <h3>El comportamiento en los momentos</h3>
             <p>
@@ -2324,24 +2047,49 @@
                 Un cliente informado y participativo facilita la prestación del servicio, mientras que uno desinformado
                 o molesto puede generar tensiones.
             </p>
-            <h3>CASO:</h3>
-            <p>
-                En un curso de formación, el primer momento de verdad ocurre cuando el estudiante solicita información y
-                recibe respuesta.
-            </p>
-            <p>
-                Una atención clara y rápida genera confianza.
-            </p>
-            <p>
-                Durante el curso, cada clase, cada respuesta del docente y cada interacción con la plataforma son
-                momentos de verdad que refuerzan o debilitan la percepción del servicio.
-            </p>
-            <p>
-                El momento de verdad final ocurre cuando el estudiante finaliza el curso y recibe su certificado.
-            </p>
-            <p>
-                Una buena gestión de este cierre influye en la recomendación futura del servicio.
-            </p>
+            <details>
+                <summary>
+                    Caso 11:
+                </summary>
+                <p>
+                    Decides pedir información sobre un curso que te interesa.
+                    El primer contacto ocurre cuando envías un mensaje y esperas respuesta.
+                </p>
+
+                <p>
+                    Si la respuesta es clara, rápida y amable,
+                    comienzas a confiar en la institución.
+                    Ese es tu primer momento de verdad.
+                </p>
+
+                <p>
+                    Luego inicias el curso.
+                    Cada clase, cada explicación del docente,
+                    cada respuesta a tus dudas
+                    y cada experiencia con la plataforma
+                    se convierten en nuevos momentos de verdad.
+                    En cada uno de ellos refuerzas o debilitas tu percepción del servicio.
+                </p>
+
+                <p>
+                    Finalmente, concluyes el curso y recibes tu certificado.
+                    La forma en que se gestiona este cierre
+                    influye en tu decisión de recomendar o no el servicio.
+                </p>
+
+                <ul>
+                    <li>¿Por qué el primer contacto es tan importante en un servicio?</li>
+                    <li>¿Cómo puede un pequeño detalle cambiar tu percepción del curso?</li>
+                    <li>¿Qué momento consideras más decisivo: el inicio, el desarrollo o el cierre?</li>
+                    <li>¿Cómo influyen los momentos de verdad en la recomendación futura del servicio?</li>
+                </ul>
+
+                <p>
+                    Este caso permite comprender que el servicio se construye a través de múltiples momentos de verdad,
+                    y cada uno de ellos impacta directamente en la experiencia y satisfacción del cliente.
+                </p>
+            </details>
+
             <h3>Importancia de gestionar los momentos</h3>
             <p>
                 Gestionar adecuadamente los momentos de verdad permite a la empresa controlar la experiencia del cliente
@@ -2351,25 +2099,29 @@
                 Para ello, es necesario capacitar al personal, definir protocolos de atención y diseñar procesos que
                 faciliten un comportamiento adecuado en cada punto de contacto.
             </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué un solo momento de verdad puede definir la percepción del servicio?
-            </p>
-            <p>
-                2. ¿Cuál consideras que es el momento de verdad más crítico en un servicio educativo?
-            </p>
-            <p>
-                3. ¿Cómo influye el comportamiento del personal en los momentos de verdad?
-            </p>
-            <p>
-                4. ¿Por qué el comportamiento del cliente también afecta el resultado del servicio?
-            </p>
-            <p>
-                5. ¿Cómo puede una empresa preparar a su personal para gestionar mejor los momentos de verdad?
-            </p>
+            <details>
+                <summary>
+                    A15 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Por qué un solo momento de verdad puede definir la percepción del servicio?
+                </p>
+                <p>
+                    2. ¿Cuál consideras que es el momento de verdad más crítico?
+                </p>
+                <p>
+                    3. ¿Cómo influye el comportamiento del personal en los momentos de verdad?
+                </p>
+                <p>
+                    4. ¿Por qué el comportamiento del cliente también afecta el resultado del servicio?
+                </p>
+                <p>
+                    5. ¿Cómo se puede preparar al personal para gestionar los momentos de verdad?
+                </p>
+            </details>
             <h3>Los 7 Pecados del Servicio</h3>
             <p>
-                Los 7 Pecados del Servicio son una clasificación que explica las principales fallas que deterioran la
+                Son una clasificación que explica las principales fallas que deterioran la
                 experiencia del cliente.
             </p>
             <p>
@@ -2436,22 +2188,26 @@
             <p>
                 Este pecado genera pérdida de confianza y daña gravemente la imagen de la empresa.
             </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Cómo puede una empresa evitar el automatismo en la atención al cliente?
-            </p>
-            <p>
-                2. ¿Por qué el “peluqueo” afecta directamente la confianza del cliente?
-            </p>
-            <p>
-                3. ¿Qué pecado del servicio identificas con mayor frecuencia en servicios educativos?
-            </p>
-            <p>
-                4. ¿Cómo influye la capacitación del personal en la prevención de estos pecados?
-            </p>
-            <p>
-                5. ¿Qué acciones concretas ayudarían a reducir estos pecados en una organización?
-            </p>
+            <details>
+                <summary>
+                    A16 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Cómo puede una empresa evitar el automatismo en la atención al cliente?
+                </p>
+                <p>
+                    2. ¿Por qué el “peluqueo” afecta directamente la confianza del cliente?
+                </p>
+                <p>
+                    3. ¿Qué pecado del servicio identificas con mayor frecuencia en servicios educativos?
+                </p>
+                <p>
+                    4. ¿Cómo influye la capacitación del personal en la prevención de estos pecados?
+                </p>
+                <p>
+                    5. ¿Qué acciones concretas ayudarían a reducir estos pecados en una organización?
+                </p>
+            </details>
             <h3>El Capital Humano en los Servicios</h3>
             <p>
                 En los servicios, el capital humano cumple un rol central, ya que la experiencia del cliente depende en
@@ -2476,20 +2232,50 @@
                 Un colaborador empático y profesional refuerza la confianza en la organización, mientras que una mala
                 actitud puede dañar seriamente la reputación del servicio.
             </p>
-            <h3>CASO:</h3>
-            <p>
-                En un curso de formación, el docente representa la institución.
-            </p>
-            <p>
-                Su forma de explicar, su disposición para responder dudas y su actitud frente a los estudiantes influyen
-                directamente en la percepción del curso.
-            </p>
-            <p>
-                Aunque el contenido sea bueno, un docente desmotivado o distante puede generar una experiencia negativa.
-            </p>
-            <p>
-                En cambio, un docente comprometido eleva el valor del servicio.
-            </p>
+            <details>
+                <summary>
+                    Caso 12:
+                </summary>
+                <p>
+                    Te inscribes en un curso con grandes expectativas.
+                    El contenido parece interesante y bien estructurado.
+                </p>
+
+                <p>
+                    Sin embargo, desde la primera clase notas que el docente explica de forma poco clara,
+                    responde con desinterés o evita profundizar en las dudas.
+                    Aunque el material sea bueno, la experiencia comienza a sentirse distante.
+                </p>
+
+                <p>
+                    Ahora imagina lo contrario.
+                    Un docente que explica con claridad,
+                    muestra disposición para ayudarte,
+                    adapta ejemplos a tu realidad
+                    y mantiene una actitud motivadora.
+                    En este caso, el valor del curso aumenta.
+                </p>
+
+                <p>
+                    En ambos escenarios, el docente representa a la institución.
+                    Su actitud influye directamente en tu percepción del servicio.
+                </p>
+
+                <ul>
+                    <li>¿Cómo influye la actitud del docente en tu motivación?</li>
+                    <li>¿Puede un buen contenido compensar una mala interacción humana?</li>
+                    <li>¿Por qué el personal de contacto es clave en los servicios educativos?</li>
+                    <li>¿Qué características debería tener un docente para fortalecer la experiencia del estudiante?
+                    </li>
+                </ul>
+
+                <p>
+                    Este caso permite comprender que en los servicios,
+                    las personas que interactúan con el cliente
+                    influyen directamente en la percepción, satisfacción y valor del servicio.
+                </p>
+            </details>
+
             <h3>Implicaciones para la gestión de servicios</h3>
             <p>
                 Reconocer que la persona es la marca y el producto implica invertir en selección, capacitación,
@@ -2499,22 +2285,26 @@
                 Las empresas de servicios deben alinear al capital humano con los valores de la organización y con la
                 promesa de marca.
             </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué el capital humano es más importante en los servicios que en los productos?
-            </p>
-            <p>
-                2. ¿En qué sentido se puede decir que la persona representa a la marca?
-            </p>
-            <p>
-                3. ¿Por qué el comportamiento del personal influye en la percepción del servicio?
-            </p>
-            <p>
-                4. ¿Qué riesgos existen cuando el personal no está alineado con la marca?
-            </p>
-            <p>
-                5. ¿Cómo puede una empresa fortalecer su marca a través de su capital humano?
-            </p>
+            <details>
+                <summary>
+                    A17 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Por qué el capital humano es más importante en los servicios?
+                </p>
+                <p>
+                    2. ¿En qué sentido se puede decir que la persona representa a la marca?
+                </p>
+                <p>
+                    3. ¿Por qué el comportamiento del personal influye en la percepción del servicio?
+                </p>
+                <p>
+                    4. ¿Qué riesgos existen cuando el personal no está alineado con la marca?
+                </p>
+                <p>
+                    5. ¿Cómo puede una empresa fortalecer su marca a través de su capital humano?
+                </p>
+            </details>
         </section>
         <section id="Unidad4">
             <h2>Unidad 4: CALIDAD DEL SERVICIO</h2>
@@ -2572,7 +2362,7 @@
                 Comprender qué factores moldean la expectativa permite a las empresas gestionar mejor la comunicación,
                 evitar promesas irreales y reducir la insatisfacción.
             </p>
-            <h3>Experiencias previas</h3>
+            <h3>1. Experiencias previas</h3>
             <p>
                 Las experiencias anteriores del cliente con el mismo servicio o con servicios similares influyen
                 directamente en sus expectativas.
@@ -2584,7 +2374,7 @@
                 Por el contrario, una experiencia negativa genera expectativas más bajas o desconfianza hacia el
                 servicio.
             </p>
-            <h3>Comunicación y publicidad</h3>
+            <h3>2. Comunicación y publicidad</h3>
             <p>
                 La publicidad, las redes sociales y los mensajes promocionales crean una imagen previa del servicio.
             </p>
@@ -2594,7 +2384,7 @@
             <p>
                 Promesas exageradas elevan las expectativas y aumentan el riesgo de insatisfacción si no se cumplen.
             </p>
-            <h3>Recomendaciones y opiniones</h3>
+            <h3>3. Recomendaciones y opiniones</h3>
             <p>
                 Las recomendaciones de amigos, familiares o las reseñas en línea influyen fuertemente en las
                 expectativas.
@@ -2603,7 +2393,7 @@
                 Un comentario positivo genera confianza, mientras que una opinión negativa puede crear dudas antes de
                 vivir el servicio.
             </p>
-            <h3>Precio del servicio</h3>
+            <h3>4. Precio del servicio</h3>
             <p>
                 El precio actúa como una señal de calidad.
             </p>
@@ -2614,7 +2404,7 @@
             <p>
                 Cuando el precio no se corresponde con la experiencia, la percepción de calidad se ve afectada.
             </p>
-            <h3>Imagen y reputación de la empresa</h3>
+            <h3>5. Imagen y reputación de la empresa</h3>
             <p>
                 La trayectoria, el prestigio y la reputación de la empresa influyen en lo que el cliente espera del
                 servicio.
@@ -2622,7 +2412,7 @@
             <p>
                 Una empresa reconocida genera expectativas más altas que una empresa poco conocida.
             </p>
-            <h3>Necesidades y motivaciones personales</h3>
+            <h3>6. Necesidades y motivaciones personales</h3>
             <p>
                 Las expectativas también dependen de la situación personal del cliente.
             </p>
@@ -2633,31 +2423,26 @@
                 En los servicios educativos, por ejemplo, un estudiante que busca mejorar su empleo espera resultados
                 concretos.
             </p>
-            <h3>CASO:</h3>
-            <p>
-                Un estudiante se inscribe en un curso influido por la publicidad, recomendaciones de otros alumnos, el
-                precio y su deseo de mejorar profesionalmente.
-            </p>
-            <p>
-                Todos estos factores construyen una expectativa previa que luego comparará con la experiencia real del
-                curso.
-            </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué las experiencias previas influyen tanto en las expectativas del cliente?
-            </p>
-            <p>
-                2. ¿Cómo puede la publicidad afectar positiva o negativamente las expectativas?
-            </p>
-            <p>
-                3. ¿Por qué las recomendaciones de otros clientes generan tanta confianza?
-            </p>
-            <p>
-                4. ¿De qué manera el precio condiciona lo que el cliente espera del servicio?
-            </p>
-            <p>
-                5. ¿Cómo influye la reputación de la empresa en la expectativa del cliente?
-            </p>
+            <details>
+                <summary>
+                    A18 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Por qué las experiencias previas influyen tanto en las expectativas del cliente?
+                </p>
+                <p>
+                    2. ¿Cómo puede la publicidad afectar positiva o negativamente las expectativas?
+                </p>
+                <p>
+                    3. ¿Por qué las recomendaciones de otros clientes generan tanta confianza?
+                </p>
+                <p>
+                    4. ¿De qué manera el precio condiciona lo que el cliente espera del servicio?
+                </p>
+                <p>
+                    5. ¿Cómo influye la reputación de la empresa en la expectativa del cliente?
+                </p>
+            </details>
             <h3>Gestión Estratégica de Reclamos y Quejas</h3>
             <p>
                 En los servicios, los reclamos y quejas no deben entenderse como un problema, sino como una fuente de
@@ -2711,17 +2496,49 @@
                 <b>Seguimiento:</b> <br>
                 verificar que el cliente quedó conforme con la solución.
             </p>
-            <h3>CASO:</h3>
-            <p>
-                Un estudiante presenta un reclamo porque no pudo acceder a la plataforma del curso.
-            </p>
-            <p>
-                Si la institución ignora el reclamo o responde tarde, el estudiante se sentirá desvalorizado.
-            </p>
-            <p>
-                En cambio, si se responde con rapidez, se explica la situación y se brinda una solución inmediata, el
-                reclamo se convierte en una oportunidad para reforzar la confianza.
-            </p>
+            <details>
+                <summary>
+                    Caso 13:
+                </summary>
+                <p>
+                    Estás realizando tu curso y de pronto no puedes ingresar a la plataforma.
+                    Intentas varias veces, pero el sistema no te permite acceder.
+                </p>
+
+                <p>
+                    Decides enviar un mensaje para reportar el problema.
+                    Ahora comienza un momento clave en tu experiencia.
+                </p>
+
+                <p>
+                    Si la institución no responde o demora varios días,
+                    puedes sentir frustración y desvalorización.
+                    Incluso podrías pensar que no les importa tu situación.
+                </p>
+
+                <p>
+                    Pero si recibes una respuesta rápida,
+                    te explican lo que ocurrió
+                    y solucionan el problema de inmediato,
+                    tu confianza puede fortalecerse.
+                </p>
+
+                <ul>
+                    <li>¿Cómo influye la rapidez de respuesta en tu percepción del servicio?</li>
+                    <li>¿Puede un reclamo bien gestionado mejorar la confianza del estudiante?
+                    </li>
+                    <li>¿Qué errores cometen las empresas cuando ignoran los reclamos?</li>
+                    <li>¿Por qué un problema puede convertirse en una oportunidad de fidelización?</li>
+                </ul>
+
+                <p>
+                    Este caso permite comprender que los reclamos no siempre son negativos.
+                    Cuando se gestionan correctamente,
+                    pueden convertirse en oportunidades para fortalecer la relación con el cliente
+                    dentro del Customer Journey.
+                </p>
+            </details>
+
             <h3>Beneficios de una buena gestión de reclamos</h3>
             <p>
                 Una gestión adecuada permite detectar fallas recurrentes, mejorar procesos internos y prevenir futuros
@@ -2730,22 +2547,26 @@
             <p>
                 Además, demuestra al cliente que la empresa se preocupa por su experiencia y está dispuesta a mejorar.
             </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué los reclamos pueden considerarse una oportunidad de mejora?
-            </p>
-            <p>
-                2. ¿Por qué la escucha activa es clave al recibir una queja?
-            </p>
-            <p>
-                3. ¿Cómo influye la rapidez de respuesta en la satisfacción del cliente?
-            </p>
-            <p>
-                4. ¿Por qué reconocer un error puede fortalecer la relación con el cliente?
-            </p>
-            <p>
-                5. ¿Por qué es importante hacer seguimiento después de resolver un reclamo?
-            </p>
+            <details>
+                <summary>
+                    A19 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Por qué los reclamos pueden considerarse una oportunidad de mejora?
+                </p>
+                <p>
+                    2. ¿Por qué la escucha activa es clave al recibir una queja?
+                </p>
+                <p>
+                    3. ¿Cómo influye la rapidez de respuesta en la satisfacción del cliente?
+                </p>
+                <p>
+                    4. ¿Por qué reconocer un error puede fortalecer la relación con el cliente?
+                </p>
+                <p>
+                    5. ¿Por qué es importante hacer seguimiento después de resolver un reclamo?
+                </p>
+            </details>
             <h3>Recuperación del Servicio</h3>
             <p>
                 La recuperación del servicio se refiere al conjunto de acciones que realiza una empresa cuando ocurre un
@@ -2778,6 +2599,7 @@
                 <li>Ofrecer soluciones poco claras o insuficientes.</li>
                 <li>No aprender del error para evitar que se repita.</li>
             </ul>
+            <br>
             <h3>¿Qué es la Cultura de Servicio?</h3>
             <p>
                 La cultura de servicio es el conjunto de valores, actitudes, comportamientos y prácticas compartidas
@@ -2806,15 +2628,47 @@
             <p>
                 Esto significa que servir bien no es una obligación impuesta, sino una convicción compartida.
             </p>
-            <h3>CASO:</h3>
-            <p>
-                En una institución educativa con cultura de servicio, el docente, el personal administrativo y el área
-                técnica trabajan con un mismo objetivo: facilitar el aprendizaje del estudiante.
-            </p>
-            <p>
-                Cuando surge un problema, no se buscan culpables, sino soluciones rápidas y efectivas, priorizando la
-                experiencia del estudiante.
-            </p>
+            <details>
+                <summary>
+                    Caso 14:
+                </summary>
+                <p>
+                    Te inscribes en un curso y desde el primer momento notas algo diferente.
+                    El docente, el personal administrativo y el equipo técnico parecen trabajar coordinadamente.
+                </p>
+
+                <p>
+                    Cuando surge una duda académica, el docente responde con claridad.
+                    Si hay un problema con el pago, el área administrativa lo gestiona rápidamente.
+                    Si la plataforma presenta una falla, el soporte técnico interviene de inmediato.
+                </p>
+
+                <p>
+                    No percibes discusiones internas ni demoras innecesarias.
+                    Todos parecen tener un mismo objetivo: facilitar tu aprendizaje.
+                </p>
+
+                <p>
+                    Cuando ocurre un inconveniente, no se buscan responsables,
+                    sino soluciones rápidas y efectivas.
+                    Te sientes respaldado y valorado.
+                </p>
+
+                <ul>
+                    <li>¿Cómo influye el trabajo en equipo en tu experiencia como estudiante?</li>
+                    <li>¿Qué diferencia percibes entre una institución organizada y una descoordinada?</li>
+                    <li>¿Por qué es importante que todos compartan el mismo objetivo de servicio?</li>
+                    <li>¿Cómo impacta la cultura interna en la satisfacción del cliente?</li>
+                </ul>
+
+                <p>
+                    Este caso permite comprender que una cultura de servicio sólida
+                    no depende de una sola persona,
+                    sino del compromiso conjunto de toda la organización
+                    para generar una experiencia positiva en cada etapa del servicio.
+                </p>
+            </details>
+
             <h3>Importancia de la cultura de servicio</h3>
             <p>
                 La cultura de servicio permite ofrecer experiencias consistentes, fortalecer la confianza del cliente y
@@ -2832,22 +2686,26 @@
             <p>
                 Cada interacción con el cliente refuerza o debilita esta cultura.
             </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué la cultura de servicio va más allá de una buena atención al cliente?
-            </p>
-            <p>
-                2. ¿Cómo influyen los valores de la empresa en la cultura de servicio?
-            </p>
-            <p>
-                3. ¿Por qué todas las áreas influyen en la experiencia del cliente?
-            </p>
-            <p>
-                4. ¿Qué consecuencias puede tener la ausencia de una cultura de servicio?
-            </p>
-            <p>
-                5. ¿Qué acciones concretas ayudan a construir una cultura de servicio?
-            </p>
+            <details>
+                <summary>
+                    A20 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Por qué la cultura de servicio va más allá de una buena atención al cliente?
+                </p>
+                <p>
+                    2. ¿Cómo influyen los valores de la empresa en la cultura de servicio?
+                </p>
+                <p>
+                    3. ¿Por qué todas las áreas influyen en la experiencia del cliente?
+                </p>
+                <p>
+                    4. ¿Qué consecuencias puede tener la ausencia de una cultura de servicio?
+                </p>
+                <p>
+                    5. ¿Qué acciones concretas ayudan a construir una cultura de servicio?
+                </p>
+            </details>
         </section>
         <section id="Unidad5">
             <h2>Unidad 5: PERSONAS, PROCESOS Y EVIDENCIA FÍSICA</h2>
@@ -2856,13 +2714,9 @@
                 insuficientes para explicar cómo se construye la experiencia del cliente.
             </p>
             <p>
-                Por ello, se incorporan tres elementos clave: personas, procesos y evidencia física.
+                Por ello, se incorporan tres elementos clave:
             </p>
-            <p>
-                Estas tres variables permiten comprender cómo se presta el servicio en la práctica y cómo el cliente
-                forma su percepción de calidad.
-            </p>
-            <h3>Personas</h3>
+            <h3>1. Personas</h3>
             <p>
                 Las personas incluyen a todo el personal que interviene en la prestación del servicio y que tiene
                 contacto directo o indirecto con el cliente.
@@ -2884,7 +2738,7 @@
             <p>
                 Su disposición para ayudar, claridad al explicar y empatía determinan la percepción del servicio.
             </p>
-            <h3>Procesos</h3>
+            <h3>2. Procesos</h3>
             <p>
                 Los procesos son el conjunto de actividades, pasos y procedimientos que permiten que el servicio se
                 preste de manera ordenada y coherente.
@@ -2903,7 +2757,7 @@
             <p>
                 Si alguno de estos pasos falla, la calidad percibida disminuye.
             </p>
-            <h3>Evidencia física</h3>
+            <h3>3. Evidencia física</h3>
             <p>
                 La evidencia física comprende todos los elementos tangibles que el cliente utiliza para evaluar un
                 servicio intangible.
@@ -2929,25 +2783,29 @@
                 Estas variables explican cómo se vive el servicio, cómo se gestiona internamente y cómo el cliente
                 evalúa su calidad.
             </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Cómo influyen las personas en la percepción de calidad del servicio?
-            </p>
-            <p>
-                2. ¿Por qué los procesos son clave para ofrecer un servicio consistente?
-            </p>
-            <p>
-                3. ¿Qué papel cumple la evidencia física en servicios intangibles?
-            </p>
-            <p>
-                4. ¿Qué riesgos existen cuando una de estas variables falla?
-            </p>
-            <p>
-                5. ¿Cómo puede una empresa mejorar su servicio trabajando estas tres variables?
-            </p>
+            <details>
+                <summary>
+                    A21 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Por qué las 4 P's tradicionales resultan insuficientes en el marketing de servicios?
+                </p>
+                <p>
+                    2. ¿Por qué se afirma que en los servicios las personas representan la marca?
+                </p>
+                <p>
+                    3. ¿Cómo contribuyen los procesos claros a mejorar la experiencia del cliente?
+                </p>
+                <p>
+                    4. ¿Por qué es importante integrar personas, procesos y evidencia física?
+                </p>
+                <p>
+                    5. ¿Qué ocurriría si uno de los tres elementos no estuviera bien gestionado?
+                </p>
+            </details>
             <h3>Imagen Personal y Profesional</h3>
             <p>
-                La imagen personal y profesional es la percepción que los demás construyen sobre una persona a partir de
+                Es la percepción que los demás construyen sobre una persona a partir de
                 su apariencia, comportamiento, comunicación y actitud.
             </p>
             <p>
@@ -2975,31 +2833,26 @@
                 Una imagen descuidada o incoherente puede generar desconfianza, incluso si el servicio es técnicamente
                 correcto.
             </p>
-            <h3>CASO:</h3>
-            <p>
-                En un servicio educativo, el docente proyecta su imagen profesional a través de su puntualidad,
-                preparación de clases, forma de comunicarse y respeto hacia los estudiantes.
-            </p>
-            <p>
-                Una imagen profesional sólida genera confianza y refuerza la percepción de calidad del servicio
-                educativo.
-            </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué la imagen personal influye en el servicio?
-            </p>
-            <p>
-                2. ¿Cómo se relacionan la imagen personal y la imagen profesional?
-            </p>
-            <p>
-                3. ¿Por qué la coherencia es clave en la construcción de la imagen?
-            </p>
-            <p>
-                4. ¿Cómo puede una empresa fortalecer la imagen?
-            </p>
-            <p>
-                5. Desde tu experiencia, ¿qué transmite confianza?
-            </p>
+            <details>
+                <summary>
+                    A22 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Por qué la imagen personal influye en el servicio?
+                </p>
+                <p>
+                    2. ¿Cómo se relacionan la imagen personal y la imagen profesional?
+                </p>
+                <p>
+                    3. ¿Por qué la coherencia es clave en la construcción de la imagen?
+                </p>
+                <p>
+                    4. ¿Cómo puede una empresa fortalecer la imagen?
+                </p>
+                <p>
+                    5. Desde tu experiencia, ¿qué transmite confianza?
+                </p>
+            </details>
             <h3>Importancia de los Procesos Internos</h3>
             <p>
                 Los procesos internos son el conjunto de actividades, normas y flujos de trabajo que se desarrollan
@@ -3039,19 +2892,52 @@
                 Procesos claros permiten que las personas sepan qué hacer, cómo actuar ante problemas y cómo mantener un
                 nivel de servicio constante.
             </p>
-            <h3>CASO:</h3>
-            <p>
-                En un curso, los procesos internos incluyen la inscripción, asignación de accesos, soporte técnico,
-                planificación de clases y evaluación.
-            </p>
-            <p>
-                Si estos procesos fallan, el estudiante experimenta confusión, demoras o frustración, aun cuando el
-                docente realice un buen trabajo.
-            </p>
-            <p>
-                Cuando los procesos están bien coordinados, el estudiante percibe orden, acompañamiento y confianza en
-                la institución.
-            </p>
+            <details>
+                <summary>
+                    Caso 15:
+                </summary>
+                <p>
+                    Te inscribes en un curso y esperas que todo funcione correctamente.
+                    Desde la inscripción hasta el inicio de clases, existen varios procesos internos
+                    que no siempre son visibles para ti.
+                </p>
+
+                <p>
+                    La institución debe registrar tu inscripción,
+                    asignarte acceso a la plataforma,
+                    coordinar el soporte técnico,
+                    planificar las clases
+                    y organizar las evaluaciones.
+                </p>
+
+                <p>
+                    Si alguno de estos procesos falla,
+                    puedes experimentar confusión, demoras o frustración,
+                    incluso si el docente realiza un buen trabajo en clase.
+                </p>
+
+                <p>
+                    En cambio, cuando todo está coordinado,
+                    percibes orden, acompañamiento y confianza en la institución.
+                    Aunque no veas los procesos internos,
+                    sientes sus resultados.
+                </p>
+
+                <ul>
+                    <li>¿Por qué los procesos internos influyen en la experiencia del estudiante?</li>
+                    <li>¿Puede un buen docente compensar fallas organizativas? Explica tu respuesta.</li>
+                    <li>¿Qué proceso consideras más crítico dentro de un curso?</li>
+                    <li>¿Por qué el cliente percibe el resultado aunque no vea el proceso?</li>
+                </ul>
+
+                <p>
+                    Este caso permite comprender que en los servicios,
+                    los procesos internos bien coordinados
+                    son fundamentales para construir una experiencia positiva
+                    dentro del Customer Journey.
+                </p>
+            </details>
+
             <h3>Beneficios de procesos internos eficientes</h3>
             <p>
                 Procesos internos bien diseñados reducen errores, reclamos y retrabajos, mejorando la experiencia del
@@ -3068,22 +2954,26 @@
             <p>
                 A largo plazo, afectan la imagen del servicio y la fidelización.
             </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué los procesos internos son considerados el motor invisible del servicio?
-            </p>
-            <p>
-                2. ¿Cómo influyen los procesos internos en la experiencia del cliente?
-            </p>
-            <p>
-                3. ¿Por qué el cliente percibe los errores internos aunque no los vea?
-            </p>
-            <p>
-                4. ¿Cómo ayudan los procesos internos a reducir reclamos y quejas?
-            </p>
-            <p>
-                5. ¿Por qué los procesos internos facilitan el trabajo del personal?
-            </p>
+            <details>
+                <summary>
+                    A23 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Por qué los procesos internos son considerados el motor invisible del servicio?
+                </p>
+                <p>
+                    2. ¿Cómo influyen los procesos internos en la experiencia del cliente?
+                </p>
+                <p>
+                    3. ¿Por qué el cliente percibe los errores internos aunque no los vea?
+                </p>
+                <p>
+                    4. ¿Cómo ayudan los procesos internos a reducir reclamos y quejas?
+                </p>
+                <p>
+                    5. ¿Por qué los procesos internos facilitan el trabajo del personal?
+                </p>
+            </details>
             <h3>Evidencia Física del Servicio</h3>
             <p>
                 La evidencia física del servicio comprende todos los elementos tangibles que el cliente utiliza para
@@ -3136,15 +3026,49 @@
                 Por el contrario, una evidencia física descuidada puede generar desconfianza, aunque el servicio sea
                 técnicamente correcto.
             </p>
-            <h3>CASO:</h3>
-            <p>
-                En un curso, la evidencia física incluye la plataforma virtual, el diseño de los materiales, la claridad
-                de los contenidos, la presentación del docente y el certificado final.
-            </p>
-            <p>
-                Si estos elementos están bien diseñados y organizados, el estudiante percibe mayor calidad y valor en el
-                servicio educativo.
-            </p>
+            <details>
+                <summary>
+                    Caso 16:
+                </summary>
+                <p>
+                    Te inscribes en un curso y desde el primer momento observas la plataforma virtual.
+                    Notas si el diseño es ordenado, si los materiales están bien organizados
+                    y si la información es clara y fácil de encontrar.
+                </p>
+
+                <p>
+                    También observas la presentación del docente,
+                    la calidad visual de las diapositivas
+                    y la forma en que se estructuran los contenidos.
+                </p>
+
+                <p>
+                    Al finalizar el curso, recibes tu certificado.
+                    La presentación del documento, su diseño y formalidad
+                    influyen en la percepción que tienes del servicio recibido.
+                </p>
+
+                <p>
+                    Aunque el servicio educativo es intangible,
+                    estos elementos visibles funcionan como evidencia física
+                    que refuerza tu percepción de calidad y valor.
+                </p>
+
+                <ul>
+                    <li>¿Cómo influye el diseño de la plataforma en tu percepción del curso?</li>
+                    <li>¿Qué importancia tiene la presentación del docente y los materiales?</li>
+                    <li>¿Por qué el certificado final impacta en la valoración del servicio?</li>
+                    <li>¿Puede una mala presentación afectar la percepción aunque el contenido sea bueno?</li>
+                </ul>
+
+                <p>
+                    Este caso permite comprender que en los servicios,
+                    la evidencia física cumple un papel fundamental
+                    al comunicar calidad, orden y profesionalismo
+                    dentro del Customer Journey.
+                </p>
+            </details>
+
             <h3>Importancia de la evidencia física</h3>
             <p>
                 Gestionar adecuadamente la evidencia física permite diferenciar el servicio, reforzar la marca y generar
@@ -3153,23 +3077,27 @@
             <p>
                 Es una herramienta clave para competir en mercados donde los servicios son similares.
             </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué la evidencia física es necesaria en servicios intangibles?
-            </p>
-            <p>
-                2. ¿Qué elementos de evidencia física generan mayor confianza en un servicio?
-            </p>
-            <p>
-                3. ¿Cómo influye la evidencia física en las expectativas del cliente?
-            </p>
-            <p>
-                4. ¿Por qué una evidencia física descuidada afecta la percepción de calidad?
-            </p>
-            <p>
-                5. ¿Por qué el entorno digital es parte de la evidencia física?
-            </p>
-            <h3>Coherencia: Promesa vs. Realidad</h3>
+            <details>
+                <summary>
+                    A24 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Por qué la evidencia física es necesaria en servicios intangibles?
+                </p>
+                <p>
+                    2. ¿Qué elementos de evidencia física generan mayor confianza en un servicio?
+                </p>
+                <p>
+                    3. ¿Cómo influye la evidencia física en las expectativas del cliente?
+                </p>
+                <p>
+                    4. ¿Por qué una evidencia física descuidada afecta la percepción de calidad?
+                </p>
+                <p>
+                    5. ¿Por qué el entorno digital es parte de la evidencia física?
+                </p>
+            </details>
+            <h3>Coherencia entre Promesa y Realidad</h3>
             <p>
                 La coherencia entre la promesa y la realidad es uno de los pilares fundamentales del marketing de
                 servicios.
@@ -3222,18 +3150,49 @@
             <p>
                 La incoherencia constante lleva al abandono del servicio y a comentarios negativos.
             </p>
-            <h3>CASO:</h3>
-            <p>
-                Un curso promete clases claras, acompañamiento y materiales actualizados.
-            </p>
-            <p>
-                Si el estudiante encuentra docentes disponibles, contenidos organizados y soporte oportuno, la promesa
-                se cumple.
-            </p>
-            <p>
-                Si, en cambio, la publicidad promete más de lo que realmente se entrega, la percepción de calidad cae,
-                aunque el contenido sea bueno.
-            </p>
+            <details>
+                <summary>
+                    Caso 17:
+                </summary>
+                <p>
+                    Decides inscribirte en un curso porque la publicidad promete clases claras,
+                    acompañamiento constante y materiales actualizados.
+                    Desde el inicio, construyes una expectativa sobre lo que vas a recibir.
+                </p>
+
+                <p>
+                    Al comenzar el curso, observas si el docente está disponible,
+                    si los contenidos están bien organizados
+                    y si el soporte responde cuando lo necesitas.
+                </p>
+
+                <p>
+                    Si todo funciona como fue prometido,
+                    sientes coherencia entre lo que te ofrecieron y lo que realmente recibes.
+                    Tu confianza aumenta.
+                </p>
+
+                <p>
+                    Pero si la publicidad promete más de lo que el curso entrega,
+                    la percepción de calidad disminuye,
+                    incluso si el contenido no es malo.
+                </p>
+
+                <ul>
+                    <li>¿Por qué es importante que la promesa del servicio sea realista?</li>
+                    <li>¿Cómo afecta la sobrepromesa en la satisfacción del estudiante?</li>
+                    <li>¿Es mejor prometer menos y cumplir más? Explica tu respuesta.</li>
+                    <li>¿Qué consecuencias puede tener una publicidad exagerada?</li>
+                </ul>
+
+                <p>
+                    Este caso permite comprender que la calidad percibida
+                    no depende solo del contenido,
+                    sino de la coherencia entre lo prometido y lo entregado
+                    dentro del Customer Journey.
+                </p>
+            </details>
+
             <h3>Consecuencias de la falta de coherencia</h3>
             <p>
                 La falta de coherencia genera reclamos, pérdida de confianza, mala reputación y reducción de la lealtad
@@ -3250,22 +3209,26 @@
             <p>
                 Prometer menos y cumplir más suele generar mejores resultados que prometer demasiado.
             </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué la coherencia entre promesa y realidad es clave en los servicios?
-            </p>
-            <p>
-                2. ¿Cómo se forman las promesas del servicio en la mente del cliente?
-            </p>
-            <p>
-                3. ¿Por qué la coherencia fortalece la confianza del cliente?
-            </p>
-            <p>
-                4. ¿Por qué es mejor prometer menos y cumplir más?
-            </p>
-            <p>
-                5. ¿Qué acciones ayudarían a mejorar la coherencia en un servicio?
-            </p>
+            <details>
+                <summary>
+                    A25 - Responde las siguientes preguntas:
+                </summary>
+                <p>
+                    1. ¿Por qué la coherencia entre promesa y realidad es clave en los servicios?
+                </p>
+                <p>
+                    2. ¿Cómo se forman las promesas del servicio en la mente del cliente?
+                </p>
+                <p>
+                    3. ¿Por qué la coherencia fortalece la confianza del cliente?
+                </p>
+                <p>
+                    4. ¿Por qué es mejor prometer menos y cumplir más?
+                </p>
+                <p>
+                    5. ¿Qué acciones ayudarían a mejorar la coherencia en un servicio?
+                </p>
+            </details>
 
         </section>
         <section id="Unidad6">
@@ -3320,16 +3283,51 @@
             <p>
                 Ambos enfoques son complementarios y necesarios para un diagnóstico estratégico completo.
             </p>
-            <h3>CASO:</h3>
-            <p>
-                En un servicio educativo, el diagnóstico estratégico puede incluir la evaluación de la satisfacción
-                de los estudiantes, el funcionamiento de la plataforma, la calidad de la enseñanza y la coherencia
-                entre lo prometido en la publicidad y la experiencia real.
-            </p>
-            <p>
-                Este análisis permite identificar qué aspectos fortalecen el servicio y cuáles requieren mejoras
-                urgentes.
-            </p>
+            <details>
+                <summary>
+                    Caso 18:
+                </summary>
+                <p>
+                    Una institución educativa decide analizar su servicio de manera integral.
+                    No solo observa si los cursos se están vendiendo,
+                    sino si los estudiantes realmente están satisfechos.
+                </p>
+
+                <p>
+                    Evalúa el funcionamiento de la plataforma,
+                    la calidad de la enseñanza,
+                    la rapidez del soporte técnico
+                    y la coherencia entre lo prometido en la publicidad
+                    y la experiencia real del estudiante.
+                </p>
+
+                <p>
+                    A través de encuestas y revisiones internas,
+                    detecta fortalezas, como el compromiso del docente,
+                    pero también identifica debilidades,
+                    como demoras en la asignación de accesos.
+                </p>
+
+                <p>
+                    Este diagnóstico le permite tomar decisiones estratégicas
+                    para mejorar la experiencia completa del servicio.
+                </p>
+
+                <ul>
+                    <li>¿Por qué es importante evaluar el servicio más allá de las ventas?</li>
+                    <li>¿Qué áreas deberían analizarse en un diagnóstico estratégico?</li>
+                    <li>¿Cómo ayuda la opinión del estudiante en la mejora del servicio?</li>
+                    <li>¿Qué podría ocurrir si la institución no realiza este tipo de análisis?</li>
+                </ul>
+
+                <p>
+                    Este caso permite comprender que el diagnóstico estratégico
+                    es una herramienta clave para fortalecer el servicio,
+                    corregir fallas y garantizar coherencia entre la promesa
+                    y la experiencia real del cliente.
+                </p>
+            </details>
+
             <h3>Beneficios del diagnóstico</h3>
             <p>
                 Un buen diagnóstico permite tomar decisiones informadas, mejorar la calidad del servicio, reducir
@@ -3338,22 +3336,6 @@
             <p>
                 Además, facilita la planificación de acciones de mejora y la alineación de toda la organización
                 hacia el cliente.
-            </p>
-            <h3>Responde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué es necesario realizar un diagnóstico?
-            </p>
-            <p>
-                2. ¿Qué riesgos existen cuando una empresa no analiza su servicio?
-            </p>
-            <p>
-                3. En un servicio educativo, ¿qué aspectos considerarías prioritarios en un diagnóstico?
-            </p>
-            <p>
-                4. ¿Cómo puede el diagnóstico estratégico ayudar a mejorar la competitividad?
-            </p>
-            <p>
-                5. ¿Cómo realizarias un diagnóstico?
             </p>
             <h3>Propuesta de Mejora Operativa</h3>
             <p>
@@ -3430,14 +3412,46 @@
             <p>
                 Responder con rapidez, respeto y soluciones claras mejora la percepción del servicio.
             </p>
-            <h3>CASO:</h3>
-            <p>
-                En un servicio educativo, buenas prácticas incluyen informar claramente el contenido del curso,
-                responder dudas a tiempo, acompañar al estudiante y mantener procesos organizados.
-            </p>
-            <p>
-                Estas prácticas generan satisfacción, confianza y recomendación del servicio.
-            </p>
+            <details>
+                <summary>
+                    Caso 19:
+                </summary>
+                <p>
+                    Te interesa un curso y antes de inscribirte encuentras información clara
+                    sobre los contenidos, la duración, el nivel y los resultados esperados.
+                    Todo está explicado de forma sencilla y transparente.
+                </p>
+
+                <p>
+                    Durante el curso, cuando tienes una duda,
+                    recibes respuesta en un tiempo razonable.
+                    El docente acompaña tu proceso,
+                    la plataforma funciona correctamente
+                    y los procesos están bien organizados.
+                </p>
+
+                <p>
+                    No solo aprendes el contenido,
+                    sino que sientes confianza y respaldo en cada etapa.
+                    Al finalizar, te quedas con una experiencia positiva
+                    y consideras recomendar el curso a otras personas.
+                </p>
+
+                <ul>
+                    <li>¿Qué prácticas generan mayor confianza en un servicio educativo?</li>
+                    <li>¿Cómo influye la organización en la satisfacción del estudiante?</li>
+                    <li>¿Por qué el acompañamiento fortalece la experiencia?</li>
+                    <li>¿Qué otras buenas prácticas podrían implementarse?</li>
+                </ul>
+
+                <p>
+                    Este caso permite comprender que las buenas prácticas
+                    no son acciones aisladas,
+                    sino hábitos organizacionales que construyen satisfacción,
+                    confianza y recomendación dentro del Customer Journey.
+                </p>
+            </details>
+
             <h3>Importancia de las buenas prácticas</h3>
             <p>
                 Aplicar buenas prácticas permite mejorar la experiencia del cliente, reducir errores y fortalecer la
@@ -3445,22 +3459,6 @@
             </p>
             <p>
                 Además, facilitan la mejora continua y la sostenibilidad del servicio en el tiempo.
-            </p>
-            <h3>Responde las siguientes preguntas</h3>
-            <p>
-                1. ¿Por qué las buenas prácticas de servicio deben aplicarse de forma constante?
-            </p>
-            <p>
-                2. ¿Cómo influye la comunicación clara en la satisfacción del cliente?
-            </p>
-            <p>
-                3. ¿Por qué los reclamos pueden verse como oportunidades de mejora?
-            </p>
-            <p>
-                4. ¿Cómo ayudan las buenas prácticas a diferenciar un servicio de otro?
-            </p>
-            <p>
-                5. En un servicio educativo, ¿qué buena práctica consideras más importante?
             </p>
             <h3>Ética y Responsabilidad</h3>
             <p>
@@ -3511,18 +3509,50 @@
             <p>
                 A largo plazo, afecta la imagen de la marca y la sostenibilidad del servicio.
             </p>
-            <h3>CASO:</h3>
-            <p>
-                Un curso promete acompañamiento permanente y contenidos actualizados.
-            </p>
-            <p>
-                Actuar éticamente implica cumplir con ese acompañamiento y no abandonar al estudiante una vez
-                realizada la inscripción.
-            </p>
-            <p>
-                La responsabilidad se refleja al responder dudas, corregir errores y mejorar el servicio cuando algo
-                no funciona como se esperaba.
-            </p>
+            <details>
+                <summary>
+                    Caso 20:
+                </summary>
+                <p>
+                    Te inscribes en un curso porque la institución promete
+                    acompañamiento permanente y contenidos actualizados.
+                    Desde el inicio, confías en que recibirás apoyo durante todo el proceso.
+                </p>
+
+                <p>
+                    Una vez realizado el pago, esperas que el compromiso continúe.
+                    No solo quieres acceso al contenido,
+                    sino orientación cuando surjan dudas
+                    y soluciones cuando aparezca algún problema.
+                </p>
+
+                <p>
+                    Actuar éticamente significa cumplir lo prometido,
+                    no abandonar al estudiante después de la inscripción
+                    y asumir responsabilidad cuando algo no funciona como se esperaba.
+                </p>
+
+                <p>
+                    Responder dudas, corregir errores
+                    y mejorar continuamente el servicio
+                    demuestra compromiso real con el estudiante.
+                </p>
+
+                <ul>
+                    <li>¿Por qué la ética es fundamental en la prestación de servicios educativos?</li>
+                    <li>¿Qué ocurre cuando una institución promete más de lo que cumple?</li>
+                    <li>¿Cómo se demuestra responsabilidad frente a un error?</li>
+                    <li>¿Qué relación existe entre ética, confianza y reputación?</li>
+                </ul>
+
+                <p>
+                    Este caso permite comprender que la ética y la responsabilidad
+                    no son solo principios teóricos,
+                    sino elementos clave para construir confianza,
+                    credibilidad y sostenibilidad en el servicio.
+                </p>
+            </details>
+
             <h3>La ética como base de la calidad del servicio</h3>
             <p>
                 Un servicio puede ser técnicamente correcto, pero sin ética pierde valor y credibilidad.
@@ -3530,22 +3560,6 @@
             <p>
                 La ética sostiene la coherencia entre promesa, acción y resultado.
             </p>
-            <h3>Resonde las siguientes preguntas:</h3>
-            <p>
-                1. ¿Por qué la ética es fundamental en la prestación de servicios?
-            </p>
-            <p>
-                2. ¿Cómo se relaciona la ética con la promesa de servicio?
-            </p>
-            <p>
-                3. ¿Qué significa actuar con responsabilidad ante una falla del servicio?
-            </p>
-            <p>
-                4. ¿Cómo influyen la ética y la responsabilidad en la lealtad del cliente?
-            </p>
-            <p>
-                5. ¿Por qué la ética no debe depender de la supervisión?
-            </p>}
             <h3>Proyecto Final: Marketing de Servicios</h3>
             <p>
                 El presente proyecto tiene como objetivo demostrar de forma práctica que el estudiante comprende y
@@ -3568,6 +3582,7 @@
                 <li>Tipo de servicio que ofrece.</li>
                 <li>Público objetivo.</li>
             </ul>
+            <br>
             <h3>2. Descripción del servicio</h3>
             <p>
                 Explica claramente en qué consiste el servicio, cómo se presta y cuál es su propuesta de valor.
@@ -3580,6 +3595,7 @@
                 <li>Cómo se entrega al cliente.</li>
                 <li>Qué lo diferencia de otros servicios similares.</li>
             </ul>
+            <br>
             <h3>3. Análisis del servicio</h3>
             <p>
                 Analiza el servicio elegido considerando:
@@ -3590,6 +3606,7 @@
                 <li>Variabilidad.</li>
                 <li>Perecibilidad.</li>
             </ul>
+            <br>
             <p>
                 Explica cómo se manifiesta cada característica en el servicio seleccionado.
             </p>
