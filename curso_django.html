@@ -1,0 +1,3294 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJANGO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            /* Paleta: Gris oscuro refinado */
+            --bg: #12141c;
+            --surface: #1e222d;
+            --accent: #34d399;
+            --text: #e2e8f0;
+            --text-dim: #94a3b8;
+            --border: #2d3343;
+            --nav-h: 72px;
+            --header-h: 60px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding-top: var(--header-h);
+            padding-bottom: calc(var(--nav-h) + 20px);
+            scroll-behavior: smooth;
+            -webkit-user-select: none;
+            /* Safari */
+            -ms-user-select: none;
+            /* IE 10 y Edge */
+            user-select: none;
+            /* Estándar moderno (Chrome, Firefox) */
+        }
+
+        b,
+        svg,
+        span {
+            color: var(--accent)
+        }
+
+        /* --- HEADER DINÁMICO --- */
+        header#top-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: var(--header-h);
+            background: rgba(18, 20, 28, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 1100;
+        }
+
+        header#top-bar h1 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            color: var(--accent);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* --- HERO --- */
+        header.hero {
+            height: 25vh;
+            background: linear-gradient(135deg, rgba(18, 20, 28, 0.95), rgba(30, 58, 138, 0.4)),
+                url('https://tesisymasters.com.ar/wp-content/uploads/imagenes-de-blog-9.jpg') center/cover;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        header.hero h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: white;
+        }
+
+        /* --- SECCIONES --- */
+        section {
+            max-width: 800px;
+            margin: 0 auto 24px;
+            padding: 24px;
+            scroll-margin-top: 80px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Títulos de sección ahora sin clase */
+        section h2,
+        section h3 {
+            font-size: 0.9rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        section h2::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* --- CÓDIGO --- */
+        pre {
+            background: #0d0f14;
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            font-family: 'Fira Code', monospace;
+            position: relative;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        button.copy-btn {
+            background: var(--border);
+            color: var(--text);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button.copy:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        /* --- NAVEGACIÓN --- */
+        nav.bar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: var(--nav-h);
+            background: rgba(30, 34, 45, 0.95);
+            backdrop-filter: blur(12px);
+            display: flex;
+            border-top: 1px solid var(--border);
+            z-index: 1000;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        button.nav-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        button.nav-btn.active {
+            color: var(--accent);
+        }
+
+        button.nav-btn span {
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* --- BÚSQUEDA / MENÚ --- */
+        dialog#search {
+            position: fixed;
+            top: auto;
+            bottom: 0;
+            left: 0;
+            /* Usamos vw para asegurar el ancho total de la ventana */
+            width: 100vw;
+            max-width: 100vw;
+            height: 70vh;
+            margin: 0;
+
+            /* Importante para que el padding no "empuje" el ancho hacia afuera */
+            box-sizing: border-box;
+
+            border: none;
+            background: var(--surface);
+            border-radius: 28px 28px 0 0;
+            color: var(--text);
+            display: none;
+            flex-direction: column;
+            padding: 20px;
+
+            /* Asegura que si hay mucho contenido, se pueda deslizar */
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* El resto se mantiene igual */
+        dialog#search[open] {
+            display: flex;
+        }
+
+        dialog#search.visible {
+            transform: translateY(0);
+        }
+
+        dialog#search::backdrop {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(3px);
+        }
+
+        ul#results {
+            list-style: none;
+            overflow-y: auto;
+            flex: 1;
+            margin-bottom: 20px;
+        }
+
+        ul#results li {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        ul#results li:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        input#query {
+            width: 100%;
+            padding: 18px;
+            border-radius: 20px;
+            border: 2px solid var(--border);
+            background: var(--bg);
+            color: white;
+            outline: none;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        /* --- RELOJ --- */
+        time#clock {
+            position: fixed;
+            top: 75px;
+            right: 20px;
+            background: var(--accent);
+            color: var(--bg);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-weight: 700;
+            display: none;
+            z-index: 2000;
+            box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
+        }
+
+        time#clock.visible {
+            display: block;
+        }
+
+        li {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* --- 3. TAMAÑOS PARA PC (Pantallas mayores a 1024px) --- */
+        @media screen and (min-width: 824px) {
+
+            section h2,
+            section h3,
+            p,
+            li,
+            td,
+            th {
+                font-size: 2.1rem;
+            }
+        }
+
+        /* --- ADAPTACIÓN PARA MÓVILES PEQUEÑOS --- */
+        @media screen and (max-width: 480px) {
+
+            /* Ocultamos el encabezado original */
+            thead {
+                display: none;
+            }
+
+            /* Cada fila se convierte en una tarjeta independiente */
+            tr {
+                display: block;
+                margin-bottom: 20px;
+                border: 1px solid #444;
+                border-radius: 8px;
+                background-color: #25252d;
+            }
+
+            /* Formateamos cada celda */
+            td {
+                display: block;
+                text-align: left;
+                /* Espacio para el label */
+                position: relative;
+                font-size: 0.9rem;
+            }
+
+            /* Estilo para los títulos de la izquierda (Labels) */
+            td::before {
+                content: attr(data-label);
+                /* Toma el nombre de la columna del HTML */
+                position: absolute;
+                left: 15px;
+                width: 35%;
+                font-weight: bold;
+                color: #888;
+                /* Color gris para diferenciar del contenido */
+                text-transform: uppercase;
+                font-size: 0.75rem;
+            }
+
+            /* Estilo especial para la primera celda (Título de la ventaja) */
+            td:first-child {
+                background-color: #2d2d3a;
+                color: #00d1ff;
+                /* Un azul resaltado para el nombre de la ventaja */
+                font-weight: bold;
+                text-align: center;
+                padding-left: 15px;
+            }
+
+            td:first-child::before {
+                display: none;
+                /* No mostrar etiqueta en el título principal */
+            }
+        }
+
+        .respuesta-box {
+            background: #1e293b;
+            /* fondo oscuro elegante */
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .respuesta-box summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: #38bdf8;
+            /* azul moderno */
+            list-style: none;
+            outline: none;
+        }
+
+        .respuesta-box summary::-webkit-details-marker {
+            display: none;
+            /* quita flecha por defecto */
+        }
+
+        .respuesta-box summary::after {
+            content: " ⬇";
+            float: right;
+            transition: transform 0.3s ease;
+        }
+
+        .respuesta-box[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        .respuesta-box p {
+            margin-top: 10px;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <time id="clock">00:00:00</time>
+
+    <header id="top-bar">
+        <h1>TECNICAS DE ESTUDIO E <span>INVESTIGACION</span></h1>
+    </header>
+
+    <main>
+        <section>
+            <h2 id="¿Qué es Django?">¿Qué es Django?</h2>
+            <p class="intro-text">
+                Django <span>(“yángo”)</span> es un framework <span>(“Freim-guork”)</span>, de código
+                abierto, escrito en Python
+                <span>(“páiton”)</span>.
+            </p>
+            <p class="intro-text">
+                Está diseñado para facilitar la creación de aplicaciones web basadas en bases de datos,
+                priorizando la rapidez, la seguridad y la escalabilidad.
+            </p>
+            <p>
+                Utiliza la Arquitectura MVT <span>(“em-vi-tí”)</span> para organizar la aplicación web de forma
+                estructurada y
+                ordenada.
+            </p>
+            <p>
+                <b>El Model:</b> representa los datos y la lógica de negocio; es decir, define cómo se
+                almacenan y gestionan los datos.
+            </p>
+            <p>
+                <b>El View (“víu”):</b> se encarga de procesar las solicitudes del usuario y decidir qué
+                información se enviará.
+            </p>
+            <p>
+                <b>El Template (“téimpleit”):</b> se ocupa de la presentación visual, mostrando los datos al
+                usuario a través de HTML.
+            </p>
+            <p>
+                Aunque Django utiliza MVT, funciona conceptualmente como el patrón <b>MVC
+                    (Model–View–Controller)</b> , con la diferencia de que Django gestiona el controlador.
+            </p>
+            <h3>Instalar Python</h3>
+            <p>
+                <b>Paso 1. Verificar si Python ya está instalado</b>
+            </p>
+            <p>
+                En algunos sistemas, Python viene instalado por defecto.
+            </p>
+            <p>
+                Abre la consola o terminal y escribe:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python --version</pre>
+            </div>
+            <p>
+                Se necesita la versión 3.12 o superior.
+            </p>
+            <p>
+                Si no está instalado, continúa con el siguiente paso.
+            </p>
+            <p>
+                <b>Paso 2. Descargar Python </b>
+            </p>
+            <p>
+                Ve al sitio oficial de <a href="https://www.python.org/downloads/" target="_blank">Python</a>
+                y descarga la última versión estable para tu sistema operativo (Windows, macOS, Linux).
+            </p>
+            <p>
+                <b>Paso 3. Instalar Python</b>
+            </p>
+            <p>
+                Ejecuta el instalador descargado y sigue las instrucciones en pantalla.
+            </p>
+            <p>
+                Asegúrate de marcar la opción
+                <b>"Add Python to PATH"</b> (Agregar Python al PATH) durante la instalación.
+            </p>
+            <p>
+                <b>4. Verificar la instalación</b>
+            </p>
+            <p>
+                Abre una nueva consola o terminal y ejecuta:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python --version</pre>
+            </div>
+            <p>
+                Si te aparece la versión 3.12 o superior, Python se ha instalado correctamente.
+            </p>
+            <h3>Instalar Visual Studio Code</h3>
+            <p>
+                <b>Paso 1. Descargar Visual Studio Code</b>
+            </p>
+            <p>
+                Ve a <a href="https://code.visualstudio.com/download" target="_blank">Visual Studio Code</a>
+                y descarga la versión estable para tu sistema operativo (Windows, macOS, Linux).
+            </p>
+            <p>
+                <b>Paso 2. Instalar Visual Studio Code</b>
+            </p>
+            <p>
+                Ejecuta el instalador descargado y sigue las instrucciones en pantalla.
+            </p>
+            <h3>Entorno virtual</h3>
+            <p>
+                Un entorno virtual en Python es una herramienta que permite crear un espacio aislado para proyectos
+                específicos, donde se pueden instalar paquetes y dependencias sin afectar al sistema global de
+                Python ni
+                a
+                otros proyectos.
+            </p>
+            <p>
+                Usar entornos virtuales es crucial para evitar conflictos entre diferentes versiones de paquetes y
+                mantener un entorno limpio y organizado para cada proyecto.
+            </p>
+            <p>
+                Para ello debes crear una carpeta dedicada al proyecto.
+            </p>
+            <p>
+                Abre la terminal y navega hasta la ubicación donde deseas crear tu proyecto.
+            </p>
+            <p>
+                Una opción común es entrar a la carpeta creada, borrar la url y escribir <b>"cmd"</b> para abrir la
+                terminal
+                directamente en esa ubicación.
+            </p>
+            <p>
+                Luego ejecuta:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python -m venv entorno</pre>
+            </div>
+            <p>
+                Esto creará una carpeta llamada <b>"entorno"</b> que contendrá los archivos del entorno virtual.
+            </p>
+            <p>
+                Una vez creado, abrimos visual studio code en esa carpeta con el comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>code .</pre>
+            </div>
+            <p>
+                Para diferenciar las carpetas y archivos se puede instalar en visual la extesion:
+            </p>
+            <p><b>"Material Icon Theme"</b></p>
+            <p>
+                Tambien es recomendable instalar la extensión:
+            </p>
+            <p><b>"Python"</b></p>
+            <p>
+                Que proporciona soporte
+                avanzado para el desarrollo en Python, incluyendo características como resaltado de sintaxis,
+                autocompletado
+                de código, depuración y gestión de entornos virtuales.
+            </p>
+            <p>
+                Ahora debemos activar el entorno virtual.
+            </p>
+            <p>
+                Abre la terminal integrada en Visual Studio Code, presionando <b>Ctrl + ñ</b>, y ejecuta el siguiente
+                comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>entorno\Scripts\activate</pre>
+            </div>
+            <p>
+                <b>Si tienes error de permisos de ejecución</b>, ejecuta el siguiente comando en PowerShell:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser</pre>
+            </div>
+            <p>
+                <b>Para validar la política de ejecución en PowerShell</b>, ejecuta el siguiente comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>Get-ExecutionPolicy -List</pre>
+            </div>
+            <p>
+                Si la configuración se aplicó correctamente, el resultado debe mostrar: <b>RemoteSigned</b>
+            </p>
+            <p>
+                Para desactivar el entorno virtual en cualquier momento, simplemente ejecuta:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>deactivate</pre>
+            </div>
+            <h3>¿Qué es el pip</h3>
+            <p>
+                El pip es el sistema de gestión de paquetes oficial para Python.
+            </p>
+            <p>
+                Permite instalar y gestionar
+                bibliotecas
+                y dependencias que no forman parte de la biblioteca estándar de Python.
+            </p>
+            <p>
+                Con pip, los desarrolladores pueden buscar, descargar e instalar paquetes desde el Python Package
+                Index
+                (PyPI) y otros índices de paquetes, facilitando la incorporación de funcionalidades adicionales a
+                sus
+                proyectos.
+            </p>
+            <p>
+                Para actualizar pip a la última versión, verifica que el entorno virtual este activo y ejecuta el
+                siguiente comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python -m pip install --upgrade pip</pre>
+            </div>
+            <h3>Instalar Django 5.2.10</h3>
+            <p>
+                Para instalar Django en tu entorno virtual, asegúrate de tener <b>Internet</b> y estar en <b>el entorno
+                    activado.</b>
+            </p>
+            <p>
+                Luego, ejecuta el siguiente comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>pip install django==5.2.10</pre>
+            </div>
+            <p>
+                Esto instalará la versión 5.2.10 de Django en tu entorno virtual.
+            </p>
+            <p>
+                Para Verificar la instalación y la versión instalada, ejecuta:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python -m django --version</pre>
+            </div>
+            <p>
+                Deberías ver "5.2.10" como resultado, confirmando que Django se ha instalado correctamente.
+            </p>
+            <h3>Crear proyecto Django</h3>
+            <p>
+                Para crear un proyecto Django, ejecuta el siguiente comando en tu terminal:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>django-admin startproject configuracion .</pre>
+            </div>
+            <p>Se coloca punto para crear el proyecto en el directorio actual.</p>
+            <p>
+                Esto creará una nueva carpeta llamada <b>"configuracion"</b> con la estructura básica de un proyecto
+                Django.
+            </p>
+            <h3>Servidor de Desarrollo</h3>
+            <p>
+                Para ejecutar el servidor de desarrollo de Django, asegúrate de estar en el directorio del proyecto
+                y
+                ejecuta:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py runserver</pre>
+            </div>
+            <p>
+                Esto iniciará el servidor de desarrollo en tu máquina local, generalmente accesible en
+                <a href="http://127.0.0.1:8000/" target="_blank">http://127.0.0.1:8000/</a>
+            </p>
+            <p>
+                Para detener el servidor, simplemente presiona <b> Ctrl + C </b> en la terminal.
+            </p>
+            <h3>Crear la Aplicación Inicio</h3>
+            <p>
+                Para crear una aplicación dentro de tu proyecto Django, <b>asegurate de detener el servidor</b>, luego
+                ejecuta el siguiente comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py startapp inicio</pre>
+            </div>
+            <p>
+                Esto creará una nueva carpeta llamada <b>"inicio"</b> con la estructura básica de una aplicación
+                Django.
+            </p>
+            <h3>Primera Vista</h3>
+            <p>
+                Para crear tu primera vista en Django, abre el archivo <b>views.py</b> dentro de la carpeta de tu
+                aplicación
+                <b>("inicio/views.py")</b> y remplaza todo el código del archivo con el siguiente código:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>from django.shortcuts import render
+
+# Create your views here.
+from django.http import HttpResponse
+
+def indice(request):
+    return HttpResponse("Hola 👋 Estás en la app 'inicio'.")
+
+</pre>
+            </div>
+            <h3>Configurar URL</h3>
+            <p>
+                Vamos a <b>crear un archivo</b> con el nombre <b>urls.py</b> dentro de la carpeta <b>inicio</b>, y
+                agregar el siguiente
+                código:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>from django.urls import path
+from . import views
+
+urlpatterns = [
+    path("", views.indice, name="indice"),
+]
+
+</pre>
+            </div>
+            <p>
+                Luego, debemos incluir las URLs de la aplicación <b> "inicio"</b> en el archivo principal de URLs del
+                proyecto
+                <b>(configuracion/urls.py)</b>:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>from django.contrib import admin
+from django.urls import include, path
+
+urlpatterns = [
+    path("inicio/", include("inicio.urls")),
+    path("admin/", admin.site.urls),
+]
+
+</pre>
+            </div>
+            <p>
+                Levantamos el servidor con:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py runserver</pre>
+            </div>
+            <p>
+                Y accedemos a <a href="http://127.0.0.1:8000/inicio/" target="_blank">http://127.0.0.1:8000/inicio/</a>
+            </p>
+            <p>
+                Deberías ver el mensaje: <br><b> "Hola 👋 Estás en la app 'inicio'."</b>
+            </p>
+            <p>
+                Lo que ocurre aquí es que hemos definido una vista llamada <b>"indice"</b> que devuelve un saludo simple
+                cuando
+                se accede a la URL raíz de la aplicación <b>"inicio"</b>.
+            </p>
+            <h3>¿Cómo cambiar Idioma y Hora?</h3>
+            <p>
+                Antes de cambiar el Idioma y Hora, ingresa a la siguiente dirección:
+            </p>
+            <p>
+                <a href="http://127.0.0.1:8000/admin/" target="_blank">http://127.0.0.1:8000/admin/</a>
+            </p>
+            <p>
+                Pordras notar que el idioma es <b>ingles</b>
+            </p>
+            <p>
+                Para cambiar el idioma y la hora, bajamos el servidor con <b>Ctrl + C</b>
+            </p>
+            <p>
+                Luego, modificaremos el archivo <b>(configuracion/settings.py)</b>.
+            </p>
+            <p>
+                Para cambiar el idioma a español, buscamos <br><b>LANGUAGE_CODE = 'en-us'</b> y lo cambiamos por:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>LANGUAGE_CODE = 'es-es'</pre>
+            </div>
+            <p>
+                Para cambiar la zona horaria, buscamos <br><b>TIME_ZONE = 'UTC'</b> y lo cambiamos por:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>TIME_ZONE = "America/La_Paz"</pre>
+            </div>
+            <p>
+                Despues de modificar el archivo, <b>levantamos el servidor</b> con <b>python manage.py runserver</b> e
+                ingresamos a:
+            </p>
+            <p>
+                <a href="http://127.0.0.1:8000/admin/" target="_blank">http://127.0.0.1:8000/admin/</a>
+            </p>
+            <p>
+                Podremos notar que el idioma a cambiado.
+            </p>
+            <h3>¿Qué es una Dependencia?</h3>
+            <p>
+                Una dependecia es un archivo que indica las librerías necesarias para que un proyecto funcione
+                correctamente.
+            </p>
+            <p>
+                Para guardar las dependencias de tu proyecto Django, baja es servidor <b>(Ctrl +C)</b> y ejecuta el
+                siguiente comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python -m pip freeze > requirements.txt</pre>
+            </div>
+            <p>
+                Esto creará un archivo llamado <b>requirements.txt</b> que contiene una lista de todas las
+                dependencias instaladas en tu entorno virtual.
+            </p>
+            <h3>Crea apliación rutas</h3>
+            <p>
+                Para crear una nueva aplicación llamada <b> "rutas"</b>, asegurate de que <b>el servidor no este
+                    levantado</b> y que <b>el entorno este activado</b>, luego ejecuta el siguiente comando en tu
+                terminal:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py startapp rutas</pre>
+            </div>
+            <h3>Registrar app en configuracion/settings.py</h3>
+            <p>
+                Para registrar la aplicación <b>"inicio"</b> y <b>"rutas"</b> en el proyecto Django, abre el archivo
+                <b>configuracion/settings.py</b> y agrega el nombre de la aplicación a la lista
+                <b>INSTALLED_APPS</b>.
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'inicio',
+    'rutas',
+]</pre>
+            </div>
+            <p>
+                Esto le indica a Django que incluya la aplicación <b>"inicio"</b> y <b>"rutas"</b> en el proyecto,
+                permitiendo que sus
+                funcionalidades estén disponibles.
+            </p>
+            <h3>Crea rutas/urls.py</h3>
+            <p>
+                Crea el archivo <b>rutas/urls.py</b> y agrega el siguiente código:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>from django.urls import path
+from . import views
+
+urlpatterns = [
+    path("", views.indice, name="rutas_indice"),
+]
+
+</pre>
+            </div>
+            <p>
+                Luego, incluye las URLs de la aplicación <b>"rutas"</b> en el archivo principal de URLs del proyecto
+                <b>(configuracion/urls.py)</b>:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>from django.contrib import admin
+from django.urls import include, path
+
+urlpatterns = [
+    path("inicio/", include("inicio.urls")),
+    path("admin/", admin.site.urls),
+    path("rutas/", include("rutas.urls")),
+]
+
+</pre>
+            </div>
+            <h3>Edita rutas/views.py</h3>
+            <p>
+                Abre el archivo <b>rutas/views.py</b> y agrega la siguiente vista:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>from django.http import HttpResponse
+def indice(request):
+    return HttpResponse("Hola 👋 Estás en la app 'rutas'."
+    )</pre>
+            </div>
+            <p>
+                Esta vista devolverá un mensaje simple cuando se acceda a la URL raíz de la aplicación <b>"rutas"</b>.
+            </p>
+            <p>
+                Para probar la ruta, ejecuta el servidor de desarrollo con el comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py runserver</pre>
+            </div>
+            <p>
+                Luego, abre tu navegador y visita la URL <a href="http://127.0.0.1:8000/rutas/"
+                    target="_blank">http://127.0.0.1:8000/rutas/</a>.
+            </p>
+            <p>
+                Deberías ver el mensaje: <br> <b> "Hola 👋 Estás en la app 'rutas'.</b>"
+            </p>
+            <p>
+                Baja el servidor con <b> Ctrl + C </b> y haz cualquier cambio que quieras en las vistas o rutas, luego
+                vuelve a
+                levantar el servidor para ver los cambios reflejados.
+            </p>
+            <h3>Agrega más rutas en rutas/urls.py</h3>
+            <p>
+                Para agregar más rutas a la aplicación <b>"rutas"</b>, abre el archivo <b>rutas/urls.py</b> y
+                modifica el
+                código para incluir nuevas rutas:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>from django.urls import path
+from . import views
+urlpatterns = [
+    path("", views.indice, name="rutas_indice"),
+    path("ayuda/", views.ayuda, name="rutas_ayuda"),
+    path("hora/", views.hora_actual, name="rutas_hora"),
+]
+</pre>
+            </div>
+            <p>
+                Luego, define las vistas correspondientes en <b>rutas/views.py</b>:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>from django.shortcuts import render
+
+# Create your views here.
+from django.http import HttpResponse
+from django.utils import timezone
+
+def indice(request):
+    return HttpResponse("Hola 👋 Estás en la app 'rutas'."
+    )
+def ayuda(request):
+    return HttpResponse(
+        "Rutas disponibles: /rutas/hola/, /rutas/hola//, "
+        "/rutas/suma///, /rutas/buscar/?q=..., /rutas/api/estado/"
+    )
+
+def hora_actual(request):
+    ahora = timezone.localtime()
+    return HttpResponse(f"🕒 Hora local: {ahora:%Y-%m-%d %H:%M:%S}")
+
+</pre>
+            </div>
+            <p>
+                Para probar las nuevas rutas, ejecuta el servidor de desarrollo con el comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py runserver</pre>
+            </div>
+            <p>
+                Luego, abre tu navegador y visita las siguientes URLs:
+            </p>
+            <p><a href="http://127.0.0.1:8000/rutas/ayuda/" target="_blank">http://127.0.0.1:8000/rutas/ayuda/</a>
+            </p>
+            <p><a href="http://127.0.0.1:8000/rutas/hora/" target="_blank">http://127.0.0.1:8000/rutas/hora/</a></p>
+            <h3>Rutas con parámetros</h3>
+            <p>
+                Para crear rutas con parámetros, primero bajamos el servidosr con <b>Ctrl +C</b>, luego añadiremos mas
+                rutas en <b>rutas/urls.py</b>:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>from django.urls import path
+from . import views
+urlpatterns = [
+    path("", views.indice, name="rutas_indice"),
+    path("ayuda/", views.ayuda, name="rutas_ayuda"),
+    path("hora/", views.hora_actual, name="rutas_hora"),
+]
+
+urlpatterns += [
+    path("hola/", views.hola, name="rutas_hola"),
+    path("hola/&lt;str:nombre&gt;/", views.hola_nombre, name="rutas_hola_nombre"),
+    path("hola/&lt;str:nombre&gt;/", views.hola_nombre_mayuscula, name="rutas_hola_nombre_mayuscula"),
+    path("suma/&lt;int:a&gt;/&lt;int:b&gt;/", views.suma, name="rutas_suma"),
+]
+
+</pre>
+            </div>
+            <p>
+                Despues realizamos modificaciones en <b>rutas/views:</b>
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>def hola(request):
+    return HttpResponse("Hola 👋 (sin nombre)")
+
+def hola_nombre(request, nombre):
+    return HttpResponse(f"Hola, {nombre} 👋")
+
+def hola_nombre_mayuscula(request, nombre):
+    return HttpResponse(f"Hola, {nombre.upper()} 👋")
+
+def suma(request, a, b):
+    return HttpResponse(f"Resultado: {a} + {b} = {a + b}")
+
+</pre>
+            </div>
+            <p>
+                Para probar si funciono, levantamos el servidor con <b>python manage.py runserver</b>, luego ingresamo a
+                la siguientes direciones:
+            </p>
+            <p>
+                <a href="http://127.0.0.1:8000/rutas/hola/" target="_blank">http://127.0.0.1:8000/rutas/hola/</a>
+            </p>
+            <p>
+                <a href="http://127.0.0.1:8000/rutas/hola/Nombre/"
+                    target="_blank">http://127.0.0.1:8000/rutas/hola/Nombre</a>
+            </p>
+            <p>
+                <a href="http://127.0.0.1:8000/rutas/suma/2/2/"
+                    target="_blank">http://127.0.0.1:8000/rutas/suma/2/2/</a>
+            </p>
+            <p>
+                De esa manera comprobamos que funcionan adecuadamente.
+            </p>
+            <h3>Uso de Consultas (Query)</h3>
+            <p>Primero bajamos el servidos <b>Ctrl + C</b></p>
+            <p>Despues añadimos el siguiente codigo en <b>rutas/urls</b>:</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>urlpatterns += [
+    path("buscar/", views.buscar, name="rutas_buscar"),
+]
+
+</pre>
+            </div>
+            <p>Tambien añadimos este codigo en <b>vitas/views</b></p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>def buscar(request):
+    q = request.GET.get("q", "").strip()
+    if not q:
+        return HttpResponse("❗ Envía un query: /rutas/buscar/?q=django")
+    return HttpResponse(f"🔎 Buscando: {q}")
+
+</pre>
+            </div>
+            <p>
+                Información para leer:
+            </p>
+            <p>
+                <b>strip()</b><br>
+                borra los espacios para no tener problemas <br>
+                <b>q</b><br>
+                Recibira la información<br>
+                <b>if not q:</b><br>
+                si NO tiene datos mostrara el mensaje: <br>
+                <b>"❗ Envía un query: /rutas/buscar/?q=django" </b><br>
+                si tiene datos mostrara el mensaje:<br>
+                <b>🔎 Buscando: django</b>
+            </p>
+            <p>
+                Para probar levantamos el servidos <b>python manage.py runserver</b> y hacemos clic en el enlace:
+            </p>
+            <p>
+                <a href="http://127.0.0.1:8000/rutas/buscar/?q=django"
+                    target="_blank">http://127.0.0.1:8000/rutas/buscar/?q=django</a>
+            </p>
+            <p>
+                Esto permite revisar la funsionalidad.
+            </p>
+            <h3>Metodo GET VS POST</h3>
+            <p>Para ver la diferencia de ambos metodos primero debes detener el servido <b>Ctrl + C</b></p>
+            <p>Luego dentro de <b>rutas/urls</b> añade lo siguiente:</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>urlpatterns += [
+    path("metodo/", views.metodo, name="rutas_metodo"),
+]
+
+</pre>
+            </div>
+            <p>En <b>rutas/views</b>escribe lo siguiente:</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>def metodo(request):
+    if request.method == "GET":
+        return HttpResponse("Estás usando GET ✅")
+    if request.method == "POST":
+        return HttpResponse("Estás usando POST ✅")
+    return HttpResponse(f"Método no manejado: {request.method}", status=405)
+
+</pre>
+            </div>
+            <p>Comprueba que metodo estamos utilizando, si es <b>POST</b> O <b>GET</b></p>
+            <p>Levantamos el servidor <b>python manage.py runserver</b> y para probar si es el metodo <b>GET</b>
+                escribe:</p>
+            <p><a href="http://127.0.0.1:8000/rutas/metodo/" target="_blank">http://127.0.0.1:8000/rutas/metodo/</a></p>
+            <p>
+                Si te aparece <b>Estás usando GET ✅</b>, funciona corectamente el <b>GET</b>.
+            </p>
+            <p>Para el metodo <b>POST</b> lo probaremos despues con formulario</p>
+            <h3>Respuestas JSON</h3>
+            <p>Primero detenemos el servidor <b>Ctrl+C</b></p>
+            <p>Despues añadimos el siguiente codigo en <b>vistas/urls</b></p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>urlpatterns += [
+    path("api/estado/", views.api_estado, name="rutas_api_estado"),
+]
+
+</pre>
+            </div>
+            <p>Añadimos el siguiente codigo en <b>rutas/views</b></p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>def api_estado(request):
+    data = {
+        "estado": "ok",
+        "app": "rutas",
+        "ruta": request.path,
+        "metodo": request.method,
+    }
+    return JsonResponse(data)
+
+</pre>
+            </div>
+            <p>Revisa que tengas en <b>rutas/views</b> esto:</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre><p>from django.http import HttpResponse, <b>JsonResponse</b>   </p>
+</pre>
+            </div>
+
+            <p>Levantamos el servidos <b>python manage.py runserver</b> y probamos:</p>
+            <p><a href="http://127.0.0.1:8000/rutas/api/estado/"
+                    target="_blank">http://127.0.0.1:8000/rutas/api/estado/</a></p>
+            <p>
+                Obtendremos la siguiente respusta:
+            </p>
+            <p>
+                {"estado": "ok", "app": "rutas", "ruta": "/rutas/api/estado/", "metodo": "GET"}
+            </p>
+            <h3>Controlar los Errores</h3>
+            <p>Primero bajamos el servidor <b>Ctrl + c</b></p>
+            <p>Añadimos en <b>rutas/urls</b>el siguiente codigo:</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>urlpatterns += [
+    path("edad/&lt;int:edad&gt;/", views.edad, name="rutas_edad"),
+]
+
+</pre>
+            </div>
+            <p>Añadimos en <b>rutas/views</b>el siguiente codigo:</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>def edad(request, edad):
+    if edad < 0 or edad > 120:
+        return HttpResponse("Edad inválida", status=400)
+    return HttpResponse(f"Edad válida: {edad}")
+
+</pre>
+            </div>
+            <p>Levantamos el servidor <b>python manage.py runserver</b> y probamos</p>
+            <p>Prueba una opcion valida:</p>
+            <p><a href="http://127.0.0.1:8000/rutas/edad/25/" target="_blank">http://127.0.0.1:8000/rutas/edad/25/</a>
+            </p>
+            <p>Prueba una opcion invalida:</p>
+            <p><a href="http://127.0.0.1:8000/rutas/edad/250/" target="_blank">http://127.0.0.1:8000/rutas/edad/250/</a>
+            </p>
+            <p>
+                De esta manera probamos si la respuesa es valida.
+            </p>
+            <h3>Creando url y view inicio</h3>
+            <p>Vamos a modifica <b>inicio/urls</b></p>
+            <p>Primero bajamos el servidor <b>Ctrl + C</b></p>
+            <p>Luego colocamos todo este codigo</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>from django.urls import path
+from . import views
+
+urlpatterns = [
+    path("", views.inicio, name="inicio"),
+]
+</pre>
+            </div>
+            <p>El archivo <b>inicio/views</b>colocamos todo este codigo</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>from django.shortcuts import render
+from django.http import HttpResponse
+
+# Create your views here.
+def inicio(request):
+    return HttpResponse("Hola 🦉 Estas en la página 'inicio'")
+
+</pre>
+            </div>
+
+            <p>El archivo <b>configuracion/urls</b>colocamos todo este codigo</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>"""
+URL configuration for configuracion project.
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/5.2/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path("", include("inicio.urls")),
+    path("rutas/", include("rutas.urls"))
+]
+</pre>
+            </div>
+            <p>Luego levantamos el servidor <b>python manage.py runserver</b> y probamos con:</p>
+            <p>
+                <a href="http://127.0.0.1:8000/" target="_blank">http://127.0.0.1:8000/</a>
+            </p>
+            <p>
+                El resulado debe ser: <b>Hola 🦉 Estas en la página 'inicio'</b>
+            </p>
+            <h3>Trabajando con Plantillas (Template)</h3>
+            <p>Bajamos el servidor <b>Ctrl + C</b></p>
+            <p>Buscamos el archivo <b>configuracio/setting</b></p>
+            <p>Dentro buscamo <b>TEMPLATES</b></p>
+            <p>Debajo escribe el siguiete codigo:</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>TEMPLATES[0]["DIRS"] = [BASE_DIR / "plantillas"]
+</pre>
+            </div>
+            <p>Despues Buscamos <b>STATIC_URL = 'static/'</b> y abajo colocamos</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>STATICFILES_DIRS = [BASE_DIR / "archivos_estaticos"]
+</pre>
+            </div>
+            <p>Debe quedar asi:</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>"""
+Django settings for configuracion project.
+
+Generated by 'django-admin startproject' using Django 5.2.10.
+
+For more information on this file, see
+https://docs.djangoproject.com/en/5.2/topics/settings/
+
+For the full list of settings and their values, see
+https://docs.djangoproject.com/en/5.2/ref/settings/
+"""
+
+from pathlib import Path
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-#njhxn4f9bl83cq7+70ki9u1%$0q56*@u5n*$ns-&2$54_2of)'
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+ALLOWED_HOSTS = []
+
+
+# Application definition
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    "rutas",
+    "inicio"
+]
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+ROOT_URLCONF = 'configuracion.urls'
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+
+TEMPLATES[0]["DIRS"] = [BASE_DIR / "plantillas"]
+
+WSGI_APPLICATION = 'configuracion.wsgi.application'
+
+
+# Database
+# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+
+# Password validation
+# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+
+
+# Internationalization
+# https://docs.djangoproject.com/en/5.2/topics/i18n/
+
+LANGUAGE_CODE = "es"
+TIME_ZONE = "America/La_Paz"
+
+USE_I18N = True
+
+USE_TZ = True
+
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.2/howto/static-files/
+
+STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / "archivos_estaticos"]
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+</pre>
+            </div>
+            <p>Luego en la raiz del proyecto crea la carpeta <b>plantillas</b></p>
+            <p>Dentro crea el archivo <b>base.html</b></p>
+            <p>Dentro escribe el siguiente codigo:</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>{% load static %}
+&lt;!doctype html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width,initial-scale=1" /&gt;
+  &lt;title&gt;{% block titulo %}{% endblock %} | Curso Django&lt;/title&gt;
+  &lt;link rel="stylesheet" href="{% static 'css/estilos.css' %}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header class="encabezado"&gt;
+    &lt;div class="contenedor"&gt;
+      &lt;h1&gt;Curso de Desarrollo Web con Django &lt;/h1&gt;
+      &lt;nav class="nav"&gt;
+        &lt;a href="{% url 'inicio' %}"&gt;Inicio&lt;/a&gt;
+        &lt;a href="{% url 'temario' %}"&gt;Temario&lt;/a&gt;
+        &lt;a href="{% url 'acerca' %}"&gt;Acerca&lt;/a&gt;
+      &lt;/nav&gt;
+    &lt;/div&gt;
+  &lt;/header&gt;
+
+  &lt;main class="contenedor"&gt;
+    {% block contenido %}{% endblock %}
+  &lt;/main&gt;
+
+  &lt;footer class="pie"&gt;
+    &lt;div class="contenedor"&gt;2026&lt;/div&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+</pre>
+            </div>
+            <p>Para trabajar mejor instala la extension: <b>django</b> es un circulo blando y adentro enverde dice dj
+            </p>
+            <p><b>{% load static %}</b> permite que carguen los archivos estaticos</p> <br>
+            <p><b>{% block titulo %}</b> esto permite que sean dinamocos los sitios</p>
+            <p><b>{% url 'acerca' %}</b> es la url dinamica que creamos en las rutas</p>
+            <h3>Archivos Estaticos</h3>
+            <p>Crea una carpeta para los archivos estaticos llamado <b>archivos_estaticos</b></p>
+            <p>Dentro de esta creamos las siguientes carpetas</p>
+            <ul>
+                <li>css</li>
+                <li>img</li>
+                <li>js</li>
+            </ul>
+            <p>Dentro de css crearemos el archivo <b>estilos.css</b></p>
+            <p>Dentro de <b>estilos.css</b> escribimos el siguiente codigo:</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>:root{
+  --bg:#0b1020;
+  --panel: rgba(255,255,255,.06);
+  --border: rgba(255,255,255,.12);
+  --text: rgba(255,255,255,.92);
+  --muted: rgba(255,255,255,.70);
+  --radius: 16px;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: radial-gradient(900px 500px at 10% 10%, rgba(124,92,255,.18), transparent 55%), var(--bg);
+  color: var(--text);
+}
+a{color:inherit; text-decoration:none; opacity:.9}
+a:hover{opacity:1; text-decoration:underline; text-underline-offset:3px}
+
+.contenedor{max-width:1050px; margin:0 auto; padding: 0 16px}
+.encabezado{border-bottom:1px solid var(--border); background: rgba(0,0,0,.25); backdrop-filter: blur(10px); padding: 14px 0;}
+.encabezado h1{margin:0 0 8px; font-size: 16px;}
+.nav{display:flex; gap:14px; flex-wrap:wrap}
+main{padding: 18px 0 30px}
+.pie{border-top:1px solid var(--border); color: var(--muted); padding: 16px 0;}
+.muted{color: var(--muted);}
+
+</pre>
+            </div>
+            <p>Dentro de la carpeta <b>inicio</b> crearemos la carpeta <b>templates</b></p>
+            <p>Ahora dentro de <b>templates</b> creamos una carpeta llamada <b>inicio</b></p>
+            <p>Dentro de la ultima carpeta llamada <b>inicio crearemos tres archivos</b></p>
+            <ul>
+                <li>acerca.html</li>
+                <li>inicio.html</li>
+                <li>temario.html</li>
+            </ul>
+            <p>Dentro de <b>inicio.html</b> escribimos el siguiente codigo:</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>{% extends "base.html" %}
+
+{% block titulo %}Inicio{% endblock %}
+
+{% block contenido %}
+  &lt;h2&gt;Bienvenido 👋&lt;/h2&gt;
+
+  &lt;p&gt;
+    Hoy aprenderás &lt;b&gt;Templates&lt;/b&gt;: variables, tags y herencia.
+  &lt;/p&gt;
+
+  &lt;p class="muted"&gt;
+    Fecha/hora (desde la vista): &lt;b&gt;{{ ahora|date:"d/m/Y H:i" }}&lt;/b&gt;
+  &lt;/p&gt;
+
+  &lt;h3&gt;Temas de hoy&lt;/h3&gt;
+  &lt;ul&gt;
+    {% for tema in temas %}
+      &lt;li&gt;{{ tema }}&lt;/li&gt;
+    {% endfor %}
+  &lt;/ul&gt;
+
+  {% if modo == "practica" %}
+    &lt;p&gt;&lt;b&gt;Modo:&lt;/b&gt; práctica ✅&lt;/p&gt;
+  {% else %}
+    &lt;p&gt;&lt;b&gt;Modo:&lt;/b&gt; lectura&lt;/p&gt;
+  {% endif %}
+{% endblock %}
+
+
+</pre>
+            </div>
+            <p>Adentro de <b>acerca.html</b> colocamso el siguiente codigo:</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>{% extends "base.html" %}
+{% block titulo %}Acerca{% endblock %}
+
+{% block contenido %}
+  &lt;h2&gt;Acerca del curso&lt;/h2&gt;
+  &lt;p&gt;Primero dominamos fundamentos; luego recién haremos el mini_LMS integrador.&lt;/p&gt;
+{% endblock %}
+
+
+
+</pre>
+            </div>
+            <p>Adentro de <b>temario.html</b> colocamso el siguiente codigo:</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>{% extends "base.html" %}
+{% block titulo %}Temario{% endblock %}
+
+{% block contenido %}
+  &lt;h2&gt;Temario (Fundamentos)&lt;/h2&gt;
+  &lt;ol&gt;
+    &lt;li&gt;URLs y Vistas&lt;/li&gt;
+    &lt;li&gt;Templates&lt;/li&gt;
+    &lt;li&gt;Modelos + Migraciones + Admin&lt;/li&gt;
+    &lt;li&gt;ORM (QuerySets)&lt;/li&gt;
+    &lt;li&gt;Forms + CSRF&lt;/li&gt;
+    &lt;li&gt;Auth&lt;/li&gt;
+  &lt;/ol&gt;
+{% endblock %}
+
+</pre>
+            </div>
+            <p>Ahora remplazamos el anterior codigo del archivo <b>inicio.views.py</b> por este: </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>from django.shortcuts import render
+from django.utils import timezone
+
+def inicio(request):
+    contexto = {
+        "ahora": timezone.localtime(),
+        "temas": ["extends/base", "blocks", "variables {{ }}", "tags {% %}", "for/if"],
+        "modo": "practica",
+    }
+    return render(request, "inicio/inicio.html", contexto)
+
+def acerca(request):
+    return render(request, "inicio/acerca.html")
+
+def temario(request):
+    return render(request, "inicio/temario.html")
+
+</pre>
+            </div>
+            <p>Modificamos <b>inicio/urls</b> de la siguiente manera:</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>from django.urls import path
+from . import views
+
+urlpatterns = [
+    path("", views.inicio, name="inicio"),
+    path("acerca/", views.acerca, name="acerca"),
+    path("temario/", views.temario, name="temario"),
+]
+
+</pre>
+            </div>
+            <p>Ahora podemos probar nuestro proyecto</p>
+            <p>Levantamos nuestro servidor <b>python manage.py runserver</b> y entramos:</p>
+            <p><a href="http://127.0.0.1:8000/" target="_blank">http://127.0.0.1:8000/</a></p>
+
+            <h3>Crear la aplicación curso</h3>
+            <p>
+                Para crear la aplicación curso, asegurate de que el <b> servidor no est levantado</b> y que el entorno
+                este <b>activado</b>
+                (recuerda que lo activamos con <b>entorno\Scripts\activate </b>), luego escribe el siguiente comanado:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py startapp cursos
+                </pre>
+            </div>
+            <p>
+                Con este comando se creara una nueva carpeta llamada <b>cursos</b>.
+            </p>
+            <p>
+                Registramos la apliación nueva en <b>configuracion/settings.py</b>
+            </p>
+            <p>
+                Buscamos <b>INSTALLED_APPS</b> y añadimos <b>cursos</b>, debe quedar de la siguiente manera:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre># Application definition
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'inicio',
+    'rutas',
+    'cursos',
+]
+                </pre>
+            </div>
+            <p>
+                Recordemos que esto lo acemos para que django reconozca la aplicación.
+            </p>
+            <p>
+                En ese sentido debemos realizarlo cada vez que creemos una aplicación.
+            </p>
+            <h3>¿Qué es models en django?</h3>
+            <p>
+                Un modelo en Django es una clase que representa una tabla en la base de datos.
+            </p>
+            <p>
+                Define los campos y comportamientos de los datos que deseas almacenar.
+            </p>
+            <p>
+                Cada atributo de la clase corresponde a una columna en la tabla, y cada instancia de la clase representa
+                una fila en esa tabla.
+            </p>
+            <p>
+                Los modelos permiten interactuar con la base de datos de manera sencilla, utilizando el ORM
+                (Object-Relational Mapping) de Django para realizar consultas, inserciones, actualizaciones y
+                eliminaciones sin necesidad de escribir SQL directamente.
+            </p>
+            <h3>Definir modelos cursos/models.py</h3>
+            <p>
+                Nos dirigimos al archivos <b>cursos/models.py</b> y remplazamos el código que viene por defecto por el
+                siguien código:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>from django.db import models
+
+# Nombre de la clase seimpre e mayuscula
+# models.Model al colocar esto indicamos que es un Modelo
+class Categoria(models.Model):
+    # Creamos los atributos
+    # models.CharField es un campo de texto con una longitud máxima
+    # unique=True indica que no se pueden repetir los nombres de las categorías 
+    nombre = models.CharField("nombre", max_length=80, unique=True)
+    # models.TextField es un campo de texto sin límite de longitud
+    # blank=True permite que el campo pueda quedar vacío
+    descripcion = models.TextField("descripción", blank=True)
+    # class Meta es una clase interna que se utiliza para configurar opciones adicionales del modelo
+    class Meta:
+        verbose_name = "categoría"
+        verbose_name_plural = "categorías"
+    # __str__ es un método especial que se utiliza para definir la representación en cadena de un objeto, lo que es útil para mostrar el nombre de la categoría en lugar de su ID en la administración de Django y en otros lugares donde se muestre el objeto. En este caso, devuelve el nombre de la categoría.
+    def __str__(self):
+        return self.nombre
+
+# El modelo Curso tiene una relación de clave foránea con el modelo Categoria, lo que significa que cada curso pertenece a una categoría específica. La opción on_delete=models.PROTECT evita que se elimine una categoría si hay cursos asociados a ella. El atributo related_name="cursos" permite acceder a los cursos relacionados desde la categoría utilizando el nombre "cursos". El campo verbose_name se utiliza para proporcionar un nombre legible para el campo en la administración de Django y en otros lugares donde se muestre el campo.
+class Curso(models.Model):
+    # El campo categoria es una clave foránea que establece una relación con el modelo Categoria. Esto significa que cada curso está asociado a una categoría específica. La opción on_delete=models.PROTECT evita que se elimine una categoría si hay cursos asociados a ella, lo que ayuda a mantener la integridad de los datos. El atributo related_name="cursos" permite acceder a los cursos relacionados desde la categoría utilizando el nombre "cursos". Por ejemplo, si tienes una instancia de categoría llamada "categoria", puedes acceder a sus cursos relacionados utilizando "categoria.cursos.all()". El campo verbose_name se utiliza para proporcionar un nombre legible para el campo en la administración de Django y en otros lugares donde se muestre el campo.
+    categoria = models.ForeignKey(
+        Categoria,
+        on_delete=models.PROTECT,
+        related_name="cursos",
+        verbose_name="categoría",
+    )
+    titulo = models.CharField("título", max_length=120)
+    descripcion = models.TextField("descripción", blank=True)
+    # fecha_inicio es un campo de tipo DateField que se utiliza para almacenar la fecha de inicio del curso. Este campo es obligatorio, lo que significa que no puede quedar vacío al crear o actualizar un curso. La opción verbose_name="fecha de inicio" proporciona un nombre legible para el campo en la administración de Django y en otros lugares donde se muestre el campo.
+    fecha_inicio = models.DateField("fecha de inicio")
+    # fecha_fin es un campo de tipo DateField que se utiliza para almacenar la fecha de finalización del curso. Este campo es opcional, lo que significa que puede quedar vacío al crear o actualizar un curso. La opción blank=True permite que el campo pueda quedar vacío. La opción verbose_name="fecha de fin" proporciona un nombre legible para el campo en la administración de Django y en otros lugares donde se muestre el campo.
+    carga_horaria = models.PositiveSmallIntegerField("carga horaria", default=0)
+    # El campo activo es un campo de tipo BooleanField que se utiliza para indicar si el curso está activo o no. El valor predeterminado es True, lo que significa que el curso estará activo por defecto al crearlo. La opción verbose_name="activo" proporciona un nombre legible para el campo en la administración de Django y en otros lugares donde se muestre el campo.
+    activo = models.BooleanField("activo", default=True)
+    # La clase Meta es una clase interna que se utiliza para configurar opciones adicionales del modelo. En este caso, se establece el nombre singular y plural del modelo utilizando las opciones verbose_name y verbose_name_plural, respectivamente. Esto es útil para mostrar nombres legibles en la administración de Django y en otros lugares donde se muestre el modelo.
+    class Meta:
+        verbose_name = "curso"
+        verbose_name_plural = "cursos"
+    # El método __str__ es un método especial que se utiliza para definir la representación en cadena de un objeto, lo que es útil para mostrar el título del curso en lugar de su ID en la administración de Django y en otros lugares donde se muestre el objeto. En este caso, devuelve el título del curso.
+    def __str__(self):
+        return self.titulo
+        </pre>
+            </div>
+            <h3>¿Qué son las Migraciones?</h3>
+            <p>
+                Las migraciones en Django son una forma de gestionar los cambios en la estructura de la base de datos a
+                lo largo del tiempo. Permiten crear, modificar y eliminar tablas y campos en la base de datos de manera
+                controlada y versionada. Cada vez que realizas cambios en tus modelos (como agregar un nuevo campo o
+                cambiar el tipo de un campo), debes crear una migración para reflejar esos cambios en la base de datos.
+                Las migraciones se pueden aplicar a la base de datos utilizando comandos específicos, lo que facilita el
+                mantenimiento y la evolución de la estructura de datos a medida que tu aplicación crece y cambia.
+            </p>
+            <p>
+                Para migrar los modelos que acabamos de crear, primero debemos crear las migraciones utilizando el
+                siguiente comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py makemigrations
+</pre>
+            </div>
+            <h3>¿Donde se guardan las migraciones?</h3>
+            <p>
+                Las migraciones se guardan en una carpeta llamada <b>migrations</b> dentro de cada aplicación de Django.
+                En nuestro caso, después de ejecutar el comando para crear las migraciones, encontrarás una nueva
+                carpeta llamada <b>migrations</b> dentro de la carpeta <b>cursos</b>. Dentro de esta carpeta, se
+                generarán archivos de migración que contienen las instrucciones para aplicar los cambios en la base de
+                datos. Cada archivo de migración tiene un nombre que sigue un formato específico, como
+                <b>0001_initial.py</b>, <b>0002_auto_20240601_1234.py</b>, etc., donde el número indica el orden de las
+                migraciones y el nombre describe brevemente los cambios realizados.
+            </p>
+            <h3>Aplicar las migraciones</h3>
+            <p>
+                Una vez creadas las migraciones, debes aplicarlas a la base de datos utilizando el siguiente comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py migrate
+</pre>
+            </div>
+            <h3>Para ver las migraciones aplicadas</h3>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py showmigrations
+</pre>
+            </div>
+            <h3>Para ver el SQL generado</h3>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py sqlmigrate cursos 0001
+</pre>
+            </div>
+            <h3>Crear super usuario</h3>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py createsuperuser
+</pre>
+            </div>
+            <p>
+                Luego de ejecutar el comando para crear un superusuario, se te solicitará que ingreses un nombre de
+                usuario, una dirección de correo electrónico y una contraseña para el superusuario. Asegúrate de
+                recordar esta información, ya que la necesitarás para iniciar sesión en la interfaz de administración de
+                Django y gestionar tu aplicación.
+            </p>
+            <p>
+                Para probar levantamos el servidor con:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py runserver
+</pre>
+            </div>
+            <p>
+                Ingresamos a la siguiente ruta: <br>
+                <a href="http://127.0.0.1:8000/admin/" target="_blank">http://127.0.0.1:8000/admin/</a>
+            </p>
+            <p>
+                Nos pide Nombre de usuario y Contraseña.
+            </p>
+            <p>
+                Colocamos los datos del super usuario.
+            </p>
+            <p>
+                Presionamos <b>INICAIR SESIÓN</b>
+            </p>
+            <p>
+                Si los datos son correctos ingresara.
+            </p>
+            <h3>Descargar SQLite Viewer </h3>
+            <p>
+                Debes entrar a las extensiones de Visual Studio Code e instalarlo.
+            </p>
+            <p>
+                Una vez instalado ingresa a <b>db.sqlite3</b> y veras un gestor de Base de Datos.
+            </p>
+            <h3>Registrar modelos en Admin</h3>
+            <p>
+                Debemos detener el servodor con <b>Ctrl+C</b>
+            </p>
+            <p>
+                Para registrar los modelos en la interfaz de administración de Django, debes abrir el archivo
+                <b>cursos/admin.py</b> y agregar el siguiente código:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>from django.contrib import admin
+from .models import Categoria, Curso
+
+
+@admin.register(Categoria)
+class CategoriaAdmin(admin.ModelAdmin):
+    list_display = ("nombre",)
+    search_fields = ("nombre",)
+
+
+@admin.register(Curso)
+class CursoAdmin(admin.ModelAdmin):
+    list_display = ("titulo", "categoria", "fecha_inicio", "activo", "carga_horaria")
+    list_filter = ("activo", "categoria")
+    search_fields = ("titulo", "descripcion")
+    ordering = ("-fecha_inicio",)
+</pre>
+            </div>
+            <p>
+                Despues de realizar las modificaciones, levantamos el servidor:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py runserver
+</pre>
+            </div>
+            <p>
+                Ingresamos a la siguiente ruta: <br>
+                <a href="http://127.0.0.1:8000/admin/" target="_blank">http://127.0.0.1:8000/admin/</a>
+            </p>
+            <p>
+                Nos pide Nombre de usuario y Contraseña.
+            </p>
+            <p>
+                Colocamos los datos del super usuario.
+            </p>
+            <p>
+                Si todo salio bien, aparece tanto cursos y categorias.
+            </p>
+            <h3>Trabajar con Django y PostgreSQL</h3>
+
+            <p>
+                Te recomiendo que detengas el servidor con <b>Ctrl + C</b> y que tengas <b>el entorno virtual
+                    desactivado</b>.
+            </p>
+
+            <p>
+                Luego crearemos una copia de la carpeta del proyecto. Para ello, usa el siguiente comando:
+            </p>
+
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>Copy-Item -Path D:\[NombreProyecto] -Destination D:\DjangoPostgresql -Recurse</pre>
+            </div>
+            <p>
+                D:\[NombreProyecto], es la ruta donde se encuentra tu proyecto actual, y D:\DjangoPostgresql es la ruta
+                donde quieres crear la copia del proyecto. Asegúrate de reemplazar estas rutas con las rutas correctas
+                en tu sistema.
+            </p>
+
+            <p>
+                Esto creará una copia de la carpeta del proyecto con el nombre <b>DjangoPostgresql</b>.
+            </p>
+            <p>
+                Ahora abre la carpeta <b>DjangoPostgresql</b> en Visual Studio Code y abre una nueva terminal dentro de
+                esta carpeta <b>Ctrl + ñ</b>.
+            </p>
+            <p>
+                En la nueva terminal, activa el entorno virtual con el siguiente comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>entorno\Scripts\activate</pre>
+            </div>
+            <p>
+                Para probar, levanta el servidor con el siguiente comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py runserver</pre>
+            </div>
+            <p>
+                Luego hacemos clic en el enlace para abrir el proyecto en el navegador: <br>
+                <a href="http://127.0.0.1:8000/" target="_blank">http://127.0.0.1:8000/</a>
+            </p>
+            <p>
+                De esa manera, podemos verificar que el proyecto se ha copiado correctamente y que el entorno virtual
+                está funcionando en la nueva ubicación. Ahora estamos listos para configurar PostgreSQL como nuestra
+                base de datos en este nuevo proyecto.
+            </p>
+            <h3>Instalar PosgreSQL</h3>
+            <p>
+                Para instalar PostgreSQL, puedes seguir estos pasos:
+            </p>
+            <ol>
+                <li>
+                    Ve al sitio web oficial de PostgreSQL: <a
+                        href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads"
+                        target="_blank">Descarga</a>
+                </li>
+                <li>
+                    En la página de descargas, selecciona la versión de PostgreSQL que deseas instalar.
+                </li>
+                <li>
+                    Sigue las instrucciones específicas para tu sistema operativo para descargar e instalar PostgreSQL.
+                </li>
+                <li>
+                    Durante la instalación, se te pedirá que configures una contraseña para el usuario "postgres".
+                    Asegúrate de recordar esta contraseña, ya que la necesitarás para acceder a la base de datos.
+                </li>
+            </ol>
+            <p>
+                Ingresanmos a pgAdmin, que es la interfaz gráfica para gestionar PostgreSQL.
+            </p>
+            <p>
+                Ve a inicio y busca pgAdmin, luego haz clic para abrirlo.
+            </p>
+            <p>
+                En pgAdmin, haz clic en <b>"Servers"</b>, te pedira la contraseña que colocaste durante la instalación,
+                ingresa
+                la contraseña y haz clic en <b>"OK"</b>.
+            </p>
+            <p>
+                Seleciona la base de datos <b>"postgres"</b>, luego selecciona <b>"Query Tool"</b>.
+            </p>
+            <p>
+                Crea un nuervo usuario para tu aplicación Django con el siguiente código:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>CREATE USER usuario_app WITH PASSWORD 'clave_segura';</pre>
+            </div>
+            <p>
+                Despues de crear el nuevo usuario, con sql crearemos la base de datos <b>"django_db"</b>, usando el
+                siguiente código:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>CREATE DATABASE django_db OWNER usuario_app;</pre>
+            </div>
+            <h3>Instala Driver PostgrSQL</h3>
+            <p>
+                Para que Django pueda conectarse a PostgreSQL, necesitas instalar el driver de PostgreSQL para Python,
+                que se llama <b>psycopg2</b>.
+            </p>
+            <p>
+                Asegurate de baja el servidor con <b>Ctrl + C</b> y asegúrate de que el <b>entorno virtual esté
+                    activado</b>.
+            </p>
+            <p>
+                Puedes instalarlo utilizando pip con el siguiente comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python -m pip install "psycopg[binary]"</pre>
+            </div>
+            <h3>Configurar settings.py</h3>
+            <p>
+                Ahora debemos configurar el archivo <b>settings.py</b> para que Django utilice PostgreSQL como base de
+                datos.
+            </p>
+            <p>
+                Abre el archivo <b>configuracion/settings.py</b> y busca #Database
+            </p>
+            <p>
+                Comenta la configuración que viene por defecto.
+            </p>
+            <p>
+                Para <b>Comentar</b> presiona <b>Ctrl + K + C</b>
+            </p>
+            <p>
+                Si desea <b>descomentar</b>, presiona: <b>Ctrl + K + U</b>
+            </p>
+            <p>
+                Más abajo copia el siguiente código.
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "django_db",
+        "USER": "usuario_app",
+        "PASSWORD": "clave_segura",
+        "HOST": "127.0.0.1",
+        "PORT": "5432",
+    }
+}
+</pre>
+            </div>
+            <p>
+                Si por alguna razón te olvidaste el puerto o el nombre de uruario, puedes verificarlo en pgAdmin
+                haciendo clic derecho en el servidor, seleccionando <b> "Properties"</b> y luego yendo a la pestaña
+                <b>"Connection"</b>.
+            </p>
+            <h3>¿Cómo migrar?</h3>
+            <p>
+                Para migrar los modelos a la nueva base de datos PostgreSQL, primero debes crear las migraciones
+                utilizando el siguiente comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py migrate</pre>
+            </div>
+            <p>
+                Este comando aplicará las migraciones a la base de datos PostgreSQL, creando las tablas necesarias para
+                tus modelos.
+            </p>
+            <p>
+                Asegúrate de que el servidor de PostgreSQL esté en funcionamiento antes de ejecutar este comando, y de
+                que la configuración en <b>settings.py</b> sea correcta para evitar errores de conexión.
+            </p>
+            <p>
+                Si todo salio bien y no se presento ningún error, entonces tu proyecto Django ahora está utilizando
+                PostgreSQL.
+            </p>
+            <p>
+                Caso contrario, hay que darle permisos al usuario que creamos en PostgreSQL para que pueda acceder a la
+                base de datos.
+            </p>
+            <p>
+                Ahora creamos el super usuario con:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py createsuperuser</pre>
+            </div>
+            <p>
+                Recuerda que después de ejecutar el comando para crear un superusuario, se te solicitará que ingreses un
+                nombre de usuario, una dirección de correo electrónico y una contraseña para el superusuario.
+            </p>
+            <p>
+                Asegúrate de recordar esta información, ya que la necesitarás para iniciar sesión en la interfaz de
+                administración de Django y gestionar tu aplicación.
+            </p>
+            <p>
+                Para probar, levantemos el servidor:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py runserver </pre>
+            </div>
+            <p>
+                Luego ingresamos a <a href="http://127.0.0.1:8000/admin/" target="_blank">admin</a>
+            </p>
+            <h3>MySQL con Django</h3>
+            <p>
+                Como alternativa a PostgreSQL, también puedes configurar Django para usar MySQL como base de datos.
+            </p>
+            <p>
+                Como isimos con PostgreSQL, aremos una copia de nuestro proyecto base.
+            </p>
+            <p>
+                Para ello, usa el siguiente comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>Copy-Item -Path D:\[NombreProyecto] -Destination D:\DjangoMySQL -Recurse</pre>
+            </div>
+            <p>
+                Luego abre la carpeta <b>DjangoMySQL</b> en Visual Studio Code y abre una nueva terminal dentro de esta
+                carpeta <b>Ctrl + ñ</b>.
+            </p>
+            <p>
+                En la nueva terminal, activa el entorno virtual con el siguiente comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>entorno\Scripts\activate</pre>
+            </div>
+            <p>
+                Para probar levanta el servidor con el siguiente comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py runserver</pre>
+            </div>
+            <p>
+                Luego hacemos clic en el enlace para abrir el proyecto en el navegador: <br>
+                <a href="http://127.0.0.1:8000/" target="_blank">http://127.0.0.1:8000/</a>
+            </p>
+            <h3>Instalamos NySQL</h3>
+            <p>
+                Para instalar MySQL, puedes seguir estos pasos:
+            </p>
+            <ol>
+                <li>
+                    Ve al sitio web oficial de MySQL: <a href="https://dev.mysql.com/downloads/installer/"
+                        target="_blank">Descarga</a>
+                </li>
+                <li>
+                    En la página de descargas, selecciona la <b>versión de MySQL 8.0.11 o superior</b>, en nuestro caso
+                    instalaremos <b>la versión MySQL 8.0.45</b>, Windows (x86, 64-bit), MSI Installer.
+                </li>
+                <li>
+                    Luego seleccionamos <a
+                        href="https://dev.mysql.com/get/Downloads/MySQLInstaller/mysql-installer-community-8.0.45.0.msi"
+                        target="_blank">No thanks, just start my download.</a>, para iniciar la descarga del Windows
+                    (x86, 32-bit), MSI InstallerL.
+                </li>
+                <li>
+                    Una vez descargado el archivo, haz doble clic en él para iniciar el proceso de instalación.
+                </li>
+                <li>
+                    Aparecera una ventana, presionamos en el boton Ejecutar y damos si a todos los permisos necesarios
+                    para que el instalador pueda hacer cambios en tu dispositivo.
+                </li>
+                <li>
+                    En MySQL Server seleccionamos MySQL Server 8.0.45 - X64, con la flecha derecha lo enviamos a
+                    productos para instalar y luego presionamos en el boton Next.
+                </li>
+                <li>
+                    En Aplicaiciones seleccionamos MySQL Workbench 8.0.46 - X64 , con la flecha derecha lo enviamos a
+                    productos para instalar y luego presionamos en el boton Next.
+                </li>
+                <li>
+                    Ahora Ejecutamos el instalador, para ello presionamos en el boton Execute y esperamos a que se
+                    instalen los productos seleccionados.
+                </li>
+                <li>
+                    Cuando termine la instalación, presionamos en el boton Next y otra vez Next hasta que pida
+                    contraseña para el usuario root, colocamos una contraseña segura y la confirmamos, luego presionamos
+                    en el boton Next.
+                </li>
+                <li>
+                    En la siguiente ventana, dejamos las opciones por defecto y presionamos en el boton Next hasta
+                    Execute y por ultime presionamos Finish.
+                </li>
+            </ol>
+            <h3>¿Cómo conectar Django con MySQL?</h3>
+            <p>
+                En la interfaz que nos aparece por defecto al instalar MySQL, vamos a la pestaña <b>Database</b> y
+                presionamos Conect to Database, dejamos todo lo que viene por defecto, solo presionamos el boton
+                <b>Store in value</b>, donde se colocarara la contraseña que colocamos durante la instalación, luego
+                presionamos ok y ok, con eso se nos mostrará el gestor de MySQL.
+            </p>
+            <p>
+                Ahora con sql crearemos un usaurio para nuestra aplicación Django con el siguiente código:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>CREATE USER 'usuario_app'@'localhost' IDENTIFIED BY 'clave_segura';</pre>
+            </div>
+            <p>
+                Pegamos el codigo en el sql y para ejecuatrlo precionamos el boton que tiene simbolo de rayo, con eso se
+                ejecutara el código y se creara el usuario.
+            </p>
+            <p>
+                Luego creamos la base de datos <b>"django_db"</b>, con el usario creado.
+            </p>
+            <p>
+                Para ello, borramos el anterior codigo y pegamos el siguiente código, luego lo ejecutamos con el boton
+                de rayo:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>CREATE DATABASE django_db;</pre>
+            </div>
+            <p>
+                Ademas añadiremos todos los permisos al usuario para que pueda acceder a la base de datos con el
+                siguiente código:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>GRANT ALL PRIVILEGES ON django_db.* TO 'usuario_app'@'localhost';</pre>
+            </div>
+            <p>
+                Terminamos de configurar, con el siguiente código:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>FLUSH PRIVILEGES;</pre>
+            </div>
+            <p>
+                Con eso se le dieron todos los permisos al usuario para que pueda acceder a la base de datos.
+            </p>
+            <h3>Instalar Driver de MySQL para Django</h3>
+            <p>
+                Para conectar Django con MySQL, necesitamos instalar el driver de MySQL para Python.
+            </p>
+            <p>
+                Antes de instalar recuerda que el servidor debe estar detenido con <b>Ctrl + C</b> y el entorno virtual
+                debe estar activado.
+            </p>
+            <p>
+                El codigo para instalar el driver de MySQL para Python es el siguiente:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python -m pip install mysqlclient</pre>
+            </div>
+            <p>
+                Una vez instalado el driver, debemos configurar el archivo <b>settings.py</b> para que Django utilice
+                MySQL como base de datos.
+            </p>
+            <p>
+                Abre el archivo <b>configuracion/settings.py</b> y busca #Database, luego comenta la configuración que
+                viene
+                por defecto y copia el siguiente código debajo de la configuración comentada:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "django_db",
+        "USER": "usuario_app",
+        "PASSWORD": "clave_segura",
+        "HOST": "127.0.0.1",
+        "PORT": "3306",
+        "OPTIONS": {"charset": "utf8mb4"},
+    }
+}
+</pre>
+            </div>
+            <p>
+                Asegúrate de que el servidor de MySQL esté en funcionamiento antes de ejecutar este comando, y de que la
+                configuración en <b>settings.py</b> sea correcta para evitar errores de conexión.
+            </p>
+            <h3>Migrando la base de datos a MySQL</h3>
+            <p>
+                Para migrar los modelos a la nueva base de datos MySQL, primero debes crear las migraciones utilizando
+                el
+                siguiente comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py makemigrations</pre>
+            </div>
+            <p>
+                Una vez creadas las migraciones, ejecuta el siguiente comando para aplicarlas a la base de datos MySQL:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py migrate</pre>
+            </div>
+            <p>
+                Si todo sale oke, tu proyecto Django ahora está utilizando MySQL como base de datos.
+            </p>
+            <p>
+                Ahora crearemos el super usuario con el siguiente comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py createsuperuser</pre>
+            </div>
+            <p>
+                Recuerda que después de ejecutar el comando para crear un superusuario, se te solicitará que ingreses un
+                nombre de usuario, una dirección de correo electrónico y una contraseña para el superusuario.
+            </p>
+            <p>
+                Asegúrate de recordar esta información, ya que la necesitarás para iniciar sesión en la interfaz de
+                administración de Django y gestionar tu aplicación.
+            </p>
+            <p>
+                Para probar, levantemos el servidor con el siguiente comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py runserver</pre>
+            </div>
+            <p>
+                Luego ingresamos a <a href="http://127.0.0.1:8000/admin/"
+                    target="_blank">http://127.0.0.1:8000/admin/</a> para ver el sitio corriendo en el servidor de
+                desarrollo de Django.
+            </p>
+            <p>
+                Para ver la base de datos en MySQL Workbench, has en <b>Schemas</b> se encuentra al lado izquierdo,
+                luego haz clic derecho en <b>Refresh All</b> y veras la base de datos <b>"django_db"</b> con las tablas
+                creadas por las migraciones.
+            </p>
+            <h3>ORM en Django</h3>
+            <p>
+                El ORM (Object-Relational Mapping) en Django es una herramienta que permite interactuar con la base de
+                datos utilizando objetos de Python en lugar de escribir consultas SQL directamente.
+            </p>
+            <p>
+                El ORM de Django
+                proporciona una capa de abstracción que facilita la manipulación de datos y la gestión de la base de
+                datos, permitiendo a los desarrolladores trabajar con modelos y consultas de manera más intuitiva y
+                eficiente.
+            </p>
+            <p>
+                Para trabajar en ORM usaremos el proyecto DjangoPostgreSQL, para ello, abre la carpeta
+                <b>DjangoPostgreSQL</b> en Visual Studio Code y abre una nueva terminal dentro de esta carpeta <b>Ctrl +
+                    ñ</b>.
+            </p>
+            <h3>¿Qué es el shell de Django?</h3>
+            <p>
+                El shell de Django es una herramienta interactiva que permite a los desarrolladores ejecutar código
+                Python en el contexto de su proyecto Django.
+            </p>
+            <p>
+                Es una forma rápida y conveniente de probar código, realizar
+                consultas a la base de datos, manipular objetos y experimentar con la lógica de la aplicación sin tener
+                que escribir un script completo o crear vistas temporales.
+            </p>
+            <p>
+                Para acceder al shell de Django, primero recuerda que <b>el servido no debe estar levantado</b> y
+                debemos estar <b>dentro del entorno virtual</b>, luego debes abrir una terminal en la raíz de tu
+                proyecto Django y ejecutar el
+                siguiente comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py shell</pre>
+            </div>
+            <p>
+                Despues para importar los modelos de la aplicación, puedes usar el siguiente código dentro del shell de
+                Django:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>from cursos.models import Categoria, Curso</pre>
+            </div>
+            <p>
+                Si todo esta bien, solo pasara a la siguiente línea sin mostrar ningún error, lo que indica que los
+                modelos se han importado correctamente y ahora puedes trabajar con ellos dentro del shell de Django.
+            </p>
+            <h3>¿Cómo crear una categoria con ORM?</h3>
+            <p>
+                Para crear una nueva categoría utilizando el ORM de Django, primero debes asegurarte de que has
+                importado el modelo de categoría en el shell de Django. Luego, puedes usar el siguiente código para
+                crear una nueva categoría:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>categoria_a = Categoria.objects.create(
+    nombre="Programacion",
+    descripcion="Cursos relacionados a la programacion"
+)</pre>
+            </div>
+            <p>
+                Todo este código lo pegamos directo en el shell de Django, y al ejecutarlo se creará una nueva categoría
+                con el nombre "Programacion" y la descripción "Cursos relacionados a la programacion" en la base de
+                datos.
+            </p>
+            <h3>¿Cómo crear un curso con ORM?</h3>
+            <p>
+                Para crear un nuevo curso utilizando el ORM de Django, primero debes asegurarte de que has importado los
+                modelos de categoría y curso en el shell de Django. Luego, puedes usar el siguiente código para crear un
+                nuevo curso:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>from datetime import date
+
+Curso.objects.create(
+    categoria=categoria_a,
+    titulo="Django + PostgreSQL",
+    descripcion="Fundamentos y conexión con PostgreSQL",
+    fecha_inicio=date(2026, 2, 20),
+    carga_horaria=40,
+    activo=True
+)</pre>
+            </div>
+            <p>
+                Este código crea un nuevo curso llamado "Django + PostgreSQL" con la descripción "Fundamentos y conexión
+                con PostgreSQL" y lo asocia a la categoría previamente creada.
+            </p>
+            <p>
+                Para practicar creamos 2 categorias nuevas y 5 cursos nuevos, usando el mismo formato que los ejemplos
+                anteriores.
+            </p>
+            <details class="respuesta-box">
+                <summary>Ver respuesta</summary>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                    <pre>from datetime import date
+
+# Nuevas categorías
+categoria_b = Categoria.objects.create(
+    nombre="Marketing Digital",
+    descripcion="Cursos relacionados al marketing en entornos digitales"
+)
+
+categoria_c = Categoria.objects.create(
+    nombre="Base de Datos",
+    descripcion="Cursos relacionados al diseño y administración de bases de datos"
+)
+
+# Nuevos cursos
+
+Curso.objects.create(
+    categoria=categoria_b,
+    titulo="Fundamentos de Marketing Digital",
+    descripcion="Conceptos básicos y estrategias digitales",
+    fecha_inicio=date(2026, 3, 1),
+    carga_horaria=30,
+    activo=True
+)
+
+Curso.objects.create(
+    categoria=categoria_b,
+    titulo="Publicidad en Redes Sociales",
+    descripcion="Gestión de campañas en Facebook e Instagram",
+    fecha_inicio=date(2026, 3, 10),
+    carga_horaria=25,
+    activo=True
+)
+
+Curso.objects.create(
+    categoria=categoria_c,
+    titulo="SQL desde Cero",
+    descripcion="Consultas básicas y avanzadas en SQL",
+    fecha_inicio=date(2026, 3, 5),
+    carga_horaria=35,
+    activo=True
+)
+
+Curso.objects.create(
+    categoria=categoria_c,
+    titulo="Modelado de Base de Datos",
+    descripcion="Diseño de diagramas entidad-relación",
+    fecha_inicio=date(2026, 3, 15),
+    carga_horaria=40,
+    activo=True
+)
+
+Curso.objects.create(
+    categoria=categoria_c,
+    titulo="Administración de MySQL",
+    descripcion="Gestión de usuarios, permisos y optimización",
+    fecha_inicio=date(2026, 3, 20),
+    carga_horaria=30,
+    activo=True
+)
+</pre>
+                </div>
+            </details>
+            <h3>¿Qué es un QuerySet?</h3>
+            <p>
+                Un QuerySet en Django es una colección de objetos de un modelo específico que se pueden filtrar, ordenar
+                y
+                manipular de diversas maneras.
+            </p>
+            <p>
+                Es el resultado de una consulta a la base de datos y proporciona una API
+                poderosa para interactuar con los datos almacenados en la base de datos a través del ORM de Django.
+            </p>
+            <h3>¿Cómo listar todos los cursos?</h3>
+            <p>
+                Para listar todos los cursos utilizando el ORM de Django, puedes usar el siguiente código en el shell de
+                Django:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>cursos = Curso.objects.all()
+list(cursos)</pre>
+            </div>
+            <p>
+                Este código obtiene todos los objetos de la clase Curso y los convierte en una lista para su
+                visualización.
+            </p>
+            <h3>¿Cómo ordena por titulo del curso?</h3>
+            <p>
+                Para ordenar los cursos por título, puedes usar el método `order_by()` del QuerySet:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>cursos = Curso.objects.order_by('titulo')
+list(cursos)</pre>
+            </div>
+            <h3>¿Cómo ordena por fecha de inicio?</h3>
+            <p>
+                Para ordenar los cursos por fecha de inicio, puedes usar el método `order_by()` del QuerySet:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>cursos = Curso.objects.order_by('fecha_inicio')
+list(cursos)</pre>
+            </div>
+            <h3>¿Cómo filtrar cursos por categoría?</h3>
+            <p>
+                Para filtrar los cursos por categoría, puedes usar el método `filter()` del QuerySet:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>cursos = Curso.objects.filter(categoria__nombre="Marketing Digital")
+list(cursos)</pre>
+            </div>
+            <p>
+                Este código filtra los cursos que pertenecen a la categoría "Marketing Digital" y los convierte en una
+                lista para su visualización.
+            </p>
+            <h3>¿Cómo filtrar cursos activos?</h3>
+            <p>
+                Para filtrar los cursos activos, puedes usar el método `filter()` del QuerySet:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>cursos = Curso.objects.filter(activo=True)
+list(cursos)</pre>
+            </div>
+            <h3>Dado el identificador de la categoria ¿Cómo mostrar la informacion de los cursos?</h3>
+            <p>
+                Para mostrar la información de los cursos dado el identificador de la categoría, puedes usar el método
+                `filter()` del QuerySet para filtrar los cursos por la categoría y luego acceder a sus atributos:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>for curso in Curso.objects.filter(categoria__id=3):
+    print(curso.titulo)</pre>
+            </div>
+            <h3>GET vs FILTER</h3>
+            <p>
+                El método `get()` se utiliza para obtener un único objeto que coincida con los criterios de búsqueda
+                especificados.
+            </p>
+
+            <p>
+                Si no se encuentra ningún objeto o si se encuentran múltiples objetos, `get()` lanzará
+                una excepción.
+            </p>
+            <p>
+                Por otro lado, el método `filter()` se utiliza para obtener un conjunto de objetos que coincidan con
+                los criterios de búsqueda especificados.
+            </p>
+            <p>
+                Si no se encuentra ningún objeto, `filter()` devolverá un
+                QuerySet vacío en lugar de lanzar una excepción.
+            </p>
+            <h3>¿Cómo usar GET?</h3>
+            <p>
+                Para usar el método `get()`, debes proporcionar los criterios de búsqueda que deben coincidir con un
+                único objeto.
+            </p>
+            <p>
+                Si no se encuentra ningún objeto o si se encuentran múltiples objetos, se lanzará una excepción.
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>curso = Curso.objects.get(id=3)
+print(curso.titulo)</pre>
+            </div>
+            <h3>¿Cómo actualizar un curso?</h3>
+            <p>
+                Para actualizar un curso, puedes usar el método `update()` del QuerySet:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>Curso.objects.filter(id=3).update(titulo="Nuevo Título")</pre>
+            </div>
+            <p>
+                Para ver los cambios, puedes obtener el curso actualizado y mostrar su título:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>curso = Curso.objects.get(id=3)
+print(curso.titulo)</pre>
+            </div>
+            <h3>¿Cómo eliminar un curso?</h3>
+            <p>
+                Para eliminar un curso, puedes usar el método `delete()` del QuerySet:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>Curso.objects.filter(id=3).delete()</pre>
+            </div>
+            <p>
+                Para salir de <b>python manage.py shell</b> presiona <b>Ctrl + Z</b> y luego <b>Enter</b>.
+            </p>
+            <h3>Mostrar Cursos en Plantilla</h3>
+            <p>
+                Para mostrar los cursos en una plantilla de Django, primero debes crear una vista que obtenga los cursos
+                de la base de datos y luego pasar esa información a la plantilla.
+            </p>
+            <p>
+                Para ello creamos una nueva vista en el archivo <b>"cursos/views.py"</b> con el siguiente código:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>from django.shortcuts import render
+# Importamos el modelo de Curso para poder obtener los cursos de la base de datos
+from .models import Curso
+
+# Creamos una vista para listar los cursos
+def lista_cursos(request):
+
+    # Obtenemos todos los cursos de la base de datos, ordenados por fecha de inicio y título
+    cursos = (
+        Curso.objects
+        .select_related("categoria")
+        .order_by("-fecha_inicio", "titulo")
+    )
+
+    # Pasamos los cursos al contexto para que estén disponibles en la plantilla
+    contexto = {"cursos": cursos}
+
+    # Renderizamos la plantilla "cursos/lista_cursos.html" con el contexto que contiene los cursos
+    return render(request, "cursos/lista_cursos.html", contexto)
+    </pre>
+            </div>
+            <p>
+                Esto crea una vista llamada `lista_cursos` que obtiene todos los cursos de la base de datos, los ordena
+                por fecha de inicio y título, y luego los pasa a la plantilla <b>"cursos/lista_cursos.html"</b> a través
+                del contexto.
+            </p>
+            <p>
+                Ahora en la carpeta <b>"cursos"</b>, creamos una nueva carpeta llamada <b>"templates"</b> y dentro de
+                esta carpeta, creamos otra carpeta llamada <b>"cursos"</b>, y dentro de esta última carpeta, creamos un
+                nuevo archivo llamado <b>"lista_cursos.html"</b> con el siguiente código:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>{% extends "base.html" %}
+
+{% block titulo %}Cursos{% endblock %}
+
+{% block contenido %}
+  &lt;h2&gt;Listado de cursos&lt;/h2&gt;
+
+  {% if cursos %}
+    &lt;table style="width:100%; border-collapse: collapse;"&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style="text-align:left; border-bottom:1px solid #ccc; padding:8px;"&gt;Título&lt;/th&gt;
+          &lt;th style="text-align:left; border-bottom:1px solid #ccc; padding:8px;"&gt;Categoría&lt;/th&gt;
+          &lt;th style="text-align:left; border-bottom:1px solid #ccc; padding:8px;"&gt;Inicio&lt;/th&gt;
+          &lt;th style="text-align:left; border-bottom:1px solid #ccc; padding:8px;"&gt;Horas&lt;/th&gt;
+          &lt;th style="text-align:left; border-bottom:1px solid #ccc; padding:8px;"&gt;Activo&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        {% for curso in cursos %}
+          &lt;tr&gt;
+            &lt;td style="padding:8px; border-bottom:1px solid #eee;"&gt;{{ curso.titulo }}&lt;/td&gt;
+            &lt;td style="padding:8px; border-bottom:1px solid #eee;"&gt;{{ curso.categoria.nombre }}&lt;/td&gt;
+            &lt;td style="padding:8px; border-bottom:1px solid #eee;"&gt;{{ curso.fecha_inicio }}&lt;/td&gt;
+            &lt;td style="padding:8px; border-bottom:1px solid #eee;"&gt;{{ curso.carga_horaria }}&lt;/td&gt;
+            &lt;td style="padding:8px; border-bottom:1px solid #eee;"&gt;
+              {% if curso.activo %}Sí{% else %}No{% endif %}
+            &lt;/td&gt;
+          &lt;/tr&gt;
+        {% endfor %}
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  {% else %}
+    &lt;p&gt;No hay cursos registrados aún.&lt;/p&gt;
+  {% endif %}
+{% endblock %}
+</pre>
+            </div>
+            </p>
+            <p>
+                Esta plantilla extiende de una plantilla base llamada <b>"base.html"</b> y define un bloque de contenido
+                donde se muestra un listado de cursos en una tabla. Si no hay cursos disponibles, se muestra un mensaje
+                indicando que no hay cursos registrados.
+            </p>
+            <p>
+                Ahora, registramos las rutas, paraello creamos el archivo <b>"cursos/urls.py"</b> con el siguiente
+                código:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>from django.urls import path
+from . import views
+
+app_name = "cursos"
+
+urlpatterns = [
+    path("", views.lista_cursos, name="lista"),
+]
+</pre>
+            </div>
+            <p>
+                Luego, registramos las rutas del módulo cursos en el archivo <b>"configuracion/urls.py"</b> con el
+                siguiente código:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>urlpatterns = [
+    path('admin/', admin.site.urls),
+    path("", include("inicio.urls")),
+    path("rutas/", include("rutas.urls")),
+    path("cursos/", include("cursos.urls")),
+]</pre>
+            </div>
+            <p>
+                Debemos modificar el bloque de contenido en la plantilla <b>"base.html"</b> para agregar un enlace al
+                listado de cursos, con el siguiente código:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>{% load static %}
+&lt;!doctype html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width,initial-scale=1" /&gt;
+  &lt;title&gt;{% block titulo %}{% endblock %} | Curso Django&lt;/title&gt;
+  &lt;link rel="stylesheet" href="{% static 'css/estilos.css' %}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header class="encabezado"&gt;
+    &lt;div class="contenedor"&gt;
+      &lt;h1&gt;Curso de Desarrollo Web con Django | Posgrado UPEA&lt;/h1&gt;
+      &lt;nav class="nav"&gt;
+        &lt;a href="{% url 'inicio' %}"&gt;Inicio&lt;/a&gt;
+        &lt;a href="{% url 'temario' %}"&gt;Temario&lt;/a&gt;
+        &lt;a href="{% url 'acerca' %}"&gt;Acerca&lt;/a&gt;
+        &lt;a href="{% url 'cursos:lista' %}"&gt;Cursos&lt;/a&gt; 
+      &lt;/nav&gt;
+    &lt;/div&gt;
+  &lt;/header&gt;
+
+  &lt;main class="contenedor"&gt;
+    {% block contenido %}{% endblock %}
+  &lt;/main&gt;
+
+  &lt;footer class="pie"&gt;
+    &lt;div class="contenedor"&gt;2026&lt;/div&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+            </div>
+            <p>
+                Levanta el servidor de desarrollo de Django con el siguiente comando:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py runserver</pre>
+            </div>
+            <p>
+                Con esto, al ingresar a la ruta <a href="http://localhost:8000"
+                    target="_blank">http://localhost:8000</a> se mostrará la lista de cursos.
+            </p>
+            <h3>Crear Formularios</h3>
+            <p>
+                Para crear formularios en Django, primero baja el servidor <b>Ctrl + C</b>, y crea el archivo
+                <b>"cursos/forms.py"</b> con el siguiente código:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>from django import forms
+from .models import Curso
+
+class CursoFormulario(forms.ModelForm):
+    class Meta:
+        model = Curso
+        fields = [
+            "categoria",
+            "titulo",
+            "descripcion",
+            "fecha_inicio",
+            "carga_horaria",
+            "activo",
+        ]
+
+        # (Opcional) mejora visual rápida: widgets
+        widgets = {
+            "fecha_inicio": forms.DateInput(attrs={"type": "date"}),
+            "descripcion": forms.Textarea(attrs={"rows": 4}),
+        }
+        </pre>
+            </div>
+            <p>
+                Este código define un formulario basado en el modelo <b>"Curso"</b> utilizando <b>"forms.ModelForm"</b>.
+            </p>
+            <p>
+                El formulario
+                incluirá campos para la categoría, título, descripción, fecha de inicio, carga horaria y estado activo
+                del curso.
+            </p>
+            <p>
+                Además, se han personalizado los widgets para mejorar la experiencia de usuario al ingresar
+                la fecha y la descripción.
+            </p>
+            <p>
+                Luego Modifica el archivo <b>"cursos/views.py"</b> para incluir el formulario:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre># Esto lo que hace es importar las funciones necesarias para manejar las vistas de los cursos.
+# from django.shortcuts import get_object_or_404, redirect, render: 
+# El get_object_or_404 se usa para obtener un objeto o mostrar una página de error 404 si no se encuentra.
+# El redirect se usa para redirigir a otra URL después de una acción exitosa (como crear o editar un curso).
+# El render se usa para renderizar una plantilla HTML con un contexto específico.
+from django.shortcuts import get_object_or_404, redirect, render
+
+# from .models import Curso: Esto importa el modelo Curso para poder usarlo en las vistas
+from .models import Curso
+
+# from .forms import CursoFormulario: Esto importa el formulario CursoFormulario para manejar la creación y edición de cursos.
+from .forms import CursoFormulario
+
+# Esta vista lista_cursos obtiene todos los cursos de la base de datos, ordenados por fecha de inicio (más reciente primero) y luego por título, y los pasa a la plantilla "cursos/lista_cursos.html" para su renderizado.
+def lista_cursos(request):
+    # Obtenemos todos los cursos de la base de datos, ordenados por fecha de inicio (más reciente primero) y luego por título.
+    cursos = (
+        Curso.objects
+        .select_related("categoria")
+        .order_by("-fecha_inicio", "titulo")
+    )
+    # Creamos un contexto con los cursos obtenidos para pasarlo a la plantilla.
+    contexto = {"cursos": cursos}
+    # Renderizamos la plantilla "cursos/lista_cursos.html" con el contexto de los cursos.
+    return render(request, "cursos/lista_cursos.html", contexto)
+
+# Esta vista detalle_curso obtiene un curso específico por su ID (o muestra un error 404 si no se encuentra) y lo pasa a la plantilla "cursos/detalle_curso.html" para su renderizado.
+def detalle_curso(request, id_curso):
+    # Usamos pk para que funcione con ID por defecto o con PK personalizada
+    curso = get_object_or_404(Curso, pk=id_curso)
+    return render(request, "cursos/detalle_curso.html", {"curso": curso})
+
+# Esta vista crear_curso maneja la creación de un nuevo curso. Si el método de la solicitud es POST, se procesa el formulario enviado. Si el formulario es válido, se guarda el nuevo curso y se redirige a la lista de cursos (PRG: Post/Redirect/Get). Si el método no es POST, se muestra un formulario vacío para crear un nuevo curso.
+def crear_curso(request):
+    if request.method == "POST":
+        formulario = CursoFormulario(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect("cursos:lista")  # PRG
+    else:
+        formulario = CursoFormulario()
+
+    return render(request, "cursos/formulario_curso.html", {
+        "formulario": formulario,
+        "modo": "crear",
+        "titulo_pagina": "Crear curso",
+    })
+
+# Esta vista editar_curso maneja la edición de un curso existente. Obtiene el curso por su ID (o muestra un error 404 si no se encuentra). Si el método de la solicitud es POST, se procesa el formulario enviado con los datos del curso existente. Si el formulario es válido, se guarda el curso editado y se redirige a la página de detalle del curso (PRG: Post/Redirect/Get). Si el método no es POST, se muestra un formulario prellenado con los datos del curso para su edición.
+def editar_curso(request, id_curso):
+    curso = get_object_or_404(Curso, pk=id_curso)
+
+    if request.method == "POST":
+        formulario = CursoFormulario(request.POST, instance=curso)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect("cursos:detalle", id_curso=curso.pk)  # PRG
+    else:
+        formulario = CursoFormulario(instance=curso)
+
+    return render(request, "cursos/formulario_curso.html", {
+        "formulario": formulario,
+        "modo": "editar",
+        "titulo_pagina": "Editar curso",
+        "curso": curso,
+    })
+
+# Esta vista eliminar_curso maneja la eliminación de un curso existente. Obtiene el curso por su ID (o muestra un error 404 si no se encuentra). Si el método de la solicitud es POST, se elimina el curso y se redirige a la lista de cursos (PRG: Post/Redirect/Get). Si el método no es POST, se muestra una página de confirmación para eliminar el curso.
+def eliminar_curso(request, id_curso):
+    curso = get_object_or_404(Curso, pk=id_curso)
+
+    if request.method == "POST":
+        curso.delete()
+        return redirect("cursos:lista")  # PRG
+
+    return render(request, "cursos/confirmar_eliminar.html", {"curso": curso})
+    </pre>
+            </div>
+            <p>
+                Esto es el CRUD completo para el modelo Curso, con vistas para listar, crear, editar y eliminar cursos
+                utilizando formularios basados en modelos de Django.
+            </p>
+            <p>
+                Ahora, modificamos el archivo <b>"cursos/urls.py"</b> para incluir las rutas de las nuevas vistas:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>from django.urls import path
+from . import views
+
+app_name = "cursos"
+
+urlpatterns = [
+    path("", views.lista_cursos, name="lista"),
+    path("nuevo/", views.crear_curso, name="crear"),
+    path("&lt;int:id_curso&gt;/", views.detalle_curso, name="detalle"),
+    path("&lt;int:id_curso&gt;/editar/", views.editar_curso, name="editar"),
+    path("&lt;int:id_curso&gt;/eliminar/", views.eliminar_curso, name="eliminar"),
+]
+
+</pre>
+            </div>
+            <p>
+                Luego, creamos la siguiente estructura de archivos:
+            </p>
+            <ol>
+                <li><b>"cursos/templates/cursos/lista_cursos.html"</b></li>
+                <li><b>"cursos/templates/cursos/detalle_curso.html"</b></li>
+                <li><b>"cursos/templates/cursos/formulario_curso.html"</b></li>
+                <li><b>"cursos/templates/cursos/confirmar_eliminar.html"</b></li>
+            </ol>
+            <p>
+                Dentro de <b>"lista_cursos.html"</b>, escribe el siguiente código:
+            </p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>{% extends "base.html" %}
+{% block titulo %}Cursos{% endblock %}
+
+{% block contenido %}
+  &lt;div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;"&gt;
+    &lt;h2&gt;Listado de cursos&lt;/h2&gt;
+    &lt;a href="{% url 'cursos:crear' %}" style="padding:10px 14px; border:1px solid #333; border-radius:10px;"&gt;
+      + Nuevo curso
+    &lt;/a&gt;
+  &lt;/div&gt;
+
+  {% if cursos %}
+    &lt;table style="width:100%; border-collapse: collapse; margin-top:12px;"&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style="text-align:left; border-bottom:1px solid #ccc; padding:8px;"&gt;Título&lt;/th&gt;
+          &lt;th style="text-align:left; border-bottom:1px solid #ccc; padding:8px;"&gt;Categoría&lt;/th&gt;
+          &lt;th style="text-align:left; border-bottom:1px solid #ccc; padding:8px;"&gt;Inicio&lt;/th&gt;
+          &lt;th style="text-align:left; border-bottom:1px solid #ccc; padding:8px;"&gt;Activo&lt;/th&gt;
+          &lt;th style="text-align:left; border-bottom:1px solid #ccc; padding:8px;"&gt;Acciones&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        {% for curso in cursos %}
+          &lt;tr&gt;
+            &lt;td style="padding:8px; border-bottom:1px solid #eee;"&gt;
+              &lt;a href="{% url 'cursos:detalle' curso.pk %}"&gt;{{ curso.titulo }}&lt;/a&gt;
+            &lt;/td&gt;
+            &lt;td style="padding:8px; border-bottom:1px solid #eee;"&gt;{{ curso.categoria.nombre }}&lt;/td&gt;
+            &lt;td style="padding:8px; border-bottom:1px solid #eee;"&gt;{{ curso.fecha_inicio|date:"d/m/Y" }}&lt;/td&gt;
+            &lt;td style="padding:8px; border-bottom:1px solid #eee;"&gt;
+              {% if curso.activo %}Sí{% else %}No{% endif %}
+            &lt;/td&gt;
+            &lt;td style="padding:8px; border-bottom:1px solid #eee; display:flex; gap:8px; flex-wrap:wrap;"&gt;
+              &lt;a href="{% url 'cursos:editar' curso.pk %}"&gt;Editar&lt;/a&gt;
+              &lt;a href="{% url 'cursos:eliminar' curso.pk %}"&gt;Eliminar&lt;/a&gt;
+            &lt;/td&gt;
+          &lt;/tr&gt;
+        {% endfor %}
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  {% else %}
+    &lt;p&gt;No hay cursos registrados aún.&lt;/p&gt;
+  {% endif %}
+{% endblock %}
+
+</pre>
+            </div>
+            <p>
+                Dentro de <b>"detalle_curso.html"</b>, escribe el siguiente código:
+            </p>
+            <div class="code-block respuesta-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>{% extends "base.html" %}
+{% block titulo %}Detalle{% endblock %}
+
+{% block contenido %}
+  &lt;h2&gt;{{ curso.titulo }}&lt;/h2&gt;
+
+  &lt;p&gt;&lt;b&gt;Categoría:&lt;/b&gt; {{ curso.categoria.nombre }}&lt;/p&gt;
+  &lt;p&gt;&lt;b&gt;Descripción:&lt;/b&gt; {{ curso.descripcion|default:"—" }}&lt;/p&gt;
+  &lt;p&gt;&lt;b&gt;Fecha de inicio:&lt;/b&gt; {{ curso.fecha_inicio|date:"d/m/Y" }}&lt;/p&gt;
+  &lt;p&gt;&lt;b&gt;Carga horaria:&lt;/b&gt; {{ curso.carga_horaria }} horas&lt;/p&gt;
+  &lt;p&gt;&lt;b&gt;Activo:&lt;/b&gt; {% if curso.activo %}Sí{% else %}No{% endif %}&lt;/p&gt;
+
+  &lt;div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;"&gt;
+    &lt;a href="{% url 'cursos:editar' curso.pk %}" style="padding:8px 12px; border:1px solid #333; border-radius:10px;"&gt;Editar&lt;/a&gt;
+    &lt;a href="{% url 'cursos:eliminar' curso.pk %}" style="padding:8px 12px; border:1px solid #333; border-radius:10px;"&gt;Eliminar&lt;/a&gt;
+    &lt;a href="{% url 'cursos:lista' %}" style="padding:8px 12px; border:1px solid #999; border-radius:10px;"&gt;Volver&lt;/a&gt;
+  &lt;/div&gt;
+{% endblock %}
+
+</pre>
+            </div>
+            <p>
+                Dentro de <b>"formulario_curso.html"</b>, escribe el siguiente código:
+            </p>
+            <div class="code-block respuesta-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>{% extends "base.html" %}
+{% block titulo %}{{ titulo_pagina }}{% endblock %}
+
+{% block contenido %}
+  &lt;h2&gt;{{ titulo_pagina }}&lt;/h2&gt;
+
+  &lt;form method="post" style="max-width:720px;"&gt;
+    {% csrf_token %}
+
+    {{ formulario.non_field_errors }}
+
+    &lt;div style="display:grid; gap:12px;"&gt;
+      &lt;div&gt;
+        &lt;label&gt;&lt;b&gt;Categoría&lt;/b&gt;&lt;/label&gt;&lt;br&gt;
+        {{ formulario.categoria }}
+        &lt;div style="color:#b00;"&gt;{{ formulario.categoria.errors }}&lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div&gt;
+        &lt;label&gt;&lt;b&gt;Título&lt;/b&gt;&lt;/label&gt;&lt;br&gt;
+        {{ formulario.titulo }}
+        &lt;div style="color:#b00;"&gt;{{ formulario.titulo.errors }}&lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div&gt;
+        &lt;label&gt;&lt;b&gt;Descripción&lt;/b&gt;&lt;/label&gt;&lt;br&gt;
+        {{ formulario.descripcion }}
+        &lt;div style="color:#b00;"&gt;{{ formulario.descripcion.errors }}&lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;"&gt;
+        &lt;div&gt;
+          &lt;label&gt;&lt;b&gt;Fecha de inicio&lt;/b&gt;&lt;/label&gt;&lt;br&gt;
+          {{ formulario.fecha_inicio }}
+          &lt;div style="color:#b00;"&gt;{{ formulario.fecha_inicio.errors }}&lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div&gt;
+          &lt;label&gt;&lt;b&gt;Carga horaria&lt;/b&gt;&lt;/label&gt;&lt;br&gt;
+          {{ formulario.carga_horaria }}
+          &lt;div style="color:#b00;"&gt;{{ formulario.carga_horaria.errors }}&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div&gt;
+        &lt;label&gt;
+          {{ formulario.activo }} &lt;b&gt;Activo&lt;/b&gt;
+        &lt;/label&gt;
+        &lt;div style="color:#b00;"&gt;{{ formulario.activo.errors }}&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;"&gt;
+      &lt;button type="submit" style="padding:10px 14px; border:1px solid #333; border-radius:10px; cursor:pointer;"&gt;
+        {% if modo == "crear" %}Guardar{% else %}Actualizar{% endif %}
+      &lt;/button&gt;
+
+      {% if modo == "editar" %}
+        &lt;a href="{% url 'cursos:detalle' curso.pk %}" style="padding:10px 14px; border:1px solid #999; border-radius:10px;"&gt;
+          Cancelar
+        &lt;/a&gt;
+      {% else %}
+        &lt;a href="{% url 'cursos:lista' %}" style="padding:10px 14px; border:1px solid #999; border-radius:10px;"&gt;
+          Cancelar
+        &lt;/a&gt;
+      {% endif %}
+    &lt;/div&gt;
+  &lt;/form&gt;
+{% endblock %}
+
+</pre>
+            </div>
+            <p>
+                Dentro de <b>"confirmar_eliminar.html"</b>, escribe el siguiente código:
+            </p>
+            <div class="code-block respuesta-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>{% extends "base.html" %}
+{% block titulo %}Eliminar{% endblock %}
+
+{% block contenido %}
+  &lt;h2&gt;Confirmar eliminación&lt;/h2&gt;
+
+  &lt;p&gt;¿Seguro que deseas eliminar el curso:&lt;/p&gt;
+  &lt;p&gt;&lt;b&gt;{{ curso.titulo }}&lt;/b&gt; ({{ curso.categoria.nombre }})&lt;/p&gt;
+
+  &lt;form method="post" style="margin-top:12px;"&gt;
+    {% csrf_token %}
+    &lt;button type="submit" style="padding:10px 14px; border:1px solid #b00; border-radius:10px; cursor:pointer;"&gt;
+      Sí, eliminar
+    &lt;/button&gt;
+    &lt;a href="{% url 'cursos:detalle' curso.pk %}" style="padding:10px 14px; border:1px solid #999; border-radius:10px; margin-left:8px;"&gt;
+      Cancelar
+    &lt;/a&gt;
+  &lt;/form&gt;
+{% endblock %}
+
+</pre>
+</div>
+            <p>
+                Con esto, ya tienes un sistema completo para gestionar cursos en tu aplicación Django, incluyendo la
+                capacidad de crear, editar, eliminar y listar cursos utilizando formularios basados en modelos.
+            </p>
+            <p>
+                Para probarlo, levanta el servidor.
+            </p>
+            <div class="code-block respuesta-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <pre>python manage.py runserver</pre>
+            </div>
+            <p>
+                Luego, ingresa a la ruta <a href="http://localhost:8000/cursos/"
+                    target="_blank">http://localhost:8000/cursos/</a> para ver el listado de cursos y probar las
+                funcionalidades de creación, edición y eliminación de cursos.
+            </p>
+
+
+        </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="section-divider"></div>
+        <section>
+            <h2 id="¿Qué es Django?">¿Qué es Django?</h2>
+            <p class="intro-text">
+                Django <span>(“yángo”)</span> es un framework <span>(“Freim-guork”)</span> web de alto nivel, de código
+                abierto, escrito en Python
+                <span>(“páiton”)</span>.
+            </p>
+        </section>
+    </main>
+
+    <nav class="bar">
+        <button class="nav-btn active" onclick="goHome()">
+            <i data-lucide="home"></i>
+            <span>Inicio</span>
+        </button>
+        <button class="nav-btn" onclick="toggleClock()">
+            <i data-lucide="clock"></i>
+            <span>Reloj</span>
+        </button>
+        <button class="nav-btn" onclick="openSearch()">
+            <i data-lucide="search"></i>
+            <span>Buscar</span>
+        </button>
+    </nav>
+
+    <dialog id="search">
+        <div
+            style="width: 40px; height: 4px; background: var(--border); border-radius: 10px; margin: 0 auto 15px; flex-shrink: 0;">
+        </div>
+        <p style="text-align: center;user-select: none;color: var(--accent);">UNIDADES TEMATICAS</p>
+        <ul id="results"></ul>
+    </dialog>
+
+    <script>
+        lucide.createIcons();
+
+        // Reloj - Configurado para Tarija, Bolivia
+        const clock = document.getElementById('clock');
+        function tick() { clock.textContent = new Date().toLocaleTimeString('es-BO', { hour12: false }); }
+        setInterval(tick, 1000); tick();
+        function toggleClock() { clock.classList.toggle('visible'); }
+
+        // Navegación
+        function goHome() { window.location.href = 'index.html'; }
+
+        // Menú de Navegación
+        const diag = document.getElementById('search');
+        const list = document.getElementById('results');
+
+        function openSearch() {
+            list.innerHTML = '';
+            document.querySelectorAll('section').forEach(s => {
+                const titleElement = s.querySelector('h2');
+                if (titleElement) {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<i data-lucide="chevron-right"></i> ${titleElement.textContent}`;
+                    li.style.cursor = "pointer";
+                    li.style.display = "flex";
+                    li.style.alignItems = "center";
+                    li.style.gap = "10px";
+
+                    li.onclick = () => {
+                        s.scrollIntoView({ behavior: 'smooth' });
+                        closeSearch();
+                    };
+                    list.appendChild(li);
+                }
+            });
+
+            lucide.createIcons();
+            diag.showModal();
+            setTimeout(() => diag.classList.add('visible'), 10);
+        }
+
+        function closeSearch() {
+            diag.classList.remove('visible');
+            setTimeout(() => diag.close(), 300);
+        }
+
+        diag.addEventListener('click', (e) => {
+            const rect = diag.getBoundingClientRect();
+            if (e.clientY < rect.top || e.clientY > rect.bottom || e.clientX < rect.left || e.clientX > rect.right) {
+                closeSearch();
+            }
+        });
+
+        // --- HEADER DINÁMICO (Lógica de IDs y Secciones) ---
+        const topBarH1 = document.querySelector('header#top-bar h1');
+        const observerOptions = {
+            root: null,
+            // Ajustamos para que el cambio ocurra cuando el elemento llega a la barra superior
+            rootMargin: '-10% 0px -85% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const titleElement = entry.target.querySelector('h2');
+                    if (titleElement) {
+                        topBarH1.textContent = titleElement.textContent;
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observamos todas las secciones Y también el header hero inicial
+        document.querySelectorAll('section, header.hero').forEach(el => observer.observe(el));
+
+        // Copiar
+        async function copyCode(btn) {
+            const code = btn.nextElementSibling.innerText;
+            try {
+                await navigator.clipboard.writeText(code);
+                btn.textContent = '¡Copiado!';
+            } catch (e) {
+                const t = document.createElement('textarea');
+                t.value = code; document.body.appendChild(t);
+                t.select(); document.execCommand('copy');
+                document.body.removeChild(t);
+                btn.textContent = '¡Copiado!';
+            }
+            setTimeout(() => btn.textContent = 'Copiar', 2000);
+        }
+    </script>
+    <script type="module">
+        import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: "base",
+            themeVariables: {
+                background: "#ffffff",
+
+                /* Cajas */
+                primaryColor: "#9ecbff",
+                primaryTextColor: "#000000",
+                primaryBorderColor: "#1e3a8a",
+
+                /* Líneas */
+                lineColor: "#ffffff",
+
+                /* Texto */
+                fontFamily: "Arial, Helvetica, sans-serif",
+                fontSize: "14px"
+            }
+        });
+    </script>
+</body>
+
+</html>
