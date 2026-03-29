@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADM - ADMINISTRACIÓN I - FORMACIÓN DE ÉLITE</title>
+
+    <!-- Bibliotecas Externas -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700;900&family=Lora:italic,wght@0,400;1,700&family=Libre+Baskerville:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Scripts de Soporte -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$']], displayMath: [['$$', '$$']] }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary-admin: #1e3a8a;
+            --secondary-admin: #3b82f6;
+            --accent-gold: #b45309;
+            --soft-bg: #f1f5f9;
+            --text-main: #0f172a;
+            --pure-white: #ffffff;
+            --color-correct: #10b981;
+            --color-wrong: #ef4444;
+            --eval-bg: radial-gradient(circle at top, #1e3a8a, #0f172a);
+            --glass: rgba(255, 255, 255, 0.07);
+            --glass-border: rgba(255, 255, 255, 0.15);
+
+            --hl-yellow: #fef08a;
+            --hl-green: #bbf7d0;
+            --hl-blue: #bfdbfe;
+            --hl-pink: #fbcfe8;
+
+            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--soft-bg);
+            color: var(--text-main);
+            line-height: 1.8;
+            padding-bottom: 120px;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        header {
+            height: 55vh;
+            background: linear-gradient(rgba(30, 58, 138, 0.88), rgba(15, 23, 42, 0.92)),
+                url('https://images.unsplash.com/photo-1454165833767-027ffea3e678?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 30px;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
+        }
+
+        header h1 {
+            font-size: clamp(2.2rem, 8vw, 4rem);
+            font-weight: 900;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-top: 10px;
+            font-weight: 300;
+            letter-spacing: 3px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: -60px auto 0;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        section {
+            background: var(--pure-white);
+            border-radius: 35px;
+            padding: 70px 55px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.06);
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .title-banner {
+            color: var(--primary-admin);
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 45px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            text-transform: uppercase;
+        }
+
+        .title-banner::before,
+        .title-banner::after {
+            content: "";
+            height: 3px;
+            width: 50px;
+            background: var(--accent-gold);
+            border-radius: 10px;
+        }
+
+        .float-img,
+        .float-video {
+            width: 35%;
+            border-radius: 24px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+            border: 6px solid white;
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .float-video {
+            aspect-ratio: 16 / 9;
+        }
+
+        .float-video iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .img-right {
+            float: right;
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        .img-left {
+            float: left;
+            margin-right: 25px;
+            margin-bottom: 20px;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+        .academic-text {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            text-align: justify;
+            color: #334155;
+        }
+
+        h3 {
+            color: var(--primary-admin);
+            margin: 30px 0 15px;
+            font-size: 1.5rem;
+            border-left: 5px solid var(--accent-gold);
+            padding-left: 15px;
+        }
+
+        .repaso-title {
+            text-align: center;
+            font-weight: 800;
+            color: var(--accent-gold);
+            margin: 40px 0 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1.2rem;
+        }
+
+        .flashcard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .flashcard {
+            height: 180px;
+            cursor: pointer;
+            perspective: 1000px;
+        }
+
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front,
+        .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .flashcard-front {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            color: var(--primary-admin);
+            font-weight: 800;
+        }
+
+        .flashcard-back {
+            background: linear-gradient(135deg, var(--primary-admin), var(--secondary-admin));
+            color: white;
+            transform: rotateY(180deg);
+            font-size: 0.95rem;
+        }
+
+        .nav-pill-wrapper {
+            position: fixed;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            z-index: 9000;
+        }
+
+        .nav-pill {
+            background: rgba(30, 58, 138, 0.98);
+            height: 75px;
+            width: 90%;
+            max-width: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            border-radius: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-item {
+            background: none;
+            border: none;
+            color: #bfdbfe;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-decoration: none;
+            transition: 0.3s;
+            gap: 4px;
+        }
+
+        .nav-item:hover {
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .center-btn {
+            background: var(--secondary-admin);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin-top: -60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 6px solid var(--primary-admin);
+            color: white;
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.5);
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        .bottom-sheet {
+            position: fixed;
+            bottom: -110%;
+            left: 0;
+            right: 0;
+            background: white;
+            z-index: 11000;
+            padding: 45px 35px;
+            border-radius: 45px 45px 0 0;
+            transition: bottom 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            text-align: center;
+            max-width: 650px;
+            margin: auto;
+        }
+
+        .bottom-sheet.active {
+            bottom: 0;
+        }
+
+        .quiz-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 20000;
+            background: var(--eval-bg);
+            display: none;
+            flex-direction: column;
+            padding: 30px;
+            color: white;
+            overflow-y: auto;
+        }
+
+        .quiz-overlay.active {
+            display: flex;
+        }
+
+        .kahoot-question-box {
+            background: var(--glass);
+            width: 100%;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 45px;
+            border-radius: 32px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .kahoot-answers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .kh-btn {
+            padding: 25px;
+            border-radius: 20px;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+            text-align: left;
+        }
+
+        .kh-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .kh-btn.correct {
+            background: var(--color-correct) !important;
+            box-shadow: 0 0 30px var(--color-correct);
+            border-color: white;
+        }
+
+        .kh-btn.wrong {
+            background: var(--color-wrong) !important;
+            opacity: 0.8;
+        }
+
+        .shape-tag {
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            flex-shrink: 0;
+        }
+
+        .btn-primary {
+            background: var(--secondary-admin);
+            color: white;
+            padding: 18px 45px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 900;
+            cursor: pointer;
+            display: block;
+            margin: 40px auto 0;
+            text-transform: uppercase;
+        }
+
+        .btn-quiz-section {
+            background: var(--primary-admin);
+        }
+
+        .report-card {
+            background: white;
+            color: var(--text-main);
+            padding: 50px 40px;
+            border-radius: 35px;
+            max-width: 550px;
+            width: 100%;
+            margin: auto;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .report-header {
+            font-family: 'Libre Baskerville', serif;
+            color: var(--primary-admin);
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+        }
+
+        .report-student {
+            font-weight: 900;
+            font-size: 1.8rem;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        .report-score {
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--primary-admin);
+            line-height: 1;
+            margin: 20px 0;
+        }
+
+        .report-label {
+            font-size: 1rem;
+            font-weight: 700;
+            opacity: 0.6;
+            text-transform: uppercase;
+        }
+
+        .report-status {
+            display: inline-block;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-top: 25px;
+            letter-spacing: 1px;
+        }
+
+        .status-pass {
+            background: #dcfce7;
+            color: #166534;
+            border: 2px solid #166534;
+        }
+
+        .status-fail {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 2px solid #991b1b;
+        }
+
+        .user-highlight {
+            cursor: pointer;
+            padding: 1px 3px;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 1068px) {
+
+            .float-img,
+            .float-video {
+                width: 100%;
+                float: none;
+                margin: 0 0 30px 0;
+            }
+
+            .kahoot-answers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 40px 20px;
+            }
+
+            .title-banner {
+                font-size: 1.5rem;
+            }
+
+            .kahoot-question-box {
+                font-size: 1.2rem;
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body onmouseup="handleSelection()">
+
+    <header id="top">
+        <p>CÓDIGO: ADM</p>
+        <h1>ADMINISTRACIÓN I</h1>
+        <div style="background: var(--accent-gold); height: 6px; width: 40%; margin-top: 25px;"></div>
+    </header>
+
+    <div class="container">
+
+        <!-- UNIDAD 01 -->
+        <section id="u1">
+            <h2 class="title-banner">01. ENFOQUE DE LA ADMINISTRACIÓN</h2>
+
+            <div class="content-wrapper">
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 260px;">
+
+                <h3>1.1 Razón de estudio de la administración</h3>
+                <p>La razón de estudio de la administración surge de la necesidad que tienen las organizaciones de
+                    lograr sus objetivos de manera eficiente y ordenada. Desde las primeras civilizaciones, el ser
+                    humano ha tenido que organizar recursos, personas y actividades para alcanzar metas comunes, como
+                    construir ciudades, producir alimentos o desarrollar sistemas comerciales. En este sentido, la
+                    administración no es una disciplina moderna, sino una práctica que ha evolucionado con el tiempo y
+                    que hoy se ha convertido en un campo de estudio formal debido a su importancia en la sociedad
+                    contemporánea.</p>
+
+                <!-- <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 230px;"> -->
+
+                <!-- VIDEO YOUTUBE FLOTANTE -->
+                <div class="float-video img-left" style="height: 268px;">
+                    <iframe src="https://www.youtube.com/embed/3LQAnFEADl4"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+
+                <p>La administración se estudia porque permite comprender cómo se planifican, organizan, dirigen y
+                    controlan los recursos dentro de una organización. Estas funciones son fundamentales para cualquier
+                    tipo de entidad, ya sea una empresa privada, una institución pública o una organización sin fines de
+                    lucro. Según Chiavenato (2006), la administración es el proceso de planear, organizar, dirigir y
+                    controlar el uso de los recursos para lograr objetivos organizacionales de manera eficiente y eficaz
+                    (p. 23). Esto demuestra que no solo se trata de “mandar”, sino de gestionar de manera inteligente
+                    todos los elementos que forman parte de una organización.</p>
+
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 230px;">
+
+                <p>Otro motivo importante para estudiar administración es la creciente complejidad del entorno
+                    empresarial. En la actualidad, las organizaciones operan en contextos dinámicos, competitivos y
+                    globalizados, donde los cambios tecnológicos, económicos y sociales ocurren constantemente. Esto
+                    obliga a los administradores a tomar decisiones rápidas y acertadas. Robbins y Coulter (2014)
+                    señalan que la administración ayuda a las organizaciones a adaptarse a los cambios del entorno y a
+                    responder de manera efectiva a los desafíos del mercado (p. 8). Por ello, estudiar administración
+                    permite desarrollar habilidades analíticas y estratégicas necesarias para enfrentar estos cambios.
+                </p>
+
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 230px;">
+
+                <p>Asimismo, la administración se estudia porque contribuye al uso eficiente de los recursos. En
+                    cualquier organización, los recursos son limitados, ya sean financieros, humanos, tecnológicos o
+                    materiales. Una mala gestión puede generar pérdidas, desperdicio o incluso el fracaso de la
+                    organización. En cambio, una adecuada administración permite optimizar el uso de estos recursos,
+                    logrando mejores resultados con menores costos. Drucker (2002) afirma que la administración tiene
+                    como finalidad hacer productivos los recursos disponibles, transformándolos en resultados concretos
+                    (p. 15). Esto resalta la importancia de estudiar esta disciplina para garantizar la sostenibilidad
+                    de las organizaciones.</p>
+
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 230px;">
+
+                <p>También es importante estudiar administración porque influye directamente en el desempeño de las
+                    personas dentro de una organización. La manera en que se lidera, motiva y dirige a los colaboradores
+                    afecta su productividad, compromiso y satisfacción laboral. Un buen administrador no solo organiza
+                    tareas, sino que también gestiona el talento humano, creando un ambiente de trabajo adecuado. Según
+                    Koontz y Weihrich (2012), la administración implica trabajar con y a través de las personas para
+                    lograr objetivos organizacionales (p. 5). Esto evidencia que el factor humano es central en la
+                    administración y que su correcta gestión es clave para el éxito organizacional.</p>
+
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 200px;">
+
+                <p>Otra razón relevante es que la administración permite establecer una dirección clara mediante la
+                    planificación. Planificar implica definir objetivos, estrategias y acciones que guiarán a la
+                    organización en el futuro. Sin planificación, las organizaciones actúan de manera improvisada, lo
+                    que aumenta el riesgo de errores. Stoner, Freeman y Gilbert (1996) explican que la planificación es
+                    el proceso de establecer metas y determinar los medios para alcanzarlas (p. 11). Por ello, estudiar
+                    administración permite comprender cómo se construyen estrategias sólidas que orientan el rumbo de
+                    una organización.</p>
+
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 220px;">
+
+                <p>De igual manera, la administración se estudia porque facilita la organización de las actividades y
+                    recursos. Organizar implica estructurar el trabajo, asignar responsabilidades y coordinar esfuerzos
+                    para evitar duplicidades o conflictos. Una buena organización permite que cada persona sepa qué
+                    hacer y cómo hacerlo, lo que mejora la eficiencia. Según Bateman y Snell (2009), la organización
+                    consiste en coordinar recursos humanos y materiales para lograr los objetivos establecidos (p. 14).
+                    Esto demuestra que la administración no solo planifica, sino que también estructura el
+                    funcionamiento interno de la organización.</p>
+
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 200px;">
+
+                <p>Además, la administración es esencial para el control de las actividades. El control permite
+                    verificar si los resultados obtenidos coinciden con los objetivos planteados y, en caso contrario,
+                    aplicar correcciones. Sin control, no es posible saber si la organización está avanzando
+                    correctamente. Terry y Franklin (2005) indican que el control es el proceso de medir el desempeño y
+                    tomar acciones correctivas cuando sea necesario (p. 20). Por ello, estudiar administración permite
+                    desarrollar la capacidad de evaluar resultados y mejorar continuamente.</p>
+
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 180px;">
+
+                <p>Finalmente, la razón de estudiar administración también radica en su impacto en la sociedad. Las
+                    organizaciones bien administradas generan empleo, producen bienes y servicios de calidad y
+                    contribuyen al desarrollo económico y social. En cambio, una mala administración puede generar
+                    desempleo, crisis económicas y problemas sociales. Por esta razón, la administración no solo es
+                    importante a nivel empresarial, sino también a nivel social, ya que influye en el bienestar de las
+                    personas y en el progreso de los países.</p>
+                <p>En conclusión, la administración se estudia porque permite comprender y aplicar principios que ayudan
+                    a las organizaciones a funcionar de manera eficiente, adaptarse a los cambios, aprovechar mejor sus
+                    recursos y alcanzar sus objetivos. Además, contribuye al desarrollo de habilidades clave como la
+                    toma de decisiones, el liderazgo y la planificación estratégica, las cuales son esenciales en el
+                    mundo actual. Su importancia radica no solo en el ámbito empresarial, sino también en su impacto en
+                    la sociedad en general.</p>
+            </div>
+
+            <!-- <h3 class="repaso-title">Repaso Interactivo: Unidad 01</h3>
+            <div class="flashcard-grid">
+                <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">¿Qué es la Eficiencia?</div>
+                        <div class="flashcard-back">Obtener los máximos resultados con la mínima cantidad de
+                            insumos/recursos.</div>
+                    </div>
+                </div>
+                <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">¿Padre de la Adm. Científica?</div>
+                        <div class="flashcard-back">Frederick Winslow Taylor.</div>
+                    </div>
+                </div>
+                <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">Las 4 Funciones (PODC)</div>
+                        <div class="flashcard-back">Planificar, Organizar, Dirigir y Controlar.</div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="content-wrapper">
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 360px;">
+
+                <h3>1.2. La revolución industrial y sus efectos en la administración</h3>
+                <p>La Revolución Industrial constituye uno de los acontecimientos más trascendentales en la historia de
+                    la humanidad y, al mismo tiempo, uno de los puntos de partida fundamentales para el desarrollo de la
+                    administración como disciplina formal. Antes de este proceso, la producción se realizaba de manera
+                    artesanal, en pequeños talleres o en el hogar, donde el control del trabajo era limitado y la
+                    organización era simple. Sin embargo, con la llegada de la Revolución Industrial, iniciada en
+                    Inglaterra a finales del siglo XVIII, se produjo un cambio radical en la forma de producir bienes,
+                    lo que generó nuevas necesidades de organización, coordinación y control que dieron origen a la
+                    administración moderna.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 200px;">
+                <p>La Revolución Industrial se caracterizó por la introducción de máquinas, el uso de nuevas fuentes de
+                    energía como el vapor y la mecanización de los procesos productivos. Según Hobsbawm (1999), este
+                    proceso transformó profundamente la economía y la sociedad al sustituir la producción manual por la
+                    producción mecanizada, lo que permitió aumentar significativamente la producción (p. 45). Este
+                    incremento en la capacidad productiva generó la necesidad de organizar grandes cantidades de
+                    trabajadores, materias primas y maquinaria, algo que no era necesario en el sistema artesanal
+                    anterior.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 220px;">
+                <p>Uno de los efectos más importantes de la Revolución Industrial en la administración fue el
+                    surgimiento de las fábricas. Estas concentraban a numerosos trabajadores en un mismo espacio físico,
+                    lo que implicaba la necesidad de establecer normas, horarios, supervisión y división del trabajo.
+                    Antes de este periodo, cada trabajador controlaba su propio proceso productivo, pero en las fábricas
+                    el trabajo se fragmentó en tareas específicas. Esto dio lugar a una mayor especialización, donde
+                    cada trabajador realizaba una parte del proceso, aumentando la eficiencia pero también generando
+                    nuevos desafíos en la coordinación de actividades.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 210px;">
+                <p>La división del trabajo se convirtió en un principio clave de la administración. Adam Smith (1776) ya
+                    había señalado que la especialización de tareas incrementa la productividad, ya que permite que los
+                    trabajadores desarrollen mayor destreza en actividades específicas (p. 12). Durante la Revolución
+                    Industrial, este principio se aplicó de manera intensiva, dando lugar a sistemas de producción más
+                    organizados y eficientes. Sin embargo, también generó problemas como la monotonía del trabajo y la
+                    pérdida de habilidades generales por parte de los trabajadores.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 200px;">
+                <p>Otro efecto significativo fue la necesidad de supervisión y control. Al incrementarse el número de
+                    trabajadores en las fábricas, se hizo indispensable la presencia de supervisores que aseguraran el
+                    cumplimiento de las tareas y el uso adecuado del tiempo. Esto marcó el inicio de estructuras
+                    jerárquicas dentro de las organizaciones, donde se establecieron niveles de autoridad y
+                    responsabilidad. Según Chiavenato (2006), la Revolución Industrial impulsó la creación de
+                    estructuras organizacionales formales, necesarias para coordinar grandes grupos de personas (p. 36).
+                </p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 180px;">
+                <p>Además, la Revolución Industrial generó la necesidad de planificar la producción. Con la fabricación
+                    en masa, las empresas debían prever la cantidad de productos a elaborar, los recursos necesarios y
+                    los tiempos de producción. Esto dio origen a la planificación como función administrativa,
+                    permitiendo a las organizaciones anticiparse a las demandas del mercado y evitar desperdicios. La
+                    planificación se convirtió en una herramienta clave para mejorar la eficiencia y la competitividad.
+                </p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 220px;">
+                <p>Otro cambio importante fue el desarrollo del concepto de eficiencia. La mecanización permitió
+                    producir más en menos tiempo, lo que llevó a los empresarios a buscar constantemente formas de
+                    optimizar los procesos productivos. Este enfoque en la eficiencia sentó las bases para el desarrollo
+                    posterior de teorías administrativas como la administración científica. Taylor (1911) propuso
+                    métodos para estudiar y mejorar el trabajo, con el objetivo de aumentar la productividad mediante la
+                    eliminación de movimientos innecesarios (p. 25). Aunque sus aportes se desarrollaron posteriormente,
+                    tienen sus raíces en los cambios generados por la Revolución Industrial.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 200px;">
+                <p>La Revolución Industrial también tuvo un impacto significativo en la gestión del recurso humano. El
+                    crecimiento de las fábricas implicó la contratación de grandes cantidades de trabajadores, muchos de
+                    los cuales provenían del campo y no tenían experiencia en el trabajo industrial. Esto generó la
+                    necesidad de capacitar, motivar y disciplinar a los empleados. Además, surgieron problemas laborales
+                    como largas jornadas de trabajo, bajos salarios y condiciones laborales precarias, lo que
+                    posteriormente dio lugar a movimientos sindicales y a la regulación del trabajo.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 200px;">
+                <p>Desde el punto de vista organizacional, la Revolución Industrial impulsó el desarrollo de nuevas
+                    formas de estructurar las empresas. Se pasó de estructuras simples a organizaciones más complejas,
+                    con departamentos especializados y funciones claramente definidas. Esto permitió una mejor
+                    coordinación de las actividades y una mayor eficiencia en la producción. Según Robbins y Coulter
+                    (2014), la complejidad organizacional aumentó significativamente durante este periodo, lo que hizo
+                    necesario el desarrollo de técnicas administrativas más avanzadas (p. 32).</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 150px;">
+                <p>Otro efecto relevante fue la estandarización de procesos. La producción en masa requería que los
+                    productos fueran uniformes y que los procesos se realizaran de manera consistente. Esto llevó a la
+                    creación de normas y procedimientos que debían ser seguidos por todos los trabajadores. La
+                    estandarización permitió mejorar la calidad de los productos y reducir errores, convirtiéndose en un
+                    elemento fundamental de la administración moderna.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 120px;">
+                <p>Asimismo, la Revolución Industrial impulsó el desarrollo de la contabilidad y el control financiero.
+                    Las empresas necesitaban llevar un registro detallado de sus costos, ingresos y beneficios para
+                    tomar decisiones informadas. Esto dio lugar al desarrollo de sistemas contables más sofisticados,
+                    que permitían evaluar el desempeño de la organización y planificar el futuro.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 150px;">
+                <p>En el ámbito social, la Revolución Industrial transformó la forma de vida de las personas. Muchas
+                    familias se trasladaron del campo a las ciudades en busca de trabajo, lo que dio lugar al
+                    crecimiento urbano y a la formación de nuevas clases sociales, como la clase obrera y la burguesía
+                    industrial. Estos cambios también influyeron en la administración, ya que las empresas debían
+                    adaptarse a un entorno social y económico en constante transformación.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 180px;">
+                <p>Otro aspecto importante fue el surgimiento de la innovación tecnológica como motor del cambio
+                    organizacional. La introducción de nuevas máquinas y procesos obligó a las empresas a adaptarse
+                    continuamente, lo que impulsó el desarrollo de la administración como una disciplina orientada a la
+                    mejora continua y la innovación. Drucker (2002) señala que la innovación es una de las funciones
+                    esenciales de la administración, ya que permite a las organizaciones mantenerse competitivas en un
+                    entorno cambiante (p. 78).</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 150px;">
+                <p>La Revolución Industrial también marcó el inicio de la globalización económica. La producción en masa
+                    permitió a las empresas expandir sus mercados más allá de las fronteras locales, lo que generó la
+                    necesidad de gestionar operaciones a mayor escala. Esto implicó nuevos desafíos en términos de
+                    logística, distribución y coordinación internacional, que fueron abordados mediante el desarrollo de
+                    técnicas administrativas más avanzadas.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 180px;">
+                <p>En términos generales, la Revolución Industrial no solo transformó la forma de producir, sino que
+                    también dio origen a la administración como disciplina científica. La necesidad de organizar,
+                    coordinar y controlar grandes sistemas productivos llevó al desarrollo de principios, teorías y
+                    técnicas que hoy forman parte del estudio de la administración. Sin este proceso histórico, la
+                    administración no habría evolucionado hasta convertirse en la herramienta fundamental que es en la
+                    actualidad.</p>
+                <p>En conclusión, la Revolución Industrial tuvo un impacto profundo en la administración, al generar la
+                    necesidad de organizar grandes cantidades de recursos, establecer estructuras jerárquicas, mejorar
+                    la eficiencia y desarrollar técnicas de planificación y control. Estos cambios sentaron las bases de
+                    la administración moderna y continúan influyendo en la forma en que las organizaciones operan en la
+                    actualidad. Estudiar este periodo permite comprender el origen de muchos de los principios
+                    administrativos que se aplican hoy en día y valorar la importancia de la administración en el
+                    desarrollo económico y social.</p>
+            </div>
+            <div class="content-wrapper">
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 260px;">
+
+                <h3>1.3. Precursores de la administración científica</h3>
+
+                <p>El estudio de los precursores de la administración científica permite comprender cómo surgieron las
+                    bases teóricas y prácticas de la administración moderna. Antes de que esta disciplina se formalizara
+                    como ciencia, diversos pensadores comenzaron a analizar la forma en que se organizaba el trabajo,
+                    buscando mejorar la eficiencia, la productividad y el control dentro de las organizaciones. Estos
+                    aportes fueron fundamentales para el desarrollo posterior de la administración científica, ya que
+                    sentaron las bases conceptuales que luego serían sistematizadas por autores como Taylor.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 210px;">
+                <p>Durante el periodo posterior a la Revolución Industrial, las organizaciones crecieron en tamaño y
+                    complejidad, lo que generó la necesidad de estudiar el trabajo de manera más estructurada. Los
+                    precursores de la administración científica se enfocaron principalmente en encontrar métodos para
+                    mejorar la eficiencia laboral, reducir desperdicios y optimizar el uso del tiempo y los recursos.
+                    Según Chiavenato (2006), estos primeros aportes fueron esenciales para transformar la administración
+                    de una práctica empírica a una disciplina basada en principios y métodos sistemáticos (p. 42).</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 230px;">
+                <p>Uno de los principales precursores fue Frederick Winslow Taylor, considerado el padre de la
+                    administración científica. Taylor observó que los trabajadores realizaban sus tareas de manera
+                    empírica, sin métodos estandarizados, lo que generaba ineficiencia. Por ello, propuso estudiar
+                    científicamente cada tarea para determinar la forma más eficiente de realizarla. Taylor (1911)
+                    sostenía que el trabajo debía ser analizado y descompuesto en movimientos simples para optimizar el
+                    tiempo y el esfuerzo (p. 18). Su enfoque dio origen a la administración científica, basada en la
+                    medición, el control y la estandarización del trabajo.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 210px;">
+                <p>Otro precursor importante fue Henry Fayol, quien desarrolló una visión más amplia de la
+                    administración, enfocándose en la organización como un todo. A diferencia de Taylor, que se centró
+                    en el nivel operativo, Fayol analizó las funciones administrativas y propuso principios que debían
+                    aplicarse en cualquier organización. Fayol (1916) identificó funciones como la planificación,
+                    organización, dirección, coordinación y control, las cuales siguen siendo fundamentales en la
+                    administración actual (p. 35). Su aporte permitió estructurar la administración como un proceso
+                    integral.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 210px;">
+                <p>Max Weber también fue un precursor clave, especialmente en el desarrollo de la teoría de la
+                    burocracia. Weber analizó cómo las organizaciones podían funcionar de manera racional y eficiente
+                    mediante estructuras formales basadas en normas, jerarquías y división del trabajo. Weber (1922)
+                    planteó que la autoridad debía basarse en reglas claras y en la competencia técnica, lo que
+                    permitiría un funcionamiento más ordenado y predecible de las organizaciones (p. 56). Su enfoque
+                    influyó profundamente en la forma en que se estructuran las organizaciones modernas.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 180px;">
+                <p>Asimismo, Frank y Lillian Gilbreth realizaron importantes aportes al estudio del trabajo. Se
+                    enfocaron en el análisis de los movimientos que realizan los trabajadores, con el objetivo de
+                    eliminar movimientos innecesarios y mejorar la eficiencia. Según Gilbreth y Gilbreth (1917), el
+                    estudio de tiempos y movimientos permite reducir la fatiga y aumentar la productividad (p. 22). Su
+                    trabajo complementó el enfoque de Taylor, aportando una visión más detallada del análisis del
+                    trabajo.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 180px;">
+                <p>Otro precursor relevante fue Henry Gantt, quien desarrolló herramientas para la planificación y el
+                    control de las actividades. Su principal aporte fue el diagrama de Gantt, una herramienta que
+                    permite visualizar el tiempo necesario para completar tareas y coordinar actividades. Gantt (1919)
+                    propuso que la planificación adecuada del trabajo es esencial para mejorar la eficiencia y cumplir
+                    con los objetivos organizacionales (p. 10). Esta herramienta sigue siendo utilizada en la actualidad
+                    en la gestión de proyectos.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 120px;">
+                <p>También es importante mencionar a Charles Babbage, quien analizó la división del trabajo y la
+                    especialización en los procesos productivos. Babbage (1832) destacó que dividir el trabajo en tareas
+                    específicas permite reducir costos y mejorar la eficiencia (p. 74). Sus ideas influyeron en el
+                    desarrollo de sistemas productivos más organizados y eficientes.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 180px;">
+                <p>Estos precursores compartían un objetivo común: mejorar la eficiencia de las organizaciones mediante
+                    el uso de métodos sistemáticos. Aunque cada uno abordó la administración desde diferentes
+                    perspectivas, sus aportes se complementan y forman la base de la administración científica. Según
+                    Robbins y Coulter (2014), el trabajo de estos autores permitió transformar la administración en una
+                    disciplina estructurada, basada en principios y técnicas aplicables a diferentes contextos
+                    organizacionales (p. 36).</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 290px;">
+                <p>Además, estos precursores contribuyeron al desarrollo de conceptos clave como la estandarización, la
+                    especialización, la jerarquía, la planificación y el control. Estos conceptos siguen siendo
+                    fundamentales en la administración moderna y se aplican en diferentes tipos de organizaciones, desde
+                    pequeñas empresas hasta grandes corporaciones.</p>
+                <p>Es importante destacar que, aunque los aportes de estos autores fueron fundamentales, también
+                    recibieron críticas, especialmente por su enfoque en la eficiencia y la productividad, dejando en
+                    segundo plano el factor humano. Sin embargo, estos enfoques fueron posteriormente complementados por
+                    teorías que incorporaron aspectos psicológicos y sociales, dando lugar a una visión más integral de
+                    la administración.</p>
+                <p>En conclusión, los precursores de la administración científica jugaron un papel fundamental en el
+                    desarrollo de esta disciplina, al introducir métodos y principios que permitieron mejorar la
+                    organización del trabajo y la eficiencia de las empresas. Sus aportes sentaron las bases de la
+                    administración moderna y continúan siendo relevantes en la actualidad, ya que muchos de sus
+                    principios siguen aplicándose en diferentes contextos organizacionales.</p>
+
+            </div>
+            <div class="content-wrapper">
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 260px;">
+
+                <h3>1.4. Concepto de administración</h3>
+                <p>El concepto de administración ha evolucionado a lo largo del tiempo, adaptándose a los cambios
+                    sociales, económicos y tecnológicos que han influido en las organizaciones. En términos generales,
+                    la administración se entiende como el proceso mediante el cual se coordinan recursos humanos,
+                    materiales, financieros y tecnológicos con el fin de alcanzar objetivos de manera eficiente y
+                    eficaz. Esta definición permite comprender que la administración no es una actividad aislada, sino
+                    un proceso integral que involucra diversas funciones y decisiones orientadas al logro de resultados.
+                </p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 200px;">
+                <p>Desde un enfoque clásico, la administración ha sido definida como un conjunto de funciones que
+                    permiten dirigir una organización. Según Chiavenato (2006), la administración es el proceso de
+                    planear, organizar, dirigir y controlar el uso de los recursos para lograr objetivos
+                    organizacionales (p. 23). Esta definición es una de las más aceptadas en el ámbito académico, ya que
+                    resume de manera clara las funciones fundamentales que todo administrador debe desarrollar. Estas
+                    funciones no actúan de forma independiente, sino que están interrelacionadas y se complementan entre
+                    sí.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 180px;">
+                <p>Por su parte, Robbins y Coulter (2014) definen la administración como la coordinación de las
+                    actividades laborales de otras personas, de manera que se realicen de forma eficiente y eficaz (p.
+                    7). Esta definición introduce dos conceptos clave: eficiencia y eficacia. La eficiencia se refiere
+                    al uso adecuado de los recursos, es decir, hacer las cosas bien, mientras que la eficacia se
+                    relaciona con el logro de los objetivos, es decir, hacer lo correcto. Ambos conceptos son
+                    fundamentales para evaluar el desempeño de una organización.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 180px;">
+                <p>Otro autor importante, Koontz y Weihrich (2012), señalan que la administración consiste en diseñar y
+                    mantener un entorno en el que las personas, trabajando en grupo, logren eficientemente objetivos
+                    seleccionados (p. 4). Esta definición resalta el papel del administrador como facilitador del
+                    trabajo en equipo, destacando la importancia del factor humano dentro de las organizaciones. No se
+                    trata solo de gestionar recursos, sino de crear condiciones adecuadas para que las personas puedan
+                    desempeñarse de manera óptima.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 180px;">
+                <p>Asimismo, Drucker (2002) aporta una visión más moderna al señalar que la administración es una
+                    función social orientada a hacer productivos los recursos y a generar resultados (p. 15). Desde esta
+                    perspectiva, la administración no solo se limita al ámbito empresarial, sino que también tiene un
+                    impacto en la sociedad, ya que contribuye al desarrollo económico y al bienestar social. Esto amplía
+                    el concepto de administración, llevándolo más allá de la simple gestión interna de las
+                    organizaciones.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 200px;">
+                <p>El concepto de administración también puede analizarse desde sus elementos fundamentales. En primer
+                    lugar, implica la existencia de objetivos, ya que toda acción administrativa está orientada a
+                    alcanzar metas específicas. En segundo lugar, requiere la utilización de recursos, los cuales deben
+                    ser gestionados de manera adecuada. En tercer lugar, involucra la toma de decisiones, ya que el
+                    administrador debe elegir entre diferentes alternativas para lograr los mejores resultados.
+                    Finalmente, implica coordinación, ya que es necesario integrar los esfuerzos de diferentes personas
+                    y áreas dentro de la organización.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 200px;">
+                <p>Otro aspecto importante del concepto de administración es su carácter universal. La administración se
+                    aplica en todo tipo de organizaciones, independientemente de su tamaño, sector o finalidad. Tanto
+                    una empresa privada como una institución pública o una organización sin fines de lucro requieren de
+                    procesos administrativos para funcionar adecuadamente. Según Stoner, Freeman y Gilbert (1996), la
+                    administración es una disciplina aplicable a cualquier organización que busque alcanzar objetivos
+                    mediante el uso de recursos (p. 9). Esto demuestra su importancia en diferentes contextos.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 150px;">
+                <p>Además, la administración es una disciplina dinámica, ya que se adapta constantemente a los cambios
+                    del entorno. En la actualidad, factores como la globalización, la tecnología y la innovación han
+                    transformado la forma en que se gestionan las organizaciones. Esto ha llevado al desarrollo de
+                    nuevos enfoques administrativos que incorporan aspectos como la gestión del conocimiento, el
+                    liderazgo transformacional y la responsabilidad social empresarial.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 150px;">
+                <p>También es importante destacar que la administración combina teoría y práctica. Por un lado, se basa
+                    en principios y conceptos desarrollados por diferentes autores, y por otro lado, se aplica en
+                    situaciones reales dentro de las organizaciones. Esto hace que la administración sea una disciplina
+                    tanto científica como práctica, ya que busca explicar fenómenos organizacionales y al mismo tiempo
+                    ofrecer soluciones a problemas concretos.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 180px;">
+                <p>Desde una perspectiva más integral, el concepto de administración puede entenderse como un proceso
+                    continuo y sistemático que busca optimizar el desempeño organizacional. Esto implica no solo
+                    alcanzar objetivos, sino hacerlo de manera sostenible en el tiempo, considerando factores
+                    económicos, sociales y ambientales. En este sentido, la administración moderna incorpora principios
+                    de desarrollo sostenible y responsabilidad social, lo que refleja su evolución hacia una visión más
+                    amplia y compleja.</p>
+                <p>En conclusión, el concepto de administración engloba un conjunto de actividades orientadas a la
+                    planificación, organización, dirección y control de los recursos con el fin de alcanzar objetivos
+                    organizacionales de manera eficiente y eficaz. Su importancia radica en que permite a las
+                    organizaciones funcionar de manera ordenada, adaptarse a los cambios del entorno y generar
+                    resultados que contribuyen al desarrollo económico y social. Además, su carácter universal y
+                    dinámico la convierte en una disciplina fundamental en el mundo actual.</p>
+            </div>
+            <div class="content-wrapper">
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 290px;">
+
+                <h3>1.5. Enfoque clásico y la administración científica</h3>
+                <p>El enfoque clásico de la administración representa uno de los pilares fundamentales en el desarrollo
+                    de esta disciplina, ya que constituye el primer intento sistemático de estudiar las organizaciones
+                    de manera científica. Este enfoque surge a finales del siglo XIX e inicios del siglo XX, en un
+                    contexto marcado por la Revolución Industrial, donde las empresas crecían rápidamente y enfrentaban
+                    problemas relacionados con la eficiencia, la organización del trabajo y el control de los procesos
+                    productivos. En este escenario, surge la necesidad de establecer principios y métodos que permitan
+                    mejorar el funcionamiento de las organizaciones.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 150px;">
+                <p>El enfoque clásico se divide principalmente en dos grandes corrientes: la administración científica y
+                    la teoría clásica de la administración. Ambas buscan mejorar la eficiencia organizacional, pero lo
+                    hacen desde perspectivas diferentes. Mientras la administración científica se enfoca en el nivel
+                    operativo, es decir, en el trabajo que realizan los obreros, la teoría clásica se centra en la
+                    estructura organizacional y en las funciones de la administración.</p>
+                <hr>
+                <hr>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 230px;">
+                <p>La administración científica, desarrollada principalmente por Frederick Winslow Taylor, se basa en la
+                    idea de que el trabajo puede ser estudiado científicamente para determinar la forma más eficiente de
+                    realizarlo. Taylor observó que los trabajadores realizaban sus tareas de manera empírica, lo que
+                    generaba desperdicio de tiempo y recursos. Por ello, propuso analizar cada actividad mediante
+                    estudios de tiempos y movimientos, con el objetivo de identificar la mejor manera de ejecutar cada
+                    tarea. Taylor (1911) señala que la administración debe sustituir los métodos empíricos por métodos
+                    científicos basados en el análisis sistemático del trabajo (p. 20).</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 180px;">
+                <p>Uno de los principios fundamentales de la administración científica es la división del trabajo. Este
+                    principio consiste en descomponer las tareas complejas en actividades más simples, permitiendo que
+                    cada trabajador se especialice en una función específica. Esto aumenta la eficiencia, ya que los
+                    trabajadores adquieren mayor habilidad en tareas repetitivas. Sin embargo, también genera efectos
+                    negativos, como la monotonía y la desmotivación laboral, lo que posteriormente sería abordado por
+                    otras teorías administrativas.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 180px;">
+                <p>Otro principio clave es la selección y capacitación científica de los trabajadores. Taylor proponía
+                    que los empleados debían ser seleccionados en función de sus habilidades y luego capacitados para
+                    desempeñar sus tareas de manera eficiente. Esto marcó un cambio importante, ya que anteriormente los
+                    trabajadores aprendían de manera informal. Según Chiavenato (2006), la administración científica
+                    introdujo la idea de que el desempeño laboral puede mejorarse mediante la capacitación y la
+                    especialización (p. 45).</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 150px;">
+                <p>Asimismo, la administración científica plantea la cooperación entre la dirección y los trabajadores.
+                    Taylor sostenía que ambos deben trabajar en conjunto para lograr los objetivos organizacionales,
+                    eliminando conflictos y mejorando la productividad. Sin embargo, en la práctica, este enfoque fue
+                    criticado por priorizar la eficiencia sobre el bienestar del trabajador, lo que generó tensiones
+                    laborales.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 120px;">
+                <p>Otro elemento importante es el control del trabajo. La administración científica establece que el
+                    trabajo debe ser supervisado para garantizar que se realice de acuerdo con los estándares
+                    establecidos. Esto implica la existencia de supervisores que controlan el desempeño de los
+                    trabajadores, lo que dio origen a estructuras jerárquicas más definidas dentro de las
+                    organizaciones.</p>
+                <hr>
+                <hr>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 180px;">
+                <p>Por otro lado, la teoría clásica de la administración, desarrollada por Henry Fayol, se enfoca en la
+                    organización como un todo. Fayol propuso que la administración se basa en funciones fundamentales
+                    como planificar, organizar, dirigir, coordinar y controlar. Fayol (1916) señala que estas funciones
+                    son universales y se aplican a cualquier tipo de organización (p. 37). Este enfoque complementa la
+                    administración científica, ya que proporciona una visión más amplia de la gestión organizacional.
+                </p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 180px;">
+                <p>Fayol también desarrolló una serie de principios administrativos que sirven como guía para la gestión
+                    de las organizaciones. Entre estos principios se encuentran la unidad de mando, la disciplina, la
+                    centralización, la jerarquía y la equidad. Estos principios buscan establecer un orden dentro de la
+                    organización y mejorar la coordinación de las actividades. Según Robbins y Coulter (2014), los
+                    principios de Fayol siguen siendo relevantes en la administración moderna, ya que proporcionan una
+                    base para la gestión organizacional (p. 40).</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 180px;">
+                <p>El enfoque clásico también incluye la teoría de la burocracia de Max Weber, quien analizó cómo las
+                    organizaciones pueden funcionar de manera racional mediante estructuras formales basadas en reglas,
+                    normas y jerarquías. Weber (1922) planteó que la burocracia permite un funcionamiento más eficiente
+                    y predecible de las organizaciones, ya que establece procedimientos claros y definidos (p. 60). Este
+                    enfoque influyó en el diseño de muchas organizaciones modernas, especialmente en el sector público.
+                </p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 120px;">
+                <p>En conjunto, el enfoque clásico busca maximizar la eficiencia organizacional mediante la
+                    racionalización del trabajo, la estandarización de procesos y la estructuración de las
+                    organizaciones. Este enfoque fue fundamental para el desarrollo de la administración, ya que
+                    permitió establecer principios y métodos que aún se utilizan en la actualidad.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 350px;">
+                <p>Sin embargo, el enfoque clásico también presenta limitaciones. Una de las principales críticas es que
+                    se centra excesivamente en la eficiencia y la productividad, dejando de lado el factor humano. Los
+                    trabajadores eran considerados como parte del sistema productivo, sin tener en cuenta sus
+                    necesidades emocionales y sociales. Esto llevó al surgimiento de nuevas teorías, como la teoría de
+                    las relaciones humanas, que buscan complementar este enfoque incorporando el estudio del
+                    comportamiento humano en las organizaciones.</p>
+                <p>Otra limitación es su visión mecanicista de la organización, donde se asume que las empresas
+                    funcionan como máquinas, con procesos rígidos y estructuras jerárquicas estrictas. En la actualidad,
+                    las organizaciones requieren mayor flexibilidad y adaptación al cambio, lo que ha dado lugar a
+                    enfoques más modernos que consideran la complejidad del entorno organizacional.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 150px;">
+                <p>A pesar de estas críticas, el enfoque clásico y la administración científica siguen siendo
+                    fundamentales en el estudio de la administración. Muchos de sus principios, como la división del
+                    trabajo, la planificación y el control, continúan siendo aplicados en diferentes contextos
+                    organizacionales. Además, su enfoque en la eficiencia y la productividad sigue siendo relevante en
+                    un entorno competitivo.</p>
+                <p>En conclusión, el enfoque clásico y la administración científica representan el inicio del estudio
+                    formal de la administración, al introducir métodos sistemáticos para mejorar la eficiencia
+                    organizacional. Aunque presentan limitaciones, sus aportes han sido fundamentales para el desarrollo
+                    de la administración moderna y continúan influyendo en la forma en que se gestionan las
+                    organizaciones en la actualidad.</p>
+            </div>
+
+            <div class="content-wrapper">
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 320px;">
+
+                <h3>1.6. Teoría de las relaciones humanas</h3>
+                <p>La teoría de las relaciones humanas surge como una respuesta a las limitaciones del enfoque clásico
+                    de la administración, el cual se centraba principalmente en la eficiencia, la productividad y la
+                    estructura organizacional, dejando de lado el factor humano. A partir de la década de 1930, diversos
+                    estudios comenzaron a demostrar que el comportamiento de los trabajadores no podía explicarse
+                    únicamente desde una perspectiva mecánica o económica, sino que también estaba influenciado por
+                    factores sociales, psicológicos y emocionales. En este contexto, la administración empezó a
+                    considerar al trabajador no solo como un recurso productivo, sino como una persona con necesidades,
+                    motivaciones y expectativas.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 210px;">
+                <p>El principal impulsor de esta teoría fue Elton Mayo, quien lideró una serie de investigaciones
+                    conocidas como los estudios de Hawthorne, realizados en una fábrica de la empresa Western Electric
+                    en Estados Unidos. Estos estudios tenían como objetivo analizar cómo diferentes condiciones de
+                    trabajo, como la iluminación, influían en la productividad de los trabajadores. Sin embargo, los
+                    resultados fueron sorprendentes, ya que demostraron que la productividad no dependía únicamente de
+                    factores físicos, sino también de aspectos sociales y psicológicos.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 150px;">
+                <p>Según Mayo (1933), los trabajadores aumentaban su productividad no por los cambios en las condiciones
+                    físicas, sino porque se sentían observados y valorados, lo que generaba un mayor compromiso con su
+                    trabajo (p. 68). Este fenómeno fue denominado “efecto Hawthorne” y evidenció la importancia de
+                    factores como la motivación, la comunicación y las relaciones interpersonales dentro de la
+                    organización.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 210px;">
+                <p>Uno de los aportes más importantes de la teoría de las relaciones humanas es el reconocimiento del
+                    ser humano como un ser social. Los trabajadores no actúan de manera aislada, sino que forman parte
+                    de grupos dentro de la organización, donde establecen relaciones, normas y comportamientos
+                    compartidos. Estos grupos influyen en el desempeño individual, ya que pueden fomentar o limitar la
+                    productividad. Según Chiavenato (2006), el comportamiento de los trabajadores está determinado en
+                    gran medida por el grupo al que pertenecen (p. 89).</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 150px;">
+                <p>Otro aspecto clave es la importancia de la motivación. A diferencia del enfoque clásico, que se
+                    centraba en incentivos económicos, la teoría de las relaciones humanas sostiene que los trabajadores
+                    también se motivan por factores como el reconocimiento, la participación, el sentido de pertenencia
+                    y las buenas relaciones laborales. Esto implica que el administrador debe preocuparse no solo por la
+                    productividad, sino también por el bienestar de los empleados.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 150px;">
+                <p>Asimismo, esta teoría resalta la importancia de la comunicación dentro de la organización. Una
+                    comunicación efectiva permite coordinar actividades, resolver conflictos y fortalecer las relaciones
+                    entre los miembros del equipo. La falta de comunicación, por el contrario, puede generar
+                    malentendidos, desmotivación y bajo rendimiento. Por ello, el administrador debe promover canales de
+                    comunicación abiertos y claros.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 180px;">
+                <p>El liderazgo también adquiere un papel fundamental en este enfoque. El administrador deja de ser un
+                    simple supervisor para convertirse en un líder que guía, motiva y apoya a su equipo. Un buen
+                    liderazgo contribuye a crear un ambiente de trabajo positivo, donde los empleados se sienten
+                    valorados y comprometidos con los objetivos organizacionales. Según Robbins y Coulter (2014), el
+                    liderazgo influye directamente en la satisfacción y el desempeño de los trabajadores (p. 52).</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 150px;">
+                <p>Otro aporte importante es el concepto de clima organizacional, que se refiere al ambiente psicológico
+                    y social dentro de la organización. Un clima organizacional positivo favorece la motivación, la
+                    colaboración y el rendimiento, mientras que un clima negativo puede generar conflictos, estrés y
+                    baja productividad. La teoría de las relaciones humanas destaca la importancia de crear un ambiente
+                    laboral saludable.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 120px;">
+                <p>Además, esta teoría introduce la idea de participación de los trabajadores en la toma de decisiones.
+                    Cuando los empleados tienen la oportunidad de expresar sus opiniones y contribuir con ideas, se
+                    sienten más comprometidos con la organización. Esto mejora la calidad de las decisiones y fortalece
+                    el sentido de pertenencia.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 150px;">
+                <p>A pesar de sus aportes, la teoría de las relaciones humanas también presenta limitaciones. Una de las
+                    principales críticas es que puede exagerar la importancia de los factores sociales, dejando de lado
+                    aspectos técnicos y estructurales necesarios para el funcionamiento de la organización. Sin embargo,
+                    su valor radica en haber equilibrado la visión de la administración, incorporando el factor humano
+                    como elemento central.</p>
+                <p>En conclusión, la teoría de las relaciones humanas representa un cambio significativo en la forma de
+                    entender la administración, al reconocer la importancia de los aspectos sociales y psicológicos en
+                    el trabajo. Sus aportes han permitido desarrollar enfoques más integrales que consideran tanto la
+                    eficiencia como el bienestar de los trabajadores, contribuyendo a una gestión más humana y efectiva
+                    de las organizaciones.</p>
+
+            </div>
+            <div class="content-wrapper">
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 290px;">
+
+                <h3>1.7. Enfoque estructuralista de la administración</h3>
+
+                <p>El enfoque estructuralista de la administración surge como una evolución de las teorías anteriores,
+                    especialmente como una integración entre el enfoque clásico y la teoría de las relaciones humanas.
+                    Mientras el enfoque clásico se centraba en la estructura y la eficiencia, y la teoría de las
+                    relaciones humanas en las personas y sus relaciones, el estructuralismo busca analizar la
+                    organización de manera más completa, considerando tanto los aspectos formales como los informales
+                    dentro de las organizaciones. Este enfoque se desarrolla principalmente a mediados del siglo XX, en
+                    un contexto donde las organizaciones se vuelven más complejas y requieren análisis más integrales.
+                </p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 200px;">
+                <p>El estructuralismo se enfoca en el estudio de las organizaciones como sistemas sociales complejos,
+                    donde interactúan diferentes elementos como la estructura, las personas, la cultura y el entorno.
+                    Según Chiavenato (2006), este enfoque considera a la organización como una unidad social
+                    deliberadamente construida para alcanzar objetivos específicos, donde coexisten estructuras formales
+                    e informales (p. 112). Esto implica que no basta con analizar la estructura jerárquica, sino que
+                    también es necesario comprender las relaciones humanas que se desarrollan dentro de ella.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 180px;">
+                <p>Uno de los principales aportes del enfoque estructuralista es el análisis de la estructura
+                    organizacional. Esta se refiere a la forma en que se distribuyen las funciones, responsabilidades y
+                    niveles de autoridad dentro de una organización. El estructuralismo reconoce que una estructura
+                    adecuada permite coordinar mejor las actividades, evitar conflictos y mejorar la eficiencia. Sin
+                    embargo, también reconoce que una estructura rígida puede limitar la flexibilidad y la innovación.
+                </p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 210px;">
+                <p>Otro aspecto fundamental es la distinción entre organización formal e informal. La organización
+                    formal está compuesta por la estructura oficial, las normas, los procedimientos y los roles
+                    definidos dentro de la empresa. Por otro lado, la organización informal surge de las relaciones
+                    espontáneas entre los trabajadores, como amistades, grupos sociales y redes de comunicación no
+                    oficiales. Según Etzioni (1964), ambas formas de organización coexisten y se influyen mutuamente,
+                    afectando el comportamiento y el desempeño de los trabajadores (p. 75).</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 150px;">
+                <p>El enfoque estructuralista también introduce el concepto de hombre organizacional, que se refiere a
+                    la idea de que el individuo pertenece a múltiples organizaciones a lo largo de su vida y debe
+                    adaptarse a diferentes normas, roles y expectativas. Esto implica que el comportamiento humano
+                    dentro de las organizaciones es complejo y está influenciado por diversos factores sociales y
+                    culturales.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 210px;">
+                <p>Asimismo, este enfoque destaca la importancia del conflicto dentro de las organizaciones. A
+                    diferencia de teorías anteriores que buscaban eliminar el conflicto, el estructuralismo reconoce que
+                    el conflicto es inevitable debido a la diversidad de intereses, objetivos y percepciones de los
+                    miembros de la organización. Sin embargo, el conflicto no siempre es negativo, ya que puede generar
+                    cambios, innovación y mejoras si se gestiona adecuadamente. Según Robbins y Coulter (2014), el
+                    conflicto puede ser funcional cuando contribuye al logro de los objetivos organizacionales (p. 58).
+                </p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 190px;">
+                <p>Otro aporte importante es el análisis de los tipos de organizaciones. Los estructuralistas clasifican
+                    las organizaciones según sus objetivos, su estructura de autoridad y el tipo de control que ejercen
+                    sobre sus miembros. Por ejemplo, existen organizaciones coercitivas, utilitarias y normativas, cada
+                    una con características diferentes en cuanto a la relación entre la organización y sus miembros.
+                    Este análisis permite comprender mejor el funcionamiento de distintos tipos de instituciones, como
+                    empresas, gobiernos y organizaciones sociales.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 180px;">
+                <p>El enfoque estructuralista también presta atención al entorno organizacional. Reconoce que las
+                    organizaciones no operan de manera aislada, sino que están influenciadas por factores externos como
+                    la economía, la política, la cultura y la tecnología. Esto implica que las organizaciones deben
+                    adaptarse constantemente a su entorno para sobrevivir y ser competitivas. Este planteamiento
+                    representa un avance importante respecto a teorías anteriores que se enfocaban principalmente en el
+                    interior de la organización.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 290px;">
+                <p>Además, este enfoque incorpora una visión interdisciplinaria, utilizando aportes de la sociología, la
+                    psicología y la teoría organizacional para analizar las organizaciones. Esto permite una comprensión
+                    más completa y profunda de los fenómenos organizacionales, superando las limitaciones de enfoques
+                    más reduccionistas.</p>
+                <p>A pesar de sus aportes, el enfoque estructuralista también presenta algunas limitaciones. Una de
+                    ellas es su tendencia a enfocarse en el análisis teórico de las estructuras, dejando en segundo
+                    plano la aplicación práctica. Además, en algunos casos puede resultar complejo debido a la cantidad
+                    de variables que considera. Sin embargo, su principal valor radica en ofrecer una visión integral de
+                    las organizaciones.</p>
+                <p>En conclusión, el enfoque estructuralista de la administración representa un avance significativo en
+                    el estudio de las organizaciones, al integrar aspectos estructurales y humanos en un mismo análisis.
+                    Este enfoque permite comprender la complejidad de las organizaciones modernas, considerando tanto su
+                    estructura formal como las relaciones informales, el entorno y los conflictos. Sus aportes han
+                    contribuido al desarrollo de teorías más completas y siguen siendo relevantes en la actualidad.</p>
+            </div>
+            <div class="content-wrapper">
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 260px;">
+
+                <h3>1.8. Enfoque de sistemas en la administración</h3>
+
+                <p>El enfoque de sistemas en la administración representa un avance importante en la forma de comprender
+                    las organizaciones, ya que permite analizarlas como un conjunto de elementos interrelacionados que
+                    trabajan en conjunto para alcanzar objetivos comunes. A diferencia de los enfoques anteriores, que
+                    estudiaban las partes de manera aislada, este enfoque propone una visión integral, donde cada
+                    componente de la organización influye en los demás. Este enfoque surge a mediados del siglo XX,
+                    influenciado por la teoría general de sistemas desarrollada por Ludwig von Bertalanffy.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 180px;">
+                <p>Desde esta perspectiva, una organización es considerada un sistema, es decir, un conjunto de
+                    elementos que interactúan entre sí. Estos elementos pueden ser personas, recursos, procesos,
+                    tecnología y estructuras. Según Chiavenato (2006), un sistema es un conjunto de partes
+                    interdependientes que forman un todo organizado y orientado hacia un objetivo (p. 132). Esto implica
+                    que no se puede entender una organización analizando solo una de sus partes, sino que es necesario
+                    comprender cómo se relacionan entre sí.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 190px;">
+                <p>Uno de los conceptos fundamentales de este enfoque es el de sistema abierto. Las organizaciones no
+                    son sistemas cerrados, sino que interactúan constantemente con su entorno. Reciben insumos
+                    (entradas) como información, recursos y materia prima, los transforman mediante procesos internos y
+                    generan productos o servicios (salidas). Además, reciben retroalimentación del entorno, lo que les
+                    permite ajustar sus procesos y mejorar su desempeño. Según Bertalanffy (1968), los sistemas abiertos
+                    se caracterizan por su interacción constante con el entorno (p. 39).</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 180px;">
+                <p>El proceso de un sistema organizacional puede entenderse a través de tres elementos principales:
+                    entradas, procesos y salidas. Las entradas son los recursos que la organización recibe del entorno,
+                    como capital, información o talento humano. Los procesos son las actividades que transforman estas
+                    entradas en resultados. Finalmente, las salidas son los productos o servicios que la organización
+                    ofrece al entorno. Este modelo permite analizar cómo funcionan las organizaciones y cómo pueden
+                    mejorar su eficiencia.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 180px;">
+                <p>Otro elemento clave es la retroalimentación, que consiste en la información que el sistema recibe
+                    sobre su desempeño. Esta información permite corregir errores, mejorar procesos y adaptarse a
+                    cambios del entorno. Sin retroalimentación, las organizaciones no podrían evolucionar ni responder
+                    adecuadamente a los desafíos externos. Robbins y Coulter (2014) señalan que la retroalimentación es
+                    esencial para el control y la mejora continua dentro de las organizaciones (p. 61).</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 150px;">
+                <p>El enfoque de sistemas también introduce el concepto de interdependencia, que significa que las
+                    partes del sistema están conectadas y dependen unas de otras. Por ejemplo, una decisión en el área
+                    de producción puede afectar al área de ventas o al área financiera. Esto implica que los
+                    administradores deben considerar el impacto de sus decisiones en toda la organización, evitando una
+                    visión aislada de los problemas.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 150px;">
+                <p>Asimismo, este enfoque resalta la importancia del equilibrio dinámico, que se refiere a la capacidad
+                    de la organización para mantenerse estable mientras se adapta a los cambios del entorno. Las
+                    organizaciones deben ser lo suficientemente flexibles para ajustarse a nuevas condiciones, pero
+                    también lo suficientemente estables para mantener su funcionamiento. Este equilibrio es clave para
+                    la supervivencia organizacional.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 380px;">
+                <p>Otro aporte importante es la visión holística, que consiste en analizar la organización como un todo.
+                    Este enfoque permite identificar problemas que no serían visibles si se analizan las partes de
+                    manera independiente. Por ejemplo, una baja productividad puede no deberse únicamente al desempeño
+                    de los trabajadores, sino a problemas en la estructura, la comunicación o el liderazgo.</p>
+                <p>El enfoque de sistemas también ha influido en el desarrollo de nuevas herramientas de gestión, como
+                    el análisis de procesos, la gestión por sistemas y el pensamiento estratégico. Estas herramientas
+                    permiten a las organizaciones mejorar su eficiencia y adaptarse a un entorno cambiante.</p>
+                <p>Sin embargo, este enfoque también presenta algunas limitaciones. Una de ellas es su nivel de
+                    complejidad, ya que analizar todas las interrelaciones dentro de una organización puede resultar
+                    difícil. Además, requiere una visión amplia y habilidades analíticas por parte de los
+                    administradores. A pesar de esto, su valor radica en proporcionar una comprensión más completa de
+                    las organizaciones.</p>
+                <p>En conclusión, el enfoque de sistemas en la administración permite entender a las organizaciones como
+                    conjuntos interrelacionados que interactúan con su entorno. Este enfoque aporta una visión integral
+                    que facilita la toma de decisiones, la coordinación de actividades y la adaptación al cambio. Su
+                    importancia radica en que ayuda a los administradores a comprender la complejidad de las
+                    organizaciones modernas y a gestionarlas de manera más efectiva.</p>
+            </div>
+            <div class="content-wrapper">
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 230px;">
+
+                <h3>1.9. Enfoque contingencial de la administración</h3>
+
+                <p>El enfoque contingencial de la administración surge como una respuesta a la necesidad de comprender
+                    que no existe una única forma correcta de administrar una organización. A diferencia de los enfoques
+                    anteriores, que buscaban principios universales aplicables a todas las empresas, este enfoque
+                    plantea que la mejor manera de gestionar depende de la situación específica en la que se encuentra
+                    la organización. Es decir, las decisiones administrativas deben adaptarse a las condiciones internas
+                    y externas que rodean a la empresa.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 180px;">
+                <p>El término “contingencia” hace referencia a algo que puede suceder o no, dependiendo de las
+                    circunstancias. En el contexto de la administración, significa que las prácticas y estrategias deben
+                    ajustarse a variables como el entorno, la tecnología, el tamaño de la organización, la cultura
+                    organizacional y el tipo de actividad que se realiza. Según Chiavenato (2006), el enfoque
+                    contingencial sostiene que no hay una única forma de organizar o administrar, sino que todo depende
+                    de la situación (p. 145).</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 180px;">
+                <p>Este enfoque se desarrolla principalmente en la década de 1960, cuando diversos estudios demostraron
+                    que los principios administrativos no podían aplicarse de manera uniforme en todas las
+                    organizaciones. Investigadores como Burns y Stalker analizaron diferentes tipos de estructuras
+                    organizacionales y concluyeron que las organizaciones deben adaptarse a su entorno. Burns y Stalker
+                    (1961) identificaron dos tipos de estructuras: mecanicistas y orgánicas, señalando que cada una es
+                    adecuada según el nivel de estabilidad o cambio del entorno (p. 120).</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 150px;">
+                <p>Las estructuras mecanicistas se caracterizan por ser rígidas, jerárquicas y con alta formalización.
+                    Son adecuadas para entornos estables, donde las condiciones no cambian constantemente. Por otro
+                    lado, las estructuras orgánicas son más flexibles, descentralizadas y adaptables, lo que las hace
+                    más apropiadas para entornos dinámicos e inciertos. Esta distinción demuestra que la estructura
+                    organizacional debe ajustarse al contexto.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 150px;">
+                <p>Otro aporte importante del enfoque contingencial es el análisis de la relación entre tecnología y
+                    estructura organizacional. Joan Woodward (1965) demostró que el tipo de tecnología utilizada por una
+                    empresa influye en su estructura y en sus prácticas administrativas. Por ejemplo, las empresas con
+                    producción en masa requieren estructuras más formales, mientras que las empresas con producción
+                    flexible necesitan estructuras más adaptables (p. 85).</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 150px;">
+                <p>Asimismo, este enfoque destaca la importancia del entorno organizacional. Las empresas operan en
+                    contextos que pueden ser estables o cambiantes, simples o complejos. Factores como la competencia,
+                    la economía, la política y la tecnología influyen en las decisiones administrativas. Robbins y
+                    Coulter (2014) señalan que el entorno es una de las variables más importantes que determinan cómo se
+                    debe administrar una organización (p. 66).</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 150px;">
+                <p>El enfoque contingencial también tiene implicaciones en el liderazgo. No existe un estilo de
+                    liderazgo universal que sea efectivo en todas las situaciones. Un líder debe adaptar su estilo según
+                    las características de su equipo y las condiciones del entorno. Por ejemplo, en situaciones de
+                    crisis puede ser necesario un liderazgo más directivo, mientras que en entornos estables puede ser
+                    más adecuado un liderazgo participativo.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 120px;">
+                <p>Otro aspecto relevante es la toma de decisiones. En el enfoque contingencial, las decisiones no se
+                    basan en reglas fijas, sino en el análisis de la situación. Esto implica que los administradores
+                    deben evaluar diferentes variables antes de tomar una decisión, considerando las posibles
+                    consecuencias y adaptándose a las circunstancias.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 120px;">
+                <p>Además, este enfoque promueve la flexibilidad organizacional. Las empresas deben ser capaces de
+                    adaptarse rápidamente a los cambios del entorno para mantenerse competitivas. Esto implica modificar
+                    estructuras, procesos y estrategias cuando sea necesario. La rigidez organizacional puede ser un
+                    obstáculo para el éxito en entornos dinámicos.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 150px;">
+                <p>Sin embargo, el enfoque contingencial también presenta desafíos. Uno de ellos es la complejidad, ya
+                    que analizar todas las variables que influyen en una organización puede ser difícil. Además,
+                    requiere que los administradores tengan habilidades analíticas y capacidad para adaptarse a
+                    diferentes situaciones. A pesar de esto, su valor radica en ofrecer una visión realista y flexible
+                    de la administración.</p>
+                <p>En conclusión, el enfoque contingencial de la administración representa un avance significativo al
+                    reconocer que no existe una única forma de gestionar las organizaciones. Este enfoque destaca la
+                    importancia de adaptarse a las condiciones específicas de cada situación, considerando variables
+                    como el entorno, la tecnología y la estructura organizacional. Su aplicación permite a las
+                    organizaciones ser más flexibles, eficientes y competitivas en un mundo cambiante.</p>
+            </div>
+            <div class="content-wrapper">
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 230px;">
+
+                <h3>1.10. Tendencias modernas de la administración</h3>
+
+                <p>Las tendencias modernas de la administración reflejan la evolución constante de las organizaciones
+                    frente a un entorno cada vez más dinámico, globalizado y tecnológico. A diferencia de los enfoques
+                    tradicionales, que se centraban en la estructura y la eficiencia, las tendencias actuales incorporan
+                    elementos como la innovación, la tecnología, el conocimiento, la sostenibilidad y el bienestar
+                    humano. Esto demuestra que la administración ya no solo busca resultados económicos, sino también
+                    generar valor integral para la sociedad.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 200px;">
+                <p>Uno de los cambios más importantes en la administración moderna es la transformación digital. Las
+                    organizaciones han incorporado tecnologías como internet, inteligencia artificial, big data y
+                    sistemas de información para mejorar sus procesos y tomar decisiones más informadas. Según Drucker
+                    (2002), la información se ha convertido en un recurso clave para la gestión, permitiendo a las
+                    empresas adaptarse rápidamente a los cambios del entorno (p. 92). Esto ha dado lugar a nuevas formas
+                    de administrar basadas en el análisis de datos y la automatización.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 200px;">
+                <p>Otra tendencia relevante es la globalización, que ha ampliado los mercados y ha incrementado la
+                    competencia entre las empresas. Las organizaciones ya no operan únicamente a nivel local, sino que
+                    interactúan con clientes, proveedores y competidores de diferentes países. Esto implica que los
+                    administradores deben desarrollar habilidades interculturales y estratégicas para gestionar
+                    operaciones a nivel internacional. Robbins y Coulter (2014) señalan que la globalización ha
+                    transformado la forma en que las organizaciones compiten y se organizan (p. 72).</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 180px;">
+                <p>Asimismo, el enfoque en el talento humano ha cobrado mayor importancia en la administración moderna.
+                    Las organizaciones reconocen que las personas son su recurso más valioso, por lo que buscan atraer,
+                    desarrollar y retener talento. Esto implica crear ambientes de trabajo positivos, fomentar el
+                    aprendizaje continuo y promover el bienestar laboral. A diferencia de enfoques anteriores, donde el
+                    trabajador era visto como un recurso más, hoy se le considera un elemento estratégico.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 150px;">
+                <p>Otra tendencia clave es el liderazgo transformacional, que se centra en inspirar y motivar a los
+                    colaboradores para lograr cambios significativos en la organización. Este tipo de liderazgo promueve
+                    la innovación, la creatividad y el compromiso del equipo. Según Chiavenato (2006), el liderazgo
+                    moderno busca influir en las personas para que trabajen con entusiasmo hacia el logro de objetivos
+                    comunes (p. 158).</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 120px;">
+                <p>El trabajo en equipo y la colaboración también se han convertido en elementos fundamentales. Las
+                    organizaciones modernas fomentan estructuras más flexibles y menos jerárquicas, donde se promueve la
+                    participación y la comunicación entre los miembros del equipo. Esto permite aprovechar mejor el
+                    conocimiento colectivo y mejorar la toma de decisiones.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 150px;">
+                <p>El trabajo remoto y los equipos virtuales son otra tendencia importante, especialmente impulsada por
+                    los avances tecnológicos y cambios recientes en la forma de trabajar. Las organizaciones han
+                    adoptado modalidades de trabajo flexible, permitiendo a los empleados trabajar desde diferentes
+                    lugares. Esto requiere nuevas formas de gestión, basadas en la confianza, la comunicación digital y
+                    el uso de herramientas tecnológicas.</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 120px;">
+                <p>La innovación continua es otro elemento clave en la administración moderna. Las empresas deben
+                    adaptarse constantemente a los cambios del entorno para mantenerse competitivas. Esto implica
+                    desarrollar nuevos productos, servicios y procesos. Drucker (2002) destaca que la innovación es una
+                    función esencial de la administración, ya que permite generar valor y crecimiento (p. 78).</p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-right" style="height: 180px;">
+                <p>La responsabilidad social empresarial (RSE) también ha adquirido gran relevancia. Las organizaciones
+                    modernas no solo buscan generar beneficios económicos, sino también contribuir al bienestar social y
+                    al cuidado del medio ambiente. Esto implica adoptar prácticas sostenibles, respetar los derechos
+                    laborales y participar en el desarrollo de la comunidad. Según Robbins y Coulter (2014), la
+                    responsabilidad social se ha convertido en un elemento clave de la gestión organizacional (p. 75).
+                </p>
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80"
+                    alt="Gestión" class="float-img img-left" style="height: 200px;">
+                <p>La administración moderna incorpora el enfoque ágil, que se caracteriza por la
+                    flexibilidad, la rapidez en la toma de decisiones y la adaptación al cambio. Este enfoque es
+                    especialmente utilizado en entornos tecnológicos y proyectos innovadores, donde las condiciones
+                    cambian constantemente.</p>
+                <p>También se observa una mayor orientación hacia el cliente. Las organizaciones buscan comprender las
+                    necesidades y expectativas de los clientes para ofrecer productos y servicios de mayor calidad. Esto
+                    implica utilizar herramientas como el análisis de datos y la retroalimentación para mejorar
+                    continuamente.</p>
+                <p>En conclusión, las tendencias modernas de la administración reflejan una evolución hacia enfoques más
+                    integrales, flexibles y orientados al cambio. La incorporación de la tecnología, la importancia del
+                    talento humano, la innovación y la responsabilidad social son elementos clave en la gestión actual.
+                    Estas tendencias permiten a las organizaciones adaptarse a un entorno complejo y competitivo,
+                    garantizando su sostenibilidad y crecimiento a largo plazo.</p>
+
+            </div>
+            <button class="btn-primary btn-quiz-section" onclick="openNamePrompt('u1')">Evaluar Unidad 01</button>
+        </section>
+
+        <!-- Marcadores para otras unidades -->
+        <section id="u2" style="opacity: 0.6;">
+            <h2 class="title-banner">02. LA EMPRESA</h2>
+            <p style="text-align:center;">Contenido en desarrollo para la siguiente sesión académica.</p>
+        </section>
+
+    </div>
+
+    <!-- NAVEGACIÓN -->
+    <div class="nav-pill-wrapper">
+        <nav class="nav-pill">
+            <button class="nav-item" onclick="window.location.href='../index.html'">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                </svg>
+                <span>INICIO</span>
+            </button>
+            <button class="nav-item center-btn" onclick="toggleSheet('highlight-sheet')">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                    <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+                    <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+                </svg>
+            </button>
+            <button class="nav-item" onclick="toggleSheet('topics-sheet')">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+                <span>TEMAS</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- OVERLAYS -->
+    <div class="overlay" id="main-overlay" onclick="closeAllSheets()"></div>
+
+    <!-- BOTTOM SHEETS -->
+    <div class="bottom-sheet" id="highlight-sheet">
+        <h3 style="margin-bottom:20px; font-weight:900; border:none;">RESALTADOR ACADÉMICO</h3>
+        <div style="display:flex; justify-content:center; gap:25px; margin-bottom:20px;">
+            <div style="width:55px; height:55px; border-radius:50%; background:var(--hl-yellow); cursor:pointer; border:3px solid #ddd;"
+                onclick="applyHighlight('var(--hl-yellow)')"></div>
+            <div style="width:55px; height:55px; border-radius:50%; background:var(--hl-green); cursor:pointer; border:3px solid #ddd;"
+                onclick="applyHighlight('var(--hl-green)')"></div>
+            <div style="width:55px; height:55px; border-radius:50%; background:var(--hl-blue); cursor:pointer; border:3px solid #ddd;"
+                onclick="applyHighlight('var(--hl-blue)')"></div>
+            <div style="width:55px; height:55px; border-radius:50%; background:var(--hl-pink); cursor:pointer; border:3px solid #ddd;"
+                onclick="applyHighlight('var(--hl-pink)')"></div>
+        </div>
+        <button class="btn-primary" style="background:#94a3b8; width:100%;" onclick="closeAllSheets()">CERRAR</button>
+    </div>
+
+    <div class="bottom-sheet" id="topics-sheet">
+        <h3 style="margin-bottom:25px; font-weight:900; border:none;">CONTENIDOS ADM</h3>
+        <div style="display:grid; gap:12px;">
+            <button class="kh-btn" style="color:var(--text-main); background:#f8fafc;" onclick="scrollToId('u1')">
+                01. ENFOQUE DE LA ADMINISTRACIÓN
+            </button>
+            <button class="kh-btn" style="color:var(--text-main); background:#f8fafc;" onclick="scrollToId('u2')">
+                02. LA EMPRESA
+            </button>
+        </div>
+        <button class="btn-primary" style="background:#94a3b8; width:100%; margin-top:20px;"
+            onclick="closeAllSheets()">CERRAR</button>
+    </div>
+
+    <!-- QUIZ MODAL -->
+    <div id="quiz-modal" class="quiz-overlay">
+        <button onclick="closeQuiz()"
+            style="position:absolute; top:30px; right:30px; background:rgba(255,255,255,0.15); border:none; color:white; font-size:2rem; width:55px; height:55px; border-radius:50%; cursor:pointer; z-index: 20001;">✕</button>
+        <div id="quiz-container" style="min-height:100%; display:flex; flex-direction:column; justify-content:center;">
+        </div>
+    </div>
+
+    <script>
+        let timerInterval = null;
+        let timeLeft = 12;
+        let activeQ = [];
+        let activeTitle = "";
+        let sName = "";
+        let qIdx = 0;
+        let score = 0;
+        let currentRange = null;
+
+        const DB = {
+            u1: {
+                title: "ENFOQUE DE LA ADMINISTRACIÓN",
+                q: [
+                    { type: "choice", q: "¿Cuál es el objetivo principal de la administración?", options: ["Solo ganar dinero", "Eficiencia y eficacia organizacional", "Sustituir a los obreros", "Pagar menos impuestos"], a: "Eficiencia y eficacia organizacional" },
+                    { type: "tf", q: "La Revolución Industrial impulsó la necesidad de una administración formal.", a: true },
+                    { type: "choice", q: "¿Quién propuso que la administración fuera tratada como ciencia antes que Taylor?", options: ["Robert Owen", "Henry Towne", "Fayol", "Drucker"], a: "Henry Towne" },
+                    { type: "choice", q: "La administración según el enfoque de Taylor se centra en:", options: ["La estructura global", "Las tareas operativas", "Las relaciones humanas", "El marketing"], a: "Las tareas operativas" },
+                    { type: "tf", q: "Henri Fayol es el autor de los 14 principios de la administración.", a: true },
+                    { type: "choice", q: "Función administrativa que consiste en influir en las personas para que contribuyan a las metas:", options: ["Planear", "Organizar", "Dirigir", "Controlar"], a: "Dirigir" },
+                    { type: "tf", q: "Eficiencia significa 'lograr los objetivos sin importar el costo'.", a: false },
+                    { type: "choice", q: "¿Qué precursor se enfocó en el bienestar del 'recurso humano'?", options: ["Babbage", "Owen", "Taylor", "Fayol"], a: "Owen" },
+                    { type: "choice", q: "Diseñar y mantener un entorno para trabajar en grupos hacia metas es:", options: ["Administración", "Contabilidad", "Derecho", "Economía"], a: "Administración" },
+                    { type: "tf", q: "El enfoque de Taylor se conoce como Teoría Clásica.", a: false },
+                    { type: "choice", q: "Taylor propuso el estudio de ________ para mejorar el trabajo.", options: ["Psicología", "Tiempos y movimientos", "Mercados", "Costos fijos"], a: "Tiempos y movimientos" },
+                    { type: "tf", q: "Fayol se enfocó en la estructura y funciones de la empresa.", a: true },
+                    { type: "choice", q: "¿Cuántas funciones administrativas identificó Fayol originalmente?", options: ["4", "5", "10", "14"], a: "5" },
+                    { type: "choice", q: "Uso óptimo de los recursos para no desperdiciar se llama:", options: ["Eficacia", "Eficiencia", "Productividad", "Calidad"], a: "Eficiencia" },
+                    { type: "tf", q: "La Revolución Industrial eliminó la producción artesanal.", a: true },
+                    { type: "choice", q: "El principio de 'Unidad de Mando' pertenece a:", options: ["Taylor", "Fayol", "Owen", "Mayo"], a: "Fayol" },
+                    { type: "tf", q: "Drucker afirma que la administración hace productivos los recursos.", a: true },
+                    { type: "choice", q: "Función que mide el desempeño y corrige desviaciones:", options: ["Planear", "Controlar", "Dirigir", "Organizar"], a: "Controlar" },
+                    { type: "tf", q: "Babbage aplicó matemáticas a la productividad.", a: true },
+                    { type: "choice", q: "El enfoque clásico de Taylor buscaba:", options: ["Paz mundial", "Maximizar eficiencia productiva", "Ventas masivas", "Crear sindicatos"], a: "Maximizar eficiencia productiva" }
+                ]
+            }
+        };
+
+        function scrollToId(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                closeAllSheets();
+                setTimeout(() => {
+                    window.scrollTo({ top: el.offsetTop - 20, behavior: 'smooth' });
+                }, 100);
+            }
+        }
+
+        function handleSelection() {
+            const sel = window.getSelection();
+            if (sel.rangeCount > 0 && sel.toString().trim().length > 0) {
+                currentRange = sel.getRangeAt(0).cloneRange();
+            }
+        }
+
+        function applyHighlight(color) {
+            if (!currentRange) return;
+            const span = document.createElement('span');
+            span.className = 'user-highlight';
+            span.style.backgroundColor = color;
+            span.onclick = function (e) { e.stopPropagation(); this.replaceWith(...this.childNodes); };
+            try {
+                span.appendChild(currentRange.extractContents());
+                currentRange.insertNode(span);
+                currentRange = null;
+                window.getSelection().removeAllRanges();
+            } catch (e) { }
+            closeAllSheets();
+        }
+
+        function toggleSheet(id) {
+            document.getElementById('main-overlay').classList.add('active');
+            document.getElementById(id).classList.add('active');
+        }
+
+        function closeAllSheets() {
+            document.querySelectorAll('.bottom-sheet, .overlay').forEach(el => el.classList.remove('active'));
+        }
+
+        function openNamePrompt(unit) {
+            activeQ = DB[unit].q;
+            activeTitle = DB[unit].title;
+            document.getElementById('quiz-modal').classList.add('active');
+            document.body.classList.add('modal-open');
+            document.getElementById('quiz-container').innerHTML = `
+            <div class="animate__animated animate__fadeIn" style="max-width:500px; margin:auto; text-align:center;">
+                <h2 style="font-weight:900; margin-bottom:20px; color:white;">ADM - REGISTRO</h2>
+                <input type="text" id="s-input" placeholder="Nombre del Estudiante" style="width:100%; padding:20px; border-radius:15px; border:1px solid white; text-align:center; font-size:1.2rem; background:rgba(255,255,255,0.2); color:white; outline:none;">
+                <button class="btn-primary" style="width:100%; margin-top:20px;" onclick="startQuiz()">INICIAR EVALUACIÓN</button>
+            </div>`;
+        }
+
+        function startQuiz() {
+            const input = document.getElementById('s-input');
+            if (input.value.trim().length < 2) return;
+            sName = input.value.trim();
+            qIdx = 0; score = 0;
+            renderQ();
+        }
+
+        function renderQ() {
+            const container = document.getElementById('quiz-container');
+            if (qIdx >= activeQ.length) { renderR(); return; }
+
+            const data = activeQ[qIdx];
+            let options = data.type === "choice" ? [...data.options].sort(() => Math.random() - 0.5) : [true, false];
+
+            let html = `<div class="kahoot-answers-grid">`;
+            options.forEach((opt, i) => {
+                const label = data.type === "tf" ? (opt ? "VERDADERO" : "FALSO") : opt;
+                const colors = ['#e21b3c', '#1368ce', '#d89e00', '#26890c'];
+                const icons = ['▲', '◆', '●', '■'];
+                html += `<button class="kh-btn" data-opt="${opt}" onclick="checkA('${opt}', this)">
+                        <div class="shape-tag" style="background:${colors[i]}">${icons[i]}</div> ${label}
+                     </button>`;
+            });
+            html += `</div>`;
+
+            container.innerHTML = `
+            <div class="animate__animated animate__fadeIn">
+                <div style="font-size: 2rem; font-weight: 900; text-align: center; color: #ffeb3b; margin-bottom: 10px;">
+                    ⏱ <span id="timer-count">12</span>s
+                </div>
+                <p style="text-align:center; font-weight:900; opacity:0.7;">PREGUNTA ${qIdx + 1} de ${activeQ.length}</p>
+                <div class="kahoot-question-box">${data.q}</div>
+                ${html}
+            </div>`;
+
+            startTimer();
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timeLeft = 12;
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer-count').innerText = timeLeft;
+                if (timeLeft <= 0) { checkA(null, null); }
+            }, 1000);
+        }
+
+        function checkA(ans, btn) {
+            clearInterval(timerInterval);
+            const correct = activeQ[qIdx].a;
+            const buttons = document.querySelectorAll('.kh-btn');
+            buttons.forEach(b => b.style.pointerEvents = 'none');
+
+            // Lógica de retroalimentación
+            if (ans !== null && ans.toString() === correct.toString()) {
+                // Correcto
+                score++;
+                if (btn) btn.classList.add('correct');
+                confetti({ particleCount: 50, spread: 60, zIndex: 30000 });
+            } else {
+                // Incorrecto o tiempo agotado
+                if (btn) btn.classList.add('wrong');
+
+                // Mostrar la respuesta correcta
+                buttons.forEach(b => {
+                    if (b.getAttribute('data-opt') === correct.toString()) {
+                        b.classList.add('correct');
+                    }
+                });
+            }
+
+            setTimeout(() => { qIdx++; renderQ(); }, 2500); // 2.5 segundos para ver la retroalimentación
+        }
+
+        function renderR() {
+            const container = document.getElementById('quiz-container');
+            const totalPoints = Math.round((score / activeQ.length) * 100);
+            const passed = totalPoints >= 61;
+
+            container.innerHTML = `
+            <div class="report-card animate__animated animate__zoomIn">
+                <div class="report-header">EVALUACIÓN: ${activeTitle}</div>
+                <div class="report-student">${sName.toUpperCase()}</div>
+                <div class="report-label">Resultado Final</div>
+                <div class="report-score">${totalPoints} PUNTOS</div>
+                <div class="report-status ${passed ? 'status-pass' : 'status-fail'}">
+                    ${passed ? '• APROBADO •' : '• SIGUE PARTICIPANDO •'}
+                </div>
+                <button class="btn-primary" style="width:100%; margin-top:30px;" onclick="closeQuiz()">FINALIZAR SESIÓN</button>
+            </div>`;
+
+            if (passed) {
+                confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 }, zIndex: 30000 });
+            }
+        }
+
+        function closeQuiz() {
+            clearInterval(timerInterval);
+            document.getElementById('quiz-modal').classList.remove('active');
+            document.body.classList.remove('modal-open');
+        }
+    </script>
+</body>
+
+</html>
