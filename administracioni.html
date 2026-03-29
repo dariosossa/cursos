@@ -84,7 +84,7 @@
         }
 
         header h1 {
-            font-size: clamp(2.2rem, 8vw, 4rem);
+            font-size: 1.5rem;
             font-weight: 900;
             letter-spacing: -1px;
             text-transform: uppercase;
@@ -465,13 +465,13 @@
 
         .report-student {
             font-weight: 900;
-            font-size: 1.8rem;
+            font-size: 1.2rem;
             color: var(--accent-gold);
             margin-bottom: 10px;
         }
 
         .report-score {
-            font-size: 5rem;
+            font-size: 1.8rem;
             font-weight: 900;
             color: var(--primary-admin);
             line-height: 1;
@@ -505,6 +505,7 @@
             background: #fee2e2;
             color: #991b1b;
             border: 2px solid #991b1b;
+            font-size: 0.7rem;
         }
 
         .user-highlight {
@@ -519,11 +520,15 @@
             .float-video {
                 width: 100%;
                 float: none;
-                margin: 0 0 30px 0;
+                margin: 0 0 1px 0;
             }
 
             .kahoot-answers-grid {
                 grid-template-columns: 1fr;
+            }
+
+            h3 {
+                font-size: 1rem;
             }
 
             section {
@@ -531,7 +536,8 @@
             }
 
             .title-banner {
-                font-size: 1.5rem;
+                font-size: 0.8rem;
+                margin: 0 0 10px 0;
             }
 
             .kahoot-question-box {
@@ -1708,7 +1714,7 @@
             document.getElementById('quiz-container').innerHTML = `
             <div class="animate__animated animate__fadeIn" style="max-width:500px; margin:auto; text-align:center;">
                 <h2 style="font-weight:900; margin-bottom:20px; color:white;">ADM - REGISTRO</h2>
-                <input type="text" id="s-input" placeholder="Nombre del Estudiante" style="width:100%; padding:20px; border-radius:15px; border:1px solid white; text-align:center; font-size:1.2rem; background:rgba(255,255,255,0.2); color:white; outline:none;">
+                <input type="text" id="s-input" placeholder="Nombre del Estudiante" style="width:100%; padding:20px; border-radius:15px; border:1px solid white; text-align:center; font-size:1.2rem; outline:none;">
                 <button class="btn-primary" style="width:100%; margin-top:20px;" onclick="startQuiz()">INICIAR EVALUACIÓN</button>
             </div>`;
         }
@@ -1803,7 +1809,6 @@
                 <div class="report-status ${passed ? 'status-pass' : 'status-fail'}">
                     ${passed ? '• APROBADO •' : '• SIGUE PARTICIPANDO •'}
                 </div>
-                <button class="btn-primary" style="width:100%; margin-top:30px;" onclick="closeQuiz()">FINALIZAR SESIÓN</button>
             </div>`;
 
             if (passed) {
