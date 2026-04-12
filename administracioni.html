@@ -24,23 +24,41 @@
            1. VARIABLES Y RESETEO BASE
            ========================================= */
         :root {
-            --primary: #1e3a8a;
-            --primary-light: #3b82f6;
-            --secondary: #0ea5e9;
-            --accent: #f59e0b;
-            --bg-body: #f1f5f9;
-            --card-bg: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --correct: #10b981;
-            --wrong: #ef4444;
-            --glass-dark: rgba(15, 23, 42, 0.95);
-            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            --hl-yellow: #fffb00;
-            --hl-green: #00ff59;
-            --hl-blue: #bfdbfe;
-            --hl-pink: #ff78c5;
+            --primary: #1368ce;
+            /* azul fuerte (acciones) */
+            --primary-light: #4f8df0;
+            /* azul claro */
+
+            --secondary: #d89e00;
+            /* amarillo atención */
+            --accent: #d89e00;
+            /* rojo destacado */
+
+            --bg-body: #2b2d31;
+            /* fondo principal oscuro */
+            --card-bg: #1e1f22;
+            /* tarjetas más oscuras */
+
+            --text-main: #f2f3f5;
+            /* texto principal claro */
+            --text-muted: #b5bac1;
+            /* texto secundario (menos brillo) */
+
+            --correct: #26890c;
+            /* verde correcto */
+            --wrong: #e21b3c;
+            /* rojo error */
+
+            --glass-dark: rgba(0, 0, 0, 0.85);
+
+            --shadow-md: 0 10px 20px rgba(0, 0, 0, 0.5);
+            --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.7);
+
+            --hl-yellow: #ffe100;
+            /* resaltado visible en oscuro */
+            --hl-green: #00ff84;
+            --hl-blue: #60a5fa;
+            --hl-pink: #ff4da6;
         }
 
         * {
@@ -140,7 +158,7 @@
         section {
             background: var(--card-bg);
             border-radius: 0;
-            padding: 40px 20px;
+            padding: 10px 10px;
             margin: 0;
             box-shadow: none;
             border: none;
@@ -172,23 +190,23 @@
 
         .slide-wrapper h2 {
             color: var(--primary);
-            margin: 0 0 25px;
             font-size: clamp(1.2rem, 4vw, 1.8rem);
             font-weight: 900;
             width: 100%;
             line-height: 1.2;
             text-align: center;
+            margin-top: 32px;
         }
 
         h3 {
             color: var(--primary);
-            margin: 0 0 25px;
             font-size: clamp(1.2rem, 4vw, 1.8rem);
             border-left: 6px solid var(--accent);
             padding-left: 12px;
             font-weight: 900;
             width: 100%;
             line-height: 1.2;
+            margin-bottom: 8px;
         }
 
         h4 {
@@ -259,65 +277,6 @@
             position: relative;
             width: 100%;
             margin-bottom: 15px;
-        }
-
-        pre.code-box {
-            background-color: #0f172a;
-            color: #e2e8f0;
-            padding: 40px 20px 20px;
-            border-radius: 15px;
-            overflow-x: auto;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: clamp(0.85rem, 3vw, 1.2rem);
-            border: 2px solid #334155;
-            width: 100%;
-            line-height: 1.5;
-            box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.3);
-            margin: 0;
-        }
-
-        pre.code-box code {
-            font-family: inherit;
-            color: #38bdf8;
-        }
-
-        .copy-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #fff;
-            padding: 6px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.75rem;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            z-index: 5;
-        }
-
-        .copy-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-        }
-
-        .copy-btn.copied {
-            background: var(--correct);
-            border-color: var(--correct);
-            color: white;
-        }
-
-        p code {
-            background-color: #e2e8f0;
-            color: #ef4444;
-            padding: 2px 6px;
-            border-radius: 5px;
-            font-family: monospace;
-            font-weight: bold;
         }
 
         /* =========================================
@@ -521,7 +480,7 @@
         }
 
         .center-btn {
-            background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+            background: var(--primary-light);
             width: 45px;
             height: 45px;
             border-radius: 50%;
@@ -563,17 +522,17 @@
 
         /* Personalización de la barra de desplazamiento (Scrollbar) para los modales */
         .bottom-sheet::-webkit-scrollbar {
-            width: 6px;
+            width: 16px;
         }
 
         .bottom-sheet::-webkit-scrollbar-track {
             background: #f1f5f9;
-            border-radius: 10px;
+            border-radius: 1px;
         }
 
         .bottom-sheet::-webkit-scrollbar-thumb {
             background: var(--secondary);
-            border-radius: 10px;
+            border-radius: 1px;
         }
 
         .bottom-sheet.active {
@@ -598,7 +557,7 @@
             border: 2px solid #e2e8f0;
             padding: 12px;
             border-radius: 12px;
-            color: var(--text-main);
+            color: var(--glass-dark);
             font-weight: 700;
             font-size: 1.1rem;
             cursor: pointer;
@@ -785,12 +744,20 @@
         .shape-tag {
             width: 35px;
             height: 35px;
-            border-radius: 10px;
+            border-radius: 8px;
+            /* 🔥 más cuadrado (antes 10px) */
+
             margin-right: 15px;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             flex-shrink: 0;
+
+            font-weight: 900;
+            font-size: 2rem;
+            color: white;
         }
 
         .timer-bar-container {
@@ -897,7 +864,7 @@
 
         .cert-name {
             font-family: 'Great Vibes', cursive;
-            font-size: 2.4rem;
+            font-size: 2.2rem;
             color: #0f172a;
             margin: 0;
             line-height: 1.1;
@@ -932,7 +899,7 @@
         }
 
         .cert-score-value {
-            font-size: 2.8rem;
+            font-size: 2.2rem;
             font-weight: 900;
             line-height: 1;
             margin-bottom: 5px;
@@ -1027,11 +994,11 @@
 
             .slide-wrapper {
                 height: 100vh;
-                padding: 60px 0;
+                padding: 100px 0;
             }
 
             section {
-                padding: 50px 40px;
+                padding: 40px 30px;
                 border-radius: 35px;
                 box-shadow: var(--shadow-lg);
                 border: 1px solid rgba(255, 255, 255, 0.8);
@@ -1041,7 +1008,8 @@
             .content-block {
                 flex-direction: row;
                 gap: 35px;
-                align-items: center;
+                /* align-items: center; */
+                margin: 60px 0px;
             }
 
             .content-block.reverse {
@@ -1049,25 +1017,24 @@
             }
 
             h3 {
-                font-size: 3.5rem;
-                margin: 0 0 35px;
+                font-size: 2.2rem;
                 border-left-width: 12px;
                 padding-left: 25px;
             }
 
             h4 {
-                font-size: 2.8rem;
+                font-size: 2.2rem;
                 margin: 0 0 20px;
             }
 
             p {
-                font-size: 2.4rem;
+                font-size: 2.2rem;
                 margin-bottom: 25px;
                 line-height: 1.6;
             }
 
             li {
-                font-size: 2.4rem;
+                font-size: 2.2rem;
                 padding-left: 50px;
             }
 
@@ -1080,20 +1047,8 @@
                 left: 15px;
             }
 
-            pre.code-box {
-                font-size: 1.6rem;
-                padding: 50px 30px 30px;
-            }
-
-            .copy-btn {
-                font-size: 1.1rem;
-                padding: 10px 20px;
-                top: 15px;
-                right: 15px;
-            }
-
             .block-image {
-                width: 45%;
+                width: 30%;
                 border-width: 6px;
                 border-radius: 25px;
             }
@@ -1164,7 +1119,7 @@
 
             .bottom-sheet {
                 padding: 50px 40px;
-                border-radius: 40px 40px 0 0;
+                border-radius: 16px 0 0 0;
                 max-width: 650px;
                 max-height: 80vh;
                 /* Ajuste para PC */
@@ -1182,13 +1137,14 @@
             .quiz-close-btn {
                 width: 60px;
                 height: 60px;
-                font-size: 2.5rem;
+                font-size: 2.2rem;
                 top: 30px;
                 right: 30px;
             }
 
             #quiz-container {
-                max-width: 1200px;
+                max-width: 1300px;
+                /* Lo modifique*/
             }
 
             .quiz-prompt-card {
@@ -1203,7 +1159,7 @@
             }
 
             .quiz-prompt-desc {
-                font-size: 2.4rem;
+                font-size: 2.2rem;
                 margin-bottom: 40px;
             }
 
@@ -1211,7 +1167,7 @@
                 padding: 25px;
                 border-radius: 25px;
                 border-width: 4px;
-                font-size: 2.8rem;
+                font-size: 2.2rem;
                 margin-bottom: 40px;
             }
 
@@ -1222,7 +1178,7 @@
             }
 
             .quiz-q-header {
-                font-size: 2.4rem;
+                font-size: 2.2rem;
                 margin-bottom: 20px;
             }
 
@@ -1239,7 +1195,7 @@
             }
 
             .kh-btn {
-                font-size: 2.4rem;
+                font-size: 2.2rem;
                 padding: 25px 35px;
                 border-radius: 25px;
                 border-width: 3px;
@@ -1345,6 +1301,325 @@
                 font-size: 1.4rem;
                 letter-spacing: 2px;
             }
+        }
+
+        /* ==========================================================================
+           ESTILOS ESTRICTAMENTE ENCAPSULADOS PARA NO AFECTAR LA PÁGINA ANFITRIONA
+           ========================================================================== */
+
+        /* 1. Reset para proteger el componente de los estilos de tu web, y viceversa */
+        .ds-wrapper {
+            all: revert;
+            /* Evita heredar estilos que rompan el diseño */
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: block;
+            margin: 0 auto;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            color: #334155;
+            box-sizing: border-box;
+            line-height: 1.5;
+            text-align: left;
+            width: 100%;
+            height: 80vh;
+        }
+
+        .ds-wrapper * {
+            box-sizing: border-box;
+        }
+
+        /* 2. Reset de tipografía interna para evitar que la plantilla anfitriona herede sus h3 o p */
+        .ds-wrapper h3.ds-title {
+            margin: 0 0 24px 0 !important;
+            font-size: 1.25rem !important;
+            color: #1e293b !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+            padding-bottom: 12px !important;
+            font-weight: 600 !important;
+            line-height: 1.2 !important;
+            text-transform: none !important;
+        }
+
+        .ds-wrapper p {
+            margin: 0 0 4px 0 !important;
+            padding: 0 !important;
+            font-size: 0.875rem !important;
+            color: #475569 !important;
+            line-height: 1.5 !important;
+        }
+
+        .ds-wrapper span {
+            font-family: inherit;
+        }
+
+        /* 3. Estructura y Grid */
+        .ds-wrapper .ds-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .ds-wrapper .ds-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .ds-wrapper .ds-chart-container {
+            background: #f8fafc;
+            border: 1px solid #f1f5f9;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        /* 4. Controles y Formularios */
+        .ds-wrapper .ds-control-group {
+            margin-bottom: 24px;
+        }
+
+        .ds-wrapper .ds-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 12px;
+        }
+
+        .ds-wrapper .ds-value-highlight {
+            font-size: 1.125rem;
+            font-weight: bold;
+        }
+
+        .ds-wrapper .ds-value-highlight.blue {
+            color: #2563eb;
+        }
+
+        .ds-wrapper .ds-value-highlight.green {
+            color: #16a34a;
+        }
+
+        .ds-wrapper .ds-value-highlight.purple {
+            color: #9333ea;
+        }
+
+        .ds-wrapper .ds-value-highlight.orange {
+            color: #ea580c;
+        }
+
+        .ds-wrapper .ds-value-highlight.red {
+            color: #dc2626;
+        }
+
+        .ds-wrapper .ds-value-highlight.pink {
+            color: #db2777;
+        }
+
+        .ds-wrapper .ds-value-highlight.teal {
+            color: #0d9488;
+        }
+
+        .ds-wrapper .ds-value-highlight.indigo {
+            color: #4f46e5;
+        }
+
+        .ds-wrapper .ds-slider {
+            width: 100%;
+            cursor: pointer;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+            margin: 10px 0;
+            padding: 0;
+            border: none;
+        }
+
+        .ds-wrapper .ds-slider::-webkit-slider-thumb {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: currentColor;
+            cursor: pointer;
+            border: none;
+        }
+
+        .ds-wrapper .ds-slider.blue {
+            color: #2563eb;
+        }
+
+        .ds-wrapper .ds-slider.green {
+            color: #16a34a;
+        }
+
+        .ds-wrapper .ds-slider.purple {
+            color: #9333ea;
+        }
+
+        .ds-wrapper .ds-slider.orange {
+            color: #ea580c;
+        }
+
+        .ds-wrapper .ds-slider.red {
+            color: #dc2626;
+        }
+
+        .ds-wrapper .ds-slider.pink {
+            color: #db2777;
+        }
+
+        .ds-wrapper .ds-slider.gray {
+            color: #64748b;
+        }
+
+        .ds-wrapper .ds-slider.teal {
+            color: #0d9488;
+        }
+
+        .ds-wrapper .ds-slider.indigo {
+            color: #4f46e5;
+        }
+
+        .ds-wrapper .ds-slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        .ds-wrapper .ds-slider-labels span {
+            color: #94a3b8 !important;
+        }
+
+        /* 5. Cajas de Resumen */
+        .ds-wrapper .ds-summary {
+            background: #f1f5f9;
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .ds-wrapper .ds-summary .ds-big-num {
+            font-size: 2.25rem !important;
+            font-weight: bold !important;
+            margin: 4px 0 0 0 !important;
+            line-height: 1.1 !important;
+        }
+
+        .ds-wrapper .ds-summary .ds-unit {
+            font-size: 1.125rem !important;
+            font-weight: 500 !important;
+            color: #64748b !important;
+        }
+
+        /* 6. Textos dentro del SVG (Blindaje extra) */
+        .ds-wrapper svg {
+            display: block;
+            overflow: visible;
+        }
+
+        .ds-wrapper .ds-svg-text {
+            font-family: system-ui, -apple-system, sans-serif !important;
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            fill: #64748b;
+        }
+
+        .ds-wrapper .ds-svg-text-bold {
+            font-family: system-ui, -apple-system, sans-serif !important;
+            font-size: 12px !important;
+            font-weight: bold !important;
+        }
+
+        .code-mini {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+
+            width: 100%;
+
+            background: #0f172a;
+            border-radius: 12px;
+            border: 1.5px solid #334155;
+
+            color: white;
+
+            padding: 12px 15px;
+        }
+
+        /* 👇 CLAVE */
+        .code-mini pre {
+            margin: 0;
+            padding: 0;
+            flex: 1;
+
+            overflow-x: auto;
+            /* ✅ solo horizontal */
+            overflow-y: hidden;
+            /* ❌ elimina scroll vertical */
+
+            white-space: pre;
+            /* ✅ mantiene saltos */
+        }
+
+        .code-mini button {
+            position: relative;
+            overflow: hidden;
+
+            background: linear-gradient(135deg, #2563eb, #06b6d4);
+            border: none;
+            color: #fff;
+
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+
+            padding: 6px 14px;
+            border-radius: 999px;
+            /* 🔥 pill shape */
+
+            cursor: pointer;
+
+            transition: all 0.25s ease;
+
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* hover */
+        .code-mini button:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        /* click */
+        .code-mini button:active {
+            transform: scale(0.95);
+        }
+
+        /* efecto copiado */
+        .code-mini button.copied {
+            background: linear-gradient(135deg, #10b981, #34d399);
+        }
+
+        /* MathJax */
+        .code-mini mjx-container {
+            font-size: 2.2rem !important;
+            margin: 0 !important;
         }
     </style>
 </head>
@@ -1506,18 +1781,6 @@
                 </button>
             </section>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
         <div class="slide-wrapper">
             <section>
@@ -2715,6 +2978,18 @@
 
             </section>
         </div>
+        <div class="slide-wrapper">
+            <section>
+                <button class="btn-eval-main" onclick="window.openNamePrompt('u2')">
+                    <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5" style="margin-right:15px;">
+                        <path d="M9 11l3 3L22 4"></path>
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    </svg>
+                    ACTIVIDAD 02
+                </button>
+            </section>
+        </div>
     </div>
 
     <!-- --------------------------------- -->
@@ -3046,6 +3321,18 @@
                         </p>
                     </div>
                 </div>
+            </section>
+        </div>
+        <div class="slide-wrapper">
+            <section>
+                <button class="btn-eval-main" onclick="window.openNamePrompt('u3')">
+                    <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5" style="margin-right:15px;">
+                        <path d="M9 11l3 3L22 4"></path>
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    </svg>
+                    ACTIVIDAD 03
+                </button>
             </section>
         </div>
     </div>
@@ -3692,6 +3979,18 @@
                 </div>
             </section>
         </div>
+        <div class="slide-wrapper">
+            <section>
+                <button class="btn-eval-main" onclick="window.openNamePrompt('u4')">
+                    <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5" style="margin-right:15px;">
+                        <path d="M9 11l3 3L22 4"></path>
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    </svg>
+                    ACTIVIDAD 04
+                </button>
+            </section>
+        </div>
     </div>
 
     <!-- --------------------------------- -->
@@ -4251,6 +4550,18 @@
                         </p>
                     </div>
                 </div>
+            </section>
+        </div>
+        <div class="slide-wrapper">
+            <section>
+                <button class="btn-eval-main" onclick="window.openNamePrompt('u5')">
+                    <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5" style="margin-right:15px;">
+                        <path d="M9 11l3 3L22 4"></path>
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    </svg>
+                    ACTIVIDAD 05
+                </button>
             </section>
         </div>
     </div>
@@ -4837,6 +5148,18 @@
                 </div>
             </section>
         </div>
+        <div class="slide-wrapper">
+            <section>
+                <button class="btn-eval-main" onclick="window.openNamePrompt('u6')">
+                    <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5" style="margin-right:15px;">
+                        <path d="M9 11l3 3L22 4"></path>
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    </svg>
+                    ACTIVIDAD 06
+                </button>
+            </section>
+        </div>
     </div>
 
     <!-- --------------------------------- -->
@@ -5236,6 +5559,18 @@
 
             </section>
         </div>
+        <div class="slide-wrapper">
+            <section>
+                <button class="btn-eval-main" onclick="window.openNamePrompt('u7')">
+                    <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5" style="margin-right:15px;">
+                        <path d="M9 11l3 3L22 4"></path>
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    </svg>
+                    ACTIVIDAD 07
+                </button>
+            </section>
+        </div>
     </div>
 
     <!-- --------------------------------- -->
@@ -5508,6 +5843,18 @@
                 </div>
             </section>
         </div>
+        <div class="slide-wrapper">
+            <section>
+                <button class="btn-eval-main" onclick="window.openNamePrompt('u8')">
+                    <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5" style="margin-right:15px;">
+                        <path d="M9 11l3 3L22 4"></path>
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    </svg>
+                    ACTIVIDAD 08
+                </button>
+            </section>
+        </div>
     </div>
 
     <!-- --------------------------------- -->
@@ -5697,6 +6044,18 @@
                 </div>
             </section>
         </div>
+        <div class="slide-wrapper">
+            <section>
+                <button class="btn-eval-main" onclick="window.openNamePrompt('u9')">
+                    <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5" style="margin-right:15px;">
+                        <path d="M9 11l3 3L22 4"></path>
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    </svg>
+                    ACTIVIDAD 09
+                </button>
+            </section>
+        </div>
     </div>
 
     <!-- --------------------------------- -->
@@ -5801,14 +6160,8 @@
                 <span class="topic-num">08</span>
             </div>
 
-            <div class="topic-btn" onclick="window.scrollToId('top')"
-                style="background: var(--bg-body); border-color: var(--primary);">
-                <span>Inicio de página</span>
-                <span class="topic-num">TOP</span>
-            </div>
-
             <div id="panel-clock"
-                style="font-family:monospace; font-size:1.8rem; text-align:center; padding:15px; background:#f8fafc; border-radius:20px; margin:15px 0; border:3px dashed var(--secondary);">
+                style="font-family:monospace; font-size:1.8rem; text-align:center; padding:15px; background:#f8fafc; border-radius:20px; margin:15px 0; border:3px dashed var(--secondary); color: var(--secondary);">
                 00:00:00
             </div>
 
@@ -5841,6 +6194,1170 @@
                     { type: "choice", q: "¿Qué es la eficiencia?", options: ["Cumplir objetivos usando bien los recursos", "Cumplir metas sin importar costos", "Dar órdenes", "Supervisar empleados"], a: "Cumplir objetivos usando bien los recursos" },
 
                     { type: "choice", q: "¿Qué es una organización?", options: ["Grupo de personas con un objetivo común", "Una empresa grande", "Un edificio", "Un jefe con empleados"], a: "Grupo de personas con un objetivo común" }
+                ]
+            },
+            u2: {
+                title: "Evaluación 02",
+                q: [
+
+                    {
+                        type: "choice",
+                        q: "¿Qué transformación permitió la Revolución Industrial en los sistemas de producción de bienes?",
+                        options: [
+                            "Uso de máquinas industriales",
+                            "Trabajo manual exclusivo",
+                            "Producción sin herramientas",
+                            "Intercambio sin fabricar"
+                        ],
+                        a: "Uso de máquinas industriales"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Cuál fue la principal razón para mejorar la administración en las empresas en crecimiento?",
+                        options: [
+                            "Evitar desorden interno",
+                            "Aumentar precios venta",
+                            "Reducir clientes activos",
+                            "Eliminar tareas diarias"
+                        ],
+                        a: "Evitar desorden interno"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿En qué consiste la división del trabajo dentro de una organización?",
+                        options: [
+                            "Asignar tareas específicas",
+                            "Hacer todo el trabajo",
+                            "Trabajar sin orden",
+                            "Eliminar funciones clave"
+                        ],
+                        a: "Asignar tareas específicas"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué problema aparece cuando no se coordina bien la división del trabajo en una empresa?",
+                        options: [
+                            "Falta coordinación laboral",
+                            "Exceso producción total",
+                            "Aumento salarios altos",
+                            "Reducción clientes fieles"
+                        ],
+                        a: "Falta coordinación laboral"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Desde cuándo se considera que existe la administración como práctica organizada?",
+                        options: [
+                            "Desde tiempos antiguos",
+                            "Desde era digital actual",
+                            "Desde siglo veinte moderno",
+                            "Desde globalización mundial"
+                        ],
+                        a: "Desde tiempos antiguos"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué actividad realiza un administrador para definir lo que se hará en el futuro?",
+                        options: [
+                            "Planificar acciones futuras",
+                            "Eliminar objetivos claros",
+                            "Improvisar decisiones diarias",
+                            "Reducir metas empresa"
+                        ],
+                        a: "Planificar acciones futuras"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "Según Frederick Taylor (1911), ¿qué acción permite mejorar el rendimiento del trabajo?",
+                        options: [
+                            "Analizar tareas detalladas",
+                            "Aumentar personal rápido",
+                            "Reducir jornada laboral",
+                            "Eliminar supervisión total"
+                        ],
+                        a: "Analizar tareas detalladas"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué busca la preparación dentro del enfoque de Taylor en la administración?",
+                        options: [
+                            "Capacitar trabajadores adecuados",
+                            "Reducir tareas complejas",
+                            "Eliminar formación laboral",
+                            "Evitar selección personal"
+                        ],
+                        a: "Capacitar trabajadores adecuados"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Cuál es la finalidad del control dentro del proceso administrativo?",
+                        options: [
+                            "Verificar trabajo correcto",
+                            "Evitar toda supervisión",
+                            "Eliminar revisión tareas",
+                            "Reducir control interno"
+                        ],
+                        a: "Verificar trabajo correcto"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué implica la ejecución dentro de la administración de una empresa?",
+                        options: [
+                            "Distribuir responsabilidades claras",
+                            "Evitar trabajo conjunto",
+                            "Centralizar decisiones únicas",
+                            "Eliminar roles definidos"
+                        ],
+                        a: "Distribuir responsabilidades claras"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "Según Henri Fayol (1916), ¿desde qué nivel debe organizarse la empresa correctamente?",
+                        options: [
+                            "Desde dirección general",
+                            "Desde nivel operativo base",
+                            "Desde clientes externos",
+                            "Desde proveedores directos"
+                        ],
+                        a: "Desde dirección general"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué principio de Fayol establece que cada trabajador recibe órdenes de un solo jefe?",
+                        options: [
+                            "Unidad de mando clara",
+                            "División trabajo total",
+                            "Jerarquía organizacional",
+                            "Disciplina organizacional"
+                        ],
+                        a: "Unidad de mando clara"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué representa la autoridad dentro de una organización según Fayol?",
+                        options: [
+                            "Derecho dar órdenes",
+                            "Obligación obedecer siempre",
+                            "Evitar responsabilidades",
+                            "Reducir decisiones clave"
+                        ],
+                        a: "Derecho dar órdenes"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué permite la jerarquía dentro de la estructura organizacional de la empresa?",
+                        options: [
+                            "Definir niveles autoridad",
+                            "Eliminar roles internos",
+                            "Evitar comunicación laboral",
+                            "Reducir funciones clave"
+                        ],
+                        a: "Definir niveles autoridad"
+                    }
+
+                ]
+            },
+            u3: {
+                title: "Actividad 03",
+                q: [
+
+                    {
+                        type: "choice",
+                        q: "¿Cómo se define una empresa dentro del contexto económico y organizacional?",
+                        options: [
+                            "Organización produce bienes",
+                            "Grupo sin objetivo claro",
+                            "Actividad sin recursos",
+                            "Sistema sin mercado"
+                        ],
+                        a: "Organización produce bienes"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Cuál es el objetivo principal que busca una empresa al operar en el mercado?",
+                        options: [
+                            "Generar beneficios económicos",
+                            "Reducir producción total",
+                            "Evitar ventas continuas",
+                            "Eliminar competencia directa"
+                        ],
+                        a: "Generar beneficios económicos"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Quiénes forman parte de la estructura interna de una empresa?",
+                        options: [
+                            "Personas con funciones",
+                            "Solo clientes externos",
+                            "Solo proveedores base",
+                            "Máquinas únicamente"
+                        ],
+                        a: "Personas con funciones"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué tipo de recurso representa a las personas que trabajan dentro de la empresa?",
+                        options: [
+                            "Recursos humanos activos",
+                            "Recursos físicos base",
+                            "Recursos financieros base",
+                            "Recursos técnicos base"
+                        ],
+                        a: "Recursos humanos activos"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué recurso permite a la empresa tomar decisiones y operar económicamente?",
+                        options: [
+                            "Recursos financieros disponibles",
+                            "Recursos humanos activos",
+                            "Recursos físicos base",
+                            "Recursos técnicos base"
+                        ],
+                        a: "Recursos financieros disponibles"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué tipo de recurso incluye maquinaria, equipos e instalaciones dentro de la empresa?",
+                        options: [
+                            "Recursos materiales físicos",
+                            "Recursos humanos activos",
+                            "Recursos financieros base",
+                            "Recursos técnicos base"
+                        ],
+                        a: "Recursos materiales físicos"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué recurso está relacionado con conocimientos, sistemas y herramientas tecnológicas?",
+                        options: [
+                            "Recursos tecnológicos modernos",
+                            "Recursos humanos activos",
+                            "Recursos físicos base",
+                            "Recursos financieros base"
+                        ],
+                        a: "Recursos tecnológicos modernos"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Cuál es la finalidad principal de una empresa dentro de la economía?",
+                        options: [
+                            "Obtener ganancias económicas",
+                            "Evitar ventas continuas",
+                            "Reducir producción total",
+                            "Eliminar costos directos"
+                        ],
+                        a: "Obtener ganancias económicas"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué finalidad social cumple una empresa dentro de la sociedad?",
+                        options: [
+                            "Generar empleo social",
+                            "Reducir consumo general",
+                            "Eliminar servicios básicos",
+                            "Evitar desarrollo económico"
+                        ],
+                        a: "Generar empleo social"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué busca una empresa mantenerse a largo plazo dentro del mercado competitivo?",
+                        options: [
+                            "Permanecer crecer competir",
+                            "Reducir presencia total",
+                            "Evitar innovación constante",
+                            "Eliminar clientes fieles"
+                        ],
+                        a: "Permanecer crecer competir"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Cómo se clasifican las empresas que transforman materias primas en productos?",
+                        options: [
+                            "Empresas industriales productivas",
+                            "Empresas comerciales básicas",
+                            "Empresas servicios directos",
+                            "Empresas mixtas públicas"
+                        ],
+                        a: "Empresas industriales productivas"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué tipo de empresa se dedica principalmente a comprar y vender productos?",
+                        options: [
+                            "Empresas comerciales activas",
+                            "Empresas industriales base",
+                            "Empresas servicios directos",
+                            "Empresas públicas base"
+                        ],
+                        a: "Empresas comerciales activas"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué tipo de empresa ofrece servicios como salud, educación o transporte?",
+                        options: [
+                            "Empresas servicios directos",
+                            "Empresas industriales base",
+                            "Empresas comerciales base",
+                            "Empresas privadas base"
+                        ],
+                        a: "Empresas servicios directos"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Cómo se clasifican las empresas con pocos trabajadores y recursos limitados?",
+                        options: [
+                            "Empresas pequeñas básicas",
+                            "Empresas grandes globales",
+                            "Empresas medianas activas",
+                            "Empresas públicas base"
+                        ],
+                        a: "Empresas pequeñas básicas"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué tipo de empresa pertenece al Estado dentro de su clasificación por propiedad?",
+                        options: [
+                            "Empresas públicas estatales",
+                            "Empresas privadas base",
+                            "Empresas mixtas activas",
+                            "Empresas comerciales base"
+                        ],
+                        a: "Empresas públicas estatales"
+                    }
+
+                ]
+            },
+            u4: {
+                title: "Actividad 04",
+                q: [
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es la planeación dentro del proceso administrativo de una empresa?",
+                        options: [
+                            "Decidir acciones anticipadas",
+                            "Ejecutar tareas directas",
+                            "Controlar resultados finales",
+                            "Supervisar actividades diarias"
+                        ],
+                        a: "Decidir acciones anticipadas"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué busca la planeación al momento de aplicarse dentro de la empresa?",
+                        options: [
+                            "Definir objetivos y recursos",
+                            "Eliminar metas futuras",
+                            "Reducir control interno",
+                            "Evitar decisiones clave"
+                        ],
+                        a: "Definir objetivos y recursos"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿En qué momento se realiza la planeación dentro de las actividades empresariales?",
+                        options: [
+                            "Antes ejecutar actividades",
+                            "Durante control interno",
+                            "Después evaluar resultados",
+                            "Al finalizar procesos"
+                        ],
+                        a: "Antes ejecutar actividades"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué indica el principio de anticipación dentro de la planeación?",
+                        options: [
+                            "Prever hechos futuros",
+                            "Actuar sin análisis previo",
+                            "Eliminar planificación total",
+                            "Evitar decisiones futuras"
+                        ],
+                        a: "Prever hechos futuros"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué establece el principio de flexibilidad en la planeación administrativa?",
+                        options: [
+                            "Adaptarse a cambios",
+                            "Mantener planes rígidos",
+                            "Evitar ajustes futuros",
+                            "Eliminar modificaciones"
+                        ],
+                        a: "Adaptarse a cambios"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué busca el principio de unidad dentro de los planes de la empresa?",
+                        options: [
+                            "Planes alineados objetivos",
+                            "Acciones sin relación",
+                            "Metas aisladas independientes",
+                            "Procesos sin dirección"
+                        ],
+                        a: "Planes alineados objetivos"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué establece el principio de precisión en la elaboración de los planes?",
+                        options: [
+                            "Planes claros definidos",
+                            "Planes ambiguos generales",
+                            "Acciones sin detalle",
+                            "Objetivos sin claridad"
+                        ],
+                        a: "Planes claros definidos"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué indica el principio de factibilidad dentro del proceso de planeación?",
+                        options: [
+                            "Planes posibles cumplir",
+                            "Objetivos imposibles lograr",
+                            "Metas sin recursos",
+                            "Acciones sin viabilidad"
+                        ],
+                        a: "Planes posibles cumplir"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué son las políticas dentro del proceso de planeación empresarial?",
+                        options: [
+                            "Guías decisiones generales",
+                            "Órdenes específicas diarias",
+                            "Tareas operativas directas",
+                            "Acciones sin control"
+                        ],
+                        a: "Guías decisiones generales"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Cuál es la función principal de las políticas dentro de la empresa?",
+                        options: [
+                            "Orientar decisiones laborales",
+                            "Eliminar reglas internas",
+                            "Reducir control general",
+                            "Evitar organización interna"
+                        ],
+                        a: "Orientar decisiones laborales"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué son las estrategias dentro de la planeación administrativa?",
+                        options: [
+                            "Acciones lograr objetivos",
+                            "Tareas sin dirección",
+                            "Procesos sin planificación",
+                            "Metas sin ejecución"
+                        ],
+                        a: "Acciones lograr objetivos"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué son los procedimientos dentro de la organización de la empresa?",
+                        options: [
+                            "Pasos ordenados actividades",
+                            "Decisiones sin estructura",
+                            "Acciones sin secuencia",
+                            "Procesos sin control"
+                        ],
+                        a: "Pasos ordenados actividades"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué son los programas dentro del proceso de planeación empresarial?",
+                        options: [
+                            "Actividades tiempo responsables",
+                            "Acciones sin responsables",
+                            "Procesos sin duración",
+                            "Planes sin organización"
+                        ],
+                        a: "Actividades tiempo responsables"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es un presupuesto dentro de la planeación financiera de la empresa?",
+                        options: [
+                            "Plan ingresos gastos",
+                            "Registro sin control",
+                            "Gastos sin planificación",
+                            "Ingresos sin registro"
+                        ],
+                        a: "Plan ingresos gastos"
+                    }
+
+                ]
+            },
+            u5: {
+                title: "Actividad 05",
+                q: [
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es la organización dentro del proceso administrativo de una empresa?",
+                        options: [
+                            "Ordenar recursos empresa",
+                            "Ejecutar tareas directas",
+                            "Controlar resultados finales",
+                            "Supervisar acciones diarias"
+                        ],
+                        a: "Ordenar recursos empresa"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué busca la organización al aplicarse dentro de la empresa?",
+                        options: [
+                            "Distribuir tareas coordinar",
+                            "Eliminar funciones clave",
+                            "Reducir metas empresa",
+                            "Evitar decisiones clave"
+                        ],
+                        a: "Distribuir tareas coordinar"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Por qué es importante la organización dentro del trabajo empresarial?",
+                        options: [
+                            "Evitar confusiones laborales",
+                            "Reducir uso recursos",
+                            "Eliminar control interno",
+                            "Aumentar errores diarios"
+                        ],
+                        a: "Evitar confusiones laborales"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es un objetivo dentro de la planificación de la empresa?",
+                        options: [
+                            "Resultado lograr tiempo",
+                            "Acción sin dirección",
+                            "Proceso sin finalidad",
+                            "Actividad sin control"
+                        ],
+                        a: "Resultado lograr tiempo"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué significa que un objetivo sea específico dentro del modelo SMART?",
+                        options: [
+                            "Claro concreto definido",
+                            "General amplio abierto",
+                            "Difuso poco claro",
+                            "Ambiguo sin detalle"
+                        ],
+                        a: "Claro concreto definido"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué representa la característica medible dentro del modelo SMART?",
+                        options: [
+                            "Permite evaluar resultados",
+                            "Evita medir avances",
+                            "Elimina control total",
+                            "Reduce seguimiento plan"
+                        ],
+                        a: "Permite evaluar resultados"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es un objetivo general dentro de una empresa?",
+                        options: [
+                            "Meta principal empresa",
+                            "Tarea pequeña diaria",
+                            "Acción sin dirección",
+                            "Proceso sin control"
+                        ],
+                        a: "Meta principal empresa"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué son los objetivos específicos dentro de la planificación empresarial?",
+                        options: [
+                            "Metas pequeñas paso",
+                            "Acciones sin orden",
+                            "Procesos sin control",
+                            "Tareas sin dirección"
+                        ],
+                        a: "Metas pequeñas paso"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es la organización formal dentro de la empresa?",
+                        options: [
+                            "Estructura oficial cargos",
+                            "Relaciones sin control",
+                            "Acciones informales diarias",
+                            "Comunicación sin reglas"
+                        ],
+                        a: "Estructura oficial cargos"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es la organización informal dentro de la empresa?",
+                        options: [
+                            "Relaciones naturales personas",
+                            "Estructura oficial cargos",
+                            "Funciones definidas empresa",
+                            "Autoridad jerárquica formal"
+                        ],
+                        a: "Relaciones naturales personas"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué representan los niveles jerárquicos dentro de una organización?",
+                        options: [
+                            "Niveles autoridad empresa",
+                            "Tareas sin orden",
+                            "Procesos sin control",
+                            "Acciones sin dirección"
+                        ],
+                        a: "Niveles autoridad empresa"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Cuál es el nivel estratégico dentro de la empresa?",
+                        options: [
+                            "Decisiones alta dirección",
+                            "Ejecución tareas diarias",
+                            "Supervisión operativa básica",
+                            "Control actividades simples"
+                        ],
+                        a: "Decisiones alta dirección"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Cuál es el nivel táctico dentro de la estructura organizacional?",
+                        options: [
+                            "Coordinar supervisar planes",
+                            "Tomar decisiones finales",
+                            "Ejecutar tareas básicas",
+                            "Realizar acciones simples"
+                        ],
+                        a: "Coordinar supervisar planes"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Cuál es el nivel operativo dentro de la empresa?",
+                        options: [
+                            "Ejecutar tareas diarias",
+                            "Definir objetivos empresa",
+                            "Planificar estrategias globales",
+                            "Controlar decisiones clave"
+                        ],
+                        a: "Ejecutar tareas diarias"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué caracteriza a la organización lineal dentro de una empresa?",
+                        options: [
+                            "Un jefe por trabajador",
+                            "Varios jefes simultáneos",
+                            "Sin niveles autoridad",
+                            "Estructura sin control"
+                        ],
+                        a: "Un jefe por trabajador"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué caracteriza a la organización funcional dentro de la empresa?",
+                        options: [
+                            "Áreas con jefes especialistas",
+                            "Un solo jefe total",
+                            "Sin división funciones",
+                            "Sin estructura formal"
+                        ],
+                        a: "Áreas con jefes especialistas"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué caracteriza a la organización matricial dentro de la empresa?",
+                        options: [
+                            "Dos jefes por persona",
+                            "Un jefe por área",
+                            "Sin autoridad definida",
+                            "Estructura sin control"
+                        ],
+                        a: "Dos jefes por persona"
+                    }
+
+                ]
+            },
+            u6: {
+                title: "Actividad 06",
+                q: [
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es la dirección dentro del proceso administrativo de una empresa?",
+                        options: [
+                            "Guiar personas objetivos",
+                            "Controlar resultados finales",
+                            "Organizar recursos empresa",
+                            "Planificar acciones futuras"
+                        ],
+                        a: "Guiar personas objetivos"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Por qué es importante la dirección dentro de la empresa?",
+                        options: [
+                            "Lograr objetivos empresariales",
+                            "Reducir tareas laborales",
+                            "Eliminar control interno",
+                            "Evitar trabajo conjunto"
+                        ],
+                        a: "Lograr objetivos empresariales"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué característica define a un buen director dentro de la organización?",
+                        options: [
+                            "Guía comunica motiva",
+                            "Evita decisiones clave",
+                            "Reduce trabajo equipo",
+                            "Elimina responsabilidades"
+                        ],
+                        a: "Guía comunica motiva"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué establece el principio de unidad de mando dentro de la dirección?",
+                        options: [
+                            "Un jefe por trabajador",
+                            "Varios jefes simultáneos",
+                            "Sin autoridad definida",
+                            "Sin estructura formal"
+                        ],
+                        a: "Un jefe por trabajador"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué indica el principio de motivación dentro del trabajo en la empresa?",
+                        options: [
+                            "Impulsar esfuerzo laboral",
+                            "Reducir interés trabajo",
+                            "Eliminar compromiso total",
+                            "Evitar participación activa"
+                        ],
+                        a: "Impulsar esfuerzo laboral"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué busca el principio de comunicación dentro de la dirección empresarial?",
+                        options: [
+                            "Comunicación clara empresa",
+                            "Evitar información interna",
+                            "Reducir interacción laboral",
+                            "Eliminar diálogo equipo"
+                        ],
+                        a: "Comunicación clara empresa"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué establece el principio de liderazgo dentro de la dirección?",
+                        options: [
+                            "Guiar ejemplo equipo",
+                            "Evitar participación grupo",
+                            "Eliminar apoyo laboral",
+                            "Reducir influencia jefe"
+                        ],
+                        a: "Guiar ejemplo equipo"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es la autoridad dentro de una empresa?",
+                        options: [
+                            "Derecho dar órdenes",
+                            "Obligación obedecer siempre",
+                            "Evitar responsabilidades",
+                            "Reducir decisiones clave"
+                        ],
+                        a: "Derecho dar órdenes"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es la responsabilidad dentro del trabajo organizacional?",
+                        options: [
+                            "Cumplir tareas asignadas",
+                            "Evitar funciones laborales",
+                            "Reducir compromiso total",
+                            "Eliminar resultados finales"
+                        ],
+                        a: "Cumplir tareas asignadas"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es la delegación dentro de la dirección empresarial?",
+                        options: [
+                            "Asignar tareas autoridad",
+                            "Eliminar funciones jefe",
+                            "Reducir control empresa",
+                            "Evitar decisiones clave"
+                        ],
+                        a: "Asignar tareas autoridad"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es el poder dentro de una organización?",
+                        options: [
+                            "Influir comportamiento personas",
+                            "Evitar decisiones empresa",
+                            "Reducir autoridad laboral",
+                            "Eliminar control interno"
+                        ],
+                        a: "Influir comportamiento personas"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es la motivación dentro del trabajo en la empresa?",
+                        options: [
+                            "Impulso realizar trabajo",
+                            "Evitar esfuerzo laboral",
+                            "Reducir interés personal",
+                            "Eliminar compromiso total"
+                        ],
+                        a: "Impulso realizar trabajo"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es el liderazgo dentro de la dirección empresarial?",
+                        options: [
+                            "Guiar influir motivar",
+                            "Evitar dirección equipo",
+                            "Reducir participación grupo",
+                            "Eliminar objetivos claros"
+                        ],
+                        a: "Guiar influir motivar"
+                    }
+
+                ]
+            },
+            u7: {
+                title: "Actividad 07",
+                q: [
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es la dotación de personal dentro de la administración de una empresa?",
+                        options: [
+                            "Asignar personas adecuadas",
+                            "Eliminar funciones laborales",
+                            "Reducir número trabajadores",
+                            "Evitar selección personal"
+                        ],
+                        a: "Asignar personas adecuadas"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué busca la dotación de personal dentro de la organización empresarial?",
+                        options: [
+                            "Habilidades adecuadas trabajo",
+                            "Reducir capacidades laborales",
+                            "Eliminar formación personal",
+                            "Evitar selección correcta"
+                        ],
+                        a: "Habilidades adecuadas trabajo"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es la administración de personal dentro de la empresa?",
+                        options: [
+                            "Gestionar trabajadores empresa",
+                            "Eliminar control laboral",
+                            "Reducir funciones clave",
+                            "Evitar supervisión directa"
+                        ],
+                        a: "Gestionar trabajadores empresa"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es el diseño de trabajo dentro de una organización empresarial?",
+                        options: [
+                            "Organizar tareas puesto",
+                            "Eliminar funciones trabajo",
+                            "Reducir actividades diarias",
+                            "Evitar planificación tareas"
+                        ],
+                        a: "Organizar tareas puesto"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es la especialización del trabajo dentro de la empresa?",
+                        options: [
+                            "Realizar tarea específica",
+                            "Hacer todas funciones",
+                            "Evitar tareas repetidas",
+                            "Eliminar roles definidos"
+                        ],
+                        a: "Realizar tarea específica"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es la rotación de puestos dentro de la empresa?",
+                        options: [
+                            "Cambiar tareas trabajadores",
+                            "Eliminar funciones laborales",
+                            "Reducir personal empresa",
+                            "Evitar aprendizaje laboral"
+                        ],
+                        a: "Cambiar tareas trabajadores"
+                    }
+
+                ]
+            },
+            u8: {
+                title: "Actividad 08",
+                q: [
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es el control dentro del proceso administrativo de una empresa?",
+                        options: [
+                            "Verificar trabajo planificado",
+                            "Ejecutar tareas diarias",
+                            "Organizar recursos empresa",
+                            "Planificar acciones futuras"
+                        ],
+                        a: "Verificar trabajo planificado"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Cuál es el primer paso dentro del proceso de control en la empresa?",
+                        options: [
+                            "Definir estándares trabajo",
+                            "Medir desempeño laboral",
+                            "Comparar resultados finales",
+                            "Corregir errores proceso"
+                        ],
+                        a: "Definir estándares trabajo"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Cuál es el segundo paso dentro del proceso de control administrativo?",
+                        options: [
+                            "Medir desempeño laboral",
+                            "Definir estándares trabajo",
+                            "Comparar resultados finales",
+                            "Corregir errores proceso"
+                        ],
+                        a: "Medir desempeño laboral"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Cuál es el tercer paso dentro del proceso de control dentro de la empresa?",
+                        options: [
+                            "Comparar resultados obtenidos",
+                            "Definir estándares trabajo",
+                            "Medir desempeño laboral",
+                            "Corregir errores proceso"
+                        ],
+                        a: "Comparar resultados obtenidos"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Cuál es el cuarto paso dentro del proceso de control administrativo?",
+                        options: [
+                            "Corregir errores proceso",
+                            "Definir estándares trabajo",
+                            "Medir desempeño laboral",
+                            "Comparar resultados finales"
+                        ],
+                        a: "Corregir errores proceso"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué son los sistemas de información administrativos dentro de la empresa?",
+                        options: [
+                            "Organizar controlar actividades",
+                            "Eliminar funciones laborales",
+                            "Reducir control empresa",
+                            "Evitar decisiones clave"
+                        ],
+                        a: "Organizar controlar actividades"
+                    }
+
+                ]
+            },
+            u9: {
+                title: "Actividad 09",
+                q: [
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es la coordinación dentro del proceso administrativo de la empresa?",
+                        options: [
+                            "Unir esfuerzos actividades",
+                            "Ejecutar tareas individuales",
+                            "Reducir trabajo conjunto",
+                            "Eliminar funciones clave"
+                        ],
+                        a: "Unir esfuerzos actividades"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué busca la coordinación dentro de las actividades de la empresa?",
+                        options: [
+                            "Trabajar hacia objetivos",
+                            "Evitar trabajo conjunto",
+                            "Reducir comunicación interna",
+                            "Eliminar metas empresa"
+                        ],
+                        a: "Trabajar hacia objetivos"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Cuál es una base fundamental de la coordinación dentro de la empresa?",
+                        options: [
+                            "Comunicación clara equipo",
+                            "Evitar diálogo interno",
+                            "Reducir interacción laboral",
+                            "Eliminar cooperación grupo"
+                        ],
+                        a: "Comunicación clara equipo"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué otra base importante permite mejorar la coordinación dentro del trabajo empresarial?",
+                        options: [
+                            "Trabajo en equipo activo",
+                            "Trabajo individual aislado",
+                            "Evitar colaboración laboral",
+                            "Reducir participación grupo"
+                        ],
+                        a: "Trabajo en equipo activo"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué elemento permite orientar correctamente la coordinación dentro de la empresa?",
+                        options: [
+                            "Objetivos claros definidos",
+                            "Metas sin dirección",
+                            "Acciones sin planificación",
+                            "Procesos sin control"
+                        ],
+                        a: "Objetivos claros definidos"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Por qué se considera la coordinación como la esencia del proceso administrativo?",
+                        options: [
+                            "Conecta funciones administrativas",
+                            "Elimina planificación empresa",
+                            "Reduce organización interna",
+                            "Evita control procesos"
+                        ],
+                        a: "Conecta funciones administrativas"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es la motivación positiva dentro del trabajo en la empresa?",
+                        options: [
+                            "Incentivar premios beneficios",
+                            "Aplicar castigos presión",
+                            "Reducir reconocimiento laboral",
+                            "Eliminar estímulos trabajo"
+                        ],
+                        a: "Incentivar premios beneficios"
+                    },
+
+                    {
+                        type: "choice",
+                        q: "¿Qué es la motivación negativa dentro de la empresa?",
+                        options: [
+                            "Presión castigos laborales",
+                            "Incentivos premios beneficios",
+                            "Reconocimiento desempeño laboral",
+                            "Motivación por logros"
+                        ],
+                        a: "Presión castigos laborales"
+                    }
+
                 ]
             }
         };
@@ -5901,6 +7418,7 @@
             const span = document.createElement('span');
             span.className = 'user-highlight';
             span.style.backgroundColor = color;
+            span.style.color = '#000';
             span.style.fontWeight = 500;
             span.onclick = function (e) {
                 e.stopPropagation();
@@ -6004,7 +7522,7 @@
 
             let html = `<div class="kahoot-answers-grid">`;
             opts.forEach((o, i) => {
-                html += `<button class="kh-btn" data-opt="${o}" onclick="window.checkA('${o}', this)"><div class="shape-tag" style="background:${colors[i % 4]}">${iconsSVG[i % 4]}</div>${o}</button>`;
+                html += `<button class="kh-btn" data-opt="${o}" onclick="window.checkA('${o}', this)"><div class="shape-tag" style="background:${colors[i % 4]}">${i + 1}</div>${o}</button>`;
             });
             html += `</div>`;
             document.getElementById('quiz-container').innerHTML = `
@@ -6019,13 +7537,13 @@
 
         function startTimer() {
             clearInterval(timerInterval);
-            timeLeft = 15;
+            timeLeft = 60;
             const bar = document.getElementById('t-bar');
             if (bar) bar.style.backgroundColor = "var(--secondary)";
 
             timerInterval = setInterval(() => {
                 timeLeft--;
-                if (bar) bar.style.width = (timeLeft / 15) * 100 + "%";
+                if (bar) bar.style.width = (timeLeft / 60) * 100 + "%";
                 if (timeLeft <= 5 && bar) bar.style.backgroundColor = "var(--wrong)";
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
