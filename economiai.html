@@ -34,23 +34,41 @@
            1. VARIABLES Y RESETEO BASE
            ========================================= */
         :root {
-            --primary: #1e3a8a;
-            --primary-light: #3b82f6;
-            --secondary: #0ea5e9;
-            --accent: #f59e0b;
-            --bg-body: #f1f5f9;
-            --card-bg: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --correct: #10b981;
-            --wrong: #ef4444;
-            --glass-dark: rgba(15, 23, 42, 0.95);
-            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            --hl-yellow: #fffb00;
-            --hl-green: #00ff59;
-            --hl-blue: #bfdbfe;
-            --hl-pink: #ff78c5;
+            --primary: #1368ce;
+            /* azul fuerte (acciones) */
+            --primary-light: #4f8df0;
+            /* azul claro */
+
+            --secondary: #d89e00;
+            /* amarillo atención */
+            --accent: #d89e00;
+            /* rojo destacado */
+
+            --bg-body: #2b2d31;
+            /* fondo principal oscuro */
+            --card-bg: #1e1f22;
+            /* tarjetas más oscuras */
+
+            --text-main: #f2f3f5;
+            /* texto principal claro */
+            --text-muted: #b5bac1;
+            /* texto secundario (menos brillo) */
+
+            --correct: #26890c;
+            /* verde correcto */
+            --wrong: #e21b3c;
+            /* rojo error */
+
+            --glass-dark: rgba(0, 0, 0, 0.85);
+
+            --shadow-md: 0 10px 20px rgba(0, 0, 0, 0.5);
+            --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.7);
+
+            --hl-yellow: #ffe100;
+            /* resaltado visible en oscuro */
+            --hl-green: #00ff84;
+            --hl-blue: #60a5fa;
+            --hl-pink: #ff4da6;
         }
 
         * {
@@ -150,7 +168,7 @@
         section {
             background: var(--card-bg);
             border-radius: 0;
-            padding: 40px 20px;
+            padding: 10px 10px;
             margin: 0;
             box-shadow: none;
             border: none;
@@ -182,7 +200,6 @@
 
         .slide-wrapper h2 {
             color: var(--primary);
-            margin: 0 0 25px;
             font-size: clamp(1.2rem, 4vw, 1.8rem);
             font-weight: 900;
             width: 100%;
@@ -192,13 +209,13 @@
 
         h3 {
             color: var(--primary);
-            margin: 0 0 25px;
             font-size: clamp(1.2rem, 4vw, 1.8rem);
             border-left: 6px solid var(--accent);
             padding-left: 12px;
             font-weight: 900;
             width: 100%;
             line-height: 1.2;
+            margin-bottom: 8px;
         }
 
         h4 {
@@ -472,7 +489,7 @@
         }
 
         .center-btn {
-            background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+            background: var(--primary-light);
             width: 45px;
             height: 45px;
             border-radius: 50%;
@@ -514,17 +531,17 @@
 
         /* Personalización de la barra de desplazamiento (Scrollbar) para los modales */
         .bottom-sheet::-webkit-scrollbar {
-            width: 6px;
+            width: 16px;
         }
 
         .bottom-sheet::-webkit-scrollbar-track {
             background: #f1f5f9;
-            border-radius: 10px;
+            border-radius: 1px;
         }
 
         .bottom-sheet::-webkit-scrollbar-thumb {
             background: var(--secondary);
-            border-radius: 10px;
+            border-radius: 1px;
         }
 
         .bottom-sheet.active {
@@ -549,7 +566,7 @@
             border: 2px solid #e2e8f0;
             padding: 12px;
             border-radius: 12px;
-            color: var(--text-main);
+            color: var(--glass-dark);
             font-weight: 700;
             font-size: 1.1rem;
             cursor: pointer;
@@ -736,12 +753,20 @@
         .shape-tag {
             width: 35px;
             height: 35px;
-            border-radius: 10px;
+            border-radius: 8px;
+            /* 🔥 más cuadrado (antes 10px) */
+
             margin-right: 15px;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             flex-shrink: 0;
+
+            font-weight: 900;
+            font-size: 2rem;
+            color: white;
         }
 
         .timer-bar-container {
@@ -978,11 +1003,11 @@
 
             .slide-wrapper {
                 height: 100vh;
-                padding: 60px 0;
+                padding: 100px 0;
             }
 
             section {
-                padding: 50px 40px;
+                padding: 40px 30px;
                 border-radius: 35px;
                 box-shadow: var(--shadow-lg);
                 border: 1px solid rgba(255, 255, 255, 0.8);
@@ -1001,7 +1026,6 @@
 
             h3 {
                 font-size: 3.5rem;
-                margin: 0 0 35px;
                 border-left-width: 12px;
                 padding-left: 25px;
             }
@@ -1032,7 +1056,7 @@
             }
 
             .block-image {
-                width: 45%;
+                width: 30%;
                 border-width: 6px;
                 border-radius: 25px;
             }
@@ -1103,7 +1127,7 @@
 
             .bottom-sheet {
                 padding: 50px 40px;
-                border-radius: 40px 40px 0 0;
+                border-radius: 16px 0 0 0;
                 max-width: 650px;
                 max-height: 80vh;
                 /* Ajuste para PC */
@@ -2596,6 +2620,18 @@
                 </div>
             </section>
         </div>
+        <div class="slide-wrapper">
+            <section>
+                <button class="btn-eval-main" onclick="window.openNamePrompt('u2')">
+                    <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5" style="margin-right:15px;">
+                        <path d="M9 11l3 3L22 4"></path>
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    </svg>
+                    ACTIVIDAD 02
+                </button>
+            </section>
+        </div>
 
     </div>
 
@@ -3014,29 +3050,34 @@
                     <div class="content-text">
 
                         <p>
-                            Una pequeña panadería tiene:
+                            Una pequeña panadería cuenta con 2 trabajadores y 1 horno, con los cuales produce 100 panes
+                            por día.
                         </p>
-
-                        <ul>
-                            <li>2 trabajadores</li>
-                            <li>1 horno</li>
-                            <li>Produce 100 panes por día</li>
-                        </ul>
 
                         <p>
-                            Si mejora sus recursos:
+                            Si la panadería mejora sus recursos, aumentando a 4 trabajadores y 2 hornos, su capacidad
+                            productiva también se incrementa.
                         </p>
-
-                        <ul>
-                            <li>4 trabajadores</li>
-                            <li>2 hornos</li>
-                        </ul>
 
                         <p>
-                            <strong>¿Cuanto puede producir por día?</strong>.
+                            En este nuevo escenario, surge la siguiente pregunta: <strong>¿cuánto puede producir por
+                                día?</strong>
                         </p>
+
                     </div>
                 </div>
+            </section>
+        </div>
+        <div class="slide-wrapper">
+            <section>
+                <button class="btn-eval-main" onclick="window.openNamePrompt('u3')">
+                    <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5" style="margin-right:15px;">
+                        <path d="M9 11l3 3L22 4"></path>
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    </svg>
+                    ACTIVIDAD 03
+                </button>
             </section>
         </div>
 
@@ -4136,10 +4177,10 @@ $Q_d = 100 - 40 = 60$
                 </div>
             </section>
         </div> -->
-        <!-- ==========================================
+    <!-- ==========================================
          1. DEMANDA (Temas 5.1.1 - 5.1.5)
          ========================================== -->
-        <!-- <div class="slide-wrapper widget-demanda">
+    <!-- <div class="slide-wrapper widget-demanda">
             <section class="ds-wrapper">
                 <h3>Gráfica de la demanda</h3>
                 <div class="ds-grid">
@@ -4184,10 +4225,10 @@ $Q_d = 100 - 40 = 60$
             </section>
         </div> -->
 
-        <!-- ==========================================
+    <!-- ==========================================
          2. OFERTA (Temas 5.2.1 - 5.2.6)
          ========================================== -->
-        <!-- <div class="slide-wrapper widget-oferta">
+    <!-- <div class="slide-wrapper widget-oferta">
             <section class="ds-wrapper">
                 <h3 class="ds-title">5.2. Curva de la Oferta y sus Cambios</h3>
                 <div class="ds-grid">
@@ -4232,10 +4273,10 @@ $Q_d = 100 - 40 = 60$
             </section>
         </div> -->
 
-        <!-- ==========================================
+    <!-- ==========================================
          3. EQUILIBRIO DE MERCADO (Tema 5.3)
          ========================================== -->
-        <!-- <div class="slide-wrapper widget-equilibrio">
+    <!-- <div class="slide-wrapper widget-equilibrio">
             <section class="ds-wrapper">
                 <h3 class="ds-title">5.3. Equilibrio de Mercado (Escasez y Excedente)</h3>
                 <div class="ds-grid">
@@ -4287,10 +4328,10 @@ $Q_d = 100 - 40 = 60$
             </section>
         </div> -->
 
-        <!-- ==========================================
+    <!-- ==========================================
          4. CAMBIOS EN EL EQUILIBRIO (Temas 5.4 - 5.5)
          ========================================== -->
-        <!-- <div class="slide-wrapper widget-dinamica-eq">
+    <!-- <div class="slide-wrapper widget-dinamica-eq">
             <section class="ds-wrapper">
                 <h3 class="ds-title">5.4 / 5.5. Ajustes y Cambios en el Equilibrio</h3>
                 <div class="ds-grid">
@@ -4346,10 +4387,10 @@ $Q_d = 100 - 40 = 60$
             </section>
         </div> -->
 
-        <!-- ==========================================
+    <!-- ==========================================
          5. UTILIDAD TOTAL Y MARGINAL (Temas 6.2 y 6.3)
          ========================================== -->
-        <!-- <div class="slide-wrapper widget-utilidad">
+    <!-- <div class="slide-wrapper widget-utilidad">
             <section class="ds-wrapper">
                 <h3 class="ds-title">6.2 / 6.3. Utilidad Total y Marginal</h3>
                 <div class="ds-grid">
@@ -4404,10 +4445,10 @@ $Q_d = 100 - 40 = 60$
             </section>
         </div> -->
 
-        <!-- ==========================================
+    <!-- ==========================================
          6. PUNTO ÓPTIMO DEL CONSUMIDOR (Tema 6.4)
          ========================================== -->
-        <!-- <div class="slide-wrapper widget-optimo">
+    <!-- <div class="slide-wrapper widget-optimo">
             <section class="ds-wrapper">
                 <h3 class="ds-title">6.4. Satisfacción Máxima (Punto Óptimo)</h3>
                 <div class="ds-grid">
@@ -4450,10 +4491,10 @@ $Q_d = 100 - 40 = 60$
             </section>
         </div> -->
 
-        <!-- ==========================================
+    <!-- ==========================================
          7. ETAPAS DE LA PRODUCCIÓN (Temas 7.7 - 7.10)
          ========================================== -->
-        <!-- <div class="slide-wrapper widget-produccion">
+    <!-- <div class="slide-wrapper widget-produccion">
             <section class="ds-wrapper">
                 <h3 class="ds-title">7.7 - 7.10. Etapas de la Producción (PFT, PFMe, PFMg)</h3>
                 <div class="ds-grid">
@@ -4520,10 +4561,10 @@ $Q_d = 100 - 40 = 60$
             </section>
         </div> -->
 
-        <!-- ==========================================
+    <!-- ==========================================
          8. MAXIMIZACIÓN DE GANANCIAS (Temas 8.4 - 8.6)
          ========================================== -->
-        <!-- <div class="slide-wrapper widget-ganancias">
+    <!-- <div class="slide-wrapper widget-ganancias">
             <section class="ds-wrapper">
                 <h3 class="ds-title">8.5 - 8.6. Maximización de Ganancias (IMg = CMg)</h3>
                 <div class="ds-grid">
@@ -4585,7 +4626,7 @@ $Q_d = 100 - 40 = 60$
 
 
 
-<!-- 
+    <!-- 
         <div class="slide-wrapper">
             <section>
                 <h3>5.1.5 Cambios en la demanda</h3>
@@ -5355,14 +5396,8 @@ Costo/Ingreso ↑
                 <span class="topic-num">08</span>
             </div>
 
-            <div class="topic-btn" onclick="window.scrollToId('top')"
-                style="background: var(--bg-body); border-color: var(--primary);">
-                <span>Inicio de página</span>
-                <span class="topic-num">TOP</span>
-            </div>
-
             <div id="panel-clock"
-                style="font-family:monospace; font-size:1.8rem; text-align:center; padding:15px; background:#f8fafc; border-radius:20px; margin:15px 0; border:3px dashed var(--secondary);">
+                style="font-family:monospace; font-size:1.8rem; text-align:center; padding:15px; background:#f8fafc; border-radius:20px; margin:15px 0; border:3px dashed var(--secondary); color:var(--secondary);">
                 00:00:00
             </div>
 
@@ -5410,7 +5445,260 @@ Costo/Ingreso ↑
 
                     { type: "choice", q: "¿Qué tipo de movilidad tenían las comunidades primitivas?", options: ["Eran nómadas con desplazamiento constante", "Eran sedentarias en ciudades grandes", "Vivían en fábricas industriales", "No se desplazaban entre regiones"], a: "Eran nómadas con desplazamiento constante" }
                 ]
-            }
+            },
+            u2: {
+                title: "Actividad 02",
+                q: [
+
+                    {
+                        type: "choice", q: "¿Qué es el modo de producción esclavista?",
+                        options: ["Sistema donde se obliga a trabajar sin salario", "Sistema basado en comercio libre y voluntario", "Sistema donde todos reciben pago igualitario", "Sistema basado en producción agrícola libre"],
+                        a: "Sistema donde se obliga a trabajar sin salario"
+                    },
+
+                    {
+                        type: "choice", q: "¿Cuál era el objetivo del sistema esclavista?",
+                        options: ["Generar riqueza con trabajo forzado", "Promover igualdad entre trabajadores", "Desarrollar comercio internacional libre", "Impulsar educación para todos"],
+                        a: "Generar riqueza con trabajo forzado"
+                    },
+
+                    {
+                        type: "choice", q: "¿Dónde se desarrolló el sistema esclavista?",
+                        options: ["Egipto Grecia y Roma antigua", "Europa moderna industrializada", "América en época contemporánea", "Asia en economías digitales"],
+                        a: "Egipto Grecia y Roma antigua"
+                    },
+
+                    {
+                        type: "choice", q: "¿Quiénes eran los esclavos?",
+                        options: ["Personas obligadas a trabajar sin derechos", "Trabajadores libres con salario justo", "Propietarios de tierras productivas", "Comerciantes con libertad económica"],
+                        a: "Personas obligadas a trabajar sin derechos"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué es el modo de producción feudal?",
+                        options: ["Sistema basado en la tierra y protección", "Sistema industrial con fábricas modernas", "Sistema financiero basado en bancos", "Sistema tecnológico digital global"],
+                        a: "Sistema basado en la tierra y protección"
+                    },
+
+                    {
+                        type: "choice", q: "¿Quiénes eran los señores feudales?",
+                        options: ["Dueños de tierras con poder político", "Trabajadores agrícolas independientes", "Comerciantes urbanos organizados", "Artesanos con producción libre"],
+                        a: "Dueños de tierras con poder político"
+                    },
+
+                    {
+                        type: "choice", q: "¿Quiénes eran los siervos en el feudalismo?",
+                        options: ["Personas que trabajaban la tierra obligados", "Empresarios que dirigían fábricas grandes", "Comerciantes que viajaban libremente", "Ciudadanos con derechos políticos plenos"],
+                        a: "Personas que trabajaban la tierra obligados"
+                    },
+
+                    {
+                        type: "choice", q: "¿Cómo era el trabajo en el feudalismo?",
+                        options: ["Principalmente agrícola y basado en tierra", "Totalmente industrial con maquinaria moderna", "Basado en servicios digitales avanzados", "Enfocado en comercio internacional masivo"],
+                        a: "Principalmente agrícola y basado en tierra"
+                    },
+
+                    {
+                        type: "choice", q: "¿Cómo era la economía feudal?",
+                        options: ["Economía de subsistencia con poco comercio", "Economía global con alto comercio externo", "Economía digital con comercio virtual", "Economía industrial con producción masiva"],
+                        a: "Economía de subsistencia con poco comercio"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué es el modo de producción capitalista?",
+                        options: ["Sistema con propiedad privada y ganancias", "Sistema basado en control total del Estado", "Sistema donde no existe el mercado libre", "Sistema sin uso de dinero o comercio"],
+                        a: "Sistema con propiedad privada y ganancias"
+                    },
+
+                    {
+                        type: "choice", q: "¿Quién posee los medios de producción?",
+                        options: ["Los empresarios o capitalistas privados", "Los trabajadores de forma colectiva", "El Estado en todas las industrias", "Las comunidades rurales organizadas"],
+                        a: "Los empresarios o capitalistas privados"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué hacen los trabajadores en capitalismo?",
+                        options: ["Venden su trabajo a cambio de salario", "Controlan fábricas sin recibir pago", "Dirigen empresas de forma colectiva", "Producen solo para consumo propio"],
+                        a: "Venden su trabajo a cambio de salario"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué explica Marx sobre el capitalismo?",
+                        options: ["Relación entre capital y trabajo productivo", "Importancia del comercio internacional libre", "Uso exclusivo de tecnología avanzada", "Distribución igualitaria de ingresos"],
+                        a: "Relación entre capital y trabajo productivo"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué clases sociales existen en capitalismo?",
+                        options: ["Burguesía y proletariado como clases", "Solo una clase sin diferencias sociales", "Nobleza y campesinos tradicionales", "Comerciantes y artesanos urbanos"],
+                        a: "Burguesía y proletariado como clases"
+                    },
+
+                    {
+                        type: "choice", q: "¿Cómo se consolidó el capitalismo?",
+                        options: ["Con la Revolución Industrial y máquinas", "Con la agricultura tradicional antigua", "Con el sistema feudal europeo clásico", "Con economías de subsistencia rurales"],
+                        a: "Con la Revolución Industrial y máquinas"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué generó la Revolución Industrial?",
+                        options: ["Fábricas producción masiva y urbanización", "Reducción total del comercio mundial", "Desaparición del trabajo humano", "Economías basadas solo en trueque"],
+                        a: "Fábricas producción masiva y urbanización"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué es el modo de producción socialista?",
+                        options: ["Sistema que busca igualdad y distribución justa", "Sistema basado solo en ganancias privadas", "Sistema sin intervención del Estado", "Sistema centrado en competencia total"],
+                        a: "Sistema que busca igualdad y distribución justa"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué es el modo de producción mixto?",
+                        options: ["Sistema que combina capitalismo y socialismo", "Sistema basado solo en agricultura rural", "Sistema donde no existe el mercado", "Sistema completamente estatal cerrado"],
+                        a: "Sistema que combina capitalismo y socialismo"
+                    }
+
+                ]
+            },
+            u3: {
+                title: "Actividad 03",
+                q: [
+
+                    {
+                        type: "choice", q: "¿Qué es el problema económico?",
+                        options: ["Necesidades ilimitadas con recursos limitados", "Exceso de recursos sin uso productivo", "Falta de tecnología en la producción", "Ausencia total de necesidades humanas"],
+                        a: "Necesidades ilimitadas con recursos limitados"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué significa escasez en economía?",
+                        options: ["Recursos limitados frente a muchas necesidades", "Existencia de recursos en abundancia total", "Producción excesiva sin consumidores", "Distribución equitativa sin problemas"],
+                        a: "Recursos limitados frente a muchas necesidades"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué es la actividad económica?",
+                        options: ["Acciones para producir distribuir y consumir", "Solo actividades comerciales internacionales", "Uso exclusivo de tecnología avanzada", "Intercambio sin producción ni consumo"],
+                        a: "Acciones para producir distribuir y consumir"
+                    },
+
+                    {
+                        type: "choice", q: "¿Cómo se enfrenta la escasez?",
+                        options: ["Tomando decisiones y priorizando necesidades", "Evitando el uso de los recursos disponibles", "Produciendo sin planificación alguna", "Eliminando todas las necesidades humanas"],
+                        a: "Tomando decisiones y priorizando necesidades"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué es la producción?",
+                        options: ["Transformar recursos en bienes y servicios", "Distribuir productos en los mercados", "Consumir bienes para necesidades", "Ahorrar dinero sin invertirlo"],
+                        a: "Transformar recursos en bienes y servicios"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué es la distribución?",
+                        options: ["Proceso de llevar bienes a consumidores", "Transformación de recursos en productos", "Uso directo de bienes por personas", "Creación de nuevas necesidades"],
+                        a: "Proceso de llevar bienes a consumidores"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué es el consumo?",
+                        options: ["Uso de bienes y servicios por personas", "Producción de bienes en fábricas", "Distribución en mercados internacionales", "Inversión de capital en empresas"],
+                        a: "Uso de bienes y servicios por personas"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué son los bienes?",
+                        options: ["Productos que satisfacen necesidades humanas", "Servicios prestados por el Estado", "Recursos naturales sin transformación", "Herramientas usadas en producción"],
+                        a: "Productos que satisfacen necesidades humanas"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué tipos de bienes existen?",
+                        options: ["Bienes de consumo y bienes de producción", "Bienes privados y bienes públicos", "Bienes nacionales y bienes externos", "Bienes digitales y bienes físicos"],
+                        a: "Bienes de consumo y bienes de producción"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué son los recursos?",
+                        options: ["Elementos usados para producir bienes", "Productos listos para el consumo final", "Servicios ofrecidos por empresas", "Dinero utilizado en mercados"],
+                        a: "Elementos usados para producir bienes"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué es la tierra en economía?",
+                        options: ["Recursos naturales usados en producción", "Trabajo humano en empresas", "Capital invertido en maquinaria", "Tecnología aplicada en industrias"],
+                        a: "Recursos naturales usados en producción"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué es el trabajo en economía?",
+                        options: ["Esfuerzo humano físico y mental productivo", "Uso de maquinaria en la industria", "Recursos naturales de la tierra", "Capital financiero en empresas"],
+                        a: "Esfuerzo humano físico y mental productivo"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué es el capital en economía?",
+                        options: ["Bienes usados para producir otros bienes", "Recursos naturales sin transformación", "Trabajo humano en producción diaria", "Consumo directo de productos finales"],
+                        a: "Bienes usados para producir otros bienes"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué es el conocimiento en producción?",
+                        options: ["Habilidades que mejoran procesos productivos", "Recursos naturales disponibles en la tierra", "Capital invertido en maquinaria industrial", "Consumo de bienes en mercados locales"],
+                        a: "Habilidades que mejoran procesos productivos"
+                    }
+
+                ]
+            },
+            u4: {
+                title: "Actividad 04",
+                q: [
+
+                    {
+                        type: "choice", q: "¿Qué son los sistemas de cooperación?",
+                        options: ["Formas de trabajar juntos para producir bienes", "Procesos individuales sin ayuda externa", "Sistemas basados solo en competencia", "Actividades sin organización económica"],
+                        a: "Formas de trabajar juntos para producir bienes"
+                    },
+
+                    {
+                        type: "choice", q: "¿Quiénes participan en los sistemas de cooperación?",
+                        options: ["Familias empresas y Estado en la economía", "Solo empresas privadas en mercados", "Solo el Estado en decisiones económicas", "Personas sin relación económica"],
+                        a: "Familias empresas y Estado en la economía"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué es la especialización?",
+                        options: ["Enfocarse en una actividad con mayor eficiencia", "Realizar muchas tareas sin experiencia", "Trabajar sin dividir actividades", "Producir sin conocimientos técnicos"],
+                        a: "Enfocarse en una actividad con mayor eficiencia"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué es la división del trabajo?",
+                        options: ["Distribuir tareas en un proceso productivo", "Trabajar sin organización de actividades", "Realizar todas las tareas una persona", "Eliminar funciones dentro de empresas"],
+                        a: "Distribuir tareas en un proceso productivo"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué es el modelo de flujo circular?",
+                        options: ["Representa circulación de dinero bienes y servicios", "Explica solo la producción industrial", "Analiza únicamente el consumo familiar", "Describe mercados sin participación empresarial"],
+                        a: "Representa circulación de dinero bienes y servicios"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué es la economía planeada?",
+                        options: ["Sistema donde el Estado decide producción", "Sistema donde el mercado decide todo", "Sistema sin control en economía", "Sistema basado en competencia libre"],
+                        a: "Sistema donde el Estado decide producción"
+                    },
+
+                    {
+                        type: "choice", q: "¿Qué son las economías industrializadas?",
+                        options: ["Economías con alta industria y tecnología", "Economías basadas solo en agricultura", "Economías sin desarrollo tecnológico", "Economías sin producción industrial"],
+                        a: "Economías con alta industria y tecnología"
+                    }
+
+                ]
+            },
+
         };
 
         const iconsSVG = [
@@ -5469,6 +5757,7 @@ Costo/Ingreso ↑
             const span = document.createElement('span');
             span.className = 'user-highlight';
             span.style.backgroundColor = color;
+            span.style.color = '#000';
             span.style.fontWeight = 500;
             span.onclick = function (e) {
                 e.stopPropagation();
@@ -5578,7 +5867,7 @@ Costo/Ingreso ↑
 
             let html = `<div class="kahoot-answers-grid">`;
             opts.forEach((o, i) => {
-                html += `<button class="kh-btn" data-opt="${o}" onclick="window.checkA('${o}', this)"><div class="shape-tag" style="background:${colors[i % 4]}">${iconsSVG[i % 4]}</div>${o}</button>`;
+                html += `<button class="kh-btn" data-opt="${o}" onclick="window.checkA('${o}', this)"><div class="shape-tag" style="background:${colors[i % 4]}">${i + 1}</div>${o}</button>`;
             });
             html += `</div>`;
             document.getElementById('quiz-container').innerHTML = `
@@ -5593,14 +5882,18 @@ Costo/Ingreso ↑
 
         function startTimer() {
             clearInterval(timerInterval);
-            timeLeft = 15;
+            timeLeft = 60; // ⬅️ ahora 60 segundos
+
             const bar = document.getElementById('t-bar');
             if (bar) bar.style.backgroundColor = "var(--secondary)";
 
             timerInterval = setInterval(() => {
                 timeLeft--;
-                if (bar) bar.style.width = (timeLeft / 15) * 100 + "%";
-                if (timeLeft <= 5 && bar) bar.style.backgroundColor = "var(--wrong)";
+
+                if (bar) bar.style.width = (timeLeft / 60) * 100 + "%"; // ⬅️ ajustar aquí también 60 segundos
+
+                if (timeLeft <= 10 && bar) bar.style.backgroundColor = "var(--wrong)";
+
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
                     window.checkA(null, null);
