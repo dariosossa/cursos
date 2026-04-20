@@ -1,0 +1,2580 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arancel: Sección I - Reino Animal</title>
+    <style>
+        /* ================= VARIABLES Y RESET ================= */
+        :root {
+            --primary: #1e3a8a;
+            /* Azul Oscuro */
+            --secondary: #f59e0b;
+            /* Ámbar */
+            --bg-dark: #0a0a0a;
+            --text-light: #ffffff;
+            --danger: #e11d48;
+            --success: #10b981;
+            --overlay-dark: rgba(0, 0, 0, 0.88);
+            /* OSCURIDAD MÁXIMA PARA CONTRASTE */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body,
+        html {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            user-select: none;
+        }
+
+        /* ================= ESTRUCTURA PRINCIPAL ================= */
+        .app-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+        }
+
+        main {
+            flex-grow: 1;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+        }
+
+        /* ================= DIAPOSITIVAS ================= */
+        .slide {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            z-index: 10;
+        }
+
+        .slide-cover {
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* Fondos e Imágenes */
+        .slide-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .slide-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            background: var(--overlay-dark);
+            backdrop-filter: blur(2px);
+        }
+
+        /* ================= DISEÑO RESPONSIVO (MOBILE FIRST) ================= */
+        .slide-content {
+            position: relative;
+            z-index: 3;
+            width: 100%;
+            padding: 1.2rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            overflow-y: auto;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            line-height: 1.2;
+            margin-bottom: 0.8rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .slide-subtitle {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .slide-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            border-bottom: 3px solid var(--secondary);
+            padding-bottom: 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+            color: var(--secondary);
+        }
+
+        .large-text p,
+        .large-text ul,
+        .large-text li {
+            font-size: 1rem;
+            line-height: 1.4;
+            margin-bottom: 0.8rem;
+            color: #f8fafc;
+            text-align: left;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.9);
+        }
+
+        .large-text ul {
+            margin-left: 1.2rem;
+        }
+
+        .large-text b {
+            color: var(--secondary);
+        }
+
+        /* Exámenes (Celular) */
+        .exam-step {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            flex-grow: 1;
+            animation: fadeIn 0.5s ease;
+            padding: 1rem;
+            position: relative;
+            z-index: 4;
+            overflow-y: auto;
+        }
+
+        .exam-step.active {
+            display: flex;
+        }
+
+        .exam-title-display {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin-bottom: 0.4rem;
+            position: relative;
+            z-index: 4;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .exam-step-subtitle {
+            font-size: 0.9rem;
+            color: #e0e7ff;
+            margin-bottom: 0.8rem;
+            text-align: center;
+        }
+
+        input.student-input {
+            width: 100%;
+            max-width: 100%;
+            padding: 0.6rem;
+            font-size: 0.9rem;
+            border-radius: 0.6rem;
+            border: none;
+            text-align: center;
+            margin-bottom: 0.8rem;
+            outline: none;
+            color: #1e293b;
+        }
+
+        .btn-action {
+            background: var(--secondary);
+            color: #000;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-radius: 1.5rem;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .quiz-wrapper {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .quiz-header-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 0.4rem;
+        }
+
+        .timer-track {
+            width: 100%;
+            background: #333;
+            height: 0.6rem;
+            border-radius: 1rem;
+            margin: 0.4rem 0 0.8rem;
+            overflow: hidden;
+        }
+
+        .timer-bar {
+            height: 100%;
+            width: 100%;
+            background: var(--success);
+            transition: width 1s linear;
+        }
+
+        .question-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin-bottom: 0.8rem;
+            border-left: 5px solid var(--secondary);
+        }
+
+        .question-box h2 {
+            font-size: 0.95rem;
+            color: #fff;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.6rem;
+            flex-grow: 1;
+        }
+
+        .quiz-btn {
+            background: #fff;
+            border: none;
+            color: #1e293b;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            padding: 0.6rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s;
+            text-align: left;
+            line-height: 1.2;
+        }
+
+        .quiz-btn .num {
+            width: 1.5rem;
+            height: 1.5rem;
+            background: #e2e8f0;
+            border-radius: 50%;
+            margin-right: 0.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.75rem;
+        }
+
+        /* Certificado (Celular) */
+        .result-card {
+            background: white;
+            color: #1e293b;
+            padding: 1.2rem;
+            border-radius: 1rem;
+            width: 100%;
+            max-width: 95%;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn-reset-x {
+            position: absolute;
+            top: 0.3rem;
+            right: 0.8rem;
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .exam-result-title {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.4rem;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+            color: #64748b;
+            text-align: center;
+        }
+
+        .result-body {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            align-items: center;
+        }
+
+        .result-student-info {
+            text-align: center;
+        }
+
+        .result-label {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-bottom: 0.2rem;
+        }
+
+        .display-student-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            word-wrap: break-word;
+        }
+
+        .result-score-box {
+            text-align: center;
+            background: #f8fafc;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border: 2px dashed #cbd5e1;
+            width: 100%;
+        }
+
+        .score-display {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--secondary);
+            line-height: 1.2;
+            padding-bottom: 0.1rem;
+        }
+
+        /* Barra de herramientas (Celular) */
+        footer {
+            height: 55px;
+            background: #111;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 0.5rem;
+            z-index: 100;
+            border-top: 1px solid #333;
+        }
+
+        .tool-group {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .tool-btn {
+            background: transparent;
+            border: 2px solid transparent;
+            color: #94a3b8;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tool-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        #slide-num {
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            margin: 0 0.2rem;
+        }
+
+        /* Menú de Temas Flotante */
+        #topic-menu {
+            position: fixed;
+            bottom: 55px;
+            left: 0;
+            width: 100%;
+            max-height: 60vh;
+            background: #1e293b;
+            color: #fff;
+            z-index: 99;
+            border-top-left-radius: 1.5rem;
+            border-top-right-radius: 1.5rem;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            transform: translateY(120%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        #topic-menu.menu-open {
+            transform: translateY(0);
+        }
+
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #334155;
+        }
+
+        .menu-header h3 {
+            font-size: 1.1rem;
+            margin: 0;
+            color: var(--secondary);
+            text-transform: uppercase;
+        }
+
+        .close-menu {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .menu-list {
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .menu-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: #e2e8f0;
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+
+        .menu-item:hover,
+        .menu-item.active-item {
+            background: rgba(255, 255, 255, 0.15);
+            border-left: 4px solid var(--secondary);
+        }
+
+        /* ================= PANTALLAS GRANDES (LAPTOPS / PROYECTORES) ================= */
+        @media (min-width: 768px) {
+            .slide-content {
+                padding: 4rem;
+                justify-content: flex-start;
+                overflow-y: hidden;
+            }
+
+            h1 {
+                font-size: 4.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .slide-subtitle {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            .slide-title {
+                font-size: 2.8rem;
+                margin-bottom: 2rem;
+                border-bottom-width: 6px;
+                letter-spacing: 2px;
+            }
+
+            .large-text p,
+            .large-text ul,
+            .large-text li {
+                font-size: 2.6rem;
+                margin-bottom: 2rem;
+            }
+
+            .exam-step {
+                padding: 3rem;
+                overflow-y: hidden;
+            }
+
+            .exam-title-display {
+                font-size: 2.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .exam-step-subtitle {
+                font-size: 1.4rem;
+                margin-bottom: 2rem;
+            }
+
+            input.student-input {
+                max-width: 500px;
+                font-size: 1.5rem;
+                padding: 1.2rem;
+            }
+
+            .btn-action {
+                font-size: 1.5rem;
+                padding: 1.2rem 2.5rem;
+            }
+
+            .quiz-header-info {
+                font-size: 1.3rem;
+                margin-bottom: 1rem;
+            }
+
+            .timer-track {
+                height: 1rem;
+                margin: 1rem 0 1.5rem;
+            }
+
+            .question-box {
+                padding: 2rem;
+                border-left-width: 8px;
+            }
+
+            .question-box h2 {
+                font-size: 2.2rem;
+            }
+
+            .quiz-options {
+                grid-template-columns: 1fr 1fr;
+                gap: 1.5rem;
+            }
+
+            .quiz-btn {
+                font-size: 1.3rem;
+                padding: 1.5rem;
+                border-radius: 0.8rem;
+            }
+
+            .quiz-btn .num {
+                width: 2.8rem;
+                height: 2.8rem;
+                font-size: 1.2rem;
+                margin-right: 1rem;
+            }
+
+            .result-card {
+                padding: 3rem;
+                max-width: 700px;
+                border-radius: 1.5rem;
+            }
+
+            .btn-reset-x {
+                font-size: 2rem;
+                top: 1rem;
+                right: 1.5rem;
+            }
+
+            .exam-result-title {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .result-body {
+                flex-direction: row;
+                justify-content: space-around;
+                gap: 2rem;
+            }
+
+            .display-student-name {
+                font-size: 2.5rem;
+                max-width: 350px;
+            }
+
+            .result-label {
+                font-size: 1.3rem;
+            }
+
+            .result-score-box {
+                width: auto;
+                padding: 2rem 3rem;
+            }
+
+            .score-display {
+                font-size: 6.5rem;
+            }
+
+            footer {
+                height: 75px;
+                padding: 0 2rem;
+            }
+
+            .tool-group {
+                gap: 1rem;
+            }
+
+            .tool-btn {
+                padding: 0.8rem;
+            }
+
+            .tool-btn svg {
+                width: 26px;
+                height: 26px;
+            }
+
+            #slide-num {
+                font-size: 1.4rem;
+                margin: 0 1rem;
+            }
+
+            #topic-menu {
+                bottom: 75px;
+                max-width: 400px;
+                left: 1rem;
+                border-radius: 1rem;
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* Feedback visual y complementos */
+        .answer-correct {
+            background-color: var(--success) !important;
+            color: white !important;
+            transform: scale(1.02);
+        }
+
+        .answer-wrong {
+            background-color: var(--danger) !important;
+            color: white !important;
+            opacity: 0.8;
+        }
+
+        .answer-correct .num,
+        .answer-wrong .num {
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+
+        .answer-disabled {
+            pointer-events: none;
+        }
+
+        .tool-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .tool-btn.active-laser {
+            background: #991b1b;
+            color: #f87171;
+        }
+
+        .tool-btn.active-highlight {
+            background: #854d0e;
+            color: #facc15;
+        }
+
+        #laser-pointer {
+            position: fixed;
+            width: 18px;
+            height: 18px;
+            background: #ff0000;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+            display: none;
+            transform: translate(-50%, -50%);
+        }
+
+        .laser-on {
+            cursor: none;
+        }
+
+        .laser-on #laser-pointer {
+            display: block;
+        }
+
+        span[style*="background-color"] {
+            cursor: pointer !important;
+        }
+
+        #highlight-palette {
+            position: fixed;
+            z-index: 10001;
+            background: #fff;
+            padding: 0.8rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .color-dot {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .color-dot:hover {
+            transform: scale(1.2);
+            border-color: #000;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        canvas#confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="confetti" style="display:none;"></canvas>
+    <div id="laser-pointer"></div>
+
+    <!-- Menú de Temas -->
+    <div id="topic-menu">
+        <div class="menu-header">
+            <h3>Temario de Clase</h3>
+            <button class="close-menu" onclick="toggleMenu()" title="Cerrar Menú">X</button>
+        </div>
+        <div id="menu-list" class="menu-list">
+            <!-- Inyectado por JS -->
+        </div>
+    </div>
+
+    <!-- Selector de Colores Resaltador -->
+    <div id="highlight-palette" class="hidden">
+        <div class="color-dot" style="background: #fde047;" data-color="#fde047"></div>
+        <div class="color-dot" style="background: #86efac;" data-color="#86efac"></div>
+        <div class="color-dot" style="background: #7dd3fc;" data-color="#7dd3fc"></div>
+        <div class="color-dot" style="background: #fda4af;" data-color="#fda4af"></div>
+    </div>
+
+    <div class="app-wrapper">
+        <main id="slide-container">
+
+            <!-- DIAPOSITIVA 1 -->
+            <div class="slide">
+                <div class="slide-bg"><img
+                        src="https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=1920&q=80"
+                        alt=""></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">SECCIÓN I</h2>
+                    <h2 class="slide-subtitle" style="color: white;">ANIMALES VIVOS Y PRODUCTOS DEL REINO ANIMAL</h2>
+                    <div class="large-text">
+                        <p>
+                            La Sección I del arancel incluye todos los productos que provienen <b>directamente de los
+                                animales</b>.
+                        </p>
+                        <p>
+                            Siempre que no hayan sido transformados en productos industriales complejos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA 2 -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">¿QUÉ INCLUYE LA SECCIÓN I?</h2>
+
+                    <div class="large-text">
+                        <p>
+                            La Sección I está formada por <b>5 capítulos</b>:
+                        </p>
+
+                        <p>
+                            <b>Capítulo 01:</b> Animales vivos<br>
+                            <b>Capítulo 02:</b> Carne y despojos comestibles<br>
+                            <b>Capítulo 03:</b> Pescados y mariscos<br>
+                            <b>Capítulo 04:</b> Leche, huevos y miel<br>
+                            <b>Capítulo 05:</b> Otros productos de origen animal
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA 3 -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 01: ANIMALES VIVOS</h2>
+
+                    <div class="large-text">
+                        <p>
+                            Este capítulo clasifica a los animales vivos de la siguiente forma:
+                        </p>
+
+                        <p>
+                            <b>01.01</b> Caballos, asnos y similares<br>
+                            <b>01.02</b> Bovinos (vacas, toros)<br>
+                            <b>01.03</b> Porcinos (cerdos)<br>
+                            <b>01.04</b> Ovinos y caprinos (ovejas, cabras)<br>
+                            <b>01.05</b> Aves de corral (pollos, patos, pavos)<br>
+                            <b>01.06</b> Los demás animales vivos
+                        </p>
+
+                        <p>
+                            <b>Recuerda:</b> Estos animales están <b>vivos</b>,
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA 4 -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1557456170-0cf4f4d0d362?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">RESTRICCIÓN DEL CAPÍTULO 01</h2>
+
+                    <div class="large-text">
+                        <ul>
+                            <li><b>Peces y mariscos →</b> van al Capítulo 03</li>
+                            <li><b>Microorganismos →</b> van al Capítulo 30</li>
+                            <li><b>Animales para entretenimiento →</b> van al Capítulo 95</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA 5 -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 02: CARNE Y DESPOJOS COMESTIBLES</h2>
+
+                    <div class="large-text">
+                        <p>
+                            Incluye <b>carne apta para el consumo</b>.
+                        </p>
+
+                        <p>
+                            <b>02.01</b> Carne de bovino<br>
+                            <b>02.02</b> Carne de bovino congelada<br>
+                            <b>02.03</b> Carne de cerdo<br>
+                            <b>02.04</b> Carne de oveja o cabra<br>
+                            <b>02.05</b> Carne de caballo y similares
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA 6 -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 02 (CONT.)</h2>
+
+                    <div class="large-text">
+                        <p>
+                            <b>02.06</b> Despojos comestibles<br>
+                            <b>02.07</b> Carne de aves<br>
+                            <b>02.08</b> Otras carnes<br>
+                            <b>02.09</b> Grasas de cerdo o aves<br>
+                            <b>02.10</b> Carne salada o seca
+                        </p>
+
+                        <p>
+                            <b>Clave:</b> Carne sin procesar.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA 7 -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">¿QUÉ NO ENTRA EN EL CAPÍTULO 02?</h2>
+
+                    <div class="large-text">
+                        <ul>
+                            <li><b>Carne no apta para comer →</b> no se incluye</li>
+                            <li><b>Insectos muertos →</b> Capítulo 04</li>
+                            <li><b>Tripas, vejigas o estómagos →</b> Capítulo 05</li>
+                            <li><b>Sangre animal →</b> Capítulo 05 o 30</li>
+                            <li><b>Grasas animales →</b> Capítulo 15</li>
+                        </ul>
+
+                        <p>
+                            <b>⚠️ Clave:</b> Si está procesado,
+                            <b>ya no va aquí</b>, pasa al Capítulo 16.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA 8 -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 03: PESCADOS Y MARISCOS</h2>
+
+                    <div class="large-text">
+                        <p>
+                            Incluye <b>animales acuáticos</b> para consumo.
+                        </p>
+
+                        <p>
+                            <b>03.01</b> Peces vivos<br>
+                            <b>03.02</b> Pescado fresco o refrigerado<br>
+                            <b>03.03</b> Pescado congelado<br>
+                            <b>03.04</b> Filetes de pescado<br>
+                            <b>03.05</b> Pescado seco o ahumado
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA 9 -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 03 (CONT.)</h2>
+
+                    <div class="large-text">
+                        <p>
+                            <b>03.06</b> Crustáceos<br>
+                            <b>03.07</b> Moluscos<br>
+                            <b>03.08</b> Otros invertebrados acuáticos
+                        </p>
+
+                        <p>
+                            <b>Clave:</b> Productos del agua, sin procesar complejo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA 10 -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">¿QUÉ NO ENTRA EN EL CAPÍTULO 03?</h2>
+
+                    <div class="large-text">
+                        <ul>
+                            <li><b>Productos preparados (enlatados, empanizados) →</b> Capítulo 16</li>
+                            <li><b>Pescado muy procesado →</b> ya no va aquí</li>
+                        </ul>
+
+                        <p>
+                            <b>⚠️ Clave:</b> Si está listo para consumo elaborado, cambia de capítulo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA 10 -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1585238342028-4c3c1c6b0f8d?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 04: LECHE, HUEVOS Y MIEL</h2>
+
+                    <div class="large-text">
+                        <p>
+                            Incluye <b>productos de origen animal</b> destinados al consumo.
+                        </p>
+
+                        <p>
+                            <b>04.01</b> Leche y nata (crema), sin concentrar ni azucarar<br>
+                            <b>04.02</b> Leche y nata (crema), concentradas o con azúcar<br>
+                            <b>04.03</b> Yogur y demás productos lácteos fermentados<br>
+                            <b>04.04</b> Suero de leche y productos derivados<br>
+                            <b>04.05</b> Mantequilla y demás grasas lácteas
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA 11 -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1604909052743-94e838986d24?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 04 (CONT.)</h2>
+
+                    <div class="large-text">
+                        <p>
+                            <b>04.06</b> Quesos y requesón<br>
+                            <b>04.07</b> Huevos de ave con cáscara<br>
+                            <b>04.08</b> Huevos sin cáscara y yemas<br>
+                            <b>04.09</b> Miel natural<br>
+                            <b>04.10</b> Otros productos comestibles de origen animal (incluye insectos)
+                        </p>
+
+                        <p>
+                            <b>Clave:</b> Productos derivados del animal, pero no carne ni pescado.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA 12 -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1526318472351-bc6a6b7e7e2d?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">¿QUÉ NO SE CONTEMPLA EN EL CAPÍTULO 04?</h2>
+
+                    <div class="large-text">
+                        <ul>
+                            <li><b>Helados y productos lácteos elaborados →</b> Capítulo 21</li>
+                            <li><b>Leche con cacao o saborizada →</b> Capítulo 22</li>
+                            <li><b>Huevos preparados (en polvo o mezclas listas) →</b> pueden ir a otros capítulos</li>
+                            <li><b>Productos con miel mezclada (dulces, jarabes) →</b> Capítulo 17 o 21</li>
+                            <li><b>Preparaciones alimenticias complejas →</b> Capítulo 16 o 21</li>
+                        </ul>
+
+                        <p>
+                            <b>Clave:</b> Si está mezclado o muy preparado, <b>ya no va en el Capítulo 04</b>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA 13 -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 05: OTROS PRODUCTOS DE ORIGEN ANIMAL</h2>
+
+                    <div class="large-text">
+                        <p>
+                            Incluye <b>productos de origen animal</b> que no se clasifican en los capítulos anteriores.
+                        </p>
+
+                        <p>
+                            <b>05.01</b> Cabello sin trabajar<br>
+                            <b>05.02</b> Cerdas de cerdo o jabalí<br>
+                            <b>05.03</b> Crines (pelo de caballo)<br>
+                            <b>05.04</b> Tripas, vejigas y estómagos<br>
+                            <b>05.05</b> Pieles y partes de aves
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA 14 -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1590080875515-8c7f8c1d3b1f?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 05 (CONT.)</h2>
+
+                    <div class="large-text">
+                        <p>
+                            <b>05.06</b> Huesos y núcleos córneos<br>
+                            <b>05.07</b> Marfil, cuernos, pezuñas<br>
+                            <b>05.08</b> Corales y conchas<br>
+                            <b>05.09</b> Esponjas naturales<br>
+                            <b>05.10</b> Ámbar gris y otras sustancias animales
+                        </p>
+
+                        <p>
+                            <b>Clave:</b> Son partes o residuos del animal que no son carne, leche ni pescado.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA 15 -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1526318472351-bc6a6b7e7e2d?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">¿QUÉ NO SE CONTEMPLA EN EL CAPÍTULO 05?</h2>
+
+                    <div class="large-text">
+                        <ul>
+                            <li><b>Carne y despojos comestibles →</b> Capítulo 02</li>
+                            <li><b>Pieles preparadas o cuero →</b> Capítulo 41</li>
+                            <li><b>Productos trabajados (artesanías, botones, adornos) →</b> otros capítulos</li>
+                            <li><b>Sustancias animales usadas en farmacia →</b> Capítulo 30</li>
+                            <li><b>Productos muy elaborados →</b> dejan de ir aquí</li>
+                        </ul>
+
+                        <p>
+                            <b>Clave:</b> Aquí solo entran productos animales <b>simples o sin trabajar</b>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">SECCIÓN II</h2>
+                    <h2 class="slide-subtitle" style="color: white;">PRODUCTOS DEL REINO VEGETAL</h2>
+
+                    <div class="large-text">
+                        <p>
+                            Esta sección incluye productos que provienen <b>directamente de las plantas</b>.
+                        </p>
+
+                        <p>
+                            Se consideran en su estado <b>natural o con poco procesamiento</b>.
+                        </p>
+
+                        <p>
+                            Ejemplos: frutas, verduras, cereales, plantas y semillas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1524594154908-edd3f3d3a5b2?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 06: PLANTAS VIVAS</h2>
+
+                    <div class="large-text">
+                        <p>
+                            Incluye <b>plantas vivas y productos de floricultura</b>.
+                        </p>
+
+                        <p>
+                            <b>06.01</b> Bulbos, tubérculos y raíces<br>
+                            <b>06.02</b> Plantas vivas (incluye raíces y esquejes)<br>
+                            <b>06.03</b> Flores cortadas y capullos<br>
+                            <b>06.04</b> Follaje y hojas decorativas
+                        </p>
+
+                        <p>
+                            <b>Clave:</b> Son plantas naturales, vivas o recién cortadas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 07: HORTALIZAS</h2>
+
+                    <div class="large-text">
+                        <p>
+                            Incluye <b>hortalizas, plantas, raíces y tubérculos</b> para consumo.
+                        </p>
+
+                        <p>
+                            <b>07.01</b> Papas (patatas)<br>
+                            <b>07.02</b> Tomates<br>
+                            <b>07.03</b> Cebollas, ajos y similares<br>
+                            <b>07.04</b> Coles y repollos<br>
+                            <b>07.05</b> Lechugas y achicorias
+                        </p>
+
+                        <p>
+                            <b>Clave:</b> Verduras frescas o poco procesadas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1471193945509-9ad0617afabf?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 07 (CONT.)</h2>
+
+                    <div class="large-text">
+                        <p>
+                            <b>07.06</b> Zanahorias, nabos y similares<br>
+                            <b>07.07</b> Pepinos y pepinillos<br>
+                            <b>07.08</b> Legumbres (frijoles, arvejas)<br>
+                            <b>07.09</b> Otras hortalizas<br>
+                            <b>07.10</b> Hortalizas congeladas
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 07 (CONT.)</h2>
+
+                    <div class="large-text">
+                        <p>
+                            <b>07.11</b> Hortalizas conservadas en sal o vinagre<br>
+                            <b>07.12</b> Hortalizas secas<br>
+                            <b>07.13</b> Legumbres secas<br>
+                            <b>07.14</b> Raíces y tubérculos (yuca, etc.)
+                        </p>
+
+                        <p>
+                            <b>Clave:</b> Pueden estar frescas, congeladas o conservadas de forma simple.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1526318472351-bc6a6b7e7e2d?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">¿QUÉ NO SE CONTEMPLA EN EL CAPÍTULO 07?</h2>
+
+                    <div class="large-text">
+                        <ul>
+                            <li><b>Hortalizas preparadas o enlatadas →</b> Capítulo 20</li>
+                            <li><b>Sopas o mezclas listas para consumir →</b> Capítulo 21</li>
+                            <li><b>Harinas o productos derivados →</b> Capítulo 11</li>
+                            <li><b>Plantas vivas (no para consumo directo) →</b> Capítulo 06</li>
+                            <li><b>Productos muy procesados →</b> cambian de capítulo</li>
+                        </ul>
+
+                        <p>
+                            <b>Clave:</b> Si la verdura está lista para comer como producto elaborado, <b>ya no va en el
+                                Capítulo 07</b>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 08: FRUTAS</h2>
+
+                    <div class="large-text">
+                        <p>
+                            Incluye <b>frutas y frutos comestibles</b>.
+                        </p>
+
+                        <p>
+                            <b>08.01</b> Coco, nuez de Brasil y castañas<br>
+                            <b>08.02</b> Otros frutos secos (almendras, nueces)<br>
+                            <b>08.03</b> Bananas o plátanos<br>
+                            <b>08.04</b> Dátiles, higos, piñas, aguacates<br>
+                            <b>08.05</b> Cítricos (naranja, limón)
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1574226516831-e1dff420e12c?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 08 (CONT.)</h2>
+
+                    <div class="large-text">
+                        <p>
+                            <b>08.06</b> Uvas<br>
+                            <b>08.07</b> Melones y papayas<br>
+                            <b>08.08</b> Manzanas, peras y membrillos<br>
+                            <b>08.09</b> Frutas de hueso (durazno, cereza)<br>
+                            <b>08.10</b> Otras frutas
+                        </p>
+
+                        <p>
+                            <b>Clave:</b> Frutas frescas o con conservación simple.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 08 (CONT.)</h2>
+
+                    <div class="large-text">
+                        <p>
+                            <b>08.11</b> Frutas congeladas<br>
+                            <b>08.12</b> Frutas conservadas temporalmente<br>
+                            <b>08.13</b> Frutas secas<br>
+                            <b>08.14</b> Cortezas de cítricos o melón
+                        </p>
+
+                        <p>
+                            <b>Clave:</b> Pueden estar frescas, secas o congeladas, sin preparación compleja.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1526318472351-bc6a6b7e7e2d?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">¿QUÉ NO SE CONTEMPLA EN EL CAPÍTULO 08?</h2>
+
+                    <div class="large-text">
+                        <ul>
+                            <li><b>Jugos de fruta →</b> Capítulo 20</li>
+                            <li><b>Mermeladas y frutas en conserva →</b> Capítulo 20</li>
+                            <li><b>Frutas en almíbar o preparadas →</b> Capítulo 20</li>
+                            <li><b>Bebidas con fruta (jugos industrializados) →</b> Capítulo 22</li>
+                            <li><b>Productos muy procesados →</b> cambian de capítulo</li>
+                        </ul>
+
+                        <p>
+                            <b>Clave:</b> Si la fruta está lista para consumir como producto elaborado, <b>ya no va en
+                                el Capítulo 08</b>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 09: CAFÉ Y ESPECIAS</h2>
+
+                    <div class="large-text">
+                        <p>
+                            Incluye <b>productos vegetales usados para bebidas o condimentos</b>.
+                        </p>
+
+                        <p>
+                            <b>09.01</b> Café (en grano o molido)<br>
+                            <b>09.02</b> Té<br>
+                            <b>09.03</b> Yerba mate<br>
+                            <b>09.04</b> Pimienta y frutos picantes<br>
+                            <b>09.05</b> Vainilla
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1510626176961-4b37d4fbad03?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 09 (CONT.)</h2>
+
+                    <div class="large-text">
+                        <p>
+                            <b>09.06</b> Canela<br>
+                            <b>09.07</b> Clavo de olor<br>
+                            <b>09.08</b> Nuez moscada y cardamomo<br>
+                            <b>09.09</b> Semillas aromáticas (anís, comino)<br>
+                            <b>09.10</b> Otras especias
+                        </p>
+
+                        <p>
+                            <b>Clave:</b> Productos naturales usados para sabor o bebida.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1526318472351-bc6a6b7e7e2d?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">¿QUÉ NO SE CONTEMPLA EN EL CAPÍTULO 09?</h2>
+
+                    <div class="large-text">
+                        <ul>
+                            <li><b>Café o té preparados para beber →</b> Capítulo 22</li>
+                            <li><b>Bebidas listas (infusiones, energizantes) →</b> Capítulo 22</li>
+                            <li><b>Mezclas alimenticias con especias →</b> Capítulo 21</li>
+                            <li><b>Salsas o condimentos elaborados →</b> Capítulo 21</li>
+                            <li><b>Productos muy procesados →</b> cambian de capítulo</li>
+                        </ul>
+
+                        <p>
+                            <b>Clave:</b> Aquí van productos naturales; si ya están listos para consumir, <b>ya no van
+                                en este capítulo</b>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 10: CEREALES</h2>
+
+                    <div class="large-text">
+                        <p>
+                            Incluye <b>granos de origen vegetal</b> destinados al consumo o siembra.
+                        </p>
+
+                        <p>
+                            <b>10.01</b> Trigo y morcajo<br>
+                            <b>10.02</b> Centeno<br>
+                            <b>10.03</b> Cebada<br>
+                            <b>10.04</b> Avena<br>
+                            <b>10.05</b> Maíz
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1603048297172-c92544798d5a?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 10 (CONT.)</h2>
+
+                    <div class="large-text">
+                        <p>
+                            <b>10.06</b> Arroz<br>
+                            <b>10.07</b> Sorgo<br>
+                            <b>10.08</b> Otros cereales (quinua, etc.)
+                        </p>
+
+                        <p>
+                            <b>Clave:</b> Son granos naturales, sin transformación industrial.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1526318472351-bc6a6b7e7e2d?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">¿QUÉ NO SE CONTEMPLA EN EL CAPÍTULO 10?</h2>
+
+                    <div class="large-text">
+                        <ul>
+                            <li><b>Harina de cereales →</b> Capítulo 11</li>
+                            <li><b>Productos a base de cereales (pan, pastas) →</b> Capítulo 19</li>
+                            <li><b>Cereales preparados o tostados →</b> Capítulo 19</li>
+                            <li><b>Bebidas a base de cereales →</b> Capítulo 22</li>
+                            <li><b>Productos muy procesados →</b> cambian de capítulo</li>
+                        </ul>
+
+                        <p>
+                            <b>Clave:</b> Si el grano está transformado (harina, alimento, bebida), <b>ya no va en el
+                                Capítulo 10</b>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1608198093002-ad4e005484ec?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 11: MOLINERÍA</h2>
+
+                    <div class="large-text">
+                        <p>
+                            Incluye <b>productos obtenidos de la molienda de cereales</b>.
+                        </p>
+
+                        <p>
+                            <b>11.01</b> Harina de trigo o morcajo<br>
+                            <b>11.02</b> Harina de otros cereales<br>
+                            <b>11.03</b> Grañones, sémola y pellets<br>
+                            <b>11.04</b> Granos trabajados (triturados, aplastados)<br>
+                            <b>11.05</b> Harina, sémola y copos de papa
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1616680214083-2c9d85c7bcb1?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 11 (CONT.)</h2>
+
+                    <div class="large-text">
+                        <p>
+                            <b>11.06</b> Harina de legumbres o raíces<br>
+                            <b>11.07</b> Malta<br>
+                            <b>11.08</b> Almidón y fécula<br>
+                            <b>11.09</b> Gluten de trigo
+                        </p>
+
+                        <p>
+                            <b>Clave:</b> Son productos transformados del grano, pero aún básicos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1526318472351-bc6a6b7e7e2d?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">¿QUÉ NO ENTRA EN EL CAPÍTULO 11?</h2>
+
+                    <div class="large-text">
+                        <ul>
+                            <li><b>Granos enteros (sin moler) →</b> Capítulo 10</li>
+                            <li><b>Pan, pastas y productos de panadería →</b> Capítulo 19</li>
+                            <li><b>Preparaciones alimenticias (mezclas listas) →</b> Capítulo 21</li>
+                            <li><b>Bebidas a base de cereales →</b> Capítulo 22</li>
+                            <li><b>Productos muy elaborados →</b> cambian de capítulo</li>
+                        </ul>
+
+                        <p>
+                            <b>Clave:</b> Aquí van productos molidos o básicos; si ya es alimento listo, <b>ya no va en
+                                este capítulo</b>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 12: SEMILLAS Y FRUTOS</h2>
+
+                    <div class="large-text">
+                        <p>
+                            Incluye <b>semillas y frutos oleaginosos</b>.
+                        </p>
+
+                        <p>
+                            <b>12.01</b> Soya<br>
+                            <b>12.02</b> Maní (cacahuate)<br>
+                            <b>12.03</b> Copra (coco seco)<br>
+                            <b>12.04</b> Semillas de lino<br>
+                            <b>12.05</b> Semillas de nabo o colza
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1524594154908-edd3f3d3a5b2?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 12 (CONT.)</h2>
+
+                    <div class="large-text">
+                        <p>
+                            <b>12.06</b> Semillas de girasol<br>
+                            <b>12.07</b> Otros frutos oleaginosos<br>
+                            <b>12.08</b> Harinas de semillas<br>
+                            <b>12.09</b> Semillas para siembra<br>
+                            <b>12.10</b> Lúpulo
+                        </p>
+
+                        <p>
+                            <b>Clave:</b> Productos vegetales usados para aceite, siembra o industria.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 12 (CONT.)</h2>
+
+                    <div class="large-text">
+                        <p>
+                            <b>12.11</b> Plantas medicinales<br>
+                            <b>12.12</b> Plantas para uso industrial<br>
+                            <b>12.13</b> Paja y forraje<br>
+                            <b>12.14</b> Otros productos vegetales
+                        </p>
+
+                        <p>
+                            <b>Clave:</b> No solo alimentos, también productos vegetales de uso técnico o agrícola.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1526318472351-bc6a6b7e7e2d?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">¿QUÉ NO SE CONTEMPLA EN EL CAPÍTULO 12?</h2>
+
+                    <div class="large-text">
+                        <ul>
+                            <li><b>Aceites vegetales (soya, girasol, etc.) →</b> Capítulo 15</li>
+                            <li><b>Productos preparados o tostados (snacks) →</b> Capítulo 20 o 21</li>
+                            <li><b>Harinas procesadas para consumo →</b> Capítulo 11</li>
+                            <li><b>Bebidas o extractos elaborados →</b> Capítulo 22</li>
+                            <li><b>Productos muy procesados →</b> cambian de capítulo</li>
+                        </ul>
+
+                        <p>
+                            <b>Clave:</b> Si la semilla ya se transformó en aceite o alimento listo, <b>ya no va en el
+                                Capítulo 12</b>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 13: RESINAS Y EXTRACTOS</h2>
+
+                    <div class="large-text">
+                        <p>
+                            Incluye <b>gomas, resinas y extractos de origen vegetal</b>.
+                        </p>
+
+                        <p>
+                            <b>13.01</b> Gomas y resinas naturales<br>
+                            <b>13.02</b> Jugos y extractos vegetales
+                        </p>
+
+                        <p>
+                            <b>Clave:</b> Sustancias vegetales obtenidas de plantas para uso industrial o medicinal.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1526318472351-bc6a6b7e7e2d?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">¿QUÉ NO ENTRA EN EL CAPÍTULO 13?</h2>
+
+                    <div class="large-text">
+                        <ul>
+                            <li><b>Medicamentos elaborados →</b> Capítulo 30</li>
+                            <li><b>Aceites esenciales →</b> Capítulo 33</li>
+                            <li><b>Productos alimenticios con extractos →</b> Capítulo 21</li>
+                            <li><b>Bebidas o infusiones listas →</b> Capítulo 22</li>
+                            <li><b>Productos muy procesados →</b> cambian de capítulo</li>
+                        </ul>
+
+                        <p>
+                            <b>Clave:</b> Si el extracto ya forma parte de un producto elaborado, <b>ya no va en este
+                                capítulo</b>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1518972559570-7cc1309f3229?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 14: OTROS PRODUCTOS VEGETALES</h2>
+
+                    <div class="large-text">
+                        <p>
+                            Incluye <b>productos vegetales no clasificados en otros capítulos</b>.
+                        </p>
+
+                        <p>
+                            <b>14.01</b> Materias trenzables (mimbre, bambú, etc.)<br>
+                            <b>14.04</b> Otros productos de origen vegetal
+                        </p>
+
+                        <p>
+                            <b>Clave:</b> Es un capítulo residual para productos vegetales no contemplados antes.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1526318472351-bc6a6b7e7e2d?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">¿QUÉ NO SE CONTEMPLA EN EL CAPÍTULO 14?</h2>
+
+                    <div class="large-text">
+                        <ul>
+                            <li><b>Productos ya trabajados (cestas, muebles) →</b> otros capítulos</li>
+                            <li><b>Alimentos de origen vegetal →</b> Capítulos 07 al 12</li>
+                            <li><b>Extractos o resinas vegetales →</b> Capítulo 13</li>
+                            <li><b>Productos industriales elaborados →</b> cambian de sección</li>
+                            <li><b>Materiales muy procesados →</b> ya no van aquí</li>
+                        </ul>
+
+                        <p>
+                            <b>Clave:</b> Aquí solo entran materiales vegetales simples, no productos terminados.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">SECCIÓN III</h2>
+                    <h2 class="slide-subtitle" style="color: white;">GRASAS Y ACEITES</h2>
+
+                    <div class="large-text">
+                        <p>
+                            Esta sección incluye <b>grasas y aceites de origen animal o vegetal</b>.
+                        </p>
+
+                        <p>
+                            También contempla productos derivados como <b>grasas elaboradas y ceras</b>.
+                        </p>
+
+                        <p>
+                            Ejemplos: aceite vegetal, manteca, margarina.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1604909052743-94e838986d24?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 15: GRASAS Y ACEITES</h2>
+
+                    <div class="large-text">
+                        <p>
+                            Incluye <b>grasas y aceites de origen animal o vegetal</b>.
+                        </p>
+
+                        <p>
+                            <b>15.01</b> Grasas de cerdo<br>
+                            <b>15.02</b> Grasas de bovino, ovino o caprino<br>
+                            <b>15.03</b> Aceites de pescado<br>
+                            <b>15.04</b> Grasas y aceites de mamíferos marinos<br>
+                            <b>15.05</b> Lana y grasas derivadas
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1615486364464-1a5f1c5f8d8b?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 15 (CONT.)</h2>
+
+                    <div class="large-text">
+                        <p>
+                            <b>15.06</b> Otras grasas animales<br>
+                            <b>15.07</b> Aceite de soya<br>
+                            <b>15.08</b> Aceite de maní<br>
+                            <b>15.09</b> Aceite de oliva<br>
+                            <b>15.10</b> Otros aceites vegetales
+                        </p>
+
+                        <p>
+                            <b>Clave:</b> Grasas o aceites, naturales o refinados, pero no alimentos preparados.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1608198093002-ad4e005484ec?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 15 (CONT.)</h2>
+
+                    <div class="large-text">
+                        <p>
+                            <b>15.11</b> Aceite de palma<br>
+                            <b>15.12</b> Aceite de girasol<br>
+                            <b>15.13</b> Aceite de coco<br>
+                            <b>15.14</b> Otros aceites vegetales<br>
+                            <b>15.15</b> Grasas y aceites modificados
+                        </p>
+
+                        <p>
+                            <b>Clave:</b> Pueden estar refinados o modificados, pero siguen siendo aceites o grasas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- DIAPOSITIVA -->
+            <div class="slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=1920&q=80"
+                        alt="">
+                </div>
+                <div class="slide-overlay"></div>
+
+                <div class="slide-content">
+                    <h2 class="slide-subtitle">CAPÍTULO 15 (CONT.)</h2>
+
+                    <div class="large-text">
+                        <p>
+                            <b>15.16</b> Grasas y aceites hidrogenados<br>
+                            <b>15.17</b> Margarina y mezclas de grasas<br>
+                            <b>15.18</b> Grasas y aceites tratados<br>
+                            <b>15.19</b> Ácidos grasos y alcoholes grasos<br>
+                            <b>15.20</b> Glicerina <br>
+                            <b>15.21</b> Ceras de origen animal o vegetal
+                        </p>
+
+                        <p>
+                            <b>Clave:</b> Incluye grasas, aceites y sus derivados, incluso transformados.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+            <!-- ================= EXAMEN 1 (Capítulos 1 y 2) ================= -->
+            <!-- <div class="slide exam-slide slide-cover" data-exam-id="exam-1"
+                data-exam-title="Prueba 1: Bases de la Sección I">
+                <div class="slide-bg"><img
+                        src="https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=1920&q=80"
+                        alt=""></div>
+                <div class="slide-overlay"></div>
+
+                <div class="exam-step step-login active">
+                    <h2 class="exam-title-display"></h2>
+                    <p class="exam-step-subtitle">Ingresa tu Nombre Completo</p>
+                    <input type="text" class="student-input" placeholder="Tu Nombre">
+                    <button onclick="startExam(this)" class="btn-action">Iniciar Examen</button>
+                </div>
+
+                <div class="exam-step step-question"> -->
+            <!-- Dinámico -->
+            <!-- </div>
+
+                <div class="exam-step step-result">
+                    <div class="result-card">
+                        <button onclick="resetExam(this)" class="btn-reset-x" title="Reiniciar Examen">X</button>
+                        <h2 class="exam-title-display exam-result-title"></h2>
+                        <div class="result-body">
+                            <div class="result-student-info">
+                                <p class="result-label">Estudiante:</p>
+                                <p class="display-student-name"></p>
+                            </div>
+                            <div class="result-score-box">
+                                <p class="result-label">Nota Final</p>
+                                <div class="display-exam-score score-display">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- ================= EXAMEN 2 (Capítulos 3, 4 y 5) ================= -->
+            <!-- <div class="slide exam-slide slide-cover" data-exam-id="exam-2"
+                data-exam-title="Prueba 2: Derivados y Otros">
+                <div class="slide-bg"><img
+                        src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=1920&q=80"
+                        alt=""></div>
+                <div class="slide-overlay"></div>
+
+                <div class="exam-step step-login active">
+                    <h2 class="exam-title-display"></h2>
+                    <p class="exam-step-subtitle">Ingresa tu Nombre Completo</p>
+                    <input type="text" class="student-input" placeholder="Tu Nombre">
+                    <button onclick="startExam(this)" class="btn-action">Iniciar Examen</button>
+                </div>
+                <div class="exam-step step-question"></div>
+                <div class="exam-step step-result">
+                    <div class="result-card">
+                        <button onclick="resetExam(this)" class="btn-reset-x" title="Reiniciar Examen">X</button>
+                        <h2 class="exam-title-display exam-result-title"></h2>
+                        <div class="result-body">
+                            <div class="result-student-info">
+                                <p class="result-label">Estudiante:</p>
+                                <p class="display-student-name"></p>
+                            </div>
+                            <div class="result-score-box">
+                                <p class="result-label">Nota Final</p>
+                                <div class="display-exam-score score-display">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- ================= EXAMEN FINAL ================= -->
+            <!-- <div class="slide exam-slide slide-cover" data-exam-id="exam-3"
+                data-exam-title="Prueba Final: Reglas Generales">
+                <div class="slide-bg"><img
+                        src="https://images.unsplash.com/photo-1501426026826-31c667bdf23d?auto=format&fit=crop&w=1920&q=80"
+                        alt=""></div>
+                <div class="slide-overlay"></div>
+
+                <div class="exam-step step-login active">
+                    <h2 class="exam-title-display"></h2>
+                    <p class="exam-step-subtitle">Ingresa tu Nombre Completo</p>
+                    <input type="text" class="student-input" placeholder="Tu Nombre">
+                    <button onclick="startExam(this)" class="btn-action">Iniciar Examen</button>
+                </div>
+                <div class="exam-step step-question"></div>
+                <div class="exam-step step-result">
+                    <div class="result-card">
+                        <button onclick="resetExam(this)" class="btn-reset-x" title="Reiniciar Examen">X</button>
+                        <h2 class="exam-title-display exam-result-title"></h2>
+                        <div class="result-body">
+                            <div class="result-student-info">
+                                <p class="result-label">Estudiante:</p>
+                                <p class="display-student-name"></p>
+                            </div>
+                            <div class="result-score-box">
+                                <p class="result-label">Nota Final</p>
+                                <div class="display-exam-score score-display">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+        </main>
+
+        <footer>
+            <div class="tool-group">
+                <button id="btn-menu" class="tool-btn" title="Menú de Temas" onclick="toggleMenu()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <button onclick="prevSlide()" class="tool-btn" title="Anterior">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                <span id="slide-num">1 / 12</span>
+                <button onclick="nextSlide()" class="tool-btn" title="Siguiente">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
+            <div class="tool-group">
+                <button id="btn-laser" class="tool-btn" title="Puntero Láser">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <circle cx="12" cy="12" r="2" fill="currentColor" />
+                    </svg>
+                </button>
+                <button id="btn-highlight" class="tool-btn" title="Resaltador">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M12 20h9" />
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                    </svg>
+                </button>
+                <button onclick="clearHighlights()" class="tool-btn" title="Limpiar Resaltado">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M3 6h18" />
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                    </svg>
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // --- ESTADO ---
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        let isLaser = false, isHighlighter = false;
+        let timer = null;
+
+        // --- BANCO DE PREGUNTAS ---
+        const banks = {
+            'exam-1': [
+                {
+                    q: "¿Qué incluye principalmente la Sección I del arancel?",
+                    a: [
+                        { t: "Animales vivos y sus productos", c: true },
+                        { t: "Ropa de cuero procesada", c: false },
+                        { t: "Alimentos sintéticos", c: false },
+                        { t: "Metales y minerales", c: false }
+                    ]
+                },
+                {
+                    q: "¿Por qué los embutidos NO se clasifican en el Capítulo 02 (Carne y Despojos)?",
+                    a: [
+                        { t: "Porque ya han sido procesados/preparados", c: true },
+                        { t: "Porque son de origen vegetal", c: false },
+                        { t: "Porque están congelados", c: false },
+                        { t: "Porque están crudos", c: false }
+                    ]
+                }
+            ],
+
+            'exam-2': [
+                {
+                    q: "¿Qué productos agrupa el Capítulo 03?",
+                    a: [
+                        { t: "Pescados y mariscos en estado natural", c: true },
+                        { t: "Pescado enlatado y empanizado", c: false },
+                        { t: "Huevos y miel", c: false },
+                        { t: "Pieles y plumas", c: false }
+                    ]
+                },
+                {
+                    q: "¿A qué capítulo pertenecen la leche, los huevos y la miel natural?",
+                    a: [
+                        { t: "Capítulo 04", c: true },
+                        { t: "Capítulo 01", c: false },
+                        { t: "Capítulo 05", c: false },
+                        { t: "Capítulo 02", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué tipo de productos encontramos en el Capítulo 05?",
+                    a: [
+                        { t: "Pieles sin procesar, plumas y huesos", c: true },
+                        { t: "Zapatos de cuero", c: false },
+                        { t: "Leche procesada", c: false },
+                        { t: "Pescado crudo", c: false }
+                    ]
+                }
+            ],
+
+            'exam-3': [
+                {
+                    q: "¿Cuáles son los 2 criterios clave para que un producto esté en la Sección I?",
+                    a: [
+                        { t: "Origen animal y bajo nivel de transformación", c: true },
+                        { t: "Estar envasado y procesado", c: false },
+                        { t: "Ser de origen vegetal y congelado", c: false },
+                        { t: "Ser manufacturado y sintético", c: false }
+                    ]
+                },
+                {
+                    q: "Según la Regla de Excepción: ¿Qué pasa si el producto sufre un cambio industrial significativo?",
+                    a: [
+                        { t: "Deja de pertenecer a esta sección", c: true },
+                        { t: "Se queda en el Capítulo 01", c: false },
+                        { t: "Se clasifica en el Capítulo 05", c: false },
+                        { t: "No se puede exportar", c: false }
+                    ]
+                }
+            ]
+        };
+
+        // --- NAVEGACIÓN Y MENÚ ---
+        const topicMenu = document.getElementById('topic-menu');
+        const menuList = document.getElementById('menu-list');
+
+        function buildMenu() {
+            menuList.innerHTML = '';
+            slides.forEach((slide, index) => {
+                let title = `Diapositiva ${index + 1}`;
+
+                if (slide.classList.contains('exam-slide')) {
+                    title = slide.dataset.examTitle || 'Examen';
+                } else {
+                    const h1 = slide.querySelector('h1');
+                    const h2 = slide.querySelector('.slide-title');
+                    if (h1) title = h1.innerText;
+                    else if (h2) title = h2.innerText;
+                }
+
+                const btn = document.createElement('button');
+                btn.className = `menu-item ${index === currentSlide ? 'active-item' : ''}`;
+                btn.innerText = `${index + 1}. ${title}`;
+                btn.onclick = () => {
+                    goToSlide(index);
+                    toggleMenu();
+                };
+                menuList.appendChild(btn);
+            });
+        }
+
+        function toggleMenu() {
+            topicMenu.classList.toggle('menu-open');
+            if (topicMenu.classList.contains('menu-open')) buildMenu();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlides();
+        }
+
+        function updateSlides() {
+            slides.forEach((s, i) => s.classList.toggle('active', i === currentSlide));
+            document.getElementById('slide-num').innerText = `${currentSlide + 1} / ${slides.length}`;
+
+            if (slides[currentSlide].classList.contains('exam-slide')) {
+                const title = slides[currentSlide].dataset.examTitle;
+                slides[currentSlide].querySelectorAll('.exam-title-display').forEach(el => el.innerText = title);
+            }
+        }
+
+        function nextSlide() { if (currentSlide < slides.length - 1) { currentSlide++; updateSlides(); } }
+        function prevSlide() { if (currentSlide > 0) { currentSlide--; updateSlides(); } }
+
+        // MANEJO DE TECLADO / PUNTERO FÍSICO MULTI-OPCIÓN
+        window.addEventListener('keydown', (e) => {
+            if (e.target.tagName.toLowerCase() === 'input') return;
+
+            if (["ArrowRight", "PageDown", "ArrowDown", " "].includes(e.key)) {
+                e.preventDefault();
+                nextSlide();
+            }
+            if (["ArrowLeft", "PageUp", "ArrowUp"].includes(e.key)) {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+
+        // --- EXAMEN ---
+        let currentQuestions = [], qIdx = 0, score = 0;
+
+        function startExam(btn) {
+            const slide = btn.closest('.exam-slide');
+            const name = slide.querySelector('.student-input').value.trim();
+            if (!name) { alert("Ingresa tu nombre completo para continuar."); return; }
+
+            slide.dataset.studentName = name;
+            currentQuestions = [...banks[slide.dataset.examId]].sort(() => Math.random() - 0.5);
+            qIdx = 0; score = 0;
+
+            slide.querySelector('.step-login').classList.remove('active');
+            slide.querySelector('.step-question').classList.add('active');
+            renderQuestion(slide);
+        }
+
+        function renderQuestion(slide) {
+            if (!slide) return;
+            const q = currentQuestions[qIdx];
+            const opts = [...q.a].sort(() => Math.random() - 0.5);
+            const container = slide.querySelector('.step-question');
+
+            if (!container) return;
+
+            container.innerHTML = `
+                <div class="quiz-wrapper">
+                    <div class="quiz-header-info">
+                        <span>Pregunta ${qIdx + 1} de ${currentQuestions.length}</span>
+                        <span><span id="timer-val">60</span>s</span>
+                    </div>
+                    <div class="timer-track"><div id="timer-bar" class="timer-bar"></div></div>
+                    <div class="question-box"><h2>${q.q}</h2></div>
+                    <div class="quiz-options">${opts.map((o, i) => `
+                        <button class="quiz-btn" onclick="checkAnswer(this, ${o.c}, this)">
+                            <div class="num">${i + 1}</div><span>${o.t}</span>
+                        </button>`).join('')}</div>
+                </div>`;
+            startTimer(slide);
+        }
+
+        function startTimer(slide) {
+            clearInterval(timer);
+            let time = 60;
+            const bar = slide.querySelector('#timer-bar');
+            const val = slide.querySelector('#timer-val');
+
+            if (bar) {
+                bar.style.transition = 'none';
+                bar.style.width = '100%';
+                bar.style.background = 'var(--success)';
+            }
+
+            setTimeout(() => { if (bar) bar.style.transition = 'width 1s linear'; }, 50);
+
+            timer = setInterval(() => {
+                time--;
+                if (val) val.innerText = time;
+                if (bar) {
+                    bar.style.width = (time / 60 * 100) + '%';
+                    if (time <= 20) bar.style.background = 'var(--secondary)';
+                    if (time <= 10) bar.style.background = 'var(--danger)';
+                }
+                if (time <= 0) {
+                    clearInterval(timer);
+                    checkAnswer(null, false, slide);
+                }
+            }, 1000);
+        }
+
+        function checkAnswer(btn, isCorrect, slideRef) {
+            clearInterval(timer);
+            const slide = btn ? btn.closest('.exam-slide') : (slideRef || document.querySelector('.exam-slide.active'));
+            if (!slide) return;
+
+            const allBtns = slide.querySelectorAll('.quiz-btn');
+
+            if (isCorrect) {
+                if (btn) btn.classList.add('answer-correct');
+                score += (100 / currentQuestions.length);
+                startConfetti(true);
+            } else {
+                if (btn) btn.classList.add('answer-wrong');
+                allBtns.forEach(b => { if (b.innerText.includes(currentQuestions[qIdx].a.find(x => x.c).t)) b.classList.add('answer-correct'); });
+                startConfetti(false);
+            }
+            allBtns.forEach(b => b.classList.add('answer-disabled'));
+
+            setTimeout(() => {
+                if (!slide.classList.contains('exam-slide')) return;
+
+                qIdx++;
+                if (qIdx < currentQuestions.length) renderQuestion(slide);
+                else finishExam(slide);
+            }, 2500);
+        }
+
+        function finishExam(slide) {
+            const questionStep = slide.querySelector('.step-question');
+            const resultStep = slide.querySelector('.step-result');
+            if (questionStep) questionStep.classList.remove('active');
+            if (resultStep) {
+                resultStep.classList.add('active');
+                resultStep.querySelector('.display-student-name').innerText = slide.dataset.studentName;
+                resultStep.querySelector('.display-exam-score').innerText = Math.round(score);
+            }
+        }
+
+        function resetExam(btn) {
+            const slide = btn.closest('.exam-slide');
+            slide.querySelector('.student-input').value = "";
+            slide.querySelector('.step-result').classList.remove('active');
+            slide.querySelector('.step-login').classList.add('active');
+        }
+
+        // --- HERRAMIENTAS (Puntero, Resaltador) ---
+        const laserPtr = document.getElementById('laser-pointer');
+        const palette = document.getElementById('highlight-palette');
+        let selRange = null;
+
+        document.getElementById('btn-laser').onclick = function () {
+            isLaser = !isLaser;
+            this.classList.toggle('active-laser', isLaser);
+            document.body.classList.toggle('laser-on', isLaser);
+            if (isHighlighter) document.getElementById('btn-highlight').click();
+        };
+
+        window.onmousemove = (e) => { if (isLaser) { laserPtr.style.left = e.clientX + 'px'; laserPtr.style.top = e.clientY + 'px'; } };
+
+        document.getElementById('btn-highlight').onclick = function () {
+            isHighlighter = !isHighlighter;
+            this.classList.toggle('active-highlight', isHighlighter);
+            document.body.style.userSelect = isHighlighter ? 'text' : 'none';
+            if (isLaser) document.getElementById('btn-laser').click();
+        };
+
+        // Cerrar menús o paleta al dar clic fuera
+        document.onmouseup = (e) => {
+            // Manejo de paleta del resaltador
+            if (isHighlighter && !e.target.closest('#highlight-palette')) {
+                const sel = window.getSelection();
+                if (sel.toString().trim().length > 0) {
+                    selRange = sel.getRangeAt(0);
+                    palette.style.left = e.pageX + 'px'; palette.style.top = (e.pageY + 10) + 'px';
+                    palette.classList.remove('hidden');
+                } else {
+                    palette.classList.add('hidden');
+                }
+            }
+
+            // Ocultar menú de temas si se hace clic afuera
+            if (topicMenu.classList.contains('menu-open') && !topicMenu.contains(e.target) && !e.target.closest('#btn-menu')) {
+                topicMenu.classList.remove('menu-open');
+            }
+        };
+
+        palette.querySelectorAll('.color-dot').forEach(dot => {
+            dot.onclick = () => {
+                const color = dot.dataset.color;
+                if (selRange) {
+                    const sel = window.getSelection();
+                    sel.removeAllRanges(); sel.addRange(selRange);
+
+                    const activeSlide = slides[currentSlide];
+                    activeSlide.contentEditable = "true";
+                    activeSlide.focus();
+
+                    document.execCommand('backColor', false, color);
+
+                    activeSlide.contentEditable = "false";
+
+                    sel.removeAllRanges(); selRange = null;
+                }
+                palette.classList.add('hidden');
+            }
+        });
+
+        document.onclick = (e) => {
+            if (e.target.tagName === 'SPAN' && e.target.style.backgroundColor) {
+                const p = e.target.parentNode;
+                while (e.target.firstChild) p.insertBefore(e.target.firstChild, e.target);
+                p.removeChild(e.target); p.normalize();
+            }
+        };
+
+        function clearHighlights() {
+            slides[currentSlide].querySelectorAll('span[style*="background-color"]').forEach(span => {
+                const p = span.parentNode;
+                while (span.firstChild) p.insertBefore(span.firstChild, span);
+                p.removeChild(span);
+            });
+            slides[currentSlide].normalize();
+        }
+
+        // --- CONFETTI ENGINE ---
+        function startConfetti(ok) {
+            const canvas = document.getElementById('confetti');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            canvas.style.display = 'block';
+            let parts = [];
+            const cols = ok ? ['#10b981', '#34d399', '#6ee7b7'] : ['#e11d48', '#fb7185', '#f43f5e'];
+            for (let i = 0; i < 100; i++) parts.push({ x: innerWidth / 2, y: innerHeight / 2 + 50, vx: (Math.random() - 0.5) * 30, vy: (Math.random() - 1.2) * 25, s: Math.random() * 15 + 5, c: cols[Math.floor(Math.random() * cols.length)] });
+            function frame() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let live = false;
+                parts.forEach(p => {
+                    p.x += p.vx; p.y += p.vy; p.vy += 0.8;
+                    ctx.fillStyle = p.c; ctx.fillRect(p.x, p.y, p.s, p.s);
+                    if (p.y < canvas.height) live = true;
+                });
+                if (live) requestAnimationFrame(frame); else canvas.style.display = 'none';
+            }
+            frame();
+        }
+
+        // --- INICIALIZAR ---
+        updateSlides();
+    </script>
+</body>
+
+</html>
