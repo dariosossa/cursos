@@ -2064,7 +2064,8 @@
             </div>
 
             <!-- ================= EXAMEN 1 (Capítulos 1 y 2) ================= -->
-            <div class="slide exam-slide slide-cover" data-exam-id="exam-1" data-exam-title="Prueba 1: Bases de la Sección I">
+            <div class="slide exam-slide slide-cover" data-exam-id="exam-1"
+                data-exam-title="Tarea 3">
                 <div class="slide-bg"><img
                         src="https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=1920&q=80"
                         alt=""></div>
@@ -2074,7 +2075,7 @@
                     <h2 class="exam-title-display"></h2>
                     <p class="exam-step-subtitle">Ingresa tu Nombre Completo</p>
                     <input type="text" class="student-input" placeholder="Tu Nombre">
-                    <button onclick="startExam(this)" class="btn-action">Iniciar Examen</button>
+                    <button onclick="startExam(this)" class="btn-action">Iniciar Tarea 3</button>
                 </div>
 
                 <div class="exam-step step-question"></div>
@@ -2098,7 +2099,8 @@
             </div>
 
             <!-- ================= EXAMEN 2 (Capítulos 3, 4 y 5) ================= -->
-            <div class="slide exam-slide slide-cover" data-exam-id="exam-2" data-exam-title="Prueba 2: Derivados y Otros">
+            <div class="slide exam-slide slide-cover" data-exam-id="exam-2"
+                data-exam-title="Prueba 2: Derivados y Otros">
                 <div class="slide-bg"><img
                         src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=1920&q=80"
                         alt=""></div>
@@ -2130,7 +2132,8 @@
             </div>
 
             <!-- ================= EXAMEN FINAL ================= -->
-            <div class="slide exam-slide slide-cover" data-exam-id="exam-3" data-exam-title="Prueba Final: Reglas Generales">
+            <div class="slide exam-slide slide-cover" data-exam-id="exam-3"
+                data-exam-title="Prueba Final: Reglas Generales">
                 <div class="slide-bg"><img
                         src="https://images.unsplash.com/photo-1501426026826-31c667bdf23d?auto=format&fit=crop&w=1920&q=80"
                         alt=""></div>
@@ -2236,54 +2239,610 @@
                 {
                     q: "¿Qué incluye principalmente la Sección I del arancel?",
                     a: [
-                        { t: "Animales vivos y sus productos", c: true },
+                        { t: "Animales vivos", c: true },
                         { t: "Ropa de cuero procesada", c: false },
                         { t: "Alimentos sintéticos", c: false },
                         { t: "Metales y minerales", c: false }
                     ]
                 },
                 {
-                    q: "¿Por qué los embutidos NO se clasifican en el Capítulo 02 (Carne y Despojos)?",
+                    q: "¿Qué incluye la sección I?",
                     a: [
-                        { t: "Porque ya han sido procesados/preparados", c: true },
-                        { t: "Porque son de origen vegetal", c: false },
-                        { t: "Porque están congelados", c: false },
-                        { t: "Porque están crudos", c: false }
-                    ]
-                }
-            ],
-
-            'exam-2': [
-                {
-                    q: "¿Qué productos agrupa el Capítulo 03?",
-                    a: [
-                        { t: "Pescados y mariscos en estado natural", c: true },
-                        { t: "Pescado enlatado y empanizado", c: false },
-                        { t: "Huevos y miel", c: false },
-                        { t: "Pieles y plumas", c: false }
+                        { t: "Capítulo 1 al 5", c: true },
+                        { t: "Capítulo 6 al 10", c: false },
+                        { t: "Capítulo 11 al 15", c: false },
+                        { t: "Capítulo 16 al 20", c: false }
                     ]
                 },
                 {
-                    q: "¿A qué capítulo pertenecen la leche, los huevos y la miel natural?",
+                    q: "¿Qué codigo representa a los caballos y asnos?",
                     a: [
-                        { t: "Capítulo 04", c: true },
-                        { t: "Capítulo 01", c: false },
-                        { t: "Capítulo 05", c: false },
-                        { t: "Capítulo 02", c: false }
+                        { t: "01.01", c: true },
+                        { t: "01.02", c: false },
+                        { t: "01.03", c: false },
+                        { t: "01.04", c: false }
                     ]
                 },
                 {
-                    q: "¿Qué tipo de productos encontramos en el Capítulo 05?",
+                    q: "¿Qué codigo representa Bovinos?",
                     a: [
-                        { t: "Pieles sin procesar, plumas y huesos", c: true },
-                        { t: "Zapatos de cuero", c: false },
-                        { t: "Leche procesada", c: false },
-                        { t: "Pescado crudo", c: false }
+                        { t: "01.01", c: false },
+                        { t: "01.02", c: true },
+                        { t: "01.03", c: false },
+                        { t: "01.04", c: false }
                     ]
-                }
+                },
+                {
+                    q: "¿Qué codigo representa Porcinos?",
+                    a: [
+                        { t: "01.01", c: false },
+                        { t: "01.02", c: false },
+                        { t: "01.03", c: true },
+                        { t: "01.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa Ovinos y caprinos?",
+                    a: [
+                        { t: "01.01", c: false },
+                        { t: "01.02", c: false },
+                        { t: "01.03", c: true },
+                        { t: "01.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa Aves de corral?",
+                    a: [
+                        { t: "01.01", c: false },
+                        { t: "01.02", c: false },
+                        { t: "01.03", c: false },
+                        { t: "01.04", c: true }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa Carne de bovino?",
+                    a: [
+                        { t: "02.01", c: true },
+                        { t: "02.02", c: false },
+                        { t: "02.03", c: false },
+                        { t: "02.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa Carne de bovino congelada?",
+                    a: [
+                        { t: "02.01", c: false },
+                        { t: "02.02", c: true },
+                        { t: "02.03", c: false },
+                        { t: "02.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa Carne de cerdo?",
+                    a: [
+                        { t: "02.01", c: false },
+                        { t: "02.02", c: false },
+                        { t: "02.03", c: true },
+                        { t: "02.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa Carne de oveja o cabra?",
+                    a: [
+                        { t: "02.01", c: false },
+                        { t: "02.02", c: false },
+                        { t: "02.03", c: false },
+                        { t: "02.04", c: true }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa peses vivos?",
+                    a: [
+                        { t: "03.01", c: true },
+                        { t: "03.02", c: false },
+                        { t: "03.03", c: false },
+                        { t: "03.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa pescado fresco?",
+                    a: [
+                        { t: "03.01", c: false },
+                        { t: "03.02", c: true },
+                        { t: "03.03", c: false },
+                        { t: "03.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa pesecado congelado?",
+                    a: [
+                        { t: "03.01", c: false },
+                        { t: "03.02", c: false },
+                        { t: "03.03", c: true },
+                        { t: "03.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa filestes de pescado?",
+                    a: [
+                        { t: "03.01", c: false },
+                        { t: "03.02", c: false },
+                        { t: "03.03", c: false },
+                        { t: "03.04", c: true }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa crustáceos?",
+                    a: [
+                        { t: "03.06", c: true },
+                        { t: "03.07", c: false },
+                        { t: "03.08", c: false },
+                        { t: "03.05", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa moluscos?",
+                    a: [
+                        { t: "03.06", c: false },
+                        { t: "03.07", c: true },
+                        { t: "03.08", c: false },
+                        { t: "03.05", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa leche y nata, sin concentrar ni azucarar?",
+                    a: [
+                        { t: "04.01", c: true },
+                        { t: "04.02", c: false },
+                        { t: "04.03", c: false },
+                        { t: "04.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa leche y nata, concentradas o con azúcar?",
+                    a: [
+                        { t: "04.01", c: false },
+                        { t: "04.02", c: true },
+                        { t: "04.03", c: false },
+                        { t: "04.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa yogur?",
+                    a: [
+                        { t: "04.01", c: false },
+                        { t: "04.02", c: false },
+                        { t: "04.03", c: true },
+                        { t: "04.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa quesos?",
+                    a: [
+                        { t: "04.04", c: false },
+                        { t: "04.05", c: false },
+                        { t: "04.06", c: true },
+                        { t: "04.07", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa huevos de ave con cáscara?",
+                    a: [
+                        { t: "04.04", c: false },
+                        { t: "04.05", c: false },
+                        { t: "04.06", c: false },
+                        { t: "04.07", c: true }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa miel natural?",
+                    a: [
+                        { t: "04.06", c: false },
+                        { t: "04.07", c: false },
+                        { t: "04.08", c: false },
+                        { t: "04.09", c: true }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa cerdas de cerdo?",
+                    a: [
+                        { t: "05.01", c: false },
+                        { t: "05.02", c: true },
+                        { t: "05.03", c: false },
+                        { t: "05.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa crines?",
+                    a: [
+                        { t: "05.01", c: false },
+                        { t: "05.02", c: false },
+                        { t: "05.03", c: true },
+                        { t: "05.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa bulbos, túberculos y raíces?",
+                    a: [
+                        { t: "06.01", c: true },
+                        { t: "06.02", c: false },
+                        { t: "06.03", c: false },
+                        { t: "06.04", c: false }
+                    ]
+                },
+                 {
+                    q: "¿Qué codigo representa plantas vivas?",
+                    a: [
+                        { t: "06.01", c: false },
+                        { t: "06.02", c: true },
+                        { t: "06.03", c: false },
+                        { t: "06.04", c: false }
+                    ]
+                },
+                 {
+                    q: "¿Qué codigo representa flores cortadas y capullos?",
+                    a: [
+                        { t: "06.01", c: false },
+                        { t: "06.02", c: false },
+                        { t: "06.03", c: true },
+                        { t: "06.04", c: false }
+                    ]
+                },
+                 {
+                    q: "¿Qué codigo representa papas (patatas)?",
+                    a: [
+                        { t: "07.01", c: true },
+                        { t: "07.02", c: false },
+                        { t: "07.03", c: false },
+                        { t: "07.04", c: false }
+                    ]
+                },
+                 {
+                    q: "¿Qué codigo representa tomates?",
+                    a: [
+                        { t: "07.01", c: false },
+                        { t: "07.02", c: true },
+                        { t: "07.03", c: false },
+                        { t: "07.04", c: false }
+                    ]
+                },
+                 {
+                    q: "¿Qué codigo representa cebollas, ajos y similares?",
+                    a: [
+                        { t: "07.01", c: false },
+                        { t: "07.02", c: false },
+                        { t: "07.03", c: true },
+                        { t: "07.04", c: false }
+                    ]
+                },
+                 {
+                    q: "¿Qué codigo representa coles y repollos?",
+                    a: [
+                        { t: "07.01", c: false },
+                        { t: "07.02", c: false },
+                        { t: "07.03", c: false },
+                        { t: "07.04", c: true }
+                    ]
+                },
+                 {
+                    q: "¿Qué codigo representa lechugas?",
+                    a: [
+                        { t: "07.05", c: true },
+                        { t: "07.06", c: false },
+                        { t: "07.07", c: false },
+                        { t: "07.08", c: false }
+                    ]
+                },
+                 {
+                    q: "¿Qué codigo representa zanahorias y nabos?",
+                    a: [
+                        { t: "07.05", c: false },
+                        { t: "07.06", c: true },
+                        { t: "07.07", c: false },
+                        { t: "07.08", c: false }
+                    ]
+                },
+                 {
+                    q: "¿Qué codigo representa pepinos?",
+                    a: [
+                        { t: "07.05", c: false },
+                        { t: "07.06", c: false },
+                        { t: "07.07", c: true },
+                        { t: "07.08", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa coco, nuez y castañas?",
+                    a: [
+                        { t: "08.01", c: true },
+                        { t: "08.02", c: false },
+                        { t: "08.03", c: false },
+                        { t: "08.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa bananas o plátanos?",
+                    a: [
+                        { t: "08.01", c: false },
+                        { t: "08.02", c: false },
+                        { t: "08.03", c: true },
+                        { t: "08.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa uvas?",
+                    a: [
+                        { t: "08.06", c: true },
+                        { t: "08.07", c: false },
+                        { t: "08.08", c: false },
+                        { t: "08.09", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa melones y papayas?",
+                    a: [
+                        { t: "08.06", c: false },
+                        { t: "08.07", c: true },
+                        { t: "08.08", c: false },
+                        { t: "08.09", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa manzanas, peras y membrillos?",
+                    a: [
+                        { t: "08.06", c: false },
+                        { t: "08.07", c: false },
+                        { t: "08.08", c: true },
+                        { t: "08.09", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa duraznos?",
+                    a: [
+                        { t: "08.06", c: false },
+                        { t: "08.07", c: false },
+                        { t: "08.08", c: false },
+                        { t: "08.09", c: true }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa café?",
+                    a: [
+                        { t: "09.01", c: true },
+                        { t: "09.02", c: false },
+                        { t: "09.03", c: false },
+                        { t: "09.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa té?",
+                    a: [
+                        { t: "09.01", c: false },
+                        { t: "09.02", c: true },
+                        { t: "09.03", c: false },
+                        { t: "09.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa yerba mate?",
+                    a: [
+                        { t: "09.01", c: false },
+                        { t: "09.02", c: false },
+                        { t: "09.03", c: true },
+                        { t: "09.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa avena?",
+                    a: [
+                        { t: "10.02", c: false },
+                        { t: "10.03", c: false },
+                        { t: "10.04", c: true },
+                        { t: "10.05", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa maíz?",
+                    a: [
+                        { t: "10.02", c: false },
+                        { t: "10.03", c: false },
+                        { t: "10.04", c: false },
+                        { t: "10.05", c: true }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa arroz?",
+                    a: [
+                        { t: "10.05", c: false },
+                        { t: "10.06", c: true },
+                        { t: "10.07", c: false },
+                        { t: "10.08", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa harina de trigo?",
+                    a: [
+                        { t: "11.01", c: true },
+                        { t: "11.02", c: false },
+                        { t: "11.03", c: false },
+                        { t: "11.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa granos trabajados?",
+                    a: [
+                        { t: "11.01", c: false },
+                        { t: "11.02", c: false },
+                        { t: "11.03", c: false },
+                        { t: "11.04", c: true }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa harina de legumbre o raices?",
+                    a: [
+                        { t: "11.06", c: true },
+                        { t: "11.07", c: false },
+                        { t: "11.08", c: false },
+                        { t: "11.09", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa malta?",
+                    a: [
+                        { t: "11.06", c: false },
+                        { t: "11.07", c: true },
+                        { t: "11.08", c: false },
+                        { t: "11.09", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa almidón y fécula?",
+                    a: [
+                        { t: "11.06", c: false },
+                        { t: "11.07", c: false },
+                        { t: "11.08", c: true },
+                        { t: "11.09", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa gluten de trigo?",
+                    a: [
+                        { t: "11.06", c: false },
+                        { t: "11.07", c: false },
+                        { t: "11.08", c: false },
+                        { t: "11.09", c: true }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa soya?",
+                    a: [
+                        { t: "12.01", c: true },
+                        { t: "12.02", c: false },
+                        { t: "12.03", c: false },
+                        { t: "12.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa maní?",
+                    a: [
+                        { t: "12.01", c: false },
+                        { t: "12.02", c: true },
+                        { t: "12.03", c: false },
+                        { t: "12.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa lúpulo?",
+                    a: [
+                        { t: "12.07", c: false },
+                        { t: "12.08", c: false },
+                        { t: "12.09", c: false },
+                        { t: "12.10", c: true }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa plantas medicinales?",
+                    a: [
+                        { t: "12.11", c: true },
+                        { t: "12.12", c: false },
+                        { t: "12.13", c: false },
+                        { t: "12.14", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa plantas para uso industrial?",
+                    a: [
+                        { t: "12.11", c: false },
+                        { t: "12.12", c: true },
+                        { t: "12.13", c: false },
+                        { t: "12.14", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa grasas de cerdo?",
+                    a: [
+                        { t: "15.01", c: true },
+                        { t: "15.02", c: false },
+                        { t: "15.03", c: false },
+                        { t: "15.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa aceite de pescado?",
+                    a: [
+                        { t: "15.01", c: false },
+                        { t: "15.02", c: false },
+                        { t: "15.03", c: true },
+                        { t: "15.04", c: false }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa grasas y aceites de mamíferos marinos?",
+                    a: [
+                        { t: "15.01", c: false },
+                        { t: "15.02", c: false },
+                        { t: "15.03", c: false },
+                        { t: "15.04", c: true }
+                    ]
+                },
+                {
+                    q: "¿Qué codigo representa aceite de soya?",
+                    a: [
+                        { t: "15.07", c: true },
+                        { t: "15.08", c: false },
+                        { t: "15.09", c: false },
+                        { t: "15.10", c: false }
+                    ]
+                },
+                 {
+                    q: "¿Qué codigo representa aceite de maní?",
+                    a: [
+                        { t: "15.07", c: false },
+                        { t: "15.08", c: true },
+                        { t: "15.09", c: false },
+                        { t: "15.10", c: false }
+                    ]
+                },
+                 {
+                    q: "¿Qué codigo representa aceite de oliva?",
+                    a: [
+                        { t: "15.07", c: false },
+                        { t: "15.08", c: false },
+                        { t: "15.09", c: true },
+                        { t: "15.10", c: false }
+                    ]
+                },
+                 {
+                    q: "¿Qué codigo representa aceite de palma?",
+                    a: [
+                        { t: "15.11", c: true },
+                        { t: "15.12", c: false },
+                        { t: "15.13", c: false },
+                        { t: "15.14", c: false }
+                    ]
+                },
+                 {
+                    q: "¿Qué codigo representa aceite de girasol?",
+                    a: [
+                        { t: "15.11", c: false },
+                        { t: "15.12", c: true },
+                        { t: "15.13", c: false },
+                        { t: "15.14", c: false }
+                    ]
+                },
+                 {
+                    q: "¿Qué codigo representa aceite de coco?",
+                    a: [
+                        { t: "15.11", c: false },
+                        { t: "15.12", c: false },
+                        { t: "15.13", c: true },
+                        { t: "15.14", c: false }
+                    ]
+                },
+                
             ],
 
-            'exam-3': [
+            'exam-31': [
                 {
                     q: "¿Cuáles son los 2 criterios clave para que un producto esté en la Sección I?",
                     a: [
