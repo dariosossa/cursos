@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RDSS Pizarra Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+    <!-- KaTeX para renderizado de fórmulas -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <style>
+        body { 
+            overflow: hidden; 
+            height: 100vh; 
+            background-color: #f3f4f6; 
+            touch-action: none; 
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        
+        #board-container { 
+            height: calc(100vh - 120px);
+            background-color: #d1d5db; 
+            padding: 20px;
+            overflow: auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        #board-wrapper {
+            background-image: radial-gradient(#94a3b8 1px, transparent 1px);
+            background-size: 25px 25px;
+            background-color: #ffffff;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -10px rgba(0, 0, 0, 0.2);
+            border: 1px solid #94a3b8;
+            position: relative;
+        }
+
+        .custom-scroll::-webkit-scrollbar { width: 12px; height: 12px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #e5e7eb; }
+        .custom-scroll::-webkit-scrollbar-thumb { 
+            background: #4b5563; 
+            border-radius: 6px;
+            border: 3px solid #e5e7eb;
+        }
+        
+        .tool-btn {
+            @apply p-2 rounded-lg transition-all duration-150 flex items-center justify-center flex-shrink-0;
+        }
+        .tool-btn.active { @apply bg-blue-100 text-blue-700 ring-2 ring-blue-500; }
+        .tool-btn:not(.active) { @apply text-gray-600 hover:bg-gray-100; }
+        
+        @media (min-width: 768px) {
+            #board-container { height: calc(100vh - 110px); }
+        }
+
+        #math-modal {
+            display: none;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+        }
+
+        .math-helper-btn {
+            @apply px-3 py-1.5 bg-gray-50 hover:bg-gray-200 rounded-lg text-sm font-mono border border-gray-200 transition-colors;
+        }
+    </style>
+</head>
+<body class="flex flex-col">
+
+    <!-- Header Superior (Dark) -->
+    <header class="h-14 bg-[#0f172a] text-white flex items-center justify-between px-4 md:px-6 shadow-md z-50 flex-shrink-0">
+        <div class="flex items-center gap-2">
+            <span class="text-lg font-bold tracking-widest text-white">RDSS <span class="text-blue-400">BOARD</span></span>
+        </div>
+        <div class="flex items-center gap-3">
+            <button id="board-save" class="bg-[#10b981] text-white px-4 py-1.5 rounded text-xs font-bold hover:bg-emerald-600 transition-colors uppercase tracking-wider">
+                Guardar
+            </button>
+            <button id="board-clear-all" class="bg-[#ef4444] text-white p-2 rounded hover:bg-red-600 transition-all" title="Borrar todo">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Toolbar Blanca (Herramientas) -->
+    <div class="bg-white border-b h-14 flex items-center px-4 gap-1 md:gap-2 overflow-x-auto no-scrollbar z-40 shadow-sm">
+        <button id="b-tool-select" class="tool-btn active" title="Mover">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></svg>
+        </button>
+        <button id="b-tool-pen" class="tool-btn" title="Lápiz">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+        </button>
+        <button id="b-tool-laser" class="tool-btn" title="Láser temporal">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
+        </button>
+        
+        <div class="w-px h-6 bg-gray-200 mx-2"></div>
+        
+        <button id="b-tool-rect" class="tool-btn" title="Rectángulo">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+        </button>
+        <button id="b-tool-circle" class="tool-btn" title="Círculo">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg>
+        </button>
+        <button id="b-tool-text" class="tool-btn" title="Texto">
+            <span class="text-xl font-bold">T</span>
+        </button>
+        <button id="b-tool-math" class="tool-btn" title="Matemáticas">
+            <span class="text-xl font-serif">Σ</span>
+        </button>
+        <button id="b-tool-note" class="tool-btn" title="Nota adhesiva">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15.5 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-8.5L15.5 3z"/><path d="M15 3v6h6"/></svg>
+        </button>
+        <button id="b-tool-img" class="tool-btn" title="Subir imagen">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        </button>
+        <input type="file" id="board-img-input" class="hidden" accept="image/*">
+
+        <div class="flex-grow"></div>
+        
+        <div class="flex items-center gap-3">
+            <div class="flex flex-col items-center">
+                <input type="color" id="board-color" value="#000000" class="w-8 h-8 rounded border-none cursor-pointer bg-transparent">
+            </div>
+            <div class="h-8 w-px bg-gray-200"></div>
+            <button id="board-undo" class="p-1 hover:bg-gray-100 rounded" title="Deshacer">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/></svg>
+            </button>
+            <button id="board-redo" class="p-1 hover:bg-gray-100 rounded" title="Rehacer">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10h-10a8 8 0 00-8 8v2m18-10l-6 6m6-6l-6-6"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Area de Pizarra -->
+    <main id="board-container" class="custom-scroll flex-grow">
+        <div id="board-wrapper">
+            <canvas id="board-canvas"></canvas>
+        </div>
+
+        <!-- Botones Flotantes de Expansión -->
+        <div class="fixed bottom-6 right-6 flex flex-col gap-3 z-40">
+            <button id="expand-v" class="bg-blue-600 text-white shadow-xl p-3 rounded-full hover:bg-blue-700 active:scale-95 transition-all" title="Expandir hacia abajo">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+            </button>
+            <button id="expand-h" class="bg-blue-600 text-white shadow-xl p-3 rounded-full hover:bg-blue-700 active:scale-95 transition-all" title="Expandir hacia la derecha">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+        </div>
+    </main>
+
+    <!-- Modal de Fórmulas -->
+    <div id="math-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg overflow-hidden border border-gray-200">
+            <div class="bg-slate-900 p-4 text-white flex justify-between items-center">
+                <h3 class="font-bold">Editor de Ecuaciones LaTeX</h3>
+                <button id="close-math" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            <div class="p-6">
+                <textarea id="latex-input" class="w-full h-24 p-3 border rounded-lg font-mono text-sm focus:ring-2 focus:ring-blue-500 outline-none mb-3 bg-gray-50" placeholder="\frac{a}{b} = c"></textarea>
+                
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <button class="math-helper-btn" data-latex="\left( \right)">( )</button>
+                    <button class="math-helper-btn" data-latex="^{}">xⁿ</button>
+                    <button class="math-helper-btn" data-latex="\sqrt{}">√</button>
+                    <button class="math-helper-btn" data-latex="\sum_{i=1}^{n}">Σ</button>
+                    <button class="math-helper-btn" data-latex="\frac{}{}">a/b</button>
+                    <button class="math-helper-btn" data-latex="\infty">∞</button>
+                </div>
+
+                <div class="mb-6">
+                    <span class="text-xs text-gray-500 uppercase font-bold tracking-widest">Vista Previa</span>
+                    <div id="math-preview" class="mt-2 min-h-[80px] p-4 bg-white rounded-lg flex items-center justify-center text-xl overflow-x-auto border"></div>
+                </div>
+
+                <div class="flex gap-2">
+                    <button id="insert-math" class="flex-1 bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition-colors">INSERTAR</button>
+                    <button id="cancel-math" class="flex-1 bg-gray-100 text-gray-600 font-bold py-3 rounded-lg hover:bg-gray-200 transition-colors">CANCELAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let boardFabric = null;
+        const boardWrapper = document.getElementById('board-wrapper');
+        let undoStack = [], redoStack = [], isSavingState = false;
+        let currentTool = 'select';
+        let isDown = false, origX = 0, origY = 0, activeObj = null;
+        
+        let internalClipboard = null;
+        let lastPointer = { x: 200, y: 200 };
+
+        window.onload = () => {
+            initBoard();
+            setupShortcuts();
+            initPasteHandler(); 
+        };
+
+        function initBoard() {
+            const canvasEl = document.getElementById('board-canvas');
+            if (!canvasEl) return;
+
+            const initialWidth = 1400;
+            const initialHeight = 2000;
+
+            try {
+                boardFabric = new fabric.Canvas('board-canvas', {
+                    width: initialWidth,
+                    height: initialHeight,
+                    isDrawingMode: false,
+                    containerClass: 'fabric-wrapper-container'
+                });
+
+                const saved = localStorage.getItem('rdss-board-v2-state');
+                if (saved) {
+                    boardFabric.loadFromJSON(saved, () => {
+                        boardFabric.renderAll();
+                        saveHistory();
+                    });
+                } else {
+                    saveHistory();
+                }
+
+                boardFabric.on('object:added', () => !isSavingState && saveHistory());
+                boardFabric.on('object:modified', () => !isSavingState && saveHistory());
+                boardFabric.on('object:removed', () => !isSavingState && saveHistory());
+                
+                boardFabric.on('mouse:down', (o) => {
+                    lastPointer = boardFabric.getPointer(o.e);
+                    handleMouseDown(o);
+                });
+                
+                boardFabric.on('mouse:move', handleMouseMove);
+                boardFabric.on('mouse:up', handleMouseUp);
+                
+                updateBoardWrapperSize();
+                initListeners();
+            } catch (e) {
+                console.error("Error inicializando Fabric:", e);
+            }
+        }
+
+        function updateBoardWrapperSize() {
+            if (!boardFabric) return;
+            boardWrapper.style.width = boardFabric.width + 'px';
+            boardWrapper.style.height = boardFabric.height + 'px';
+        }
+
+        function setTool(tool) {
+            if (!boardFabric) return;
+            currentTool = tool;
+            boardFabric.isDrawingMode = (tool === 'pen' || tool === 'laser');
+            boardFabric.selection = (tool === 'select');
+            
+            document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+            const btn = document.getElementById(`b-tool-${tool}`);
+            if (btn) btn.classList.add('active');
+
+            if (boardFabric.isDrawingMode) {
+                boardFabric.freeDrawingBrush = new fabric.PencilBrush(boardFabric);
+                boardFabric.freeDrawingBrush.width = 3;
+                boardFabric.freeDrawingBrush.color = document.getElementById('board-color').value;
+                
+                if (tool === 'laser') {
+                    boardFabric.off('path:created');
+                    boardFabric.on('path:created', (opt) => {
+                        setTimeout(() => {
+                            if (boardFabric) {
+                                boardFabric.remove(opt.path);
+                                boardFabric.requestRenderAll();
+                            }
+                        }, 1200);
+                    });
+                } else {
+                    boardFabric.off('path:created');
+                }
+            }
+        }
+
+        function handleMouseDown(o) {
+            if (!boardFabric || currentTool === 'select' || boardFabric.isDrawingMode) return;
+            isDown = true;
+            origX = lastPointer.x;
+            origY = lastPointer.y;
+            const color = document.getElementById('board-color').value;
+
+            if (currentTool === 'rect') {
+                activeObj = new fabric.Rect({
+                    left: origX, top: origY, width: 0, height: 0,
+                    fill: 'transparent', stroke: color, strokeWidth: 3
+                });
+            } else if (currentTool === 'circle') {
+                activeObj = new fabric.Ellipse({
+                    left: origX, top: origY, rx: 0, ry: 0,
+                    fill: 'transparent', stroke: color, strokeWidth: 3
+                });
+            }
+            if (activeObj) boardFabric.add(activeObj);
+        }
+
+        function handleMouseMove(o) {
+            if (!isDown || !activeObj || !boardFabric) return;
+            const pointer = boardFabric.getPointer(o.e);
+            if (currentTool === 'rect') {
+                activeObj.set({ 
+                    left: Math.min(origX, pointer.x), 
+                    top: Math.min(origY, pointer.y),
+                    width: Math.abs(origX - pointer.x), 
+                    height: Math.abs(origY - pointer.y) 
+                });
+            } else if (currentTool === 'circle') {
+                activeObj.set({ 
+                    left: Math.min(origX, pointer.x), 
+                    top: Math.min(origY, pointer.y),
+                    rx: Math.abs(origX - pointer.x) / 2, 
+                    ry: Math.abs(origY - pointer.y) / 2 
+                });
+            }
+            boardFabric.renderAll();
+        }
+
+        function handleMouseUp() {
+            isDown = false;
+            if (activeObj && activeObj.width < 5 && (!activeObj.rx || activeObj.rx < 5)) {
+                if (boardFabric) boardFabric.remove(activeObj);
+            }
+            activeObj = null;
+        }
+
+        function initListeners() {
+            ['select', 'pen', 'laser', 'rect', 'circle'].forEach(t => {
+                const el = document.getElementById(`b-tool-${t}`);
+                if (el) el.onclick = () => setTool(t);
+            });
+            
+            document.getElementById('b-tool-text').onclick = () => {
+                if (!boardFabric) return;
+                const text = new fabric.IText('Nuevo Texto', {
+                    left: lastPointer.x, 
+                    top: lastPointer.y, 
+                    fontSize: 40, 
+                    fill: document.getElementById('board-color').value
+                });
+                boardFabric.add(text);
+                boardFabric.setActiveObject(text);
+                setTool('select');
+            };
+
+            document.getElementById('b-tool-note').onclick = () => {
+                if (!boardFabric) return;
+                const note = new fabric.Group([
+                    new fabric.Rect({ width: 220, height: 220, fill: '#fef08a', shadow: '5px 5px 15px rgba(0,0,0,0.1)' }),
+                    new fabric.IText('Escribe una nota...', { fontSize: 20, left: 20, top: 20, width: 180 })
+                ], { left: lastPointer.x, top: lastPointer.y });
+                boardFabric.add(note);
+                setTool('select');
+            };
+
+            const mathModal = document.getElementById('math-modal');
+            const latexInput = document.getElementById('latex-input');
+            const mathPreview = document.getElementById('math-preview');
+
+            document.getElementById('b-tool-math').onclick = () => {
+                mathModal.style.display = 'flex';
+                latexInput.focus();
+                updateMathPreview();
+            };
+
+            const closeMath = () => mathModal.style.display = 'none';
+            document.getElementById('close-math').onclick = closeMath;
+            document.getElementById('cancel-math').onclick = closeMath;
+
+            function updateMathPreview() {
+                try {
+                    katex.render(latexInput.value || "\\text{Vista previa}", mathPreview, { throwOnError: false, displayMode: true });
+                } catch (e) {
+                    mathPreview.innerHTML = `<span class="text-red-500">Error en LaTeX</span>`;
+                }
+            }
+
+            latexInput.oninput = updateMathPreview;
+
+            document.querySelectorAll('.math-helper-btn').forEach(btn => {
+                btn.onclick = () => {
+                    const l = btn.getAttribute('data-latex');
+                    const start = latexInput.selectionStart;
+                    latexInput.value = latexInput.value.substring(0, start) + l + latexInput.value.substring(latexInput.selectionEnd);
+                    latexInput.setSelectionRange(start + l.length, start + l.length);
+                    latexInput.focus();
+                    updateMathPreview();
+                };
+            });
+
+            document.getElementById('insert-math').onclick = () => {
+                const latex = latexInput.value.trim();
+                if (!latex) return;
+                const color = document.getElementById('board-color').value.replace('#', '');
+                const url = `https://latex.codecogs.com/svg.image?\\color[RGB]{${hexToRgb(color)}}${encodeURIComponent(latex)}`;
+                fabric.Image.fromURL(url, (img) => {
+                    img.scale(2);
+                    img.set({ left: lastPointer.x, top: lastPointer.y });
+                    boardFabric.add(img);
+                    boardFabric.setActiveObject(img);
+                    boardFabric.renderAll();
+                    closeMath();
+                }, { crossOrigin: 'anonymous' });
+            };
+
+            document.getElementById('b-tool-img').onclick = () => document.getElementById('board-img-input').click();
+            document.getElementById('board-img-input').onchange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (f) => {
+                    fabric.Image.fromURL(f.target.result, (img) => {
+                        img.scaleToWidth(400);
+                        img.set({ left: lastPointer.x, top: lastPointer.y });
+                        boardFabric.add(img);
+                        boardFabric.setActiveObject(img);
+                        boardFabric.renderAll();
+                    });
+                };
+                reader.readAsDataURL(file);
+                e.target.value = '';
+            };
+
+            document.getElementById('expand-v').onclick = () => {
+                if (!boardFabric) return;
+                boardFabric.setHeight(boardFabric.height + 800);
+                updateBoardWrapperSize();
+                boardFabric.renderAll();
+            };
+            
+            document.getElementById('expand-h').onclick = () => {
+                if (!boardFabric) return;
+                boardFabric.setWidth(boardFabric.width + 800);
+                updateBoardWrapperSize();
+                boardFabric.renderAll();
+            };
+
+            document.getElementById('board-undo').onclick = undo;
+            document.getElementById('board-redo').onclick = redo;
+            document.getElementById('board-save').onclick = exportBoard;
+
+            document.getElementById('board-clear-all').onclick = () => {
+                if (boardFabric && confirm("¿Deseas limpiar todo el lienzo?")) {
+                    boardFabric.clear();
+                    saveHistory();
+                }
+            };
+
+            document.getElementById('board-color').oninput = (e) => {
+                if (!boardFabric) return;
+                if (boardFabric.isDrawingMode && boardFabric.freeDrawingBrush) {
+                    boardFabric.freeDrawingBrush.color = e.target.value;
+                }
+                const active = boardFabric.getActiveObject();
+                if (active && (active.type === 'i-text' || active.type === 'text')) {
+                    active.set('fill', e.target.value);
+                    boardFabric.renderAll();
+                }
+            };
+        }
+
+        function hexToRgb(hex) {
+            const r = parseInt(hex.substring(0, 2), 16);
+            const g = parseInt(hex.substring(2, 4), 16);
+            const b = parseInt(hex.substring(4, 6), 16);
+            return `${r},${g},${b}`;
+        }
+
+        function saveHistory() {
+            if (isSavingState || !boardFabric) return;
+            const json = JSON.stringify(boardFabric);
+            undoStack.push(json);
+            if (undoStack.length > 30) undoStack.shift();
+            redoStack = [];
+            localStorage.setItem('rdss-board-v2-state', json);
+        }
+
+        function undo() {
+            if (undoStack.length <= 1 || !boardFabric) return;
+            isSavingState = true;
+            redoStack.push(undoStack.pop());
+            boardFabric.loadFromJSON(undoStack[undoStack.length - 1], () => {
+                boardFabric.renderAll();
+                isSavingState = false;
+            });
+        }
+
+        function redo() {
+            if (redoStack.length === 0 || !boardFabric) return;
+            isSavingState = true;
+            const next = redoStack.pop();
+            undoStack.push(next);
+            boardFabric.loadFromJSON(next, () => {
+                boardFabric.renderAll();
+                isSavingState = false;
+            });
+        }
+
+        // --- EXPORTACIÓN MEJORADA ---
+        function exportBoard() {
+            if (!boardFabric) return;
+            
+            // Forzar fondo blanco antes de generar el DataURL
+            const multiplier = 2;
+            const dataURL = boardFabric.toDataURL({ 
+                format: 'png', 
+                multiplier: multiplier, 
+                backgroundColor: '#ffffff', // Forzar blanco aquí
+                quality: 1
+            });
+            
+            const link = document.createElement('a');
+            link.download = `pizarra-rdss-${Date.now()}.png`;
+            link.href = dataURL;
+            link.click();
+        }
+
+        function copyObject() {
+            if (!boardFabric) return;
+            const active = boardFabric.getActiveObject();
+            if (active) {
+                active.clone((cloned) => {
+                    internalClipboard = cloned;
+                });
+            }
+        }
+
+        function cutObject() {
+            if (!boardFabric) return;
+            const active = boardFabric.getActiveObject();
+            if (active) {
+                active.clone((cloned) => {
+                    internalClipboard = cloned;
+                    boardFabric.remove(active);
+                    boardFabric.discardActiveObject();
+                    boardFabric.renderAll();
+                    saveHistory();
+                });
+            }
+        }
+
+        function pasteInternalObject() {
+            if (!boardFabric || !internalClipboard) return;
+            internalClipboard.clone((clonedObj) => {
+                boardFabric.discardActiveObject();
+                clonedObj.set({
+                    left: lastPointer.x,
+                    top: lastPointer.y,
+                    evented: true,
+                });
+                if (clonedObj.type === 'activeSelection') {
+                    clonedObj.canvas = boardFabric;
+                    clonedObj.forEachObject((obj) => boardFabric.add(obj));
+                    clonedObj.setCoords();
+                } else {
+                    boardFabric.add(clonedObj);
+                }
+                boardFabric.setActiveObject(clonedObj);
+                boardFabric.renderAll();
+                saveHistory();
+            });
+        }
+
+        function setupShortcuts() {
+            window.addEventListener('keydown', (e) => {
+                if (!boardFabric || e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+                
+                if (e.ctrlKey && e.key === 'c') {
+                    e.preventDefault();
+                    copyObject();
+                }
+
+                if (e.ctrlKey && e.key === 'x') {
+                    e.preventDefault();
+                    cutObject();
+                }
+
+                if (e.ctrlKey && e.key === 'v') {
+                    if (internalClipboard) {
+                        e.preventDefault();
+                        pasteInternalObject();
+                    }
+                }
+
+                if (e.ctrlKey && e.key === 'z') { e.preventDefault(); undo(); }
+                if (e.ctrlKey && e.key === 'y') { e.preventDefault(); redo(); }
+                
+                if (e.key === 'Delete' || e.key === 'Backspace') {
+                    const active = boardFabric.getActiveObjects();
+                    if (active.length > 0) {
+                        boardFabric.remove(...active);
+                        boardFabric.discardActiveObject();
+                        boardFabric.renderAll();
+                    }
+                }
+            });
+        }
+
+        function initPasteHandler() {
+            window.addEventListener('paste', (e) => {
+                if (!boardFabric) return;
+                
+                const items = e.clipboardData.items;
+                for (let i = 0; i < items.length; i++) {
+                    if (items[i].type.indexOf('image') !== -1) {
+                        const blob = items[i].getAsFile();
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            fabric.Image.fromURL(event.target.result, (img) => {
+                                if (img.width > 1000) img.scaleToWidth(800);
+                                img.set({ left: lastPointer.x, top: lastPointer.y });
+                                boardFabric.add(img);
+                                boardFabric.setActiveObject(img);
+                                boardFabric.renderAll();
+                                saveHistory();
+                            });
+                        };
+                        reader.readAsDataURL(blob);
+                        setTool('select');
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
