@@ -29,12 +29,23 @@
         /* Estilos UI */
         .chapter-item.active { border-left: 4px solid #ef4444; background: rgba(255,255,255,0.1); }
         #sidebar-content h3, #sidebar-content span { color: #ffffff !important; }
-        #progress-container { height: 6px; background: #444; cursor: pointer; position: relative; }
+        
+        /* Barra de progreso optimizada para dedos (más gruesa) */
+        #progress-container { height: 10px; background: #444; cursor: pointer; position: relative; }
         #progress-bar { height: 100%; background: #ef4444; width: 0%; position: absolute; transition: width 0.2s linear; }
 
-        /* Estilos activos para herramientas (Rojo para normales, Cyan para Láser) */
+        /* Estilos activos para herramientas */
         .tool-active { color: #ef4444; }
         .laser-active { color: #22d3ee; text-shadow: 0 0 8px rgba(34, 211, 238, 0.8); }
+
+        /* Animación para el doble tap de adelantar video */
+        @keyframes fadeOutUp {
+            0% { opacity: 1; transform: translateY(-50%) scale(0.8); }
+            100% { opacity: 0; transform: translateY(-50%) scale(1.2); }
+        }
+        .animate-fade-out-up {
+            animation: fadeOutUp 0.6s ease-out forwards;
+        }
     </style>
 </head>
 <body class="h-screen w-screen flex overflow-hidden">
@@ -43,7 +54,7 @@
     <div id="sidebar-menu" class="absolute h-full w-[300px] bg-black/95 z-40 transform -translate-x-full transition-transform border-r border-white/10 flex flex-col">
         <div class="p-4 flex justify-between items-center text-white border-b border-white/10">
             <h2 class="font-bold">Materia: FullStack Web</h2>
-            <button id="close-sidebar" tabindex="0" class="focus:outline-none focus:text-red-400"><i class="fa-solid fa-xmark"></i></button>
+            <button id="close-sidebar" tabindex="0" class="focus:outline-none focus:text-red-400 p-2"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div id="sidebar-content" class="flex-1 overflow-y-auto p-2"></div>
     </div>
@@ -51,21 +62,18 @@
     <!-- Contenedor principal derecho -->
     <div class="flex-1 flex flex-col h-full relative bg-black overflow-hidden">
         
-        <!-- Área exclusiva del Video (Donde funciona el Zoom y Dibujo) -->
-        <div id="video-container" class="flex-1 relative flex items-center justify-center overflow-hidden">
+        <!-- Área exclusiva del Video -->
+        <div id="video-container" class="flex-1 relative flex items-center justify-center overflow-hidden touch-manipulation">
             
             <!-- Media Layer -->
             <div id="media-layer" class="w-full h-full flex items-center justify-center relative bg-black">
                 
-                <!-- Contenedor de YouTube (Añadido ID yt-wrapper para poder darle o quitarle los clics) -->
                 <div id="yt-wrapper" class="absolute inset-0 w-full h-full pointer-events-none">
                     <div id="main-video" class="w-full h-full"></div>
                 </div>
 
-                <!-- Escudo invisible (z-10) para atrapar clics de Pan/Zoom sin tocar el iframe -->
                 <div id="interaction-overlay" class="absolute inset-0 z-10 w-full h-full"></div>
                 
-                <!-- Lienzos para dibujar encima (z-20 y z-21) -->
                 <canvas id="draw-canvas"></canvas>
                 <canvas id="temp-canvas"></canvas> 
             </div>
@@ -74,9 +82,9 @@
             <button id="sidebar-toggle" class="absolute top-4 left-4 text-white text-xl z-50 bg-black/50 p-2 rounded hover:bg-black transition-colors"><i class="fa-solid fa-bars"></i></button>
         </div>
 
-        <!-- Controles Inferiores (Separados físicamente del video) -->
+        <!-- Controles Inferiores -->
         <div class="w-full bg-[#0a0a0a] z-50 p-4 border-t border-white/10 shrink-0">
-            <div class="flex justify-between text-white text-[10px] mb-1 font-mono">
+            <div class="flex justify-between text-white text-[10px] mb-2 font-mono">
                 <span id="current-time">0:00</span>
                 <span id="total-duration">0:00</span>
             </div>
@@ -85,42 +93,43 @@
                 <div id="progress-bar"></div>
             </div>
             
-            <div class="flex justify-between items-center text-white">
+            <div class="flex justify-between items-center text-white flex-wrap gap-y-3">
                 <div class="flex items-center gap-4">
-                    <button id="play-btn" class="w-6 hover:text-red-400 transition-colors"><i class="fa-solid fa-play"></i></button>
+                    <button id="play-btn" class="w-6 hover:text-red-400 transition-colors p-1"><i class="fa-solid fa-play text-xl"></i></button>
                     
-                    <!-- NUEVO: Controles de Volumen -->
                     <div class="flex items-center gap-2 border-l border-white/20 pl-4">
-                        <button id="mute-btn" class="hover:text-red-400 transition-colors w-5" title="Silenciar"><i class="fa-solid fa-volume-high"></i></button>
-                        <input id="volume-slider" type="range" min="0" max="100" value="100" class="w-20 accent-red-500 cursor-pointer">
+                        <button id="mute-btn" class="hover:text-red-400 transition-colors w-5 p-1" title="Silenciar"><i class="fa-solid fa-volume-high"></i></button>
+                        <!-- Ocultar slider de volumen en móviles pequeños -->
+                        <input id="volume-slider" type="range" min="0" max="100" value="100" class="w-20 accent-red-500 cursor-pointer hidden sm:block">
                     </div>
 
-                    <span id="zoom-val" class="text-xs w-8 text-gray-400 ml-4">1.0x</span>
+                    <span id="zoom-val" class="text-xs w-8 text-gray-400 ml-2 sm:ml-4">1.0x</span>
                 </div>
                 
-                <div class="flex items-center gap-5 text-lg">
-                    <button id="reset-zoom" class="hover:text-red-400 transition-colors" title="Restaurar Zoom"><i class="fa-solid fa-compress"></i></button>
+                <div class="flex items-center gap-4 sm:gap-5 text-lg">
+                    <button id="reset-zoom" class="hover:text-red-400 transition-colors p-1" title="Restaurar Zoom"><i class="fa-solid fa-compress"></i></button>
                     <div class="w-px h-5 bg-white/20"></div>
                     
-                    <!-- NUEVO: Botones para Mano (Mover) e Interactuar con el iframe de YT -->
-                    <button id="pan-mode-btn" class="transition-colors tool-active" title="Mover y Zoom (H)"><i class="fa-solid fa-hand"></i></button>
-                    <button id="pointer-mode-btn" class="transition-colors" title="Interactuar / Saltar Anuncios (V)"><i class="fa-solid fa-arrow-pointer"></i></button>
-                    <div class="w-px h-5 bg-white/20"></div>
+                    <!-- Botones Principales -->
+                    <button id="pan-mode-btn" class="transition-colors tool-active p-1" title="Mover y Zoom (H)"><i class="fa-solid fa-hand"></i></button>
+                    <button id="pointer-mode-btn" class="transition-colors p-1" title="Interactuar / Saltar Anuncios (V)"><i class="fa-solid fa-arrow-pointer"></i></button>
                     
-                    <!-- Herramientas de Dibujo -->
-                    <button id="draw-mode-btn" class="transition-colors" title="Lápiz (D)"><i class="fa-solid fa-pen"></i></button>
-                    <button id="laser-mode-btn" class="transition-colors" title="Puntero Temporal (T)"><i class="fa-solid fa-wand-magic-sparkles"></i></button>
-                    <button id="erase-mode-btn" class="transition-colors" title="Borrar (B)"><i class="fa-solid fa-eraser"></i></button>
-                    
-                    <div class="w-px h-5 bg-white/20"></div>
-                    <button id="draw-clear" class="hover:text-red-400 transition-colors" title="Limpiar Todo (C)"><i class="fa-solid fa-trash-can"></i></button>
+                    <!-- Herramientas de Dibujo (Se ocultan en móviles para ahorrar espacio) -->
+                    <div class="hidden md:flex items-center gap-5">
+                        <div class="w-px h-5 bg-white/20"></div>
+                        <button id="draw-mode-btn" class="transition-colors p-1" title="Lápiz (D)"><i class="fa-solid fa-pen"></i></button>
+                        <button id="laser-mode-btn" class="transition-colors p-1" title="Puntero Temporal (T)"><i class="fa-solid fa-wand-magic-sparkles"></i></button>
+                        <button id="erase-mode-btn" class="transition-colors p-1" title="Borrar (B)"><i class="fa-solid fa-eraser"></i></button>
+                        
+                        <div class="w-px h-5 bg-white/20"></div>
+                        <button id="draw-clear" class="hover:text-red-400 transition-colors p-1" title="Limpiar Todo (C)"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // TEMARIO AMPLIADO CON MÁS VIDEOS Y UNIDADES
         const themes = [
             { name: "Unidad 1: Desarrollo Frontend", videos: [
                 { title: "HTML Desde Cero (HolaMundo)", url: "https://www.youtube.com/watch?v=MJkdaVFHrto" },
@@ -160,7 +169,7 @@
         const progressBar = document.getElementById('progress-bar');
         
         let currentZoom = 1;
-        let currentTool = null; // 'pan' (null), 'pointer', 'pen', 'eraser', 'temporal'
+        let currentTool = null; 
         
         let panX = 0, panY = 0, isDragging = false, startPanX = 0, startPanY = 0;
 
@@ -184,7 +193,7 @@
                     'disablekb': 1,    
                     'rel': 0,
                     'modestbranding': 1,
-                    'vq': 'hd1080' // Parámetro extra para sugerir HD desde el inicio
+                    'vq': 'hd1080' 
                 },
                 events: {
                     'onReady': onPlayerReady,
@@ -199,11 +208,8 @@
         function onPlayerReady(event) {
             isPlayerReady = true;
             document.getElementById('total-duration').textContent = formatTime(ytPlayer.getDuration());
-            
-            // Sugerir máxima resolución apenas el reproductor esté listo
             ytPlayer.setPlaybackQuality('highres');
             
-            // Inicializar volumen
             const vol = ytPlayer.getVolume();
             volumeSlider.value = vol;
             updateMuteIcon(ytPlayer.isMuted() || vol === 0);
@@ -238,14 +244,12 @@
 
         function onPlayerStateChange(event) {
             if (event.data === YT.PlayerState.PLAYING) {
-                // Reforzar la calidad máxima cada vez que se le da a Play
                 event.target.setPlaybackQuality('highres');
-                
-                document.getElementById('play-btn').innerHTML = '<i class="fa-solid fa-pause"></i>';
+                document.getElementById('play-btn').innerHTML = '<i class="fa-solid fa-pause text-xl"></i>';
                 document.getElementById('total-duration').textContent = formatTime(ytPlayer.getDuration());
                 progressInterval = setInterval(updateProgressBar, 500);
             } else {
-                document.getElementById('play-btn').innerHTML = '<i class="fa-solid fa-play"></i>';
+                document.getElementById('play-btn').innerHTML = '<i class="fa-solid fa-play text-xl"></i>';
                 clearInterval(progressInterval);
             }
         }
@@ -303,7 +307,6 @@
                 
                 const loadVideo = () => {
                     if (isPlayerReady) {
-                        // Cambiamos loadVideoById simple por un objeto que exige 'highres'
                         ytPlayer.loadVideoById({
                             videoId: vidId,
                             suggestedQuality: 'highres' 
@@ -326,12 +329,11 @@
 
         function setTool(tool) {
             if (currentTool === tool) {
-                currentTool = null; // null es el modo Mano (Pan/Zoom) por defecto
+                currentTool = null; 
             } else {
                 currentTool = tool;
             }
 
-            // Limpiar UI general
             document.body.classList.remove('drawing-active');
             document.getElementById('pan-mode-btn').classList.remove('tool-active');
             document.getElementById('pointer-mode-btn').classList.remove('tool-active');
@@ -342,13 +344,11 @@
             const ytWrapper = document.getElementById('yt-wrapper');
             const interactionOverlay = document.getElementById('interaction-overlay');
 
-            // Si es Puntero (Interactuar con Youtube)
             if (currentTool === 'pointer') {
                 document.getElementById('pointer-mode-btn').classList.add('tool-active');
                 ytWrapper.classList.remove('pointer-events-none');
                 interactionOverlay.classList.add('pointer-events-none');
             } else {
-                // Si es cualquier otra herramienta, bloqueamos los clics de youtube para poder dibujar/mover
                 ytWrapper.classList.add('pointer-events-none');
                 interactionOverlay.classList.remove('pointer-events-none');
                 
@@ -368,8 +368,57 @@
             updateCursor();
         }
 
-        // Inicializa el botón de pan activado al cargar la página
         setTool(null); 
+
+        // ====== LÓGICA DE DOBLE TAP / DOBLE CLIC PARA ADELANTAR ======
+        function handleDoubleTap(clientX) {
+            if (!isPlayerReady || currentTool === 'pen' || currentTool === 'eraser' || currentTool === 'temporal') return;
+            
+            const rect = videoContainer.getBoundingClientRect();
+            const x = clientX - rect.left;
+            
+            const ripple = document.createElement('div');
+            ripple.className = 'absolute text-white font-bold text-xl md:text-3xl z-50 pointer-events-none bg-black/60 px-4 py-2 rounded-full animate-fade-out-up flex items-center gap-2';
+            ripple.style.top = '50%';
+            
+            if (x > rect.width / 2) {
+                // Lado Derecho: Adelantar 10s
+                ytPlayer.seekTo(ytPlayer.getCurrentTime() + 10, true);
+                ripple.innerHTML = '10s <i class="fa-solid fa-forward-step"></i>';
+                ripple.style.right = '10%';
+            } else {
+                // Lado Izquierdo: Retroceder 10s
+                ytPlayer.seekTo(ytPlayer.getCurrentTime() - 10, true);
+                ripple.innerHTML = '<i class="fa-solid fa-backward-step"></i> 10s';
+                ripple.style.left = '10%';
+            }
+            
+            videoContainer.appendChild(ripple);
+            updateProgressBar();
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        // Evento especial para móviles (Touch)
+        let lastTouchTime = 0;
+        videoContainer.addEventListener('touchstart', (e) => {
+            if (e.touches.length > 1) return; // Ignorar si son varios dedos
+            
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTouchTime;
+            
+            if (tapLength < 300 && tapLength > 0) {
+                handleDoubleTap(e.touches[0].clientX);
+                e.preventDefault(); // Evitar comportamientos nativos no deseados en doble tap
+            }
+            lastTouchTime = currentTime;
+        }, { passive: false });
+
+        // Evento para PC (Doble clic con ratón)
+        videoContainer.addEventListener('dblclick', (e) => {
+            handleDoubleTap(e.clientX);
+        });
+        // ==============================================================
+
 
         document.addEventListener('keydown', (e) => {
             if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
@@ -377,8 +426,8 @@
                 case 'Space': e.preventDefault(); togglePlay(); break;
                 case 'ArrowRight': if(isPlayerReady) ytPlayer.seekTo(ytPlayer.getCurrentTime() + 5, true); break;
                 case 'ArrowLeft': if(isPlayerReady) ytPlayer.seekTo(ytPlayer.getCurrentTime() - 5, true); break;
-                case 'KeyH': setTool(null); break; // Pan (Mano)
-                case 'KeyV': setTool('pointer'); break; // Interactuar
+                case 'KeyH': setTool(null); break; 
+                case 'KeyV': setTool('pointer'); break; 
                 case 'KeyD': setTool('pen'); break;
                 case 'KeyB': setTool('eraser'); break;
                 case 'KeyT': setTool('temporal'); break;
@@ -399,7 +448,6 @@
         });
 
         videoContainer.addEventListener('wheel', (e) => {
-            // Permitir zoom incluso si estamos en modo interactivo, mientras se mueva la rueda sobre el contenedor principal
             e.preventDefault();
             const zoomAmount = e.deltaY > 0 ? -0.2 : 0.2;
             const newZoom = Math.min(Math.max(currentZoom + zoomAmount, 1), 10);
@@ -419,7 +467,6 @@
         }, { passive: false });
         
         videoContainer.addEventListener('mousedown', (e) => {
-            // Solo iniciar paneo si estamos estrictamente en el modo Hand (null) y hay zoom
             if (currentTool === null && currentZoom > 1) {
                 isDragging = true;
                 startPanX = e.clientX - panX;
