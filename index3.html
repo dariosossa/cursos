@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor Profesional de Cursos - YouTube Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background: #0f0f0f; font-family: sans-serif; }
+        
+        /* Transición suave para el zoom y pan */
+        #media-layer { transition: transform 0.05s linear; transform-origin: center center; }
+        
+        /* Contenedores de dibujo superpuestos al video */
+        #draw-canvas, #temp-canvas { 
+            position: absolute; 
+            top:0; left:0; 
+            width:100%; height:100%; 
+            touch-action: none; 
+            pointer-events: none; 
+            z-index: 20;
+        }
+        #temp-canvas { z-index: 21; }
+
+        /* Activar interacción cuando se dibuja */
+        .drawing-active #temp-canvas { pointer-events: auto; cursor: crosshair; }
+        
+        /* Estilos UI */
+        .chapter-item.active { border-left: 4px solid #ef4444; background: rgba(255,255,255,0.1); }
+        #sidebar-content h3, #sidebar-content span { color: #ffffff !important; }
+        
+        /* Barra de progreso optimizada para dedos */
+        #progress-container { height: 10px; background: #444; cursor: pointer; position: relative; }
+        #progress-bar { height: 100%; background: #ef4444; width: 0%; position: absolute; transition: width 0.2s linear; }
+
+        /* Estilos activos para herramientas */
+        .tool-active { color: #ef4444; }
+        .laser-active { color: #22d3ee; text-shadow: 0 0 8px rgba(34, 211, 238, 0.8); }
+
+        /* Animación para el doble tap */
+        @keyframes fadeOutUp {
+            0% { opacity: 1; transform: translateY(-50%) scale(0.8); }
+            100% { opacity: 0; transform: translateY(-50%) scale(1.2); }
+        }
+        .animate-fade-out-up {
+            animation: fadeOutUp 0.6s ease-out forwards;
+        }
+
+        /* Estilo para el input de color */
+        input[type="color"] {
+            -webkit-appearance: none;
+            border: none;
+        }
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+        input[type="color"]::-webkit-color-swatch {
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="h-[100dvh] w-screen flex overflow-hidden">
+
+    <!-- Modal Cargar URL temporal de YouTube -->
+    <div id="url-modal" class="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-[#1a1a1a] border border-white/10 rounded-xl p-6 w-11/12 max-w-md transform scale-95 transition-transform duration-300" id="url-modal-content">
+            <h3 class="text-white text-lg font-bold mb-4 flex items-center gap-2"><i class="fa-brands fa-youtube text-red-500"></i> Cargar Video Rápido</h3>
+            <p class="text-xs text-gray-400 mb-4">Reproducirá el video sin guardarlo en el temario.</p>
+            <input type="text" id="youtube-url-input" placeholder="Pega el enlace aquí (ej: https://youtu.be/...)" class="w-full bg-black border border-white/20 rounded p-3 text-white text-sm focus:outline-none focus:border-red-500 mb-2">
+            <p id="url-error" class="text-red-500 text-xs hidden mb-4">URL no válida.</p>
+            <div class="flex justify-end gap-3 mt-6">
+                <button id="close-modal-btn" class="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">Cancelar</button>
+                <button id="submit-url-btn" class="px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded font-bold transition-colors">Reproducir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Añadir Video al Temario -->
+    <div id="add-video-modal" class="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-[#1a1a1a] border border-white/10 rounded-xl p-6 w-11/12 max-w-md transform scale-95 transition-transform duration-300" id="add-video-content">
+            <h3 class="text-white text-lg font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-folder-plus text-red-500"></i> Añadir al Temario</h3>
+            <input type="text" id="new-video-title" placeholder="Título del Video" class="w-full bg-black border border-white/20 rounded p-3 text-white text-sm focus:outline-none focus:border-red-500 mb-3">
+            <input type="text" id="new-video-url" placeholder="Enlace de YouTube" class="w-full bg-black border border-white/20 rounded p-3 text-white text-sm focus:outline-none focus:border-red-500 mb-2">
+            <p id="new-video-error" class="text-red-500 text-xs hidden mb-4">Por favor completa ambos campos con un enlace válido.</p>
+            <div class="flex justify-end gap-3 mt-6">
+                <button id="close-add-video-btn" class="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">Cancelar</button>
+                <button id="submit-add-video-btn" class="px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded font-bold transition-colors">Guardar Video</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NUEVO: Modal para Añadir Unidad -->
+    <div id="add-unit-modal" class="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-[#1a1a1a] border border-white/10 rounded-xl p-6 w-11/12 max-w-md transform scale-95 transition-transform duration-300" id="add-unit-content">
+            <h3 class="text-white text-lg font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-folder-plus text-red-500"></i> Crear Nueva Unidad</h3>
+            <input type="text" id="new-unit-title" placeholder="Nombre de la unidad (ej. Unidad 1: Bases)" class="w-full bg-black border border-white/20 rounded p-3 text-white text-sm focus:outline-none focus:border-red-500 mb-2">
+            <p id="new-unit-error" class="text-red-500 text-xs hidden mb-4">El nombre de la unidad no puede estar vacío.</p>
+            <div class="flex justify-end gap-3 mt-6">
+                <button id="close-add-unit-btn" class="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">Cancelar</button>
+                <button id="submit-add-unit-btn" class="px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded font-bold transition-colors">Crear Unidad</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menú lateral con Temario -->
+    <div id="sidebar-menu" class="absolute h-full w-[320px] bg-black/95 z-40 transform -translate-x-full transition-transform border-r border-white/10 flex flex-col shadow-2xl">
+        <div class="p-4 flex justify-between items-center text-white border-b border-white/10 bg-black/50">
+            <h2 class="font-bold flex items-center gap-2"><i class="fa-solid fa-list-ul"></i> Gestor de Temario</h2>
+            <button id="close-sidebar" tabindex="0" class="focus:outline-none focus:text-red-400 p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
+        </div>
+        <div id="sidebar-content" class="flex-1 overflow-y-auto p-3 pb-24">
+            <!-- Contenido dinámico renderizado por JS -->
+        </div>
+    </div>
+
+    <!-- Contenedor principal derecho -->
+    <div class="flex-1 flex flex-col h-full relative bg-black overflow-hidden">
+        
+        <!-- Área exclusiva del Video -->
+        <div id="video-container" class="flex-1 relative flex items-center justify-center overflow-hidden touch-manipulation">
+            <div id="media-layer" class="w-full h-full flex items-center justify-center relative bg-black">
+                <div id="yt-wrapper" class="absolute inset-0 w-full h-full pointer-events-none">
+                    <div id="main-video" class="w-full h-full"></div>
+                </div>
+                <div id="interaction-overlay" class="absolute inset-0 z-10 w-full h-full"></div>
+                <canvas id="draw-canvas"></canvas>
+                <canvas id="temp-canvas"></canvas> 
+            </div>
+            <button id="sidebar-toggle" class="absolute top-4 left-4 text-white text-xl z-50 bg-black/50 p-2 rounded hover:bg-black transition-colors shadow-lg"><i class="fa-solid fa-bars"></i> Temario</button>
+        </div>
+
+        <!-- Controles Inferiores -->
+        <div class="w-full bg-[#0a0a0a] z-50 p-4 border-t border-white/10 shrink-0">
+            <div class="flex justify-between text-white text-[10px] mb-2 font-mono">
+                <span id="current-time">0:00</span>
+                <span id="total-duration">0:00</span>
+            </div>
+            
+            <div id="progress-container" class="w-full mb-4 rounded-full overflow-hidden shadow-inner">
+                <div id="progress-bar"></div>
+            </div>
+            
+            <div class="flex justify-between items-center text-white flex-wrap gap-y-3">
+                <div class="flex items-center gap-4">
+                    <button id="play-btn" class="w-6 hover:text-red-400 transition-colors p-1"><i class="fa-solid fa-play text-xl"></i></button>
+                    
+                    <div class="flex items-center gap-2 border-l border-white/20 pl-4">
+                        <button id="mute-btn" class="hover:text-red-400 transition-colors w-5 p-1" title="Silenciar"><i class="fa-solid fa-volume-high"></i></button>
+                        <input id="volume-slider" type="range" min="0" max="100" value="100" class="w-20 accent-red-500 cursor-pointer hidden sm:block">
+                    </div>
+
+                    <span id="zoom-val" class="text-xs w-8 text-gray-400 ml-2 sm:ml-4">1.0x</span>
+                </div>
+                
+                <div class="flex items-center gap-4 sm:gap-5 text-lg">
+                    <!-- Herramienta: Cargar URL Rápido -->
+                    <button id="load-url-btn" class="hover:text-red-400 transition-colors p-1" title="Reproducir URL Rápida"><i class="fa-solid fa-link"></i></button>
+                    <div class="w-px h-5 bg-white/20"></div>
+
+                    <button id="reset-zoom" class="hover:text-red-400 transition-colors p-1" title="Restaurar Zoom"><i class="fa-solid fa-compress"></i></button>
+                    <div class="w-px h-5 bg-white/20"></div>
+                    
+                    <!-- Botones Principales -->
+                    <button id="pan-mode-btn" class="transition-colors tool-active p-1" title="Mover y Zoom (H)"><i class="fa-solid fa-hand"></i></button>
+                    <button id="pointer-mode-btn" class="transition-colors p-1" title="Interactuar / Saltar Anuncios (V)"><i class="fa-solid fa-arrow-pointer"></i></button>
+                    
+                    <!-- Herramientas de Dibujo -->
+                    <div class="hidden md:flex items-center gap-4">
+                        <div class="w-px h-5 bg-white/20"></div>
+                        <input type="color" id="color-picker" value="#ef4444" class="w-6 h-6 p-0 border-0 rounded cursor-pointer bg-transparent shadow" title="Color de letra y lápiz">
+                        <button id="text-mode-btn" class="transition-colors p-1" title="Texto (A)"><i class="fa-solid fa-font"></i></button>
+                        <button id="draw-mode-btn" class="transition-colors p-1" title="Lápiz (D)"><i class="fa-solid fa-pen"></i></button>
+                        <button id="laser-mode-btn" class="transition-colors p-1" title="Puntero Temporal (T)"><i class="fa-solid fa-wand-magic-sparkles"></i></button>
+                        <button id="erase-mode-btn" class="transition-colors p-1" title="Borrar (B)"><i class="fa-solid fa-eraser"></i></button>
+                        <div class="w-px h-5 bg-white/20"></div>
+                        <button id="draw-clear" class="hover:text-red-400 transition-colors p-1" title="Limpiar Todo (C)"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DATOS POR DEFECTO Y PERSISTENCIA (Local Storage)
+        const defaultThemes = []; // Empezamos con el arreglo completamente vacío
+
+        // Cargar desde localStorage o usar defecto (Cambiamos la clave para asegurar un inicio limpio)
+        let themes = JSON.parse(localStorage.getItem('cursoProTemarioVacio')) || defaultThemes;
+
+        function saveThemes() {
+            localStorage.setItem('cursoProTemarioVacio', JSON.stringify(themes));
+            renderSidebar();
+        }
+
+        function extractYTId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
+        // ==========================================
+        // RENDERIZADO DINÁMICO DEL TEMARIO
+        // ==========================================
+        const sidebarContent = document.getElementById('sidebar-content');
+
+        function renderSidebar() {
+            sidebarContent.innerHTML = ''; 
+
+            // Mensaje amigable si el temario está vacío
+            if (themes.length === 0) {
+                const emptyMsg = document.createElement('div');
+                emptyMsg.className = "text-gray-500 text-sm text-center mt-12 mb-4 px-4 flex flex-col items-center animate-pulse";
+                emptyMsg.innerHTML = '<i class="fa-solid fa-folder-open text-4xl mb-3 opacity-50"></i><p>Tu temario está vacío.</p><p class="text-xs mt-2 opacity-70">Haz clic en "Crear Nueva Unidad" abajo para empezar.</p>';
+                sidebarContent.appendChild(emptyMsg);
+            }
+
+            themes.forEach((t, unitIndex) => {
+                // Header de Unidad con botón para añadir video
+                const headerDiv = document.createElement('div');
+                headerDiv.className = "flex justify-between items-center mt-5 mb-2 px-1 border-b border-white/10 pb-1 group/header";
+                
+                const headerText = document.createElement('h3');
+                headerText.className = "text-xs font-bold text-gray-400 uppercase tracking-wider";
+                headerText.textContent = t.name;
+                
+                const addVidBtn = document.createElement('button');
+                addVidBtn.innerHTML = '<i class="fa-solid fa-plus"></i>';
+                addVidBtn.className = "text-gray-500 hover:text-white transition-colors px-2 py-1 bg-white/5 rounded opacity-0 group-hover/header:opacity-100";
+                addVidBtn.title = "Añadir video a esta unidad";
+                addVidBtn.onclick = () => openAddVideoModal(unitIndex);
+
+                headerDiv.appendChild(headerText);
+                headerDiv.appendChild(addVidBtn);
+                sidebarContent.appendChild(headerDiv);
+                
+                // Lista de videos
+                t.videos.forEach((v, videoIndex) => {
+                    const vidId = extractYTId(v.url);
+                    const posterUrl = `https://img.youtube.com/vi/${vidId}/hqdefault.jpg`;
+                    
+                    const el = document.createElement('div');
+                    el.tabIndex = 0; 
+                    // Se agregó overflow-hidden y clases group para el menú de controles
+                    el.className = "relative flex gap-3 p-2 mb-2 cursor-pointer chapter-item hover:bg-white/10 focus:bg-white/20 focus:outline-none items-center rounded-lg transition-colors group overflow-hidden border border-transparent hover:border-white/5";
+                    
+                    el.innerHTML = `
+                        <img src="${posterUrl}" class="w-16 h-10 object-cover rounded shadow flex-shrink-0">
+                        <span class="text-sm flex-1 truncate pr-16" title="${v.title}">${v.title}</span>
+                    `;
+
+                    // Controles Flotantes para Editar Temario (Subir, Bajar, Borrar)
+                    const controls = document.createElement('div');
+                    controls.className = "absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity bg-black/90 p-1 rounded-md shadow-lg z-10 border border-white/10";
+                    
+                    // Botón Subir
+                    if (videoIndex > 0) {
+                        const upBtn = document.createElement('button');
+                        upBtn.innerHTML = '<i class="fa-solid fa-chevron-up"></i>';
+                        upBtn.className = "text-[10px] text-gray-300 hover:text-white px-2 py-1 bg-white/10 hover:bg-white/20 rounded transition-colors";
+                        upBtn.onclick = (e) => { e.stopPropagation(); moveVideo(unitIndex, videoIndex, -1); };
+                        controls.appendChild(upBtn);
+                    }
+                    
+                    // Botón Bajar
+                    if (videoIndex < t.videos.length - 1) {
+                        const downBtn = document.createElement('button');
+                        downBtn.innerHTML = '<i class="fa-solid fa-chevron-down"></i>';
+                        downBtn.className = "text-[10px] text-gray-300 hover:text-white px-2 py-1 bg-white/10 hover:bg-white/20 rounded transition-colors";
+                        downBtn.onclick = (e) => { e.stopPropagation(); moveVideo(unitIndex, videoIndex, 1); };
+                        controls.appendChild(downBtn);
+                    }
+
+                    // Botón Borrar
+                    const delBtn = document.createElement('button');
+                    delBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
+                    delBtn.className = "text-[10px] text-red-400 hover:text-red-300 px-2 py-1 bg-red-500/20 hover:bg-red-500/40 rounded transition-colors ml-1";
+                    delBtn.onclick = (e) => { e.stopPropagation(); deleteVideo(unitIndex, videoIndex); };
+                    controls.appendChild(delBtn);
+
+                    el.appendChild(controls);
+                    
+                    const loadVideo = () => {
+                        if (isPlayerReady) {
+                            ytPlayer.loadVideoById({ videoId: vidId, suggestedQuality: 'highres' });
+                        }
+                        if (window.innerWidth < 768) {
+                            document.getElementById('sidebar-menu').classList.add('-translate-x-full'); 
+                        }
+                        document.querySelectorAll('.chapter-item').forEach(i => i.classList.remove('active')); 
+                        el.classList.add('active'); 
+                        document.activeElement.blur();
+                    };
+
+                    el.onclick = loadVideo;
+                    el.onkeydown = (e) => { if (e.key === 'Enter') loadVideo(); };
+
+                    sidebarContent.appendChild(el);
+                });
+            });
+
+            // Botón Crear Nueva Unidad
+            const addUnitBtn = document.createElement('button');
+            addUnitBtn.className = "w-full mt-6 mb-4 p-3 border border-dashed border-white/20 text-gray-400 hover:text-white hover:border-white hover:bg-white/5 rounded-lg transition-all text-sm font-bold flex items-center justify-center gap-2";
+            addUnitBtn.innerHTML = '<i class="fa-solid fa-folder-plus"></i> Crear Nueva Unidad';
+            addUnitBtn.onclick = openAddUnitModal;
+            sidebarContent.appendChild(addUnitBtn);
+        }
+
+        // Lógicas de Edición
+        function moveVideo(unitIndex, videoIndex, direction) {
+            const temp = themes[unitIndex].videos[videoIndex];
+            themes[unitIndex].videos[videoIndex] = themes[unitIndex].videos[videoIndex + direction];
+            themes[unitIndex].videos[videoIndex + direction] = temp;
+            saveThemes();
+        }
+
+        function deleteVideo(unitIndex, videoIndex) {
+            // También reemplazamos el confirm() bloqueado por uno visual o directo. 
+            // Para mantenerlo fluido, lo eliminaremos directamente, o puedes crear otro modal para confirmar.
+            themes[unitIndex].videos.splice(videoIndex, 1);
+            saveThemes();
+        }
+
+        // ==========================================
+        // INICIALIZACIÓN DE YOUTUBE Y EVENTOS
+        // ==========================================
+
+        const canvas = document.getElementById('draw-canvas');
+        const tempCanvas = document.getElementById('temp-canvas');
+        const ctx = canvas.getContext('2d');
+        const tempCtx = tempCanvas.getContext('2d');
+        const mediaLayer = document.getElementById('media-layer');
+        const videoContainer = document.getElementById('video-container');
+        const progressBar = document.getElementById('progress-bar');
+        const colorPicker = document.getElementById('color-picker');
+        
+        let currentZoom = 1;
+        let currentTool = null; 
+        let currentColor = colorPicker ? colorPicker.value : "#ef4444"; 
+        
+        let panX = 0, panY = 0, isDragging = false, startPanX = 0, startPanY = 0;
+
+        let ytPlayer = null;
+        let isPlayerReady = false;
+        let progressInterval = null;
+
+        if (colorPicker) {
+            colorPicker.addEventListener('input', (e) => {
+                currentColor = e.target.value;
+                if (currentTool === 'pen') document.getElementById('draw-mode-btn').style.color = currentColor;
+                else if (currentTool === 'text') document.getElementById('text-mode-btn').style.color = currentColor;
+            });
+        }
+
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        window.onYouTubeIframeAPIReady = function() {
+            // Asegurarnos de que hay al menos un video para iniciar, si no cargamos vacío
+            let firstVideoId = 'dQw4w9WgXcQ'; // Fallback a video dummy si no hay nada
+            if (themes.length > 0 && themes[0].videos.length > 0) {
+                firstVideoId = extractYTId(themes[0].videos[0].url);
+            }
+            
+            ytPlayer = new YT.Player('main-video', {
+                videoId: firstVideoId,
+                playerVars: { 'playsinline': 1, 'controls': 0, 'disablekb': 1, 'rel': 0, 'modestbranding': 1, 'vq': 'hd1080' },
+                events: { 'onReady': onPlayerReady, 'onStateChange': onPlayerStateChange }
+            });
+            renderSidebar(); // Renderizamos el menú lateral inicialmente
+        };
+
+        const volumeSlider = document.getElementById('volume-slider');
+        const muteBtn = document.getElementById('mute-btn');
+
+        function onPlayerReady(event) {
+            isPlayerReady = true;
+            document.getElementById('total-duration').textContent = formatTime(ytPlayer.getDuration());
+            ytPlayer.setPlaybackQuality('highres');
+            const vol = ytPlayer.getVolume();
+            volumeSlider.value = vol;
+            updateMuteIcon(ytPlayer.isMuted() || vol === 0);
+        }
+
+        function updateMuteIcon(isMuted) {
+            muteBtn.innerHTML = isMuted ? '<i class="fa-solid fa-volume-xmark"></i>' : '<i class="fa-solid fa-volume-high"></i>';
+        }
+
+        volumeSlider.addEventListener('input', (e) => {
+            if (!isPlayerReady) return;
+            const vol = parseInt(e.target.value);
+            ytPlayer.setVolume(vol);
+            if(ytPlayer.isMuted() && vol > 0) ytPlayer.unMute();
+            updateMuteIcon(vol === 0);
+        });
+
+        muteBtn.addEventListener('click', () => {
+            if (!isPlayerReady) return;
+            if (ytPlayer.isMuted() || ytPlayer.getVolume() === 0) {
+                ytPlayer.unMute();
+                let vol = parseInt(volumeSlider.value);
+                if (vol === 0) { vol = 100; volumeSlider.value = 100; }
+                ytPlayer.setVolume(vol);
+                updateMuteIcon(false);
+            } else {
+                ytPlayer.mute();
+                volumeSlider.value = 0;
+                updateMuteIcon(true);
+            }
+        });
+
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+                event.target.setPlaybackQuality('highres');
+                document.getElementById('play-btn').innerHTML = '<i class="fa-solid fa-pause text-xl"></i>';
+                document.getElementById('total-duration').textContent = formatTime(ytPlayer.getDuration());
+                progressInterval = setInterval(updateProgressBar, 500);
+            } else {
+                document.getElementById('play-btn').innerHTML = '<i class="fa-solid fa-play text-xl"></i>';
+                clearInterval(progressInterval);
+            }
+        }
+
+        function updateProgressBar() {
+            if(!isPlayerReady) return;
+            const dur = ytPlayer.getDuration();
+            const cur = ytPlayer.getCurrentTime();
+            if(dur > 0) {
+                progressBar.style.width = ((cur / dur) * 100) + "%";
+                document.getElementById('current-time').textContent = formatTime(cur);
+            }
+        }
+
+        function formatTime(s) {
+            if (isNaN(s)) return "0:00";
+            const m = Math.floor(s / 60);
+            const sec = Math.floor(s % 60);
+            return `${m}:${sec < 10 ? '0' : ''}${sec}`;
+        }
+
+        function togglePlay() {
+            if (!isPlayerReady) return;
+            if (ytPlayer.getPlayerState() === YT.PlayerState.PLAYING) ytPlayer.pauseVideo();
+            else ytPlayer.playVideo();
+        }
+
+        document.getElementById('progress-container').onclick = (e) => {
+            if (!isPlayerReady) return;
+            const rect = e.currentTarget.getBoundingClientRect();
+            ytPlayer.seekTo(((e.clientX - rect.left) / rect.width) * ytPlayer.getDuration(), true);
+            updateProgressBar();
+        };
+
+        // ==========================================
+        // MODALES (URL Rápida y Temario)
+        // ==========================================
+        const urlModal = document.getElementById('url-modal');
+        const urlInput = document.getElementById('youtube-url-input');
+        const urlError = document.getElementById('url-error');
+
+        const addVideoModal = document.getElementById('add-video-modal');
+        const newVideoTitle = document.getElementById('new-video-title');
+        const newVideoUrl = document.getElementById('new-video-url');
+        const newVideoError = document.getElementById('new-video-error');
+        let activeUnitForVideo = null;
+
+        // NUEVAS VARIABLES PARA EL MODAL DE UNIDAD
+        const addUnitModal = document.getElementById('add-unit-modal');
+        const newUnitTitle = document.getElementById('new-unit-title');
+        const newUnitError = document.getElementById('new-unit-error');
+
+        // Modal de Reproducción Rápida
+        function openUrlModal() {
+            urlModal.classList.remove('hidden');
+            void urlModal.offsetWidth;
+            urlModal.classList.remove('opacity-0');
+            document.getElementById('url-modal-content').classList.remove('scale-95');
+            urlInput.value = '';
+            urlError.classList.add('hidden');
+            urlInput.focus();
+            setTool('pointer'); 
+        }
+
+        function closeUrlModal() {
+            urlModal.classList.add('opacity-0');
+            document.getElementById('url-modal-content').classList.add('scale-95');
+            setTimeout(() => urlModal.classList.add('hidden'), 300);
+        }
+
+        function submitCustomUrl() {
+            const vidId = extractYTId(urlInput.value.trim());
+            if (vidId) {
+                if (isPlayerReady) ytPlayer.loadVideoById({ videoId: vidId, suggestedQuality: 'highres' });
+                document.querySelectorAll('.chapter-item').forEach(i => i.classList.remove('active'));
+                closeUrlModal();
+                setTool(null); 
+            } else urlError.classList.remove('hidden');
+        }
+
+        if(document.getElementById('load-url-btn')) document.getElementById('load-url-btn').onclick = openUrlModal;
+        document.getElementById('close-modal-btn').onclick = closeUrlModal;
+        document.getElementById('submit-url-btn').onclick = submitCustomUrl;
+        urlInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitCustomUrl(); });
+
+        // Modal para Añadir al Temario
+        function openAddVideoModal(unitIndex) {
+            activeUnitForVideo = unitIndex;
+            addVideoModal.classList.remove('hidden');
+            void addVideoModal.offsetWidth;
+            addVideoModal.classList.remove('opacity-0');
+            document.getElementById('add-video-content').classList.remove('scale-95');
+            newVideoTitle.value = '';
+            newVideoUrl.value = '';
+            newVideoError.classList.add('hidden');
+            newVideoTitle.focus();
+        }
+
+        function closeAddVideoModal() {
+            addVideoModal.classList.add('opacity-0');
+            document.getElementById('add-video-content').classList.add('scale-95');
+            setTimeout(() => addVideoModal.classList.add('hidden'), 300);
+        }
+
+        function submitAddVideo() {
+            const title = newVideoTitle.value.trim();
+            const url = newVideoUrl.value.trim();
+            const vidId = extractYTId(url);
+
+            if (title !== '' && vidId) {
+                themes[activeUnitForVideo].videos.push({ title: title, url: url });
+                saveThemes(); // Renderiza y guarda
+                closeAddVideoModal();
+            } else {
+                newVideoError.classList.remove('hidden');
+            }
+        }
+
+        document.getElementById('close-add-video-btn').onclick = closeAddVideoModal;
+        document.getElementById('submit-add-video-btn').onclick = submitAddVideo;
+        newVideoUrl.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitAddVideo(); });
+
+        // Lógica Modal para Añadir Unidad
+        function openAddUnitModal() {
+            addUnitModal.classList.remove('hidden');
+            void addUnitModal.offsetWidth;
+            addUnitModal.classList.remove('opacity-0');
+            document.getElementById('add-unit-content').classList.remove('scale-95');
+            newUnitTitle.value = '';
+            newUnitError.classList.add('hidden');
+            newUnitTitle.focus();
+        }
+
+        function closeAddUnitModal() {
+            addUnitModal.classList.add('opacity-0');
+            document.getElementById('add-unit-content').classList.add('scale-95');
+            setTimeout(() => addUnitModal.classList.add('hidden'), 300);
+        }
+
+        function submitAddUnit() {
+            const name = newUnitTitle.value.trim();
+            if (name !== '') {
+                themes.push({ name: name, videos: [] });
+                saveThemes();
+                closeAddUnitModal();
+            } else {
+                newUnitError.classList.remove('hidden');
+            }
+        }
+
+        document.getElementById('close-add-unit-btn').onclick = closeAddUnitModal;
+        document.getElementById('submit-add-unit-btn').onclick = submitAddUnit;
+        newUnitTitle.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitAddUnit(); });
+
+        // ==========================================
+        // HERRAMIENTAS DE DIBUJO Y NAVEGACIÓN
+        // ==========================================
+        function createTextObject(x, y) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'text-object absolute z-30 group select-none flex items-center justify-center';
+            wrapper.style.left = x + 'px'; wrapper.style.top = y + 'px';
+            wrapper.style.transform = 'translate(-50%, -50%)';
+
+            const content = document.createElement('div');
+            content.contentEditable = true;
+            content.className = 'font-bold outline-none whitespace-nowrap min-w-[20px] min-h-[30px] p-2 cursor-text bg-transparent';
+            content.style.fontSize = '24px';
+            content.style.fontFamily = 'sans-serif';
+            content.style.color = currentColor; 
+            content.innerText = 'Escribe aquí...';
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
+            deleteBtn.className = 'absolute -top-4 -right-4 bg-red-600 hover:bg-red-700 text-white rounded-full w-8 h-8 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer shadow-lg z-40 hidden pointer-events-auto';
+
+            const moveHandle = document.createElement('div');
+            moveHandle.innerHTML = '<i class="fa-solid fa-arrows-up-down-left-right text-black"></i>';
+            moveHandle.className = 'absolute -top-4 -left-4 bg-white border border-gray-300 rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-move shadow-lg z-40 hidden pointer-events-auto';
+
+            wrapper.appendChild(content); wrapper.appendChild(deleteBtn); wrapper.appendChild(moveHandle);
+            document.getElementById('media-layer').appendChild(wrapper);
+
+            const showControls = () => { deleteBtn.classList.remove('hidden'); moveHandle.classList.remove('hidden'); content.style.border = '2px dashed rgba(255, 255, 255, 0.5)'; content.style.backgroundColor = 'rgba(0,0,0,0.5)'; content.style.borderRadius = '4px'; };
+            const hideControls = () => { deleteBtn.classList.add('hidden'); moveHandle.classList.add('hidden'); content.style.border = 'none'; content.style.backgroundColor = 'transparent'; if (content.innerText.trim() === '') wrapper.remove(); };
+
+            content.addEventListener('focus', showControls);
+            content.addEventListener('blur', () => { setTimeout(() => { if (!wrapper.contains(document.activeElement)) hideControls(); }, 150); });
+
+            deleteBtn.onclick = () => wrapper.remove();
+
+            let isMoving = false, startX, startY, initialLeft, initialTop;
+            const startMove = (cx, cy) => { isMoving = true; startX = cx; startY = cy; initialLeft = parseFloat(wrapper.style.left); initialTop = parseFloat(wrapper.style.top); document.body.style.userSelect = 'none'; };
+            const doMove = (cx, cy) => { if (!isMoving) return; wrapper.style.left = initialLeft + (cx - startX) / currentZoom + 'px'; wrapper.style.top = initialTop + (cy - startY) / currentZoom + 'px'; };
+            const endMove = () => { isMoving = false; document.body.style.userSelect = ''; content.focus(); };
+
+            moveHandle.onmousedown = (e) => { e.stopPropagation(); e.preventDefault(); startMove(e.clientX, e.clientY); document.addEventListener('mousemove', onMouseMove); document.addEventListener('mouseup', onMouseUp); };
+            moveHandle.ontouchstart = (e) => { e.stopPropagation(); e.preventDefault(); startMove(e.touches[0].clientX, e.touches[0].clientY); document.addEventListener('touchmove', onTouchMove, {passive: false}); document.addEventListener('touchend', onTouchEnd); };
+            const onMouseMove = (e) => doMove(e.clientX, e.clientY);
+            const onMouseUp = () => { endMove(); document.removeEventListener('mousemove', onMouseMove); document.removeEventListener('mouseup', onMouseUp); };
+            const onTouchMove = (e) => { e.preventDefault(); doMove(e.touches[0].clientX, e.touches[0].clientY); };
+            const onTouchEnd = () => { endMove(); document.removeEventListener('touchmove', onTouchMove); document.removeEventListener('touchend', onTouchEnd); };
+
+            setTimeout(() => { content.focus(); document.execCommand('selectAll', false, null); }, 50);
+        }
+
+        function setTool(tool) {
+            if (currentTool === tool) currentTool = null; 
+            else currentTool = tool;
+
+            document.body.classList.remove('drawing-active');
+            ['pan', 'pointer', 'text', 'draw', 'erase'].forEach(t => {
+                const btn = document.getElementById(`${t}-mode-btn`);
+                if (btn) btn.classList.remove('tool-active');
+            });
+            if(document.getElementById('text-mode-btn')) document.getElementById('text-mode-btn').style.color = '';
+            if(document.getElementById('draw-mode-btn')) document.getElementById('draw-mode-btn').style.color = '';
+            if(document.getElementById('laser-mode-btn')) document.getElementById('laser-mode-btn').classList.remove('laser-active');
+
+            const ytWrapper = document.getElementById('yt-wrapper');
+            const interactionOverlay = document.getElementById('interaction-overlay');
+
+            if (currentTool === 'pointer') {
+                if(document.getElementById('pointer-mode-btn')) document.getElementById('pointer-mode-btn').classList.add('tool-active');
+                ytWrapper.classList.remove('pointer-events-none');
+                interactionOverlay.classList.add('pointer-events-none');
+            } else {
+                ytWrapper.classList.add('pointer-events-none');
+                interactionOverlay.classList.remove('pointer-events-none');
+                
+                if (currentTool === 'pen') {
+                    document.body.classList.add('drawing-active');
+                    if(document.getElementById('draw-mode-btn')) {
+                        document.getElementById('draw-mode-btn').classList.add('tool-active');
+                        document.getElementById('draw-mode-btn').style.color = currentColor; 
+                    }
+                } else if (currentTool === 'eraser') {
+                    document.body.classList.add('drawing-active');
+                    if(document.getElementById('erase-mode-btn')) document.getElementById('erase-mode-btn').classList.add('tool-active');
+                } else if (currentTool === 'temporal') {
+                    document.body.classList.add('drawing-active');
+                    if(document.getElementById('laser-mode-btn')) document.getElementById('laser-mode-btn').classList.add('laser-active');
+                } else if (currentTool === 'text') {
+                    document.body.classList.add('drawing-active');
+                    if(document.getElementById('text-mode-btn')) {
+                        document.getElementById('text-mode-btn').classList.add('tool-active');
+                        document.getElementById('text-mode-btn').style.color = currentColor; 
+                    }
+                } else if (currentTool === null) {
+                    if(document.getElementById('pan-mode-btn')) document.getElementById('pan-mode-btn').classList.add('tool-active');
+                }
+            }
+            updateCursor();
+        }
+
+        setTool(null); 
+
+        function handleDoubleTap(clientX) {
+            if (!isPlayerReady || currentTool === 'pen' || currentTool === 'eraser' || currentTool === 'temporal' || currentTool === 'text') return;
+            
+            const rect = videoContainer.getBoundingClientRect();
+            const ripple = document.createElement('div');
+            ripple.className = 'absolute text-white font-bold text-xl md:text-3xl z-50 pointer-events-none bg-black/60 px-4 py-2 rounded-full animate-fade-out-up flex items-center gap-2';
+            ripple.style.top = '50%';
+            
+            if (clientX - rect.left > rect.width / 2) {
+                ytPlayer.seekTo(ytPlayer.getCurrentTime() + 10, true);
+                ripple.innerHTML = '10s <i class="fa-solid fa-forward-step"></i>';
+                ripple.style.right = '10%';
+            } else {
+                ytPlayer.seekTo(ytPlayer.getCurrentTime() - 10, true);
+                ripple.innerHTML = '<i class="fa-solid fa-backward-step"></i> 10s';
+                ripple.style.left = '10%';
+            }
+            videoContainer.appendChild(ripple);
+            updateProgressBar();
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        let lastTouchTime = 0;
+        videoContainer.addEventListener('touchstart', (e) => {
+            if (e.touches.length > 1) return; 
+            const currentTime = new Date().getTime();
+            if (currentTime - lastTouchTime < 300 && currentTime - lastTouchTime > 0) { handleDoubleTap(e.touches[0].clientX); e.preventDefault(); }
+            lastTouchTime = currentTime;
+        }, { passive: false });
+        videoContainer.addEventListener('dblclick', (e) => handleDoubleTap(e.clientX));
+
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
+            switch(e.code) {
+                case 'Space': e.preventDefault(); togglePlay(); break;
+                case 'ArrowRight': if(isPlayerReady) ytPlayer.seekTo(ytPlayer.getCurrentTime() + 5, true); break;
+                case 'ArrowLeft': if(isPlayerReady) ytPlayer.seekTo(ytPlayer.getCurrentTime() - 5, true); break;
+                case 'KeyH': setTool(null); break; 
+                case 'KeyV': setTool('pointer'); break; 
+                case 'KeyA': setTool('text'); break; 
+                case 'KeyD': setTool('pen'); break;
+                case 'KeyB': setTool('eraser'); break;
+                case 'KeyT': setTool('temporal'); break;
+                case 'KeyC': clearCanvases(); break;
+                case 'KeyQ': 
+                    const menu = document.getElementById('sidebar-menu');
+                    menu.classList.toggle('-translate-x-full'); 
+                    if (!menu.classList.contains('-translate-x-full')) setTimeout(() => { const first = document.querySelector('.chapter-item'); if(first) first.focus(); }, 100);
+                    else document.activeElement.blur();
+                    break;
+            }
+        });
+
+        videoContainer.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const newZoom = Math.min(Math.max(currentZoom + (e.deltaY > 0 ? -0.2 : 0.2), 1), 10);
+            if (newZoom !== currentZoom) {
+                const rect = videoContainer.getBoundingClientRect();
+                panX = (e.clientX - rect.left) - ((e.clientX - rect.left) - panX) * (newZoom / currentZoom);
+                panY = (e.clientY - rect.top) - ((e.clientY - rect.top) - panY) * (newZoom / currentZoom);
+                currentZoom = newZoom;
+                if (currentZoom === 1) { panX = 0; panY = 0; }
+                applyTransform();
+            }
+        }, { passive: false });
+        
+        videoContainer.addEventListener('mousedown', (e) => {
+            if (currentTool === null && currentZoom > 1) { isDragging = true; startPanX = e.clientX - panX; startPanY = e.clientY - panY; updateCursor(); }
+        });
+        
+        window.addEventListener('mousemove', (e) => {
+            if (isDragging) { panX = e.clientX - startPanX; panY = e.clientY - startPanY; applyTransform(); }
+        });
+
+        function applyTransform() {
+            mediaLayer.style.transform = `translate(${panX}px, ${panY}px) scale(${currentZoom})`;
+            document.getElementById('zoom-val').textContent = currentZoom.toFixed(1) + "x";
+            updateCursor();
+        }
+        
+        function updateCursor() {
+            if (currentTool === 'pointer') videoContainer.style.cursor = 'default';
+            else if (currentTool === 'text') videoContainer.style.cursor = 'text';
+            else if (currentTool === 'pen' || currentTool === 'eraser' || currentTool === 'temporal') videoContainer.style.cursor = 'default';
+            else videoContainer.style.cursor = isDragging ? 'grabbing' : (currentZoom > 1 ? 'grab' : 'default');
+        }
+
+        let drawing = false, lastX = 0, lastY = 0;
+
+        tempCanvas.onmousedown = (e) => {
+            if (!currentTool || currentTool === 'pointer') return;
+            e.stopPropagation();
+            const rect = tempCanvas.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / currentZoom, y = (e.clientY - rect.top) / currentZoom;
+
+            if (currentTool === 'text') { createTextObject(x, y); setTool('pointer'); return; }
+            drawing = true; lastX = x; lastY = y;
+        };
+
+        window.addEventListener('mouseup', () => { 
+            if (drawing) { drawing = false; ctx.beginPath(); tempCtx.beginPath(); }
+            if (isDragging) { isDragging = false; updateCursor(); }
+        });
+
+        tempCanvas.onmousemove = (e) => {
+            if(!drawing || !currentTool || currentTool === 'pointer' || currentTool === 'text') return;
+            const rect = tempCanvas.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / currentZoom, y = (e.clientY - rect.top) / currentZoom;
+            const activeCtx = currentTool === 'temporal' ? tempCtx : ctx;
+            activeCtx.globalCompositeOperation = currentTool === 'eraser' ? 'destination-out' : 'source-over';
+            activeCtx.lineWidth = (currentTool === 'eraser' ? 50 : 10) / currentZoom;
+            activeCtx.lineCap = 'round'; activeCtx.lineJoin = 'round';
+            activeCtx.strokeStyle = currentTool === 'temporal' ? "#22d3ee" : currentColor;
+            activeCtx.beginPath(); activeCtx.moveTo(lastX, lastY); activeCtx.lineTo(x, y); activeCtx.stroke();
+            lastX = x; lastY = y;
+        };
+
+        function fadeTemporalCanvas() {
+            tempCtx.globalCompositeOperation = 'destination-out';
+            tempCtx.fillStyle = 'rgba(0, 0, 0, 0.015)'; 
+            tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+            requestAnimationFrame(fadeTemporalCanvas);
+        }
+        fadeTemporalCanvas();
+
+        function clearCanvases() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+            document.querySelectorAll('.text-object').forEach(el => el.remove());
+        }
+
+        if(document.getElementById('pan-mode-btn')) document.getElementById('pan-mode-btn').onclick = () => setTool(null);
+        if(document.getElementById('pointer-mode-btn')) document.getElementById('pointer-mode-btn').onclick = () => setTool('pointer');
+        if(document.getElementById('text-mode-btn')) document.getElementById('text-mode-btn').onclick = () => setTool('text');
+        if(document.getElementById('draw-mode-btn')) document.getElementById('draw-mode-btn').onclick = () => setTool('pen');
+        if(document.getElementById('erase-mode-btn')) document.getElementById('erase-mode-btn').onclick = () => setTool('eraser');
+        if(document.getElementById('laser-mode-btn')) document.getElementById('laser-mode-btn').onclick = () => setTool('temporal');
+        if(document.getElementById('draw-clear')) document.getElementById('draw-clear').onclick = clearCanvases;
+        if(document.getElementById('play-btn')) document.getElementById('play-btn').onclick = togglePlay;
+        if(document.getElementById('reset-zoom')) document.getElementById('reset-zoom').onclick = () => { currentZoom = 1; panX = 0; panY = 0; applyTransform(); };
+        
+        if(document.getElementById('sidebar-toggle')) document.getElementById('sidebar-toggle').onclick = () => {
+            document.getElementById('sidebar-menu').classList.remove('-translate-x-full');
+            setTimeout(() => { const first = document.querySelector('.chapter-item'); if(first) first.focus(); }, 100);
+        };
+        if(document.getElementById('close-sidebar')) {
+            document.getElementById('close-sidebar').onclick = () => document.getElementById('sidebar-menu').classList.add('-translate-x-full');
+            document.getElementById('close-sidebar').onkeydown = (e) => { if (e.key === 'Enter') document.getElementById('sidebar-menu').classList.add('-translate-x-full'); };
+        }
+        
+        function setupCanvas() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; tempCanvas.width = tempCanvas.offsetWidth; tempCanvas.height = tempCanvas.offsetHeight; }
+        window.addEventListener('resize', setupCanvas);
+        setupCanvas();
+    </script>
+</body>
+</html>
