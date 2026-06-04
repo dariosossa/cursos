@@ -183,7 +183,8 @@
                     'controls': 0,     
                     'disablekb': 1,    
                     'rel': 0,
-                    'modestbranding': 1
+                    'modestbranding': 1,
+                    'vq': 'hd1080' // Parámetro extra para sugerir HD desde el inicio
                 },
                 events: {
                     'onReady': onPlayerReady,
@@ -198,6 +199,9 @@
         function onPlayerReady(event) {
             isPlayerReady = true;
             document.getElementById('total-duration').textContent = formatTime(ytPlayer.getDuration());
+            
+            // Sugerir máxima resolución apenas el reproductor esté listo
+            ytPlayer.setPlaybackQuality('highres');
             
             // Inicializar volumen
             const vol = ytPlayer.getVolume();
@@ -234,6 +238,9 @@
 
         function onPlayerStateChange(event) {
             if (event.data === YT.PlayerState.PLAYING) {
+                // Reforzar la calidad máxima cada vez que se le da a Play
+                event.target.setPlaybackQuality('highres');
+                
                 document.getElementById('play-btn').innerHTML = '<i class="fa-solid fa-pause"></i>';
                 document.getElementById('total-duration').textContent = formatTime(ytPlayer.getDuration());
                 progressInterval = setInterval(updateProgressBar, 500);
@@ -295,7 +302,13 @@
                                 <span class="text-sm">${v.title}</span>`;
                 
                 const loadVideo = () => {
-                    if (isPlayerReady) ytPlayer.loadVideoById(vidId);
+                    if (isPlayerReady) {
+                        // Cambiamos loadVideoById simple por un objeto que exige 'highres'
+                        ytPlayer.loadVideoById({
+                            videoId: vidId,
+                            suggestedQuality: 'highres' 
+                        });
+                    }
                     document.getElementById('sidebar-menu').classList.add('-translate-x-full'); 
                     document.querySelectorAll('.chapter-item').forEach(i => i.classList.remove('active')); 
                     el.classList.add('active'); 
