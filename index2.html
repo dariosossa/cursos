@@ -43,7 +43,7 @@
     <div id="sidebar-menu" class="absolute h-full w-[300px] bg-black/95 z-40 transform -translate-x-full transition-transform border-r border-white/10 flex flex-col">
         <div class="p-4 flex justify-between items-center text-white border-b border-white/10">
             <h2 class="font-bold">Materia: FullStack Web</h2>
-            <button id="close-sidebar"><i class="fa-solid fa-xmark"></i></button>
+            <button id="close-sidebar" tabindex="0" class="focus:outline-none focus:text-red-400"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div id="sidebar-content" class="flex-1 overflow-y-auto p-2"></div>
     </div>
@@ -81,7 +81,7 @@
             <div class="flex justify-between items-center text-white">
                 <div class="flex items-center gap-4">
                     <button id="play-btn" class="w-6"><i class="fa-solid fa-play"></i></button>
-                    <input id="zoom-slider" type="range" min="1" max="10" step="0.1" value="1" class="w-24 accent-red-500">
+                    <!-- Zoom slider eliminado -->
                     <span id="zoom-val" class="text-xs w-8">1.0x</span>
                 </div>
                 
@@ -221,24 +221,43 @@
         };
 
         // Generar Menú lateral
+        const sidebarContent = document.getElementById('sidebar-content');
         themes.forEach(t => {
-            document.getElementById('sidebar-content').innerHTML += `<h3 class="text-xs p-2 font-bold mt-2 text-gray-400 uppercase">${t.name}</h3>`;
+            // Creamos el encabezado de la unidad correctamente como un Nodo para no borrar eventos previos
+            const header = document.createElement('h3');
+            header.className = "text-xs p-2 font-bold mt-2 text-gray-400 uppercase";
+            header.textContent = t.name;
+            sidebarContent.appendChild(header);
+            
             t.videos.forEach(v => {
                 const vidId = extractYTId(v.url);
                 // Construimos el enlace de la imagen en base al ID del video extraído
                 const posterUrl = `https://img.youtube.com/vi/${vidId}/hqdefault.jpg`;
                 
                 const el = document.createElement('div');
-                el.className = "flex gap-3 p-2 mb-1 cursor-pointer chapter-item hover:bg-white/10 items-center rounded-lg transition-colors";
+                el.tabIndex = 0; // Hacemos que sea navegable con el teclado (Tab)
+                // Se agregan las clases focus:bg-white/20 y focus:outline-none para saber cuál está enfocado
+                el.className = "flex gap-3 p-2 mb-1 cursor-pointer chapter-item hover:bg-white/10 focus:bg-white/20 focus:outline-none items-center rounded-lg transition-colors";
                 el.innerHTML = `<img src="${posterUrl}" class="w-16 h-10 object-cover rounded shadow">
                                 <span class="text-sm">${v.title}</span>`;
-                el.onclick = () => { 
+                
+                // Función al hacer click o enter
+                const loadVideo = () => {
                     if (isPlayerReady) ytPlayer.loadVideoById(vidId);
                     document.getElementById('sidebar-menu').classList.add('-translate-x-full'); 
                     document.querySelectorAll('.chapter-item').forEach(i => i.classList.remove('active')); 
                     el.classList.add('active'); 
+                    // Regresar foco al contenedor principal
+                    document.activeElement.blur();
                 };
-                document.getElementById('sidebar-content').appendChild(el);
+
+                el.onclick = loadVideo;
+                // Permitir usar enter para los que usan tabulador
+                el.onkeydown = (e) => {
+                    if (e.key === 'Enter') loadVideo();
+                };
+
+                sidebarContent.appendChild(el);
             });
         });
 
@@ -276,7 +295,19 @@
                 case 'KeyB': setTool('eraser'); break;
                 case 'KeyT': setTool('temporal'); break;
                 case 'KeyC': clearCanvases(); break;
-                case 'KeyQ': document.getElementById('sidebar-menu').classList.toggle('-translate-x-full'); break;
+                case 'KeyQ': 
+                    const menu = document.getElementById('sidebar-menu');
+                    menu.classList.toggle('-translate-x-full'); 
+                    if (!menu.classList.contains('-translate-x-full')) {
+                        // Enfoca automáticamente el primer ítem al abrir con Q
+                        setTimeout(() => {
+                            const firstItem = document.querySelector('.chapter-item');
+                            if(firstItem) firstItem.focus();
+                        }, 100);
+                    } else {
+                        document.activeElement.blur();
+                    }
+                    break;
             }
         });
 
@@ -320,7 +351,6 @@
             mediaLayer.style.transform = `translate(${panX}px, ${panY}px) scale(${currentZoom})`;
             mediaLayer.style.transformOrigin = '0 0';
             document.getElementById('zoom-val').textContent = currentZoom.toFixed(1) + "x";
-            document.getElementById('zoom-slider').value = currentZoom;
             updateCursor();
         }
         
@@ -405,15 +435,20 @@
         document.getElementById('reset-zoom').onclick = () => {
             currentZoom = 1; panX = 0; panY = 0; applyTransform();
         };
-
-        document.getElementById('zoom-slider').oninput = (e) => {
-            currentZoom = parseFloat(e.target.value);
-            if (currentZoom === 1) { panX = 0; panY = 0; }
-            applyTransform();
-        };
         
-        document.getElementById('sidebar-toggle').onclick = () => document.getElementById('sidebar-menu').classList.remove('-translate-x-full');
+        document.getElementById('sidebar-toggle').onclick = () => {
+            document.getElementById('sidebar-menu').classList.remove('-translate-x-full');
+            // Enfoca automáticamente el primer ítem al abrir también mediante click
+            setTimeout(() => {
+                const firstItem = document.querySelector('.chapter-item');
+                if(firstItem) firstItem.focus();
+            }, 100);
+        };
+
         document.getElementById('close-sidebar').onclick = () => document.getElementById('sidebar-menu').classList.add('-translate-x-full');
+        document.getElementById('close-sidebar').onkeydown = (e) => {
+            if (e.key === 'Enter') document.getElementById('sidebar-menu').classList.add('-translate-x-full');
+        };
         
         function setupCanvas() { 
             canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; 
