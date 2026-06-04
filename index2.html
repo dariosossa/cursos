@@ -10,7 +10,7 @@
         body { background: #0f0f0f; font-family: sans-serif; }
         
         /* Transición suave para el zoom y pan */
-        #media-layer { transition: transform 0.05s linear; transform-origin: center center; }
+        #media-layer { transition: transform 0.05s linear; transform-origin: 0 0; }
         
         /* Contenedores de dibujo superpuestos al video */
         #draw-canvas, #temp-canvas { 
@@ -38,7 +38,7 @@
         .tool-active { color: #ef4444; }
         .laser-active { color: #22d3ee; text-shadow: 0 0 8px rgba(34, 211, 238, 0.8); }
 
-        /* Animación para el doble tap de adelantar video */
+        /* Animación para el doble tap */
         @keyframes fadeOutUp {
             0% { opacity: 1; transform: translateY(-50%) scale(0.8); }
             100% { opacity: 0; transform: translateY(-50%) scale(1.2); }
@@ -46,30 +46,46 @@
         .animate-fade-out-up {
             animation: fadeOutUp 0.6s ease-out forwards;
         }
+
+        /* Estilo para el input de color */
+        input[type="color"] {
+            -webkit-appearance: none;
+            border: none;
+        }
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+        input[type="color"]::-webkit-color-swatch {
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body class="h-[100dvh] w-screen flex overflow-hidden">
 
-    <!-- Modal Cargar URL de YouTube -->
+    <!-- Modal Cargar URL temporal de YouTube (Herramienta de Profesor) -->
     <div id="url-modal" class="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
         <div class="bg-[#1a1a1a] border border-white/10 rounded-xl p-6 w-11/12 max-w-md transform scale-95 transition-transform duration-300" id="url-modal-content">
-            <h3 class="text-white text-lg font-bold mb-4 flex items-center gap-2"><i class="fa-brands fa-youtube text-red-500"></i> Cargar Video de YouTube</h3>
+            <h3 class="text-white text-lg font-bold mb-4 flex items-center gap-2"><i class="fa-brands fa-youtube text-red-500"></i> Cargar Video Rápido</h3>
+            <p class="text-xs text-gray-400 mb-4">Reproducirá el video al vuelo sin agregarlo al temario.</p>
             <input type="text" id="youtube-url-input" placeholder="Pega el enlace aquí (ej: https://youtu.be/...)" class="w-full bg-black border border-white/20 rounded p-3 text-white text-sm focus:outline-none focus:border-red-500 mb-2">
-            <p id="url-error" class="text-red-500 text-xs hidden mb-4">URL no válida. Asegúrate de que sea un enlace de YouTube.</p>
+            <p id="url-error" class="text-red-500 text-xs hidden mb-4">URL no válida.</p>
             <div class="flex justify-end gap-3 mt-6">
                 <button id="close-modal-btn" class="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">Cancelar</button>
-                <button id="submit-url-btn" class="px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded font-bold transition-colors">Cargar Video</button>
+                <button id="submit-url-btn" class="px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded font-bold transition-colors">Reproducir</button>
             </div>
         </div>
     </div>
 
-    <!-- Menú lateral con Materia de YouTube -->
-    <div id="sidebar-menu" class="absolute h-full w-[300px] bg-black/95 z-40 transform -translate-x-full transition-transform border-r border-white/10 flex flex-col">
-        <div class="p-4 flex justify-between items-center text-white border-b border-white/10">
-            <h2 class="font-bold">Materia: FullStack Web</h2>
-            <button id="close-sidebar" tabindex="0" class="focus:outline-none focus:text-red-400 p-2"><i class="fa-solid fa-xmark"></i></button>
+    <!-- Menú lateral con Temario Estático -->
+    <div id="sidebar-menu" class="absolute h-full w-[320px] bg-black/95 z-40 transform -translate-x-full transition-transform border-r border-white/10 flex flex-col shadow-2xl">
+        <div class="p-4 flex justify-between items-center text-white border-b border-white/10 bg-black/50">
+            <h2 class="font-bold flex items-center gap-2"><i class="fa-solid fa-list-ul"></i> Temario del Curso</h2>
+            <button id="close-sidebar" tabindex="0" class="focus:outline-none focus:text-red-400 p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
         </div>
-        <div id="sidebar-content" class="flex-1 overflow-y-auto p-2"></div>
+        <div id="sidebar-content" class="flex-1 overflow-y-auto p-3 pb-24">
+            <!-- Contenido generado por JS -->
+        </div>
     </div>
 
     <!-- Contenedor principal derecho -->
@@ -77,22 +93,15 @@
         
         <!-- Área exclusiva del Video -->
         <div id="video-container" class="flex-1 relative flex items-center justify-center overflow-hidden touch-manipulation">
-            
-            <!-- Media Layer -->
             <div id="media-layer" class="w-full h-full flex items-center justify-center relative bg-black">
-                
                 <div id="yt-wrapper" class="absolute inset-0 w-full h-full pointer-events-none">
                     <div id="main-video" class="w-full h-full"></div>
                 </div>
-
                 <div id="interaction-overlay" class="absolute inset-0 z-10 w-full h-full"></div>
-                
                 <canvas id="draw-canvas"></canvas>
                 <canvas id="temp-canvas"></canvas> 
             </div>
-
-            <!-- Botón del menú -->
-            <button id="sidebar-toggle" class="absolute top-4 left-4 text-white text-xl z-50 bg-black/50 p-2 rounded hover:bg-black transition-colors"><i class="fa-solid fa-bars"></i></button>
+            <button id="sidebar-toggle" class="absolute top-4 left-4 text-white text-xl z-50 bg-black/50 p-2 rounded hover:bg-black transition-colors shadow-lg"><i class="fa-solid fa-bars"></i> Temario</button>
         </div>
 
         <!-- Controles Inferiores -->
@@ -102,7 +111,7 @@
                 <span id="total-duration">0:00</span>
             </div>
             
-            <div id="progress-container" class="w-full mb-4 rounded-full overflow-hidden">
+            <div id="progress-container" class="w-full mb-4 rounded-full overflow-hidden shadow-inner">
                 <div id="progress-bar"></div>
             </div>
             
@@ -119,8 +128,8 @@
                 </div>
                 
                 <div class="flex items-center gap-4 sm:gap-5 text-lg">
-                    <!-- NUEVA HERRAMIENTA: Cargar URL -->
-                    <button id="load-url-btn" class="hover:text-red-400 transition-colors p-1" title="Cargar URL de YouTube"><i class="fa-solid fa-link"></i></button>
+                    <!-- Herramienta: Cargar URL Rápido -->
+                    <button id="load-url-btn" class="hover:text-red-400 transition-colors p-1" title="Reproducir URL Rápida"><i class="fa-solid fa-link"></i></button>
                     <div class="w-px h-5 bg-white/20"></div>
 
                     <button id="reset-zoom" class="hover:text-red-400 transition-colors p-1" title="Restaurar Zoom"><i class="fa-solid fa-compress"></i></button>
@@ -130,13 +139,14 @@
                     <button id="pan-mode-btn" class="transition-colors tool-active p-1" title="Mover y Zoom (H)"><i class="fa-solid fa-hand"></i></button>
                     <button id="pointer-mode-btn" class="transition-colors p-1" title="Interactuar / Saltar Anuncios (V)"><i class="fa-solid fa-arrow-pointer"></i></button>
                     
-                    <!-- Herramientas de Dibujo (Se ocultan en móviles para ahorrar espacio) -->
-                    <div class="hidden md:flex items-center gap-5">
+                    <!-- Herramientas de Dibujo -->
+                    <div class="hidden md:flex items-center gap-4">
                         <div class="w-px h-5 bg-white/20"></div>
+                        <input type="color" id="color-picker" value="#ef4444" class="w-6 h-6 p-0 border-0 rounded cursor-pointer bg-transparent shadow" title="Color de letra y lápiz">
+                        <button id="text-mode-btn" class="transition-colors p-1" title="Texto (A)"><i class="fa-solid fa-font"></i></button>
                         <button id="draw-mode-btn" class="transition-colors p-1" title="Lápiz (D)"><i class="fa-solid fa-pen"></i></button>
                         <button id="laser-mode-btn" class="transition-colors p-1" title="Puntero Temporal (T)"><i class="fa-solid fa-wand-magic-sparkles"></i></button>
                         <button id="erase-mode-btn" class="transition-colors p-1" title="Borrar (B)"><i class="fa-solid fa-eraser"></i></button>
-                        
                         <div class="w-px h-5 bg-white/20"></div>
                         <button id="draw-clear" class="hover:text-red-400 transition-colors p-1" title="Limpiar Todo (C)"><i class="fa-solid fa-trash-can"></i></button>
                     </div>
@@ -146,6 +156,7 @@
     </div>
 
     <script>
+        // TEMARIO ESTÁTICO FIJO (Sin LocalStorage)
         const themes = [
             { name: "Unidad 1: Desarrollo Frontend", videos: [
                 { title: "HTML Desde Cero (HolaMundo)", url: "https://www.youtube.com/watch?v=MJkdaVFHrto" },
@@ -176,6 +187,53 @@
             return (match && match[2].length === 11) ? match[2] : null;
         }
 
+        // ==========================================
+        // RENDERIZADO DEL TEMARIO ESTÁTICO
+        // ==========================================
+        const sidebarContent = document.getElementById('sidebar-content');
+
+        themes.forEach(t => {
+            const header = document.createElement('h3');
+            header.className = "text-xs p-2 font-bold mt-4 mb-1 text-gray-400 uppercase tracking-wider";
+            header.textContent = t.name;
+            sidebarContent.appendChild(header);
+            
+            t.videos.forEach(v => {
+                const vidId = extractYTId(v.url);
+                const posterUrl = `https://img.youtube.com/vi/${vidId}/hqdefault.jpg`;
+                
+                const el = document.createElement('div');
+                el.tabIndex = 0; 
+                el.className = "flex gap-3 p-2 mb-2 cursor-pointer chapter-item hover:bg-white/10 focus:bg-white/20 focus:outline-none items-center rounded-lg transition-colors";
+                
+                el.innerHTML = `
+                    <img src="${posterUrl}" class="w-16 h-10 object-cover rounded shadow flex-shrink-0">
+                    <span class="text-sm flex-1 truncate pr-2" title="${v.title}">${v.title}</span>
+                `;
+                
+                const loadVideo = () => {
+                    if (isPlayerReady) {
+                        ytPlayer.loadVideoById({ videoId: vidId, suggestedQuality: 'highres' });
+                    }
+                    if (window.innerWidth < 768) {
+                        document.getElementById('sidebar-menu').classList.add('-translate-x-full'); 
+                    }
+                    document.querySelectorAll('.chapter-item').forEach(i => i.classList.remove('active')); 
+                    el.classList.add('active'); 
+                    document.activeElement.blur();
+                };
+
+                el.onclick = loadVideo;
+                el.onkeydown = (e) => { if (e.key === 'Enter') loadVideo(); };
+
+                sidebarContent.appendChild(el);
+            });
+        });
+
+        // ==========================================
+        // INICIALIZACIÓN DE YOUTUBE Y EVENTOS
+        // ==========================================
+
         const canvas = document.getElementById('draw-canvas');
         const tempCanvas = document.getElementById('temp-canvas');
         const ctx = canvas.getContext('2d');
@@ -183,9 +241,11 @@
         const mediaLayer = document.getElementById('media-layer');
         const videoContainer = document.getElementById('video-container');
         const progressBar = document.getElementById('progress-bar');
+        const colorPicker = document.getElementById('color-picker');
         
         let currentZoom = 1;
         let currentTool = null; 
+        let currentColor = colorPicker ? colorPicker.value : "#ef4444"; 
         
         let panX = 0, panY = 0, isDragging = false, startPanX = 0, startPanY = 0;
 
@@ -193,29 +253,32 @@
         let isPlayerReady = false;
         let progressInterval = null;
 
+        if (colorPicker) {
+            colorPicker.addEventListener('input', (e) => {
+                currentColor = e.target.value;
+                if (currentTool === 'pen') document.getElementById('draw-mode-btn').style.color = currentColor;
+                else if (currentTool === 'text') document.getElementById('text-mode-btn').style.color = currentColor;
+            });
+        }
+
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         const firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
         window.onYouTubeIframeAPIReady = function() {
+            // Empezar con el primer video de la Unidad 1
             const firstVideoId = extractYTId(themes[0].videos[0].url);
             
             ytPlayer = new YT.Player('main-video', {
                 videoId: firstVideoId,
-                playerVars: {
-                    'playsinline': 1,
-                    'controls': 0,     
-                    'disablekb': 1,    
-                    'rel': 0,
-                    'modestbranding': 1,
-                    'vq': 'hd1080' 
-                },
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
+                playerVars: { 'playsinline': 1, 'controls': 0, 'disablekb': 1, 'rel': 0, 'modestbranding': 1, 'vq': 'hd1080' },
+                events: { 'onReady': onPlayerReady, 'onStateChange': onPlayerStateChange }
             });
+            
+            // Marcar el primer video como activo visualmente
+            const firstItem = document.querySelector('.chapter-item');
+            if(firstItem) firstItem.classList.add('active');
         };
 
         const volumeSlider = document.getElementById('volume-slider');
@@ -225,7 +288,6 @@
             isPlayerReady = true;
             document.getElementById('total-duration').textContent = formatTime(ytPlayer.getDuration());
             ytPlayer.setPlaybackQuality('highres');
-            
             const vol = ytPlayer.getVolume();
             volumeSlider.value = vol;
             updateMuteIcon(ytPlayer.isMuted() || vol === 0);
@@ -289,136 +351,126 @@
 
         function togglePlay() {
             if (!isPlayerReady) return;
-            if (ytPlayer.getPlayerState() === YT.PlayerState.PLAYING) {
-                ytPlayer.pauseVideo();
-            } else {
-                ytPlayer.playVideo();
-            }
+            if (ytPlayer.getPlayerState() === YT.PlayerState.PLAYING) ytPlayer.pauseVideo();
+            else ytPlayer.playVideo();
         }
 
         document.getElementById('progress-container').onclick = (e) => {
             if (!isPlayerReady) return;
             const rect = e.currentTarget.getBoundingClientRect();
-            const seekTime = ((e.clientX - rect.left) / rect.width) * ytPlayer.getDuration();
-            ytPlayer.seekTo(seekTime, true);
+            ytPlayer.seekTo(((e.clientX - rect.left) / rect.width) * ytPlayer.getDuration(), true);
             updateProgressBar();
         };
 
-        const sidebarContent = document.getElementById('sidebar-content');
-        themes.forEach(t => {
-            const header = document.createElement('h3');
-            header.className = "text-xs p-2 font-bold mt-2 text-gray-400 uppercase";
-            header.textContent = t.name;
-            sidebarContent.appendChild(header);
-            
-            t.videos.forEach(v => {
-                const vidId = extractYTId(v.url);
-                const posterUrl = `https://img.youtube.com/vi/${vidId}/hqdefault.jpg`;
-                
-                const el = document.createElement('div');
-                el.tabIndex = 0; 
-                el.className = "flex gap-3 p-2 mb-1 cursor-pointer chapter-item hover:bg-white/10 focus:bg-white/20 focus:outline-none items-center rounded-lg transition-colors";
-                el.innerHTML = `<img src="${posterUrl}" class="w-16 h-10 object-cover rounded shadow">
-                                <span class="text-sm">${v.title}</span>`;
-                
-                const loadVideo = () => {
-                    if (isPlayerReady) {
-                        ytPlayer.loadVideoById({
-                            videoId: vidId,
-                            suggestedQuality: 'highres' 
-                        });
-                    }
-                    document.getElementById('sidebar-menu').classList.add('-translate-x-full'); 
-                    document.querySelectorAll('.chapter-item').forEach(i => i.classList.remove('active')); 
-                    el.classList.add('active'); 
-                    document.activeElement.blur();
-                };
-
-                el.onclick = loadVideo;
-                el.onkeydown = (e) => {
-                    if (e.key === 'Enter') loadVideo();
-                };
-
-                sidebarContent.appendChild(el);
-            });
-        });
-
-        // ====== LÓGICA DEL MODAL DE URL ======
+        // ==========================================
+        // MODAL CARGAR URL RÁPIDA
+        // ==========================================
         const urlModal = document.getElementById('url-modal');
-        const urlModalContent = document.getElementById('url-modal-content');
         const urlInput = document.getElementById('youtube-url-input');
         const urlError = document.getElementById('url-error');
 
         function openUrlModal() {
             urlModal.classList.remove('hidden');
-            // Forzar repintado para que la transición funcione
             void urlModal.offsetWidth;
             urlModal.classList.remove('opacity-0');
-            urlModalContent.classList.remove('scale-95');
-            
+            document.getElementById('url-modal-content').classList.remove('scale-95');
             urlInput.value = '';
             urlError.classList.add('hidden');
             urlInput.focus();
-            setTool('pointer'); // Cambiar a interactuar para evitar trazos accidentales de fondo
+            setTool('pointer'); 
         }
 
         function closeUrlModal() {
             urlModal.classList.add('opacity-0');
-            urlModalContent.classList.add('scale-95');
-            setTimeout(() => {
-                urlModal.classList.add('hidden');
-            }, 300);
+            document.getElementById('url-modal-content').classList.add('scale-95');
+            setTimeout(() => urlModal.classList.add('hidden'), 300);
         }
 
         function submitCustomUrl() {
-            const url = urlInput.value.trim();
-            const vidId = extractYTId(url);
-            
+            const vidId = extractYTId(urlInput.value.trim());
             if (vidId) {
-                if (isPlayerReady) {
-                    ytPlayer.loadVideoById({
-                        videoId: vidId,
-                        suggestedQuality: 'highres'
-                    });
-                    // Desmarcar elementos del menú lateral, ya que es un video externo
-                    document.querySelectorAll('.chapter-item').forEach(i => i.classList.remove('active'));
-                }
+                if (isPlayerReady) ytPlayer.loadVideoById({ videoId: vidId, suggestedQuality: 'highres' });
+                document.querySelectorAll('.chapter-item').forEach(i => i.classList.remove('active'));
                 closeUrlModal();
-                setTool(null); // Volver automáticamente a la herramienta Mano
-            } else {
-                urlError.classList.remove('hidden');
-            }
+                setTool(null); 
+            } else urlError.classList.remove('hidden');
         }
 
-        document.getElementById('load-url-btn').onclick = openUrlModal;
+        if(document.getElementById('load-url-btn')) document.getElementById('load-url-btn').onclick = openUrlModal;
         document.getElementById('close-modal-btn').onclick = closeUrlModal;
         document.getElementById('submit-url-btn').onclick = submitCustomUrl;
-        
-        // Permitir usar "Enter" dentro del input
-        urlInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') submitCustomUrl();
-        });
-        // =====================================
+        urlInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitCustomUrl(); });
+
+
+        // ==========================================
+        // HERRAMIENTAS DE DIBUJO Y NAVEGACIÓN
+        // ==========================================
+        function createTextObject(x, y) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'text-object absolute z-30 group select-none flex items-center justify-center';
+            wrapper.style.left = x + 'px'; wrapper.style.top = y + 'px';
+            wrapper.style.transform = 'translate(-50%, -50%)';
+
+            const content = document.createElement('div');
+            content.contentEditable = true;
+            content.className = 'font-bold outline-none whitespace-nowrap min-w-[20px] min-h-[30px] p-2 cursor-text bg-transparent';
+            content.style.fontSize = '24px';
+            content.style.fontFamily = 'sans-serif';
+            content.style.color = currentColor; 
+            content.innerText = 'Escribe aquí...';
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
+            deleteBtn.className = 'absolute -top-4 -right-4 bg-red-600 hover:bg-red-700 text-white rounded-full w-8 h-8 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer shadow-lg z-40 hidden pointer-events-auto';
+
+            const moveHandle = document.createElement('div');
+            moveHandle.innerHTML = '<i class="fa-solid fa-arrows-up-down-left-right text-black"></i>';
+            moveHandle.className = 'absolute -top-4 -left-4 bg-white border border-gray-300 rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-move shadow-lg z-40 hidden pointer-events-auto';
+
+            wrapper.appendChild(content); wrapper.appendChild(deleteBtn); wrapper.appendChild(moveHandle);
+            document.getElementById('media-layer').appendChild(wrapper);
+
+            const showControls = () => { deleteBtn.classList.remove('hidden'); moveHandle.classList.remove('hidden'); content.style.border = '2px dashed rgba(255, 255, 255, 0.5)'; content.style.backgroundColor = 'rgba(0,0,0,0.5)'; content.style.borderRadius = '4px'; };
+            const hideControls = () => { deleteBtn.classList.add('hidden'); moveHandle.classList.add('hidden'); content.style.border = 'none'; content.style.backgroundColor = 'transparent'; if (content.innerText.trim() === '') wrapper.remove(); };
+
+            content.addEventListener('focus', showControls);
+            content.addEventListener('blur', () => { setTimeout(() => { if (!wrapper.contains(document.activeElement)) hideControls(); }, 150); });
+
+            deleteBtn.onclick = () => wrapper.remove();
+
+            let isMoving = false, startX, startY, initialLeft, initialTop;
+            const startMove = (cx, cy) => { isMoving = true; startX = cx; startY = cy; initialLeft = parseFloat(wrapper.style.left); initialTop = parseFloat(wrapper.style.top); document.body.style.userSelect = 'none'; };
+            const doMove = (cx, cy) => { if (!isMoving) return; wrapper.style.left = initialLeft + (cx - startX) / currentZoom + 'px'; wrapper.style.top = initialTop + (cy - startY) / currentZoom + 'px'; };
+            const endMove = () => { isMoving = false; document.body.style.userSelect = ''; content.focus(); };
+
+            moveHandle.onmousedown = (e) => { e.stopPropagation(); e.preventDefault(); startMove(e.clientX, e.clientY); document.addEventListener('mousemove', onMouseMove); document.addEventListener('mouseup', onMouseUp); };
+            moveHandle.ontouchstart = (e) => { e.stopPropagation(); e.preventDefault(); startMove(e.touches[0].clientX, e.touches[0].clientY); document.addEventListener('touchmove', onTouchMove, {passive: false}); document.addEventListener('touchend', onTouchEnd); };
+            const onMouseMove = (e) => doMove(e.clientX, e.clientY);
+            const onMouseUp = () => { endMove(); document.removeEventListener('mousemove', onMouseMove); document.removeEventListener('mouseup', onMouseUp); };
+            const onTouchMove = (e) => { e.preventDefault(); doMove(e.touches[0].clientX, e.touches[0].clientY); };
+            const onTouchEnd = () => { endMove(); document.removeEventListener('touchmove', onTouchMove); document.removeEventListener('touchend', onTouchEnd); };
+
+            setTimeout(() => { content.focus(); document.execCommand('selectAll', false, null); }, 50);
+        }
 
         function setTool(tool) {
-            if (currentTool === tool) {
-                currentTool = null; 
-            } else {
-                currentTool = tool;
-            }
+            if (currentTool === tool) currentTool = null; 
+            else currentTool = tool;
 
             document.body.classList.remove('drawing-active');
-            document.getElementById('pan-mode-btn').classList.remove('tool-active');
-            document.getElementById('pointer-mode-btn').classList.remove('tool-active');
-            document.getElementById('draw-mode-btn').classList.remove('tool-active');
-            document.getElementById('erase-mode-btn').classList.remove('tool-active');
-            document.getElementById('laser-mode-btn').classList.remove('laser-active');
+            ['pan', 'pointer', 'text', 'draw', 'erase'].forEach(t => {
+                const btn = document.getElementById(`${t}-mode-btn`);
+                if (btn) btn.classList.remove('tool-active');
+            });
+            if(document.getElementById('text-mode-btn')) document.getElementById('text-mode-btn').style.color = '';
+            if(document.getElementById('draw-mode-btn')) document.getElementById('draw-mode-btn').style.color = '';
+            if(document.getElementById('laser-mode-btn')) document.getElementById('laser-mode-btn').classList.remove('laser-active');
 
             const ytWrapper = document.getElementById('yt-wrapper');
             const interactionOverlay = document.getElementById('interaction-overlay');
 
             if (currentTool === 'pointer') {
-                document.getElementById('pointer-mode-btn').classList.add('tool-active');
+                if(document.getElementById('pointer-mode-btn')) document.getElementById('pointer-mode-btn').classList.add('tool-active');
                 ytWrapper.classList.remove('pointer-events-none');
                 interactionOverlay.classList.add('pointer-events-none');
             } else {
@@ -427,15 +479,24 @@
                 
                 if (currentTool === 'pen') {
                     document.body.classList.add('drawing-active');
-                    document.getElementById('draw-mode-btn').classList.add('tool-active');
+                    if(document.getElementById('draw-mode-btn')) {
+                        document.getElementById('draw-mode-btn').classList.add('tool-active');
+                        document.getElementById('draw-mode-btn').style.color = currentColor; 
+                    }
                 } else if (currentTool === 'eraser') {
                     document.body.classList.add('drawing-active');
-                    document.getElementById('erase-mode-btn').classList.add('tool-active');
+                    if(document.getElementById('erase-mode-btn')) document.getElementById('erase-mode-btn').classList.add('tool-active');
                 } else if (currentTool === 'temporal') {
                     document.body.classList.add('drawing-active');
-                    document.getElementById('laser-mode-btn').classList.add('laser-active');
+                    if(document.getElementById('laser-mode-btn')) document.getElementById('laser-mode-btn').classList.add('laser-active');
+                } else if (currentTool === 'text') {
+                    document.body.classList.add('drawing-active');
+                    if(document.getElementById('text-mode-btn')) {
+                        document.getElementById('text-mode-btn').classList.add('tool-active');
+                        document.getElementById('text-mode-btn').style.color = currentColor; 
+                    }
                 } else if (currentTool === null) {
-                    document.getElementById('pan-mode-btn').classList.add('tool-active');
+                    if(document.getElementById('pan-mode-btn')) document.getElementById('pan-mode-btn').classList.add('tool-active');
                 }
             }
             updateCursor();
@@ -444,16 +505,14 @@
         setTool(null); 
 
         function handleDoubleTap(clientX) {
-            if (!isPlayerReady || currentTool === 'pen' || currentTool === 'eraser' || currentTool === 'temporal') return;
+            if (!isPlayerReady || currentTool === 'pen' || currentTool === 'eraser' || currentTool === 'temporal' || currentTool === 'text') return;
             
             const rect = videoContainer.getBoundingClientRect();
-            const x = clientX - rect.left;
-            
             const ripple = document.createElement('div');
             ripple.className = 'absolute text-white font-bold text-xl md:text-3xl z-50 pointer-events-none bg-black/60 px-4 py-2 rounded-full animate-fade-out-up flex items-center gap-2';
             ripple.style.top = '50%';
             
-            if (x > rect.width / 2) {
+            if (clientX - rect.left > rect.width / 2) {
                 ytPlayer.seekTo(ytPlayer.getCurrentTime() + 10, true);
                 ripple.innerHTML = '10s <i class="fa-solid fa-forward-step"></i>';
                 ripple.style.right = '10%';
@@ -462,7 +521,6 @@
                 ripple.innerHTML = '<i class="fa-solid fa-backward-step"></i> 10s';
                 ripple.style.left = '10%';
             }
-            
             videoContainer.appendChild(ripple);
             updateProgressBar();
             setTimeout(() => ripple.remove(), 600);
@@ -471,31 +529,21 @@
         let lastTouchTime = 0;
         videoContainer.addEventListener('touchstart', (e) => {
             if (e.touches.length > 1) return; 
-            
             const currentTime = new Date().getTime();
-            const tapLength = currentTime - lastTouchTime;
-            
-            if (tapLength < 300 && tapLength > 0) {
-                handleDoubleTap(e.touches[0].clientX);
-                e.preventDefault(); 
-            }
+            if (currentTime - lastTouchTime < 300 && currentTime - lastTouchTime > 0) { handleDoubleTap(e.touches[0].clientX); e.preventDefault(); }
             lastTouchTime = currentTime;
         }, { passive: false });
-
-        videoContainer.addEventListener('dblclick', (e) => {
-            handleDoubleTap(e.clientX);
-        });
+        videoContainer.addEventListener('dblclick', (e) => handleDoubleTap(e.clientX));
 
         document.addEventListener('keydown', (e) => {
-            // No activar atajos si el usuario está escribiendo una URL en el input
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-            
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
             switch(e.code) {
                 case 'Space': e.preventDefault(); togglePlay(); break;
                 case 'ArrowRight': if(isPlayerReady) ytPlayer.seekTo(ytPlayer.getCurrentTime() + 5, true); break;
                 case 'ArrowLeft': if(isPlayerReady) ytPlayer.seekTo(ytPlayer.getCurrentTime() - 5, true); break;
                 case 'KeyH': setTool(null); break; 
                 case 'KeyV': setTool('pointer'); break; 
+                case 'KeyA': setTool('text'); break; 
                 case 'KeyD': setTool('pen'); break;
                 case 'KeyB': setTool('eraser'); break;
                 case 'KeyT': setTool('temporal'); break;
@@ -503,31 +551,19 @@
                 case 'KeyQ': 
                     const menu = document.getElementById('sidebar-menu');
                     menu.classList.toggle('-translate-x-full'); 
-                    if (!menu.classList.contains('-translate-x-full')) {
-                        setTimeout(() => {
-                            const firstItem = document.querySelector('.chapter-item');
-                            if(firstItem) firstItem.focus();
-                        }, 100);
-                    } else {
-                        document.activeElement.blur();
-                    }
+                    if (!menu.classList.contains('-translate-x-full')) setTimeout(() => { const first = document.querySelector('.chapter-item'); if(first) first.focus(); }, 100);
+                    else document.activeElement.blur();
                     break;
             }
         });
 
         videoContainer.addEventListener('wheel', (e) => {
             e.preventDefault();
-            const zoomAmount = e.deltaY > 0 ? -0.2 : 0.2;
-            const newZoom = Math.min(Math.max(currentZoom + zoomAmount, 1), 10);
-
+            const newZoom = Math.min(Math.max(currentZoom + (e.deltaY > 0 ? -0.2 : 0.2), 1), 10);
             if (newZoom !== currentZoom) {
                 const rect = videoContainer.getBoundingClientRect();
-                const mouseX = e.clientX - rect.left;
-                const mouseY = e.clientY - rect.top;
-
-                panX = mouseX - (mouseX - panX) * (newZoom / currentZoom);
-                panY = mouseY - (mouseY - panY) * (newZoom / currentZoom);
-                
+                panX = (e.clientX - rect.left) - ((e.clientX - rect.left) - panX) * (newZoom / currentZoom);
+                panY = (e.clientY - rect.top) - ((e.clientY - rect.top) - panY) * (newZoom / currentZoom);
                 currentZoom = newZoom;
                 if (currentZoom === 1) { panX = 0; panY = 0; }
                 applyTransform();
@@ -535,20 +571,11 @@
         }, { passive: false });
         
         videoContainer.addEventListener('mousedown', (e) => {
-            if (currentTool === null && currentZoom > 1) {
-                isDragging = true;
-                startPanX = e.clientX - panX;
-                startPanY = e.clientY - panY;
-                updateCursor();
-            }
+            if (currentTool === null && currentZoom > 1) { isDragging = true; startPanX = e.clientX - panX; startPanY = e.clientY - panY; updateCursor(); }
         });
         
         window.addEventListener('mousemove', (e) => {
-            if (isDragging) {
-                panX = e.clientX - startPanX;
-                panY = e.clientY - startPanY;
-                applyTransform();
-            }
+            if (isDragging) { panX = e.clientX - startPanX; panY = e.clientY - startPanY; applyTransform(); }
         });
 
         function applyTransform() {
@@ -559,62 +586,40 @@
         }
         
         function updateCursor() {
-            if (currentTool === 'pointer') {
-                videoContainer.style.cursor = 'default';
-            } else if (currentTool === 'pen' || currentTool === 'eraser' || currentTool === 'temporal') {
-                videoContainer.style.cursor = 'default';
-            } else {
-                videoContainer.style.cursor = isDragging ? 'grabbing' : (currentZoom > 1 ? 'grab' : 'default');
-            }
+            if (currentTool === 'pointer') videoContainer.style.cursor = 'default';
+            else if (currentTool === 'text') videoContainer.style.cursor = 'text';
+            else if (currentTool === 'pen' || currentTool === 'eraser' || currentTool === 'temporal') videoContainer.style.cursor = 'default';
+            else videoContainer.style.cursor = isDragging ? 'grabbing' : (currentZoom > 1 ? 'grab' : 'default');
         }
 
-        let drawing = false;
-        let lastX = 0, lastY = 0;
+        let drawing = false, lastX = 0, lastY = 0;
 
         tempCanvas.onmousedown = (e) => {
             if (!currentTool || currentTool === 'pointer') return;
             e.stopPropagation();
-            drawing = true; 
-            
             const rect = tempCanvas.getBoundingClientRect();
-            lastX = (e.clientX - rect.left) / currentZoom;
-            lastY = (e.clientY - rect.top) / currentZoom;
+            const x = (e.clientX - rect.left) / currentZoom, y = (e.clientY - rect.top) / currentZoom;
+
+            if (currentTool === 'text') { createTextObject(x, y); setTool('pointer'); return; }
+            drawing = true; lastX = x; lastY = y;
         };
 
         window.addEventListener('mouseup', () => { 
-            if (drawing) {
-                drawing = false; 
-                ctx.beginPath(); 
-                tempCtx.beginPath();
-            }
-            if (isDragging) {
-                isDragging = false;
-                updateCursor();
-            }
+            if (drawing) { drawing = false; ctx.beginPath(); tempCtx.beginPath(); }
+            if (isDragging) { isDragging = false; updateCursor(); }
         });
 
         tempCanvas.onmousemove = (e) => {
-            if(!drawing || !currentTool || currentTool === 'pointer') return;
-            
+            if(!drawing || !currentTool || currentTool === 'pointer' || currentTool === 'text') return;
             const rect = tempCanvas.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / currentZoom;
-            const y = (e.clientY - rect.top) / currentZoom;
-            
+            const x = (e.clientX - rect.left) / currentZoom, y = (e.clientY - rect.top) / currentZoom;
             const activeCtx = currentTool === 'temporal' ? tempCtx : ctx;
             activeCtx.globalCompositeOperation = currentTool === 'eraser' ? 'destination-out' : 'source-over';
-            
             activeCtx.lineWidth = (currentTool === 'eraser' ? 50 : 10) / currentZoom;
-            activeCtx.lineCap = 'round';
-            activeCtx.lineJoin = 'round';
-            activeCtx.strokeStyle = currentTool === 'temporal' ? "#22d3ee" : "#ef4444";
-            
-            activeCtx.beginPath();
-            activeCtx.moveTo(lastX, lastY);
-            activeCtx.lineTo(x, y);
-            activeCtx.stroke();
-            
-            lastX = x;
-            lastY = y;
+            activeCtx.lineCap = 'round'; activeCtx.lineJoin = 'round';
+            activeCtx.strokeStyle = currentTool === 'temporal' ? "#22d3ee" : currentColor;
+            activeCtx.beginPath(); activeCtx.moveTo(lastX, lastY); activeCtx.lineTo(x, y); activeCtx.stroke();
+            lastX = x; lastY = y;
         };
 
         function fadeTemporalCanvas() {
@@ -628,37 +633,29 @@
         function clearCanvases() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+            document.querySelectorAll('.text-object').forEach(el => el.remove());
         }
 
-        document.getElementById('pan-mode-btn').onclick = () => setTool(null);
-        document.getElementById('pointer-mode-btn').onclick = () => setTool('pointer');
-        document.getElementById('draw-mode-btn').onclick = () => setTool('pen');
-        document.getElementById('erase-mode-btn').onclick = () => setTool('eraser');
-        document.getElementById('laser-mode-btn').onclick = () => setTool('temporal');
-        document.getElementById('draw-clear').onclick = clearCanvases;
-        document.getElementById('play-btn').onclick = togglePlay;
+        if(document.getElementById('pan-mode-btn')) document.getElementById('pan-mode-btn').onclick = () => setTool(null);
+        if(document.getElementById('pointer-mode-btn')) document.getElementById('pointer-mode-btn').onclick = () => setTool('pointer');
+        if(document.getElementById('text-mode-btn')) document.getElementById('text-mode-btn').onclick = () => setTool('text');
+        if(document.getElementById('draw-mode-btn')) document.getElementById('draw-mode-btn').onclick = () => setTool('pen');
+        if(document.getElementById('erase-mode-btn')) document.getElementById('erase-mode-btn').onclick = () => setTool('eraser');
+        if(document.getElementById('laser-mode-btn')) document.getElementById('laser-mode-btn').onclick = () => setTool('temporal');
+        if(document.getElementById('draw-clear')) document.getElementById('draw-clear').onclick = clearCanvases;
+        if(document.getElementById('play-btn')) document.getElementById('play-btn').onclick = togglePlay;
+        if(document.getElementById('reset-zoom')) document.getElementById('reset-zoom').onclick = () => { currentZoom = 1; panX = 0; panY = 0; applyTransform(); };
         
-        document.getElementById('reset-zoom').onclick = () => {
-            currentZoom = 1; panX = 0; panY = 0; applyTransform();
-        };
-        
-        document.getElementById('sidebar-toggle').onclick = () => {
+        if(document.getElementById('sidebar-toggle')) document.getElementById('sidebar-toggle').onclick = () => {
             document.getElementById('sidebar-menu').classList.remove('-translate-x-full');
-            setTimeout(() => {
-                const firstItem = document.querySelector('.chapter-item');
-                if(firstItem) firstItem.focus();
-            }, 100);
+            setTimeout(() => { const first = document.querySelector('.chapter-item'); if(first) first.focus(); }, 100);
         };
-
-        document.getElementById('close-sidebar').onclick = () => document.getElementById('sidebar-menu').classList.add('-translate-x-full');
-        document.getElementById('close-sidebar').onkeydown = (e) => {
-            if (e.key === 'Enter') document.getElementById('sidebar-menu').classList.add('-translate-x-full');
-        };
-        
-        function setupCanvas() { 
-            canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; 
-            tempCanvas.width = tempCanvas.offsetWidth; tempCanvas.height = tempCanvas.offsetHeight;
+        if(document.getElementById('close-sidebar')) {
+            document.getElementById('close-sidebar').onclick = () => document.getElementById('sidebar-menu').classList.add('-translate-x-full');
+            document.getElementById('close-sidebar').onkeydown = (e) => { if (e.key === 'Enter') document.getElementById('sidebar-menu').classList.add('-translate-x-full'); };
         }
+        
+        function setupCanvas() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; tempCanvas.width = tempCanvas.offsetWidth; tempCanvas.height = tempCanvas.offsetHeight; }
         window.addEventListener('resize', setupCanvas);
         setupCanvas();
     </script>
