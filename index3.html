@@ -10,7 +10,7 @@
         body { background: #0f0f0f; font-family: sans-serif; }
         
         /* Transición suave para el zoom y pan */
-        #media-layer { transition: transform 0.05s linear; transform-origin: center center; }
+        #media-layer { transition: transform 0.05s linear; transform-origin: 0 0; }
         
         /* Contenedores de dibujo superpuestos al video */
         #draw-canvas, #temp-canvas { 
@@ -91,7 +91,7 @@
         </div>
     </div>
 
-    <!-- NUEVO: Modal para Añadir Unidad -->
+    <!-- Modal para Añadir Unidad -->
     <div id="add-unit-modal" class="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
         <div class="bg-[#1a1a1a] border border-white/10 rounded-xl p-6 w-11/12 max-w-md transform scale-95 transition-transform duration-300" id="add-unit-content">
             <h3 class="text-white text-lg font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-folder-plus text-red-500"></i> Crear Nueva Unidad</h3>
@@ -100,6 +100,18 @@
             <div class="flex justify-end gap-3 mt-6">
                 <button id="close-add-unit-btn" class="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">Cancelar</button>
                 <button id="submit-add-unit-btn" class="px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded font-bold transition-colors">Crear Unidad</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NUEVO: Modal de Confirmación de Borrado Seguro -->
+    <div id="confirm-modal" class="fixed inset-0 bg-black/80 z-[110] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-[#1a1a1a] border border-red-500/30 rounded-xl p-6 w-11/12 max-w-sm transform scale-95 transition-transform duration-300" id="confirm-modal-content">
+            <h3 class="text-white text-lg font-bold mb-2 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-red-500"></i> Confirmar Eliminación</h3>
+            <p id="confirm-message" class="text-sm text-gray-300 mb-6">¿Estás seguro de que deseas eliminar este elemento?</p>
+            <div class="flex justify-end gap-3">
+                <button id="close-confirm-btn" class="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">Cancelar</button>
+                <button id="submit-confirm-btn" class="px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded font-bold transition-colors">Eliminar</button>
             </div>
         </div>
     </div>
@@ -217,22 +229,36 @@
             }
 
             themes.forEach((t, unitIndex) => {
-                // Header de Unidad con botón para añadir video
+                // Header de Unidad con botones para añadir video y eliminar unidad
                 const headerDiv = document.createElement('div');
                 headerDiv.className = "flex justify-between items-center mt-5 mb-2 px-1 border-b border-white/10 pb-1 group/header";
                 
                 const headerText = document.createElement('h3');
-                headerText.className = "text-xs font-bold text-gray-400 uppercase tracking-wider";
+                headerText.className = "text-xs font-bold text-gray-400 uppercase tracking-wider truncate flex-1 pr-2";
                 headerText.textContent = t.name;
                 
+                const actionsDiv = document.createElement('div');
+                actionsDiv.className = "flex items-center gap-1 opacity-100 lg:opacity-0 lg:group-hover/header:opacity-100 transition-opacity";
+
+                // Añadir Video Button
                 const addVidBtn = document.createElement('button');
                 addVidBtn.innerHTML = '<i class="fa-solid fa-plus"></i>';
-                addVidBtn.className = "text-gray-500 hover:text-white transition-colors px-2 py-1 bg-white/5 rounded opacity-0 group-hover/header:opacity-100";
+                addVidBtn.className = "text-[10px] text-gray-300 hover:text-white transition-colors px-2 py-1 bg-white/5 hover:bg-white/10 rounded";
                 addVidBtn.title = "Añadir video a esta unidad";
                 addVidBtn.onclick = () => openAddVideoModal(unitIndex);
 
+                // Eliminar Unidad Button
+                const delUnitBtn = document.createElement('button');
+                delUnitBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
+                delUnitBtn.className = "text-[10px] text-red-400 hover:text-red-300 transition-colors px-2 py-1 bg-red-500/10 hover:bg-red-500/20 rounded";
+                delUnitBtn.title = "Eliminar unidad completa";
+                delUnitBtn.onclick = () => deleteUnit(unitIndex);
+
+                actionsDiv.appendChild(addVidBtn);
+                actionsDiv.appendChild(delUnitBtn);
+                
                 headerDiv.appendChild(headerText);
-                headerDiv.appendChild(addVidBtn);
+                headerDiv.appendChild(actionsDiv);
                 sidebarContent.appendChild(headerDiv);
                 
                 // Lista de videos
@@ -242,7 +268,6 @@
                     
                     const el = document.createElement('div');
                     el.tabIndex = 0; 
-                    // Se agregó overflow-hidden y clases group para el menú de controles
                     el.className = "relative flex gap-3 p-2 mb-2 cursor-pointer chapter-item hover:bg-white/10 focus:bg-white/20 focus:outline-none items-center rounded-lg transition-colors group overflow-hidden border border-transparent hover:border-white/5";
                     
                     el.innerHTML = `
@@ -272,7 +297,7 @@
                         controls.appendChild(downBtn);
                     }
 
-                    // Botón Borrar
+                    // Botón Borrar Video
                     const delBtn = document.createElement('button');
                     delBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
                     delBtn.className = "text-[10px] text-red-400 hover:text-red-300 px-2 py-1 bg-red-500/20 hover:bg-red-500/40 rounded transition-colors ml-1";
@@ -317,10 +342,17 @@
         }
 
         function deleteVideo(unitIndex, videoIndex) {
-            // También reemplazamos el confirm() bloqueado por uno visual o directo. 
-            // Para mantenerlo fluido, lo eliminaremos directamente, o puedes crear otro modal para confirmar.
-            themes[unitIndex].videos.splice(videoIndex, 1);
-            saveThemes();
+            openConfirmModal("¿Seguro que deseas eliminar este video?", () => {
+                themes[unitIndex].videos.splice(videoIndex, 1);
+                saveThemes();
+            });
+        }
+
+        function deleteUnit(unitIndex) {
+            openConfirmModal(`¿Seguro que deseas eliminar la unidad "${themes[unitIndex].name}" y todos sus videos?`, () => {
+                themes.splice(unitIndex, 1);
+                saveThemes();
+            });
         }
 
         // ==========================================
@@ -456,24 +488,44 @@
         };
 
         // ==========================================
-        // MODALES (URL Rápida y Temario)
+        // MODALES GLOBALES
         // ==========================================
+
+        // Lógica Modal de Confirmación
+        const confirmModal = document.getElementById('confirm-modal');
+        const confirmMessage = document.getElementById('confirm-message');
+        let currentConfirmAction = null;
+
+        function openConfirmModal(msg, actionCallback) {
+            confirmMessage.textContent = msg;
+            currentConfirmAction = actionCallback;
+            confirmModal.classList.remove('hidden');
+            void confirmModal.offsetWidth;
+            confirmModal.classList.remove('opacity-0');
+            document.getElementById('confirm-modal-content').classList.remove('scale-95');
+        }
+
+        function closeConfirmModal() {
+            confirmModal.classList.add('opacity-0');
+            document.getElementById('confirm-modal-content').classList.add('scale-95');
+            setTimeout(() => {
+                confirmModal.classList.add('hidden');
+                currentConfirmAction = null;
+            }, 300);
+        }
+
+        document.getElementById('close-confirm-btn').onclick = closeConfirmModal;
+        document.getElementById('submit-confirm-btn').onclick = () => {
+            if (currentConfirmAction) currentConfirmAction();
+            closeConfirmModal();
+        };
+
+
+        // Lógica Modal Reproducción Rápida
         const urlModal = document.getElementById('url-modal');
         const urlInput = document.getElementById('youtube-url-input');
         const urlError = document.getElementById('url-error');
 
-        const addVideoModal = document.getElementById('add-video-modal');
-        const newVideoTitle = document.getElementById('new-video-title');
-        const newVideoUrl = document.getElementById('new-video-url');
-        const newVideoError = document.getElementById('new-video-error');
-        let activeUnitForVideo = null;
-
-        // NUEVAS VARIABLES PARA EL MODAL DE UNIDAD
-        const addUnitModal = document.getElementById('add-unit-modal');
-        const newUnitTitle = document.getElementById('new-unit-title');
-        const newUnitError = document.getElementById('new-unit-error');
-
-        // Modal de Reproducción Rápida
         function openUrlModal() {
             urlModal.classList.remove('hidden');
             void urlModal.offsetWidth;
@@ -506,7 +558,14 @@
         document.getElementById('submit-url-btn').onclick = submitCustomUrl;
         urlInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitCustomUrl(); });
 
-        // Modal para Añadir al Temario
+
+        // Lógica Modal para Añadir al Temario
+        const addVideoModal = document.getElementById('add-video-modal');
+        const newVideoTitle = document.getElementById('new-video-title');
+        const newVideoUrl = document.getElementById('new-video-url');
+        const newVideoError = document.getElementById('new-video-error');
+        let activeUnitForVideo = null;
+
         function openAddVideoModal(unitIndex) {
             activeUnitForVideo = unitIndex;
             addVideoModal.classList.remove('hidden');
@@ -532,7 +591,7 @@
 
             if (title !== '' && vidId) {
                 themes[activeUnitForVideo].videos.push({ title: title, url: url });
-                saveThemes(); // Renderiza y guarda
+                saveThemes();
                 closeAddVideoModal();
             } else {
                 newVideoError.classList.remove('hidden');
@@ -543,7 +602,12 @@
         document.getElementById('submit-add-video-btn').onclick = submitAddVideo;
         newVideoUrl.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitAddVideo(); });
 
+
         // Lógica Modal para Añadir Unidad
+        const addUnitModal = document.getElementById('add-unit-modal');
+        const newUnitTitle = document.getElementById('new-unit-title');
+        const newUnitError = document.getElementById('new-unit-error');
+
         function openAddUnitModal() {
             addUnitModal.classList.remove('hidden');
             void addUnitModal.offsetWidth;
@@ -753,6 +817,7 @@
 
         function applyTransform() {
             mediaLayer.style.transform = `translate(${panX}px, ${panY}px) scale(${currentZoom})`;
+            mediaLayer.style.transformOrigin = '0 0';
             document.getElementById('zoom-val').textContent = currentZoom.toFixed(1) + "x";
             updateCursor();
         }
