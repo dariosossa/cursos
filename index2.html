@@ -57,8 +57,8 @@
             <!-- Media Layer -->
             <div id="media-layer" class="w-full h-full flex items-center justify-center relative bg-black">
                 
-                <!-- Contenedor bloqueado de YouTube -->
-                <div class="absolute inset-0 w-full h-full pointer-events-none">
+                <!-- Contenedor de YouTube (Añadido ID yt-wrapper para poder darle o quitarle los clics) -->
+                <div id="yt-wrapper" class="absolute inset-0 w-full h-full pointer-events-none">
                     <div id="main-video" class="w-full h-full"></div>
                 </div>
 
@@ -88,14 +88,26 @@
             <div class="flex justify-between items-center text-white">
                 <div class="flex items-center gap-4">
                     <button id="play-btn" class="w-6 hover:text-red-400 transition-colors"><i class="fa-solid fa-play"></i></button>
-                    <span id="zoom-val" class="text-xs w-8 text-gray-400">1.0x</span>
+                    
+                    <!-- NUEVO: Controles de Volumen -->
+                    <div class="flex items-center gap-2 border-l border-white/20 pl-4">
+                        <button id="mute-btn" class="hover:text-red-400 transition-colors w-5" title="Silenciar"><i class="fa-solid fa-volume-high"></i></button>
+                        <input id="volume-slider" type="range" min="0" max="100" value="100" class="w-20 accent-red-500 cursor-pointer">
+                    </div>
+
+                    <span id="zoom-val" class="text-xs w-8 text-gray-400 ml-4">1.0x</span>
                 </div>
                 
                 <div class="flex items-center gap-5 text-lg">
-                    <!-- Iconos de herramientas -->
                     <button id="reset-zoom" class="hover:text-red-400 transition-colors" title="Restaurar Zoom"><i class="fa-solid fa-compress"></i></button>
                     <div class="w-px h-5 bg-white/20"></div>
                     
+                    <!-- NUEVO: Botones para Mano (Mover) e Interactuar con el iframe de YT -->
+                    <button id="pan-mode-btn" class="transition-colors tool-active" title="Mover y Zoom (H)"><i class="fa-solid fa-hand"></i></button>
+                    <button id="pointer-mode-btn" class="transition-colors" title="Interactuar / Saltar Anuncios (V)"><i class="fa-solid fa-arrow-pointer"></i></button>
+                    <div class="w-px h-5 bg-white/20"></div>
+                    
+                    <!-- Herramientas de Dibujo -->
                     <button id="draw-mode-btn" class="transition-colors" title="Lápiz (D)"><i class="fa-solid fa-pen"></i></button>
                     <button id="laser-mode-btn" class="transition-colors" title="Puntero Temporal (T)"><i class="fa-solid fa-wand-magic-sparkles"></i></button>
                     <button id="erase-mode-btn" class="transition-colors" title="Borrar (B)"><i class="fa-solid fa-eraser"></i></button>
@@ -133,7 +145,6 @@
             ]}
         ];
 
-        // Función mágica para extraer el ID de cualquier enlace de YouTube
         function extractYTId(url) {
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
             const match = url.match(regExp);
@@ -149,32 +160,28 @@
         const progressBar = document.getElementById('progress-bar');
         
         let currentZoom = 1;
-        let currentTool = null; // 'pen', 'eraser', 'temporal', null
+        let currentTool = null; // 'pan' (null), 'pointer', 'pen', 'eraser', 'temporal'
         
-        // Variables Pan
         let panX = 0, panY = 0, isDragging = false, startPanX = 0, startPanY = 0;
 
-        // YT API Variables
         let ytPlayer = null;
         let isPlayerReady = false;
         let progressInterval = null;
 
-        // Cargar script de YouTube de forma dinámica
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         const firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
         window.onYouTubeIframeAPIReady = function() {
-            // Inicializar con el primer video extrayendo el ID
             const firstVideoId = extractYTId(themes[0].videos[0].url);
             
             ytPlayer = new YT.Player('main-video', {
                 videoId: firstVideoId,
                 playerVars: {
                     'playsinline': 1,
-                    'controls': 0,     // Apagamos los controles nativos
-                    'disablekb': 1,    // Apagamos el teclado de YouTube para usar el nuestro
+                    'controls': 0,     
+                    'disablekb': 1,    
                     'rel': 0,
                     'modestbranding': 1
                 },
@@ -185,10 +192,45 @@
             });
         };
 
+        const volumeSlider = document.getElementById('volume-slider');
+        const muteBtn = document.getElementById('mute-btn');
+
         function onPlayerReady(event) {
             isPlayerReady = true;
             document.getElementById('total-duration').textContent = formatTime(ytPlayer.getDuration());
+            
+            // Inicializar volumen
+            const vol = ytPlayer.getVolume();
+            volumeSlider.value = vol;
+            updateMuteIcon(ytPlayer.isMuted() || vol === 0);
         }
+
+        function updateMuteIcon(isMuted) {
+            muteBtn.innerHTML = isMuted ? '<i class="fa-solid fa-volume-xmark"></i>' : '<i class="fa-solid fa-volume-high"></i>';
+        }
+
+        volumeSlider.addEventListener('input', (e) => {
+            if (!isPlayerReady) return;
+            const vol = parseInt(e.target.value);
+            ytPlayer.setVolume(vol);
+            if(ytPlayer.isMuted() && vol > 0) ytPlayer.unMute();
+            updateMuteIcon(vol === 0);
+        });
+
+        muteBtn.addEventListener('click', () => {
+            if (!isPlayerReady) return;
+            if (ytPlayer.isMuted() || ytPlayer.getVolume() === 0) {
+                ytPlayer.unMute();
+                let vol = parseInt(volumeSlider.value);
+                if (vol === 0) { vol = 100; volumeSlider.value = 100; }
+                ytPlayer.setVolume(vol);
+                updateMuteIcon(false);
+            } else {
+                ytPlayer.mute();
+                volumeSlider.value = 0;
+                updateMuteIcon(true);
+            }
+        });
 
         function onPlayerStateChange(event) {
             if (event.data === YT.PlayerState.PLAYING) {
@@ -235,10 +277,8 @@
             updateProgressBar();
         };
 
-        // Generar Menú lateral
         const sidebarContent = document.getElementById('sidebar-content');
         themes.forEach(t => {
-            // Creamos el encabezado de la unidad correctamente como un Nodo para no borrar eventos previos
             const header = document.createElement('h3');
             header.className = "text-xs p-2 font-bold mt-2 text-gray-400 uppercase";
             header.textContent = t.name;
@@ -246,28 +286,23 @@
             
             t.videos.forEach(v => {
                 const vidId = extractYTId(v.url);
-                // Construimos el enlace de la imagen en base al ID del video extraído
                 const posterUrl = `https://img.youtube.com/vi/${vidId}/hqdefault.jpg`;
                 
                 const el = document.createElement('div');
-                el.tabIndex = 0; // Hacemos que sea navegable con el teclado (Tab)
-                // Se agregan las clases focus:bg-white/20 y focus:outline-none para saber cuál está enfocado
+                el.tabIndex = 0; 
                 el.className = "flex gap-3 p-2 mb-1 cursor-pointer chapter-item hover:bg-white/10 focus:bg-white/20 focus:outline-none items-center rounded-lg transition-colors";
                 el.innerHTML = `<img src="${posterUrl}" class="w-16 h-10 object-cover rounded shadow">
                                 <span class="text-sm">${v.title}</span>`;
                 
-                // Función al hacer click o enter
                 const loadVideo = () => {
                     if (isPlayerReady) ytPlayer.loadVideoById(vidId);
                     document.getElementById('sidebar-menu').classList.add('-translate-x-full'); 
                     document.querySelectorAll('.chapter-item').forEach(i => i.classList.remove('active')); 
                     el.classList.add('active'); 
-                    // Regresar foco al contenedor principal
                     document.activeElement.blur();
                 };
 
                 el.onclick = loadVideo;
-                // Permitir usar enter para los que usan tabulador
                 el.onkeydown = (e) => {
                     if (e.key === 'Enter') loadVideo();
                 };
@@ -277,28 +312,51 @@
         });
 
         function setTool(tool) {
-            // Lógica de Toggle: Si ya está activo, lo apaga y regresa la mano (null).
             if (currentTool === tool) {
-                currentTool = null;
+                currentTool = null; // null es el modo Mano (Pan/Zoom) por defecto
             } else {
                 currentTool = tool;
             }
 
-            // Limpiar estilos UI
+            // Limpiar UI general
             document.body.classList.remove('drawing-active');
+            document.getElementById('pan-mode-btn').classList.remove('tool-active');
+            document.getElementById('pointer-mode-btn').classList.remove('tool-active');
             document.getElementById('draw-mode-btn').classList.remove('tool-active');
             document.getElementById('erase-mode-btn').classList.remove('tool-active');
             document.getElementById('laser-mode-btn').classList.remove('laser-active');
 
-            // Aplicar estilos según herramienta
-            if (currentTool) {
-                document.body.classList.add('drawing-active');
-                if (currentTool === 'pen') document.getElementById('draw-mode-btn').classList.add('tool-active');
-                if (currentTool === 'eraser') document.getElementById('erase-mode-btn').classList.add('tool-active');
-                if (currentTool === 'temporal') document.getElementById('laser-mode-btn').classList.add('laser-active');
+            const ytWrapper = document.getElementById('yt-wrapper');
+            const interactionOverlay = document.getElementById('interaction-overlay');
+
+            // Si es Puntero (Interactuar con Youtube)
+            if (currentTool === 'pointer') {
+                document.getElementById('pointer-mode-btn').classList.add('tool-active');
+                ytWrapper.classList.remove('pointer-events-none');
+                interactionOverlay.classList.add('pointer-events-none');
+            } else {
+                // Si es cualquier otra herramienta, bloqueamos los clics de youtube para poder dibujar/mover
+                ytWrapper.classList.add('pointer-events-none');
+                interactionOverlay.classList.remove('pointer-events-none');
+                
+                if (currentTool === 'pen') {
+                    document.body.classList.add('drawing-active');
+                    document.getElementById('draw-mode-btn').classList.add('tool-active');
+                } else if (currentTool === 'eraser') {
+                    document.body.classList.add('drawing-active');
+                    document.getElementById('erase-mode-btn').classList.add('tool-active');
+                } else if (currentTool === 'temporal') {
+                    document.body.classList.add('drawing-active');
+                    document.getElementById('laser-mode-btn').classList.add('laser-active');
+                } else if (currentTool === null) {
+                    document.getElementById('pan-mode-btn').classList.add('tool-active');
+                }
             }
             updateCursor();
         }
+
+        // Inicializa el botón de pan activado al cargar la página
+        setTool(null); 
 
         document.addEventListener('keydown', (e) => {
             if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
@@ -306,6 +364,8 @@
                 case 'Space': e.preventDefault(); togglePlay(); break;
                 case 'ArrowRight': if(isPlayerReady) ytPlayer.seekTo(ytPlayer.getCurrentTime() + 5, true); break;
                 case 'ArrowLeft': if(isPlayerReady) ytPlayer.seekTo(ytPlayer.getCurrentTime() - 5, true); break;
+                case 'KeyH': setTool(null); break; // Pan (Mano)
+                case 'KeyV': setTool('pointer'); break; // Interactuar
                 case 'KeyD': setTool('pen'); break;
                 case 'KeyB': setTool('eraser'); break;
                 case 'KeyT': setTool('temporal'); break;
@@ -314,7 +374,6 @@
                     const menu = document.getElementById('sidebar-menu');
                     menu.classList.toggle('-translate-x-full'); 
                     if (!menu.classList.contains('-translate-x-full')) {
-                        // Enfoca automáticamente el primer ítem al abrir con Q
                         setTimeout(() => {
                             const firstItem = document.querySelector('.chapter-item');
                             if(firstItem) firstItem.focus();
@@ -327,6 +386,7 @@
         });
 
         videoContainer.addEventListener('wheel', (e) => {
+            // Permitir zoom incluso si estamos en modo interactivo, mientras se mueva la rueda sobre el contenedor principal
             e.preventDefault();
             const zoomAmount = e.deltaY > 0 ? -0.2 : 0.2;
             const newZoom = Math.min(Math.max(currentZoom + zoomAmount, 1), 10);
@@ -346,7 +406,8 @@
         }, { passive: false });
         
         videoContainer.addEventListener('mousedown', (e) => {
-            if (!currentTool && currentZoom > 1) {
+            // Solo iniciar paneo si estamos estrictamente en el modo Hand (null) y hay zoom
+            if (currentTool === null && currentZoom > 1) {
                 isDragging = true;
                 startPanX = e.clientX - panX;
                 startPanY = e.clientY - panY;
@@ -370,7 +431,9 @@
         }
         
         function updateCursor() {
-            if (currentTool) {
+            if (currentTool === 'pointer') {
+                videoContainer.style.cursor = 'default';
+            } else if (currentTool === 'pen' || currentTool === 'eraser' || currentTool === 'temporal') {
                 videoContainer.style.cursor = 'default';
             } else {
                 videoContainer.style.cursor = isDragging ? 'grabbing' : (currentZoom > 1 ? 'grab' : 'default');
@@ -381,7 +444,7 @@
         let lastX = 0, lastY = 0;
 
         tempCanvas.onmousedown = (e) => {
-            if (!currentTool) return;
+            if (!currentTool || currentTool === 'pointer') return;
             e.stopPropagation();
             drawing = true; 
             
@@ -403,7 +466,7 @@
         });
 
         tempCanvas.onmousemove = (e) => {
-            if(!drawing || !currentTool) return;
+            if(!drawing || !currentTool || currentTool === 'pointer') return;
             
             const rect = tempCanvas.getBoundingClientRect();
             const x = (e.clientX - rect.left) / currentZoom;
@@ -412,7 +475,6 @@
             const activeCtx = currentTool === 'temporal' ? tempCtx : ctx;
             activeCtx.globalCompositeOperation = currentTool === 'eraser' ? 'destination-out' : 'source-over';
             
-            // Grosor aumentado. Goma = 50px, Lápiz/Láser = 10px
             activeCtx.lineWidth = (currentTool === 'eraser' ? 50 : 10) / currentZoom;
             activeCtx.lineCap = 'round';
             activeCtx.lineJoin = 'round';
@@ -429,7 +491,6 @@
 
         function fadeTemporalCanvas() {
             tempCtx.globalCompositeOperation = 'destination-out';
-            // Valor reducido a 0.015 para que la estela dure el doble de tiempo en pantalla
             tempCtx.fillStyle = 'rgba(0, 0, 0, 0.015)'; 
             tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
             requestAnimationFrame(fadeTemporalCanvas);
@@ -441,6 +502,8 @@
             tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
         }
 
+        document.getElementById('pan-mode-btn').onclick = () => setTool(null);
+        document.getElementById('pointer-mode-btn').onclick = () => setTool('pointer');
         document.getElementById('draw-mode-btn').onclick = () => setTool('pen');
         document.getElementById('erase-mode-btn').onclick = () => setTool('eraser');
         document.getElementById('laser-mode-btn').onclick = () => setTool('temporal');
@@ -453,7 +516,6 @@
         
         document.getElementById('sidebar-toggle').onclick = () => {
             document.getElementById('sidebar-menu').classList.remove('-translate-x-full');
-            // Enfoca automáticamente el primer ítem al abrir también mediante click
             setTimeout(() => {
                 const firstItem = document.querySelector('.chapter-item');
                 if(firstItem) firstItem.focus();
