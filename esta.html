@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Estadística Paso a Paso</title>
+
+    <!-- Chart.js para los gráficos matemáticos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- CSS Clásico Personalizado -->
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+            background-color: #f3f4f6;
+            font-family: system-ui, -apple-system, sans-serif;
+            overscroll-behavior-y: none;
+            color: #111827;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+
+        /* Ocultar contenido en orientación horizontal */
+        #landscape-warning {
+            display: none;
+        }
+
+        @media (orientation: landscape) {
+            #main-content {
+                display: none !important;
+            }
+
+            #landscape-warning {
+                display: flex !important;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background-color: #1e3a8a;
+                color: white;
+                z-index: 9999;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                padding: 2rem;
+            }
+        }
+
+        /* Clases utilitarias de CSS clásico */
+        .app-container {
+            width: 100%;
+            max-width: 28rem;
+            margin: 0 auto;
+            background-color: #ffffff;
+            min-height: 100vh;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            padding-bottom: 2.5rem;
+        }
+
+        .header-main {
+            background-color: #1e40af;
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-bottom-left-radius: 0.75rem;
+            border-bottom-right-radius: 0.75rem;
+            text-align: center;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+        }
+
+        .content-padding {
+            padding: 1rem;
+        }
+
+        .space-y>*+* {
+            margin-top: 1.5rem;
+        }
+
+        .section-title-blue {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1e3a8a;
+            border-bottom: 2px solid #93c5fd;
+            padding-bottom: 0.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-title-green {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #166534;
+            border-bottom: 2px solid #86efac;
+            padding-bottom: 0.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-title-purple {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #581c87;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-box {
+            background-color: #ffffff;
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 5 / 4;
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            border: 1px solid #9ca3af;
+            padding: 0.25rem;
+        }
+
+        .exercise-card {
+            background-color: #f0fdf4;
+            border-radius: 1rem;
+            padding: 1rem;
+            border: 1px solid #bbf7d0;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            margin-bottom: 0.75rem;
+        }
+
+        .exercise-inner {
+            background-color: #ffffff;
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            border: 1px solid #86efac;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            font-family: serif;
+        }
+
+        .math-step {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #f3f4f6;
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .math-step:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .math-fraction {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1;
+            font-size: 0.75rem;
+        }
+
+        .math-numerator {
+            border-bottom: 1px solid #1f2937;
+            padding-left: 0.25rem;
+            padding-right: 0.25rem;
+            padding-bottom: 0.125rem;
+        }
+
+        .math-denominator {
+            padding-top: 0.125rem;
+        }
+
+        .formula-box {
+            background-color: #f3e8ff;
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            border: 1px solid #d8b4fe;
+            margin-bottom: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .code-container {
+            background-color: #111827;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #374151;
+            margin-bottom: 1rem;
+        }
+
+        .code-header {
+            background-color: #1f2937;
+            padding: 0.375rem 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .code-dots {
+            display: flex;
+            gap: 0.375rem;
+        }
+
+        .dot-red {
+            width: 0.625rem;
+            height: 0.625rem;
+            border-radius: 9999px;
+            background-color: #ef4444;
+        }
+
+        .dot-yellow {
+            width: 0.625rem;
+            height: 0.625rem;
+            border-radius: 9999px;
+            background-color: #eab308;
+        }
+
+        .dot-green {
+            width: 0.625rem;
+            height: 0.625rem;
+            border-radius: 9999px;
+            background-color: #22c55e;
+        }
+
+        .code-title {
+            color: #9ca3af;
+            font-family: monospace;
+            font-size: 0.625rem;
+        }
+
+        .code-body {
+            padding: 0.75rem;
+            overflow-x: auto;
+        }
+
+        .code-pre {
+            color: #f3f4f6;
+            font-family: monospace;
+            font-size: 0.625rem;
+            white-space: pre-wrap;
+            line-height: 1.25;
+        }
+
+        .btn-copy {
+            width: 100%;
+            background-color: #7e22ce;
+            color: white;
+            font-size: 0.875rem;
+            font-weight: bold;
+            padding: 0.625rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-copy:hover {
+            background-color: #9333ea;
+        }
+
+        .btn-copy:active {
+            background-color: #581c87;
+        }
+
+        .tasks-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .task-btn {
+            width: 100%;
+            color: white;
+            font-weight: 900;
+            font-size: 0.875rem;
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .task-btn:active {
+            transform: translateY(4px);
+        }
+
+        /* Estilos para Tablas Adaptativas con Scroll Horizontal y Celdas Centradas */
+        .table-responsive-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db;
+            background-color: #ffffff;
+            margin-top: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .data-table {
+            width: 100%;
+            min-width: 34rem;
+            /* Ancho mínimo para forzar scroll horizontal adaptativo en pantallas muy reducidas */
+            border-collapse: collapse;
+            text-align: center;
+            /* Centrado general */
+            font-size: 0.75rem;
+        }
+
+        .data-table th {
+            background-color: #1e40af;
+            color: white;
+            padding: 0.625rem 0.75rem;
+            font-weight: bold;
+            border-bottom: 2px solid #1e3a8a;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .data-table td {
+            padding: 0.5rem 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #374151;
+            white-space: nowrap;
+            text-align: center;
+            /* Datos perfectamente centrados */
+        }
+
+        .data-table tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+
+        /* Modal del Quiz */
+        #quiz-fullscreen {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background-color: #9333ea;
+            display: none;
+            flex-direction: column;
+        }
+
+        .quiz-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            width: 100%;
+            max-width: 24rem;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .quiz-card-question {
+            background-color: #ffffff;
+            color: #111827;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            margin-bottom: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 3.75rem;
+            border-bottom: 4px solid #e5e7eb;
+            flex-shrink: 0;
+            width: 100%;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+            width: 100%;
+            max-height: 18.75rem;
+        }
+
+        .quiz-btn {
+            width: 100%;
+            font-weight: bold;
+            font-size: 0.8125rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        /* Toast */
+        #toastMessage {
+            position: fixed;
+            bottom: 1rem;
+            left: 0;
+            right: 0;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            display: flex;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 50;
+            pointer-events: none;
+        }
+
+        .toast-inner {
+            background-color: #1f2937;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        /* Colores de sintaxis Java */
+        .c-keyword {
+            color: #f472b6;
+        }
+
+        .c-type {
+            color: #60a5fa;
+        }
+
+        .c-string {
+            color: #4ade80;
+        }
+
+        .c-comment {
+            color: #4ade80;
+            font-style: italic;
+        }
+
+        .c-number {
+            color: #fb923c;
+        }
+
+        #quiz-fullscreen,
+        #quiz-fullscreen * {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        #studentName {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            }
+        };
+    </script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js"></script>
+</head>
+
+<body>
+
+    <!-- ADVERTENCIA DE ROTACIÓN -->
+    <div id="landscape-warning">
+        <svg style="width: 5rem; height: 5rem; margin-bottom: 1rem;" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+        </svg>
+        <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem;">Por favor, gira tu celular</h2>
+        <p style="font-size: 1.125rem;">Esta app es exclusiva para formato vertical.</p>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main id="main-content" class="app-container">
+
+        <header class="header-main">
+            <h1 class="header-title">Estadística Fácil</h1>
+        </header>
+
+        <div class="content-padding space-y">
+
+            <!-- SECCIÓN 1: INTRODUCCIÓN Y DEFINICIONES -->
+            <section>
+                <h2 class="section-title-blue">Conceptos Fundamentales</h2>
+                <div class="card-box" style="margin-bottom: 0.75rem; background-color: #f9fafb;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Normal_Distribution_PDF.svg/800px-Normal_Distribution_PDF.svg.png"
+                        onerror="this.src='https://placehold.co/400x250/e0f2fe/1e3a8a?text=Campana+de+Gauss'"
+                        alt="Gráfico de distribución normal"
+                        style="width: 100%; height: auto; object-fit: contain; background: white; border-radius: 0.375rem;">
+                </div>
+                <div class="card-box" style="font-size: 0.8125rem; color: #374151; line-height: 1.4;">
+                    <p style="margin-bottom: 0.5rem;"><b>Estadística Descriptiva:</b> Rama encargada de recopilar,
+                        organizar, resumir y presentar conjuntos de datos numéricos en tablas o gráficos precisos.</p>
+                    <p style="margin-bottom: 0.5rem;"><b>Población:</b> Conjunto total de individuos, objetos o medidas
+                        que poseen características comunes observables.</p>
+                    <p style="margin-bottom: 0.5rem;"><b>Muestra:</b> Subconjunto representativo extraído de una
+                        población para realizar estudios analíticos y poblacionales.</p>
+                    <p style="margin-bottom: 0.5rem;"><b>Frecuencia Absoluta ($f_i$):</b> Número de veces que se repite
+                        un determinado valor o intervalo en el conjunto de datos.</p>
+                    <p><b>Marca de Clase ($x_i$):</b> Valor representativo de un intervalo, calculado como el promedio
+                        entre su límite inferior y superior.</p>
+                </div>
+            </section>
+
+            <!-- SECCIÓN NUEVA: TABLA DE FRECUENCIAS ADAPTATIVA CON SCROLL HORIZONTAL Y DATOS CENTRADOS -->
+            <section class="card-box">
+                <h2 style="font-size: 1.125rem; font-weight: bold; color: #1e3a8a; margin-bottom: 0.25rem;">Tabla de
+                    Distribución de Frecuencias</h2>
+                <p style="font-size: 0.75rem; color: #4b5563; margin-bottom: 0.5rem; line-height: 1.25;">Desliza
+                    horizontalmente la tabla para ver todas sus columnas en pantallas pequeñas.</p>
+
+                <div class="table-responsive-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Intervalo [L<sub>i</sub> − L<sub>s</sub>]</th>
+                                <th>Frecuencia absoluta f<sub>i</sub></th>
+                                <th>Frecuencia acumulada F<sub>i</sub></th>
+                                <th>Marca de clase x<sub>i</sub></th>
+                                <th>Producto x<sub>i</sub> · f<sub>i</sub></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>[10 - 20)</td>
+                                <td>5</td>
+                                <td>5</td>
+                                <td>15.0</td>
+                                <td>75.0</td>
+                            </tr>
+                            <tr>
+                                <td>[20 - 30)</td>
+                                <td>12</td>
+                                <td>17</td>
+                                <td>25.0</td>
+                                <td>300.0</td>
+                            </tr>
+                            <tr>
+                                <td>[30 - 40)</td>
+                                <td>8</td>
+                                <td>25</td>
+                                <td>35.0</td>
+                                <td>280.0</td>
+                            </tr>
+                            <tr>
+                                <td>[40 - 50)</td>
+                                <td>5</td>
+                                <td>30</td>
+                                <td>45.0</td>
+                                <td>225.0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 2: GRÁFICO CAMPANA EXACTO -->
+            <section class="card-box">
+                <h2 style="font-size: 1.125rem; font-weight: bold; color: #111827; margin-bottom: 0.25rem;">Gráfico de
+                    Gauss Exacto</h2>
+                <p style="font-size: 0.75rem; color: #4b5563; margin-bottom: 0.5rem; line-height: 1.25;">Observa cómo
+                    cada punto azul cae <b>exactamente</b> en la intersección de la cuadrícula.</p>
+                <div class="chart-wrapper">
+                    <canvas id="gaussChart"></canvas>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 3: GRÁFICO PUNTO DE EQUILIBRIO EXACTO -->
+            <section class="card-box">
+                <h2 style="font-size: 1.125rem; font-weight: bold; color: #7c2d12; margin-bottom: 0.25rem;">Punto de
+                    Equilibrio</h2>
+                <p style="font-size: 0.75rem; color: #4b5563; margin-bottom: 0.5rem; line-height: 1.25;">Intersección
+                    exacta entre Costos (Rojo) e Ingresos (Verde).</p>
+                <div class="chart-wrapper">
+                    <canvas id="equilibrioChart"></canvas>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 4: EJERCICIOS RESUELTOS PASO A PASO (CON FORMATO UNIFORME) -->
+            <section>
+                <h2 class="section-title-green">Ejercicios Resueltos Paso a Paso</h2>
+
+                <!-- Ejercicio 1: Media -->
+                <div class="exercise-card">
+                    <div style="border-bottom: 1px solid #bbf7d0; padding-bottom: 0.5rem; margin-bottom: 0.75rem;">
+                        <span
+                            style="background-color: #15803d; color: white; font-size: 0.625rem; text-transform: uppercase; font-weight: 900; padding: 0.125rem 0.5rem; border-radius: 9999px;">Ejercicio
+                            1</span>
+                        <h3 style="font-weight: bold; color: #111827; font-size: 0.875rem; margin-top: 0.25rem;">Cálculo
+                            de la Media para: {10, 15, 20}</h3>
+                    </div>
+
+                    <div class="exercise-inner">
+                        <div class="math-step">
+                            <span
+                                style="font-family: sans-serif; font-size: 0.6875rem; font-weight: bold; color: #166534;">Paso
+                                1 (Fórmula):</span>
+                            <div style="display: flex; align-items: center; gap: 0.25rem; font-size: 0.875rem;">
+                                <span style="font-style: italic; font-weight: bold;">μ</span> =
+                                <div class="math-fraction">
+                                    <span class="math-numerator">Σ x<sub>i</sub></span>
+                                    <span class="math-denominator">N</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="math-step">
+                            <span
+                                style="font-family: sans-serif; font-size: 0.6875rem; font-weight: bold; color: #166534;">Paso
+                                2 (Sustitución):</span>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.25rem; font-size: 0.875rem; font-family: monospace;">
+                                <span style="font-style: italic; font-family: sans-serif; font-weight: bold;">μ</span> =
+                                <div class="math-fraction">
+                                    <span class="math-numerator">10 + 15 + 20</span>
+                                    <span class="math-denominator">3</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="math-step">
+                            <span
+                                style="font-family: sans-serif; font-size: 0.6875rem; font-weight: bold; color: #166534;">Paso
+                                3 (Resultado):</span>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.25rem; font-size: 0.875rem; font-family: monospace;">
+                                <span style="font-style: italic; font-family: sans-serif; font-weight: bold;">μ</span> =
+                                <div class="math-fraction">
+                                    <span class="math-numerator" style="color: #15803d; font-weight: bold;">45</span>
+                                    <span class="math-denominator" style="color: #15803d; font-weight: bold;">3</span>
+                                </div>
+                                <span style="font-weight: bold; color: #15803d; margin-left: 0.25rem;">= 15</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 2: Mediana -->
+                <div class="exercise-card">
+                    <div style="border-bottom: 1px solid #bbf7d0; padding-bottom: 0.5rem; margin-bottom: 0.75rem;">
+                        <span
+                            style="background-color: #15803d; color: white; font-size: 0.625rem; text-transform: uppercase; font-weight: 900; padding: 0.125rem 0.5rem; border-radius: 9999px;">Ejercicio
+                            2</span>
+                        <h3 style="font-weight: bold; color: #111827; font-size: 0.875rem; margin-top: 0.25rem;">Cálculo
+                            de la Mediana para: {7, 3, 9, 1, 5}</h3>
+                    </div>
+
+                    <div class="exercise-inner">
+                        <div class="math-step">
+                            <span
+                                style="font-family: sans-serif; font-size: 0.6875rem; font-weight: bold; color: #166534;">Paso
+                                1 (Ordenar):</span>
+                            <div style="font-size: 0.8125rem; font-family: monospace;">
+                                {1, 3, <b>5</b>, 7, 9}
+                            </div>
+                        </div>
+
+                        <div class="math-step">
+                            <span
+                                style="font-family: sans-serif; font-size: 0.6875rem; font-weight: bold; color: #166534;">Paso
+                                2 (Posición):</span>
+                            <div style="font-size: 0.8125rem;">
+                                Posición = (N + 1) / 2 = 3
+                            </div>
+                        </div>
+
+                        <div class="math-step">
+                            <span
+                                style="font-family: sans-serif; font-size: 0.6875rem; font-weight: bold; color: #166534;">Paso
+                                3 (Resultado):</span>
+                            <div style="font-weight: bold; color: #15803d; font-size: 0.875rem;">
+                                Mediana = 5
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 5: FÓRMULAS Y MÚLTIPLES BLOQUES DE CÓDIGO JAVA PARA COPIAR -->
+            <section style="margin-top: 1rem;">
+                <h2 class="section-title-purple">Fórmulas y Módulos Java</h2>
+
+                <div class="formula-box">
+                    <div
+                        style="display: flex; align-items: center; gap: 0.5rem; font-family: serif; font-size: 0.875rem; color: #111827;">
+                        <span
+                            style="font-weight: bold; font-family: sans-serif; font-size: 0.625rem; text-transform: uppercase; color: #581c87; width: 4rem;">Media</span>
+                        <span style="font-style: italic; font-size: 1.125rem;">μ</span>
+                        <span>=</span>
+                        <div class="math-fraction" style="font-size: 0.75rem;">
+                            <span class="math-numerator" style="border-bottom: 1px solid #111827;">Σ
+                                x<sub>i</sub></span>
+                            <span class="math-denominator">N</span>
+                        </div>
+                    </div>
+                    <div
+                        style="display: flex; align-items: center; gap: 0.5rem; font-family: serif; font-size: 0.875rem; color: #111827;">
+                        <span
+                            style="font-weight: bold; font-family: sans-serif; font-size: 0.625rem; text-transform: uppercase; color: #581c87; width: 4rem;">Varianza</span>
+                        <span style="font-style: italic; font-size: 1.125rem;">σ²</span>
+                        <span>=</span>
+                        <div class="math-fraction" style="font-size: 0.75rem;">
+                            <span class="math-numerator" style="border-bottom: 1px solid #111827;">Σ (x<sub>i</sub> -
+                                <span style="font-style: italic;">μ</span>)²</span>
+                            <span class="math-denominator">N</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bloque de Código Java 1: Media y Varianza -->
+                <div class="code-container">
+                    <div class="code-header">
+                        <div class="code-dots">
+                            <div class="dot-red"></div>
+                            <div class="dot-yellow"></div>
+                            <div class="dot-green"></div>
+                        </div>
+                        <span class="code-title">EstadisticaBasica.java</span>
+                    </div>
+                    <div class="code-body">
+                        <pre id="codeBlock1" class="code-pre"><span class="c-comment">/* ==========================================
+ * EJERCICIO 1: Media y Varianza Poblacional
+ * Datos de entrada: 10.0, 15.0, 20.0
+ * ========================================== */</span>
+
+<span class="c-keyword">public</span> <span class="c-keyword">class</span> <span style="color: #fde047;">EstadisticaBasica</span> {
+    
+    <span class="c-keyword">public</span> <span class="c-keyword">static</span> <span class="c-keyword">void</span> <span style="color: #93c5fd;">main</span>(String[] args) {
+        <span class="c-type">double</span>[] notas = {<span class="c-number">10.0</span>, <span class="c-number">15.0</span>, <span class="c-number">20.0</span>};
+        
+        <span class="c-keyword">if</span> (notas == <span class="c-keyword">null</span> || notas.length == <span class="c-number">0</span>) {
+            System.out.println(<span class="c-string">"Error: Sin datos."</span>);
+            <span class="c-keyword">return</span>;
+        }
+        
+        <span class="c-type">double</span> media = <span style="color: #93c5fd;">calcularMedia</span>(notas);
+        <span class="c-type">double</span> varianza = <span style="color: #93c5fd;">calcularVarianza</span>(notas, media);
+        
+        System.out.println(<span class="c-string">"Media: "</span> + media);
+        System.out.println(<span class="c-string">"Varianza: "</span> + varianza);
+    }
+
+    <span class="c-keyword">public</span> <span class="c-keyword">static</span> <span class="c-type">double</span> <span style="color: #93c5fd;">calcularMedia</span>(<span class="c-type">double</span>[] d) {
+        <span class="c-type">double</span> s = <span class="c-number">0.0</span>;
+        <span class="c-keyword">for</span> (<span class="c-type">double</span> val : d) s += val;
+        <span class="c-keyword">return</span> s / d.length;
+    }
+
+    <span class="c-keyword">public</span> <span class="c-keyword">static</span> <span class="c-type">double</span> <span style="color: #93c5fd;">calcularVarianza</span>(<span class="c-type">double</span>[] d, <span class="c-type">double</span> m) {
+        <span class="c-type">double</span> sd = <span class="c-number">0.0</span>;
+        <span class="c-keyword">for</span> (<span class="c-type">double</span> val : d) sd += Math.pow(val - m, <span class="c-number">2</span>);
+        <span class="c-keyword">return</span> sd / d.length;
+    }
+}</pre>
+                    </div>
+                    <button onclick="copiarCodigo('codeBlock1')" class="btn-copy">
+                        <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3">
+                            </path>
+                        </svg>
+                        COPIAR CÓDIGO 1 (MEDIA Y VARIANZA)
+                    </button>
+                </div>
+
+                <!-- Bloque de Código Java 2: Cálculo de Mediana -->
+                <div class="code-container">
+                    <div class="code-header">
+                        <div class="code-dots">
+                            <div class="dot-red"></div>
+                            <div class="dot-yellow"></div>
+                            <div class="dot-green"></div>
+                        </div>
+                        <span class="code-title">CalculadorMediana.java</span>
+                    </div>
+                    <div class="code-body">
+                        <pre id="codeBlock2" class="code-pre"><span class="c-comment">/* ==========================================
+ * EJERCICIO 2: Algoritmo para Mediana
+ * Ordenamiento previo requerido
+ * ========================================== */</span>
+<span class="c-keyword">import</span> java.util.Arrays;
+
+<span class="c-keyword">public</span> <span class="c-keyword">class</span> <span style="color: #fde047;">CalculadorMediana</span> {
+    <span class="c-keyword">public</span> <span class="c-keyword">static</span> <span class="c-keyword">void</span> <span style="color: #93c5fd;">main</span>(String[] args) {
+        <span class="c-type">double</span>[] datos = {<span class="c-number">7.0</span>, <span class="c-number">3.0</span>, <span class="c-number">9.0</span>, <span class="c-number">1.0</span>, <span class="c-number">5.0</span>};
+        Arrays.sort(datos);
+        
+        <span class="c-type">double</span> mediana;
+        <span class="c-keyword">int</span> n = datos.length;
+        <span class="c-keyword">if</span> (n % <span class="c-number">2</span> == <span class="c-number">0</span>) {
+            mediana = (datos[n/<span class="c-number">2</span> - <span class="c-number">1</span>] + datos[n/<span class="c-number">2</span>]) / <span class="c-number">2.0</span>;
+        } <span class="c-keyword">else</span> {
+            mediana = datos[n / <span class="c-number">2</span>];
+        }
+        System.out.println(<span class="c-string">"Mediana calculada: "</span> + mediana);
+    }
+}</pre>
+                    </div>
+                    <button onclick="copiarCodigo('codeBlock2')" class="btn-copy">
+                        <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3">
+                            </path>
+                        </svg>
+                        COPIAR CÓDIGO 2 (MEDIANA)
+                    </button>
+                </div>
+
+                <!-- Bloque de Código Java 3: Punto de Equilibrio -->
+                <div class="code-container">
+                    <div class="code-header">
+                        <div class="code-dots">
+                            <div class="dot-red"></div>
+                            <div class="dot-yellow"></div>
+                            <div class="dot-green"></div>
+                        </div>
+                        <span class="code-title">PuntoEquilibrio.java</span>
+                    </div>
+                    <div class="code-body">
+                        <pre id="codeBlock3" class="code-pre"><span class="c-comment">/* ==========================================
+ * EJERCICIO 3: Cálculo del Punto de Equilibrio
+ * Costos Fijos / (Precio - Costo Variable)
+ * ========================================== */</span>
+<span class="c-keyword">public</span> <span class="c-keyword">class</span> <span style="color: #fde047;">PuntoEquilibrio</span> {
+    <span class="c-keyword">public</span> <span class="c-keyword">static</span> <span class="c-keyword">void</span> <span style="color: #93c5fd;">main</span>(String[] args) {
+        <span class="c-type">double</span> costosFijos = <span class="c-number">5000.0</span>;
+        <span class="c-type">double</span> precioVentaUnitario = <span class="c-number">50.0</span>;
+        <span class="c-type">double</span> costoVariableUnitario = <span class="c-number">30.0</span>;
+        
+        <span class="c-type">double</span> unidadesEq = costosFijos / (precioVentaUnitario - costoVariableUnitario);
+        System.out.println(<span class="c-string">"Unidades en Equilibrio: "</span> + unidadesEq);
+    }
+}</pre>
+                    </div>
+                    <button onclick="copiarCodigo('codeBlock3')" class="btn-copy">
+                        <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3">
+                            </path>
+                        </svg>
+                        COPIAR CÓDIGO 3 (EQUILIBRIO)
+                    </button>
+                </div>
+            </section>
+
+            <!-- SECCIÓN: TAREAS 1 AL 10 -->
+            <section
+                style="margin-top: 1.5rem; margin-bottom: 0.5rem; border-top: 2px dashed #d1d5db; padding-top: 1.25rem; text-align: center;">
+                <h2 style="font-size: 1.25rem; font-weight: 900; color: #581c87; margin-bottom: 0.25rem;">Tareas de
+                    Evaluación</h2>
+                <p style="font-size: 0.75rem; color: #4b5563; margin-bottom: 0.75rem;">Elige una tarea. Cada una
+                    contiene 10 ejercicios.</p>
+
+                <div class="tasks-grid">
+                    <button onclick="openQuizModal('Tarea 1')" class="task-btn"
+                        style="background-color: #ef4444; box-shadow: 0 4px 0 #991b1b;">TAREA 1 🚀</button>
+                    <button onclick="openQuizModal('Tarea 2')" class="task-btn"
+                        style="background-color: #3b82f6; box-shadow: 0 4px 0 #1e40af;">TAREA 2 🚀</button>
+                    <button onclick="openQuizModal('Tarea 3')" class="task-btn"
+                        style="background-color: #facc15; color: #581c87; box-shadow: 0 4px 0 #b45309;">TAREA 3
+                        🚀</button>
+                    <button onclick="openQuizModal('Tarea 4')" class="task-btn"
+                        style="background-color: #22c55e; box-shadow: 0 4px 0 #166534;">TAREA 4 🚀</button>
+                    <button onclick="openQuizModal('Tarea 5')" class="task-btn"
+                        style="background-color: #a855f7; box-shadow: 0 4px 0 #581c87;">TAREA 5 🚀</button>
+                    <button onclick="openQuizModal('Tarea 6')" class="task-btn"
+                        style="background-color: #f97316; box-shadow: 0 4px 0 #c2410c;">TAREA 6 🚀</button>
+                    <button onclick="openQuizModal('Tarea 7')" class="task-btn"
+                        style="background-color: #14b8a6; box-shadow: 0 4px 0 #0f766e;">TAREA 7 🚀</button>
+                    <button onclick="openQuizModal('Tarea 8')" class="task-btn"
+                        style="background-color: #ec4899; box-shadow: 0 4px 0 #be185d;">TAREA 8 🚀</button>
+                    <button onclick="openQuizModal('Tarea 9')" class="task-btn"
+                        style="background-color: #6366f1; box-shadow: 0 4px 0 #3730a3;">TAREA 9 🚀</button>
+                    <button onclick="openQuizModal('Tarea 10')" class="task-btn"
+                        style="background-color: #374151; box-shadow: 0 4px 0 #111827;">TAREA 10 🚀</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- PANTALLA COMPLETA DEL QUIZ -->
+    <div id="quiz-fullscreen">
+        <button onclick="closeQuizModal()"
+            style="position: absolute; top: 0.5rem; right: 0.5rem; color: rgba(255,255,255,0.7); background: rgba(0,0,0,0.2); border: none; border-radius: 9999px; padding: 0.5rem; z-index: 50; cursor: pointer;"
+            aria-label="Cerrar">
+            <svg style="width: 1.25rem; height: 1.25rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+
+        <div class="quiz-wrapper">
+
+            <!-- PANTALLA 1: INGRESO -->
+            <div id="quiz-login" style="width: 100%; text-align: center; z-index: 10;">
+                <h2 id="task-title-display"
+                    style="font-size: 1.875rem; font-weight: 900; margin-bottom: 0.25rem; color: #fde047; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                    Tarea 1</h2>
+                <h3 style="font-size: 1.125rem; font-weight: bold; margin-bottom: 0.75rem; color: white;">Ingresa Tu
+                    Nombre</h3>
+                <input type="text" id="studentName" placeholder="Escribe aquí..."
+                    style="width: 100%; text-align: center; padding: 0.5rem; border-radius: 0.5rem; color: #111827; font-weight: bold; font-size: 1rem; border: none; outline: none; margin-bottom: 1rem;"
+                    autocomplete="off">
+                <button onclick="startQuiz()"
+                    style="width: 100%; background-color: #facc15; color: #581c87; font-weight: 900; font-size: 1.125rem; padding: 0.5rem; border-radius: 0.5rem; border: none; box-shadow: 0 4px 0 #b45309; cursor: pointer;">
+                    ¡JUGAR!
+                </button>
+            </div>
+
+            <!-- PANTALLA 2: JUEGO -->
+            <div id="quiz-play"
+                style="display: none; width: 100%; flex-direction: column; justify-content: center; height: 100%; z-index: 10;">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-shrink: 0;">
+                    <span id="player-name-display"
+                        style="font-weight: bold; color: white; font-size: 0.75rem; background-color: rgba(88, 28, 135, 0.8); padding: 0.125rem 0.5rem; border-radius: 0.25rem; max-width: 60%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Jugador</span>
+                    <span
+                        style="background-color: rgba(88, 28, 135, 0.8); padding: 0.125rem 0.5rem; border-radius: 9999px; font-size: 0.75rem; font-weight: bold; color: white;">
+                        <span id="q-current">1</span>/10
+                    </span>
+                </div>
+
+                <div class="quiz-card-question">
+                    <h3 id="question-text" style="font-size: 0.875rem; font-weight: bold; line-height: 1.25;">¿Pregunta?
+                    </h3>
+                </div>
+
+                <div class="quiz-options" id="options-container">
+                    <!-- Dinámico -->
+                </div>
+
+                <div style="margin-top: 0.75rem; flex-shrink: 0; height: 2.5rem;">
+                    <button id="next-btn" onclick="nextQuestion()"
+                        style="display: none; width: 100%; height: 100%; background-color: #111827; color: white; font-weight: 900; font-size: 0.875rem; border-radius: 0.5rem; border: none; box-shadow: 0 4px 0 #000; cursor: pointer;">
+                        SIGUIENTE ➔
+                    </button>
+                </div>
+            </div>
+
+            <!-- PANTALLA 3: RESULTADOS -->
+            <div id="quiz-result" style="display: none; width: 100%; text-align: center; z-index: 10;">
+                <h2 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 0.25rem; color: #fde047;">¡Finalizado!
+                </h2>
+
+                <div
+                    style="background-color: white; border-radius: 0.75rem; padding: 1rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); margin-bottom: 0.75rem; margin-top: 0.5rem; border-bottom: 4px solid #e5e7eb; text-align: left;">
+
+                    <p
+                        style="font-size: 0.625rem; color: #6b7280; font-weight: bold; text-transform: uppercase; margin-bottom: 0.125rem;">
+                        Tarea:</p>
+                    <p id="final-task"
+                        style="font-size: 1.125rem; font-weight: 900; color: #1f2937; margin-bottom: 0.5rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.25rem;">
+                    </p>
+
+                    <p
+                        style="font-size: 0.625rem; color: #6b7280; font-weight: bold; text-transform: uppercase; margin-bottom: 0.125rem;">
+                        Estudiante:</p>
+                    <p style="font-size: 1.125rem; font-weight: 900; color: #1f2937; margin-bottom: 0.5rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.25rem;"
+                        id="final-name"></p>
+
+                    <p
+                        style="font-size: 0.625rem; color: #6b7280; font-weight: bold; text-transform: uppercase; margin-bottom: 0.125rem;">
+                        Nota:</p>
+                    <p style="font-size: 2.25rem; font-weight: 900; color: #7e22ce; text-align: center;"><span
+                            id="final-score">100</span><span style="font-size: 1.125rem;"> / 100</span></p>
+
+                </div>
+
+                <p id="feedback-msg"
+                    style="font-size: 0.875rem; font-weight: bold; margin-bottom: 0.75rem; color: white; line-height: 1.25;">
+                </p>
+
+                <button onclick="resetQuiz()"
+                    style="width: 100%; background-color: white; color: #7e22ce; font-weight: 900; font-size: 0.875rem; padding: 0.5rem; border-radius: 0.5rem; border: none; box-shadow: 0 4px 0 #cbd5e1; cursor: pointer;">
+                    VOLVER A INTENTAR ↺
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toastMessage">
+        <div class="toast-inner">✅ Copiado!</div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // ==========================================
+        // 1. GRÁFICOS MATEMÁTICOS EXACTOS (Chart.js)
+        // ==========================================
+
+        const gaussCtx = document.getElementById('gaussChart').getContext('2d');
+        new Chart(gaussCtx, {
+            type: 'line',
+            data: {
+                labels: [-3, -2, -1, 0, 1, 2, 3],
+                datasets: [{
+                    label: 'Campana Normal',
+                    data: [0.00, 0.05, 0.25, 0.40, 0.25, 0.05, 0.00],
+                    borderColor: '#1d4ed8', backgroundColor: 'rgba(29, 78, 216, 0.2)',
+                    borderWidth: 3, fill: true, tension: 0.4,
+                    pointRadius: 6, pointBackgroundColor: '#ef4444',
+                    pointBorderColor: '#fff', pointBorderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: {
+                        type: 'linear', min: -3, max: 3,
+                        grid: { display: true, color: '#9ca3af', lineWidth: 1.5 },
+                        ticks: { stepSize: 0.5, font: { size: 10 } }
+                    },
+                    y: {
+                        type: 'linear', min: 0, max: 0.5,
+                        grid: { display: true, color: '#9ca3af', lineWidth: 1.5 },
+                        ticks: { stepSize: 0.05, font: { size: 10 } }
+                    }
+                }
+            }
+        });
+
+        const eqCtx = document.getElementById('equilibrioChart').getContext('2d');
+        new Chart(eqCtx, {
+            type: 'line',
+            data: {
+                labels: [0, 2, 4, 6, 8, 10],
+                datasets: [
+                    {
+                        label: 'Ingresos', data: [0, 20, 40, 60, 80, 100],
+                        borderColor: '#16a34a', borderWidth: 3, pointRadius: 5, pointBackgroundColor: '#16a34a'
+                    },
+                    {
+                        label: 'Costos', data: [20, 30, 40, 50, 60, 70],
+                        borderColor: '#dc2626', borderWidth: 3, pointRadius: 5, pointBackgroundColor: '#dc2626'
+                    }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: {
+                        type: 'linear', min: 0, max: 10,
+                        grid: { display: true, color: '#9ca3af', lineWidth: 1.5 },
+                        ticks: { stepSize: 1, font: { size: 10 } }
+                    },
+                    y: {
+                        type: 'linear', min: 0, max: 100,
+                        grid: { display: true, color: '#9ca3af', lineWidth: 1.5 },
+                        ticks: { stepSize: 10, font: { size: 10 } }
+                    }
+                }
+            }
+        });
+
+        // ==========================================
+        // 2. BASE DE DATOS DE PREGUNTAS (50 ítems)
+        // ==========================================
+        const quizDatabase = [
+            {
+                q: "¿Qué representa la frecuencia absoluta $f_i$?",
+                options: [
+                    "Cantidad de veces que aparece un dato",
+                    "Total de datos acumulados",
+                    "Valor central del intervalo",
+                    "Porcentaje de datos"
+                ],
+                correctIndex: 0
+            },
+            {
+                q: "¿Qué representa la frecuencia acumulada $F_i$?",
+                options: [
+                    "La suma progresiva de las frecuencias",
+                    "La cantidad de intervalos",
+                    "El valor máximo",
+                    "La marca de clase"
+                ],
+                correctIndex: 0
+            },
+            {
+                q: "La marca de clase se representa con:",
+                options: [
+                    "$x_i$",
+                    "$f_i$",
+                    "$F_i$",
+                    "$L_i$"
+                ],
+                correctIndex: 0
+            },
+            {
+                q: "¿Cuál es la fórmula de la marca de clase?",
+                options: [
+                    "$x_i = \\frac{L_i + L_s}{2}$",
+                    "$x_i = L_s - L_i$",
+                    "$x_i = f_i + F_i$",
+                    "$x_i = L_i \\cdot L_s$"
+                ],
+                correctIndex: 0
+            },
+            {
+                q: "Si el intervalo es $[10 - 20)$, ¿cuál es su marca de clase $x_i$?",
+                options: [
+                    "$15$",
+                    "$10$",
+                    "$20$",
+                    "$30$"
+                ],
+                correctIndex: 0
+            },
+            {
+                q: "Si $f_1 = 5$ y $f_2 = 12$, ¿cuál es $F_2$?",
+                options: [
+                    "$17$",
+                    "$12$",
+                    "$7$",
+                    "$60$"
+                ],
+                correctIndex: 0
+            },
+            {
+                q: "Si $f_i = 8$ y $x_i = 35$, ¿cuál es el producto $x_i \\cdot f_i$?",
+                options: [
+                    "$280$",
+                    "$43$",
+                    "$27$",
+                    "$350$"
+                ],
+                correctIndex: 0
+            },
+            {
+                q: "En una tabla de frecuencias, la suma de todas las frecuencias absolutas es:",
+                options: [
+                    "$N$",
+                    "$x_i$",
+                    "$L_i$",
+                    "$F_i - f_i$"
+                ],
+                correctIndex: 0
+            },
+            {
+                q: "Si la última frecuencia acumulada es $30$, entonces el total de datos es:",
+                options: [
+                    "$N = 30$",
+                    "$N = 15$",
+                    "$N = 60$",
+                    "$N = 0$"
+                ],
+                correctIndex: 0
+            },
+            {
+                q: "¿Cuál es la amplitud del intervalo $[20 - 30)$?",
+                options: [
+                    "$10$",
+                    "$20$",
+                    "$30$",
+                    "$50$"
+                ],
+                correctIndex: 0
+            },
+            {
+                q: "Si $L_i = 30$ y $L_s = 40$, entonces $x_i$ es:",
+                options: [
+                    "$35$",
+                    "$10$",
+                    "$40$",
+                    "$70$"
+                ],
+                correctIndex: 0
+            },
+            {
+                q: "¿Cuál expresión representa el producto de una marca de clase por su frecuencia?",
+                options: [
+                    "$x_i \\cdot f_i$",
+                    "$x_i + f_i$",
+                    "$x_i - f_i$",
+                    "$\\frac{x_i}{f_i}$"
+                ],
+                correctIndex: 0
+            },
+            {
+                q: "Si $x_i = 25$ y $f_i = 12$, el producto $x_i \\cdot f_i$ es:",
+                options: [
+                    "$300$",
+                    "$37$",
+                    "$13$",
+                    "$250$"
+                ],
+                correctIndex: 0
+            },
+            {
+                q: "Si $F_1 = 5$ y $f_2 = 12$, ¿cuál es $F_2$?",
+                options: [
+                    "$17$",
+                    "$7$",
+                    "$60$",
+                    "$12$"
+                ],
+                correctIndex: 0
+            },
+            {
+                q: "¿Qué dato se obtiene al sumar todos los valores $x_i \\cdot f_i$?",
+                options: [
+                    "$\\sum x_i f_i$",
+                    "$\\sum L_i$",
+                    "$\\sum F_i$",
+                    "$\\sum x_i$"
+                ],
+                correctIndex: 0
+            },
+            {
+                q: "¿Cuál es la fórmula de la media para datos agrupados?",
+                options: [
+                    "$\\bar{x} = \\frac{\\sum x_i f_i}{N}$",
+                    "$\\bar{x} = \\frac{N}{\\sum x_i f_i}$",
+                    "$\\bar{x} = x_i + f_i$",
+                    "$\\bar{x} = L_s - L_i$"
+                ],
+                correctIndex: 0
+            },
+            {
+                q: "Si $\\sum x_i f_i = 880$ y $N = 30$, la media es aproximadamente:",
+                options: [
+                    "$29.33$",
+                    "$26.67$",
+                    "$850$",
+                    "$910$"
+                ],
+                correctIndex: 0
+            },
+            {
+                q: "En el intervalo $[40 - 50)$, el límite inferior $L_i$ es:",
+                options: [
+                    "$40$",
+                    "$50$",
+                    "$45$",
+                    "$90$"
+                ],
+                correctIndex: 0
+            },
+            {
+                q: "En el intervalo $[40 - 50)$, el límite superior $L_s$ es:",
+                options: [
+                    "$50$",
+                    "$40$",
+                    "$45$",
+                    "$90$"
+                ],
+                correctIndex: 0
+            },
+            {
+                q: "Si las frecuencias son $5$, $12$, $8$ y $5$, el total $N$ es:",
+                options: [
+                    "$30$",
+                    "$25$",
+                    "$20$",
+                    "$35$"
+                ],
+                correctIndex: 0
+            }
+        ];
+
+        // ==========================================
+        // 3. LÓGICA DEL RETO
+        // ==========================================
+        let currentQuestions = [];
+        let currentQIndex = 0;
+        let score = 0;
+        let playerName = "";
+        let answered = false;
+
+        const baseBtnStyles = [
+            "background-color: #ef4444; box-shadow: 0 4px 0 #b91c1c;",
+            "background-color: #3b82f6; box-shadow: 0 4px 0 #1d4ed8;",
+            "background-color: #eab308; color: #111827; box-shadow: 0 4px 0 #a16207;",
+            "background-color: #22c55e; box-shadow: 0 4px 0 #15803d;"
+        ];
+
+        function shuffleArray(array) {
+            let arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function openQuizModal(taskName = 'Tarea 1') {
+            document.getElementById('task-title-display').innerText = taskName;
+            document.getElementById('quiz-fullscreen').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            resetQuiz();
+        }
+
+        function closeQuizModal() {
+            document.getElementById('quiz-fullscreen').style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        function startQuiz() {
+            const input = document.getElementById('studentName');
+            if (input.value.trim() === "") {
+                input.style.border = "2px solid #ef4444";
+                setTimeout(() => input.style.border = "none", 400);
+                return;
+            }
+            playerName = input.value.trim();
+            document.getElementById('player-name-display').innerText = playerName;
+
+            currentQuestions = shuffleArray(quizDatabase).slice(0, 10);
+
+            document.getElementById('quiz-login').style.display = 'none';
+            document.getElementById('quiz-play').style.display = 'flex';
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            answered = false;
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('q-current').innerText = currentQIndex + 1;
+
+            const qData = currentQuestions[currentQIndex];
+            document.getElementById('question-text').innerText = qData.q;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = "";
+
+            let mappedOptions = qData.options.map((text, idx) => ({
+                text: text,
+                isCorrect: idx === qData.correctIndex
+            }));
+
+            mappedOptions = shuffleArray(mappedOptions);
+
+            mappedOptions.forEach((opt, uiIndex) => {
+                const btn = document.createElement('button');
+                const styleCss = baseBtnStyles[uiIndex % 4];
+
+                btn.className = "quiz-btn text-white";
+                btn.style.cssText = styleCss;
+
+                if (!styleCss.includes("color: #111827")) {
+                    btn.style.color = "white";
+                }
+
+                btn.innerHTML = `
+            <span style="padding-right: 0.5rem; line-height: 1.25;">
+                ${opt.text}
+            </span>
+            <span style="font-size: 1rem; font-weight: 900; opacity: 0;" class="icon-mark">X</span>
+        `;
+
+                btn.dataset.correct = opt.isCorrect;
+                btn.onclick = () => checkAnswer(btn);
+
+                container.appendChild(btn);
+            });
+
+            /* Convierte las fórmulas creadas dentro del juego */
+            if (window.MathJax && MathJax.typesetPromise) {
+                MathJax.typesetPromise([
+                    document.getElementById('question-text'),
+                    document.getElementById('options-container')
+                ]);
+            }
+        }
+
+        function checkAnswer(selectedBtn) {
+            if (answered) return;
+            answered = true;
+
+            document.getElementById('next-btn').style.display = 'block';
+            const allBtns = document.querySelectorAll('.quiz-btn');
+
+            allBtns.forEach(btn => {
+                btn.onclick = null;
+                btn.style.boxShadow = "none";
+                btn.style.transform = "translateY(4px)";
+
+                const icon = btn.querySelector('.icon-mark');
+                if (btn.dataset.correct === "true") {
+                    btn.style.border = "2px solid white";
+                    btn.style.opacity = "1";
+                    icon.innerText = "✓"; icon.style.opacity = "1";
+                    if (btn === selectedBtn) score++;
+                } else if (btn === selectedBtn) {
+                    btn.style.opacity = "0.5";
+                    icon.innerText = "✗"; icon.style.opacity = "1";
+                } else {
+                    btn.style.opacity = "0.4";
+                }
+            });
+        }
+
+        function nextQuestion() {
+            currentQIndex++;
+            if (currentQIndex < currentQuestions.length) {
+                renderQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-play').style.display = 'none';
+            document.getElementById('quiz-result').style.display = 'block';
+
+            document.getElementById('final-task').innerText =
+                document.getElementById('task-title-display').innerText;
+            document.getElementById('final-name').innerText = playerName;
+            const finalScore = score * 10;
+            document.getElementById('final-score').innerText = finalScore;
+
+            let msg = finalScore === 100 ? "¡Perfección absoluta! 🌟" :
+                finalScore >= 60 ? "¡Bien hecho! 👍" : "¡Sigue practicando! 💪";
+            document.getElementById('feedback-msg').innerText = msg;
+        }
+
+        function resetQuiz() {
+            currentQIndex = 0; score = 0;
+            document.getElementById('quiz-result').style.display = 'none';
+            document.getElementById('quiz-play').style.display = 'none';
+            document.getElementById('quiz-login').style.display = 'block';
+            document.getElementById('studentName').value = "";
+        }
+
+        // ==========================================
+        // 4. FUNCIÓN COPIAR CÓDIGO JAVA (Múltiples bloques)
+        // ==========================================
+        function copiarCodigo(elementId) {
+            const txt = document.getElementById(elementId).innerText;
+            const temp = document.createElement("textarea");
+            temp.value = txt; temp.style.position = "fixed"; temp.style.opacity = "0";
+            document.body.appendChild(temp);
+            temp.select();
+            try {
+                if (document.execCommand('copy')) {
+                    const toast = document.getElementById('toastMessage');
+                    toast.style.opacity = "1";
+                    setTimeout(() => {
+                        toast.style.opacity = "0";
+                    }, 2000);
+                }
+            } catch (e) { }
+            document.body.removeChild(temp);
+        }
+    </script>
+</body>
+
+</html>
