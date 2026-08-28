@@ -33,6 +33,17 @@
             background: transparent;
         }
 
+        /* Corrección de espacio blanco inicial por canvas sin estilo */
+        #confettiCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 999;
+        }
+
         /* Ocultar contenido en orientación horizontal */
         #landscape-warning {
             display: none;
@@ -61,7 +72,7 @@
             }
         }
 
-        /* Clases utilitarias de CSS clásico */
+        /* Clases utilitarias y componentes */
         .app-container {
             width: 100%;
             max-width: 28rem;
@@ -82,13 +93,107 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             border-bottom-left-radius: 0.75rem;
             border-bottom-right-radius: 0.75rem;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .header-title {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 800;
             letter-spacing: -0.025em;
+            flex: 1;
+            text-align: center;
+        }
+
+        /* Botón de Menú Hamburguesa */
+        .hamburger-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.2s;
+        }
+
+        .hamburger-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Menú Lateral (Drawer) */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sidebar-menu {
+            position: fixed;
+            top: 0;
+            left: -18rem;
+            width: 17rem;
+            height: 100vh;
+            background-color: #ffffff;
+            z-index: 100;
+            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.15);
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem 1rem;
+        }
+
+        .sidebar-menu.active {
+            left: 0;
+        }
+
+        .sidebar-header {
+            font-size: 1.125rem;
+            font-weight: 900;
+            color: #1e3a8a;
+            margin-bottom: 1.25rem;
+            border-bottom: 2px solid #93c5fd;
+            padding-bottom: 0.5rem;
+        }
+
+        .sidebar-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            overflow-y: auto;
+        }
+
+        .sidebar-link {
+            background-color: #f8fafc;
+            color: #1e3a8a;
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.8125rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .sidebar-link:hover {
+            background-color: #1e3a8a;
+            color: white;
+            border-color: #1e3a8a;
         }
 
         .content-padding {
@@ -142,180 +247,32 @@
             padding: 0.25rem;
         }
 
-        .exercise-card {
-            background-color: #f0fdf4;
-            border-radius: 1rem;
-            padding: 1rem;
-            border: 1px solid #bbf7d0;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            margin-bottom: 0.75rem;
+        /* Contenedor flexible para un solo botón de tarea por unidad */
+        .tasks-section-container {
+            margin-top: 0.75rem;
+            padding-top: 0;
+            text-align: center;
         }
 
-        .exercise-inner {
-            background-color: #ffffff;
-            padding: 0.75rem;
-            border-radius: 0.75rem;
-            border: 1px solid #86efac;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            font-family: serif;
-        }
-
-        .math-step {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #f3f4f6;
-            padding-bottom: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .math-step:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .math-fraction {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            line-height: 1;
-            font-size: 0.75rem;
-        }
-
-        .math-numerator {
-            border-bottom: 1px solid #1f2937;
-            padding-left: 0.25rem;
-            padding-right: 0.25rem;
-            padding-bottom: 0.125rem;
-        }
-
-        .math-denominator {
-            padding-top: 0.125rem;
-        }
-
-        .formula-box {
-            background-color: #f3e8ff;
-            padding: 0.75rem;
-            border-radius: 0.75rem;
-            border: 1px solid #d8b4fe;
-            margin-bottom: 0.75rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-        }
-
-        .code-container {
-            background-color: #111827;
-            border-radius: 0.75rem;
-            overflow: hidden;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            border: 1px solid #374151;
-            margin-bottom: 1rem;
-        }
-
-        .code-header {
-            background-color: #1f2937;
-            padding: 0.375rem 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .code-dots {
-            display: flex;
-            gap: 0.375rem;
-        }
-
-        .dot-red {
-            width: 0.625rem;
-            height: 0.625rem;
-            border-radius: 9999px;
-            background-color: #ef4444;
-        }
-
-        .dot-yellow {
-            width: 0.625rem;
-            height: 0.625rem;
-            border-radius: 9999px;
-            background-color: #eab308;
-        }
-
-        .dot-green {
-            width: 0.625rem;
-            height: 0.625rem;
-            border-radius: 9999px;
-            background-color: #22c55e;
-        }
-
-        .code-title {
-            color: #9ca3af;
-            font-family: monospace;
-            font-size: 0.625rem;
-        }
-
-        .code-body {
-            padding: 0.75rem;
-            overflow-x: auto;
-        }
-
-        .code-pre {
-            color: #f3f4f6;
-            font-family: monospace;
-            font-size: 0.625rem;
-            white-space: pre-wrap;
-            line-height: 1.25;
-        }
-
-        .btn-copy {
-            width: 100%;
-            background-color: #7e22ce;
-            color: white;
-            font-size: 0.875rem;
-            font-weight: bold;
-            padding: 0.625rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .btn-copy:hover {
-            background-color: #9333ea;
-        }
-
-        .btn-copy:active {
-            background-color: #581c87;
-        }
-
-        .tasks-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 0.75rem;
-            margin-top: 0.5rem;
-        }
-
-        .task-btn {
+        .task-btn-single {
             width: 100%;
             color: white;
             font-weight: 900;
             font-size: 0.875rem;
-            padding: 0.75rem;
-            border-radius: 0.75rem;
+            padding: 0.625rem;
+            border-radius: 0.5rem;
             border: none;
             cursor: pointer;
+            background-color: #ef4444;
+            box-shadow: 0 4px 0 #991b1b;
             transition: transform 0.1s, box-shadow 0.1s;
         }
 
-        .task-btn:active {
+        .task-btn-single:active {
             transform: translateY(4px);
+            box-shadow: none;
         }
 
-        /* Estilos para Tablas Adaptativas con Scroll Horizontal y Celdas Centradas */
         .table-responsive-container {
             width: 100%;
             overflow-x: auto;
@@ -330,10 +287,8 @@
         .data-table {
             width: 100%;
             min-width: 34rem;
-            /* Ancho mínimo para forzar scroll horizontal adaptativo en pantallas muy reducidas */
             border-collapse: collapse;
             text-align: center;
-            /* Centrado general */
             font-size: 0.75rem;
         }
 
@@ -353,14 +308,12 @@
             color: #374151;
             white-space: nowrap;
             text-align: center;
-            /* Datos perfectamente centrados */
         }
 
         .data-table tr:nth-child(even) {
             background-color: #f9fafb;
         }
 
-        /* Modal del Quiz */
         #quiz-fullscreen {
             position: fixed;
             inset: 0;
@@ -423,7 +376,6 @@
             transition: all 0.2s;
         }
 
-        /* Toast */
         #toastMessage {
             position: fixed;
             bottom: 1rem;
@@ -452,7 +404,6 @@
             font-weight: bold;
         }
 
-        /* Colores de sintaxis Java */
         .c-keyword {
             color: #f472b6;
         }
@@ -462,11 +413,11 @@
         }
 
         .c-string {
-            color: #4ade80;
+            color: #22c55e;
         }
 
         .c-comment {
-            color: #4ade80;
+            color: #22c55e;
             font-style: italic;
         }
 
@@ -486,6 +437,335 @@
             user-select: text;
             -webkit-user-select: text;
         }
+
+        #quiz-play {
+            justify-content: flex-start !important;
+            padding-top: max(4.5rem, env(safe-area-inset-top));
+        }
+
+        .name-display {
+            width: 100%;
+            min-height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            margin-bottom: 0.75rem;
+            background: white;
+            border-radius: 0.5rem;
+            color: #111827;
+            font-size: 1rem;
+            font-weight: bold;
+            text-align: center;
+            word-break: break-word;
+        }
+
+        .name-display.empty {
+            color: #6b7280;
+            font-weight: normal;
+        }
+
+        .name-keyboard {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.4rem;
+            width: 100%;
+        }
+
+        .name-key {
+            min-height: 2.5rem;
+            border: none;
+            border-radius: 0.45rem;
+            background: white;
+            color: #581c87;
+            font-weight: 900;
+            font-size: 0.95rem;
+            cursor: pointer;
+            box-shadow: 0 3px 0 #d1d5db;
+        }
+
+        .name-key:active {
+            transform: translateY(3px);
+            box-shadow: none;
+        }
+
+        .name-space {
+            grid-column: 1 / -1;
+            background: #fde047;
+            color: #581c87;
+        }
+
+        .landscape-svg {
+            width: 5rem;
+            height: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        .landscape-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .landscape-text {
+            font-size: 1.125rem;
+        }
+
+        .card-box-img-wrapper {
+            margin-bottom: 0.75rem;
+            background-color: #f9fafb;
+        }
+
+        .card-box-image {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            background: white;
+            border-radius: 0.375rem;
+        }
+
+        .card-box-text {
+            font-size: 0.8125rem;
+            color: #374151;
+            line-height: 1.4;
+        }
+
+        .card-box-p {
+            margin-bottom: 0.5rem;
+        }
+
+        .table-section-title {
+            font-size: 1.125rem;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 0.25rem;
+        }
+
+        .table-section-desc {
+            font-size: 0.75rem;
+            color: #4b5563;
+            margin-bottom: 0.5rem;
+            line-height: 1.25;
+        }
+
+        .chart-section-title-blue {
+            font-size: 1.125rem;
+            font-weight: bold;
+            color: #111827;
+            margin-bottom: 0.25rem;
+        }
+
+        .chart-section-title-brown {
+            font-size: 1.125rem;
+            font-weight: bold;
+            color: #7c2d12;
+            margin-bottom: 0.25rem;
+        }
+
+        .chart-section-desc {
+            font-size: 0.75rem;
+            color: #4b5563;
+            margin-bottom: 0.5rem;
+            line-height: 1.25;
+        }
+
+        .quiz-close-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            background: rgba(0, 0, 0, 0.2);
+            border: none;
+            border-radius: 9999px;
+            padding: 0.5rem;
+            z-index: 50;
+            cursor: pointer;
+        }
+
+        .quiz-login-container {
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .quiz-task-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: 0.25rem;
+            color: #fde047;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .quiz-login-subtitle {
+            font-size: 1.125rem;
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+            color: white;
+        }
+
+        .quiz-play-btn {
+            width: 100%;
+            background-color: #facc15;
+            color: #581c87;
+            font-weight: 900;
+            font-size: 1.125rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            box-shadow: 0 4px 0 #b45309;
+            cursor: pointer;
+        }
+
+        .quiz-play-container {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            z-index: 10;
+        }
+
+        .quiz-play-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .quiz-player-name-badge {
+            font-weight: bold;
+            color: white;
+            font-size: 0.75rem;
+            background-color: rgba(88, 28, 135, 0.8);
+            padding: 0.125rem 0.5rem;
+            border-radius: 0.25rem;
+            max-width: 60%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .quiz-counter-badge {
+            background-color: rgba(88, 28, 135, 0.8);
+            padding: 0.125rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .quiz-question-heading {
+            font-size: 0.875rem;
+            font-weight: bold;
+            line-height: 1.25;
+        }
+
+        .quiz-next-container {
+            margin-top: 0.75rem;
+            flex-shrink: 0;
+            height: 2.5rem;
+        }
+
+        .quiz-next-btn {
+            display: none;
+            width: 100%;
+            height: 100%;
+            background-color: #111827;
+            color: white;
+            font-weight: 900;
+            font-size: 0.875rem;
+            border-radius: 0.5rem;
+            border: none;
+            box-shadow: 0 4px 0 #000;
+            cursor: pointer;
+        }
+
+        .quiz-result-container {
+            display: none;
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .quiz-result-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: 0.25rem;
+            color: #fde047;
+        }
+
+        .quiz-result-box {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 0.75rem;
+            margin-top: 0.5rem;
+            border-bottom: 4px solid #e5e7eb;
+            text-align: left;
+        }
+
+        .quiz-result-label {
+            font-size: 0.625rem;
+            color: #6b7280;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 0.125rem;
+        }
+
+        .quiz-result-value-main {
+            font-size: 1.125rem;
+            font-weight: 900;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 0.25rem;
+        }
+
+        .quiz-result-score-number {
+            font-size: 2.25rem;
+            font-weight: 900;
+            color: #7e22ce;
+            text-align: center;
+        }
+
+        .quiz-result-score-total {
+            font-size: 1.125rem;
+        }
+
+        .quiz-feedback-msg {
+            font-size: 0.875rem;
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+            color: white;
+            line-height: 1.25;
+        }
+
+        .quiz-retry-btn {
+            width: 100%;
+            background-color: white;
+            color: #7e22ce;
+            font-weight: 900;
+            font-size: 0.875rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            box-shadow: 0 4px 0 #cbd5e1;
+            cursor: pointer;
+        }
+
+        ul,
+        li {
+            margin-left: 1rem;
+            padding-left: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        p {
+            padding-bottom: 0.5rem;
+            text-align: justify;
+        }
     </style>
     <script>
         window.MathJax = {
@@ -494,62 +774,546 @@
             }
         };
     </script>
-
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js"></script>
 </head>
 
 <body>
+    <canvas id="confettiCanvas"></canvas>
 
     <!-- ADVERTENCIA DE ROTACIÓN -->
     <div id="landscape-warning">
-        <svg style="width: 5rem; height: 5rem; margin-bottom: 1rem;" fill="none" stroke="currentColor"
-            viewBox="0 0 24 24">
+        <svg class="landscape-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                 d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
         </svg>
-        <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem;">Por favor, gira tu celular</h2>
-        <p style="font-size: 1.125rem;">Esta app es exclusiva para formato vertical.</p>
+        <h2 class="landscape-title">Por favor, gira tu celular</h2>
+        <p class="landscape-text">Esta app es exclusiva para formato vertical.</p>
     </div>
+
+    <!-- MENÚ LATERAL (DRAWER) -->
+    <div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <nav id="sidebarMenu" class="sidebar-menu">
+        <div class="sidebar-header">Unidades Temáticas</div>
+        <div class="sidebar-links">
+            <a href="#unidad-introduccion" class="sidebar-link" onclick="toggleSidebar()">1. Introducción a la
+                Estadística</a>
+            <a href="#unidad-tecnicas" class="sidebar-link" onclick="toggleSidebar()">2. Técnicas de Recogida de
+                Datos</a>
+            <a href="#unidad-distribuciones" class="sidebar-link" onclick="toggleSidebar()">3. Distribuciones de
+                Frecuencias</a>
+            <a href="#unidad-tendencia" class="sidebar-link" onclick="toggleSidebar()">4. Medidas de Tendencia
+                Central</a>
+            <a href="#unidad-dispersion" class="sidebar-link" onclick="toggleSidebar()">5. Medidas de Dispersión</a>
+            <a href="#unidad-regresion" class="sidebar-link" onclick="toggleSidebar()">6. Regresión y Correlación Lineal
+                Simple</a>
+            <a href="#unidad-inferencia" class="sidebar-link" onclick="toggleSidebar()">7. Nociones de Inferencia</a>
+            <a href="#unidad-muestreo" class="sidebar-link" onclick="toggleSidebar()">8. Teoría Elemental del
+                Muestreo</a>
+            <a href="#unidad-formulas" class="sidebar-link" onclick="toggleSidebar()">Fórmulas y Módulos Java</a>
+        </div>
+    </nav>
 
     <!-- CONTENIDO PRINCIPAL -->
     <main id="main-content" class="app-container">
 
         <header class="header-main">
+            <button id="hamburgerBtn" class="hamburger-btn" onclick="toggleSidebar()" aria-label="Abrir menú">
+                <svg style="width: 1.5rem; height: 1.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
             <h1 class="header-title">Estadística Fácil</h1>
+            <div style="width: 2.5rem;"></div>
         </header>
 
         <div class="content-padding space-y">
 
-            <!-- SECCIÓN 1: INTRODUCCIÓN Y DEFINICIONES -->
-            <section>
-                <h2 class="section-title-blue">Conceptos Fundamentales</h2>
-                <div class="card-box" style="margin-bottom: 0.75rem; background-color: #f9fafb;">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Normal_Distribution_PDF.svg/800px-Normal_Distribution_PDF.svg.png"
+            <!-- UNIDAD 1 -->
+            <section id="unidad-introduccion" class="card-box">
+                <h2 class="section-title-blue">1. Introducción a la Estadística</h2>
+                <div class="card-box-img-wrapper">
+                    <img src="https://unade.edu.mx/wp-content/uploads/2025/09/estadistica_descriptiva.jpg"
                         onerror="this.src='https://placehold.co/400x250/e0f2fe/1e3a8a?text=Campana+de+Gauss'"
-                        alt="Gráfico de distribución normal"
-                        style="width: 100%; height: auto; object-fit: contain; background: white; border-radius: 0.375rem;">
+                        alt="Gráfico de distribución normal" class="card-box-image">
                 </div>
-                <div class="card-box" style="font-size: 0.8125rem; color: #374151; line-height: 1.4;">
-                    <p style="margin-bottom: 0.5rem;"><b>Estadística Descriptiva:</b> Rama encargada de recopilar,
-                        organizar, resumir y presentar conjuntos de datos numéricos en tablas o gráficos precisos.</p>
-                    <p style="margin-bottom: 0.5rem;"><b>Población:</b> Conjunto total de individuos, objetos o medidas
-                        que poseen características comunes observables.</p>
-                    <p style="margin-bottom: 0.5rem;"><b>Muestra:</b> Subconjunto representativo extraído de una
-                        población para realizar estudios analíticos y poblacionales.</p>
-                    <p style="margin-bottom: 0.5rem;"><b>Frecuencia Absoluta ($f_i$):</b> Número de veces que se repite
-                        un determinado valor o intervalo en el conjunto de datos.</p>
-                    <p><b>Marca de Clase ($x_i$):</b> Valor representativo de un intervalo, calculado como el promedio
-                        entre su límite inferior y superior.</p>
+                <div class="card-box-text">
+                    <p class="card-box-p">
+                        <b>¿De que se encarga la Estadística?</b>
+                    </p>
+                    <p class="card-box-p">
+                        Segun Levin y Rubín (2004) la estadística se encarga de: </p>
+                    <ul>
+                        <li><b>Recoger</b></li>
+                        <li><b>Organizar</b></li>
+                        <li><b>Analizar</b></li>
+                        <li><b>Interpretar</b></li>
+                    </ul>
+                    <p class="card-box-p">
+                        Un conjunto de datos con el propósito de ayudar en la toma de decisiones frente a situaciones de
+                        incertidumbre (p. 3).
+                    </p>
+                    <p class="card-box-p">
+                        <b>¿La estadística es una ciencia?</b>
+                    </p>
+                    <p class="card-box-p">
+                        Si, la estadística es considerada una ciencia porque utiliza métodos sistemáticos para
+                        recopilar, organizar, analizar e interpretar un conjunto de datos.
+                    </p>
+                    <p class="card-box-p">
+                        Su metodología rigurosa le otorga un carácter científico, ya que busca generar conocimiento a
+                        partir del análisis de datos.
+                    </p>
+                    <p class="card-box-p">
+                        <b>¿Qué proceso sigue la estadística para ayudar a tomar decisiones?</b>
+                    </p>
+                    <p class="card-box-p">
+                        Para ayudar a tomar decisiones, la estadística sigue un proceso ordenado:
+                    </p>
+                    <p class="card-box-p">
+                        <b>Primero se recopilan los datos:</b>
+                    </p>
+                    <p class="card-box-p">
+                        Se obtienen datos sobre una situación, problema o fenómeno que se desea estudiar.
+                    </p>
+                    <p class="card-box-p">
+                        Estos se recogen mediante encuestas, registros, observaciones, entrevistas o resultados de
+                        evaluaciones.
+                    </p>
+                    <p class="card-box-p">
+                        <b>Después se organizan los datos:</b>
+                    </p>
+                    <p class="card-box-p">
+                        Los datos suelen estar desordenados.
+                    </p>
+                    <p class="card-box-p">
+                        Por ello, es necesario ordenarlos y presentarlos de forma comprensible.
+                    </p>
+                    <p class="card-box-p">
+                        <b>Luego se analizan los datos:</b>
+                    </p>
+                    <p class="card-box-p">
+                        En esta etapa se aplican técnicas estadísticas para encontrar patrones.
+                    </p>
+                    <p class="card-box-p">
+                        Por ejemplo, pueden calcularse promedios, porcentajes, frecuencias, desviaciones
+                        estándar o correlaciones.
+                    </p>
+                    <p class="card-box-p">
+                        El análisis permite comprender mejor los datos organizados.
+                    </p>
+                    <p class="card-box-p">
+                        <b>Finalmente, se interpretan:</b>
+                    </p>
+                    <p class="card-box-p">
+                        Interpretar significa explicar qué indican los resultados obtenidos.
+                    </p>
+                    <p class="card-box-p">
+                        En esta fase, los resultados se convierten en información.
+                    </p>
+                    <p class="card-box-p">
+                        De esta manera, la estadística permite tomar decisiones con mayor seguridad, basándose en
+                        evidencia y no solamente en opiniones o intuiciones.
+                    </p>
+                    <p class="card-box-p">
+                        <button type="button" onclick="openQuizModal('UNIDAD 1 - TAREA 1')" class="task-btn-single"
+                            style="background-color: #ef4444; box-shadow: 0 4px 0 #991b1b;">
+                            UNIDAD 1 - TAREA 1 🚀</button>
+                    </p>
+                    <p class="card-box-p">
+                        <b>¿Cómo se divide la estadística?</b>
+                    </p>
+                    <p class="card-box-p">
+                        La estadística se divide en dos grandes ramas:
+                    <ul>
+                        <li>la estadística descriptiva</li>
+                        <li>la estadística inferencial.</li>
+                    </ul>
+                    Ambas se utilizan, pero cumplen funciones distintas y complementarias.
+                    </p>
+                    <hr><br>
+                    <p class="card-box-p">
+                        <b>¿Cual es el objetivo de la estadística descriptiva?</b>
+                    </p>
+                    <p class="card-box-p">
+                        La estadística descriptiva tiene como objetivo resumir y presentar los datos tal como son, sin
+                        sacar conclusiones más allá de lo observado.
+                    </p>
+                    <p class="card-box-p">
+                        <b>Por ejemplo</b>, si una empresa realiza una encuesta a 100 clientes y descubre que 70
+                        prefieren el sabor de frutilla, esa información es descriptiva:
+                        <b>“muestra lo que ocurrió con ese grupo específico”</b>
+                    </p>
+                    <hr><br>
+                    <p class="card-box-p">
+                        <b>¿Cual es el objetivo de la estadística inferencial?</b>
+                    </p>
+                    <p class="card-box-p">
+                        La estadística inferencial tiene como objetivo predecir o concluir sobre una población a partir
+                        de una muestra.
+                    </p>
+                    <p class="card-box-p">
+                        <b>Por ejemplo</b>, si se encuestan a 100 personas y el 70% prefiere frutilla, con métodos
+                        inferenciales se puede estimar que:
+                        <b>“en toda la ciudad, ese sabor también sería el más elegido”</b>
+                    </p>
+                    <hr><br>
+                    <p class="card-box-p">
+                        <b>¿Cómo identificar si es estadística descriptiva o inferencial?</b>
+                    </p>
+
+                    <p class="card-box-p">
+                        Solo debes hacerte una pregunta:
+                    </p>
+
+                    <p class="card-box-p">
+                        <b>¿El resultado habla del grupo encuestado o habla de un grupo mayor?</b>
+                    </p>
+
+                    <ul>
+                        <li>
+                            Si habla solo de las personas encuestadas, es <b>estadística descriptiva</b>.
+                        </li>
+                        <li>
+                            Si usa a las personas encuestadas para decir algo sobre toda una población, es
+                            <b>estadística inferencial</b>.
+                        </li>
+                    </ul>
+
+                    <p class="card-box-p">
+                        <b>Ejemplo descriptivo:</b><br>
+                        “De 100 clientes, 70 prefieren frutilla”.
+                    </p>
+
+                    <p class="card-box-p">
+                        Habla de los 100 clientes encuestados. <br>
+                        Por eso es <b>descriptiva</b>.
+                    </p>
+
+                    <p class="card-box-p">
+                        <b>Ejemplo inferencial:</b> <br>
+                        “70 de 100 clientes prefieren frutilla, se estima que en toda
+                        la ciudad ese sabor sería el más elegido”.
+                    </p>
+
+                    <p class="card-box-p">
+                        Habla de toda la ciudad usando los datos de 100 clientes. Por eso es <b>inferencial</b>.
+                    </p>
+                    <p class="card-box-p">
+                        <button type="button" onclick="openQuizModal('UNIDAD 1 - TAREA 2')" class="task-btn-single"
+                            style="background-color: #ef4444; box-shadow: 0 4px 0 #991b1b;">
+                            UNIDAD 1 - TAREA 2 🚀</button>
+                    </p>
+
+
+
+
+
                 </div>
             </section>
 
-            <!-- SECCIÓN NUEVA: TABLA DE FRECUENCIAS ADAPTATIVA CON SCROLL HORIZONTAL Y DATOS CENTRADOS -->
-            <section class="card-box">
-                <h2 style="font-size: 1.125rem; font-weight: bold; color: #1e3a8a; margin-bottom: 0.25rem;">Tabla de
-                    Distribución de Frecuencias</h2>
-                <p style="font-size: 0.75rem; color: #4b5563; margin-bottom: 0.5rem; line-height: 1.25;">Desliza
-                    horizontalmente la tabla para ver todas sus columnas en pantallas pequeñas.</p>
+            <!-- UNIDAD 2 -->
+            <section id="unidad-tecnicas" class="card-box">
+                <h2 class="section-title-blue">2. Técnicas de Recogida de Datos</h2>
+                <div class="card-box-text">
+                    <p class="card-box-p">
+                        Para poder aplicar la estadística, primero hay que obtener los datos, y para eso se utilizan
+                        diferentes técnicas.
+                    </p>
+                    <p class="card-box-p">
+                        Elegir bien la técnica es fundamental, porque de eso dependerá la calidad de la información
+                        obtenida.
+                    </p>
+                    <p class="card-box-p">
+                        <b>Si los datos son confiables, <br>las decisiones también lo serán.</b>
+                    </p>
+                    <hr><br>
+                    <p class="card-box-p">
+                        Las tres técnicas más utilizadas son:
+                    <ul>
+                        <li>la entrevista</li>
+                        <li>la observación</li>
+                        <li>la encuesta</li>
+                    </ul>
+                    </p>
+                    <hr><br>
+                    <p class="card-box-p">
+                        <b>¿Qué es la entrevista?</b>
+                    </p>
+                    <p class="card-box-p">
+                        La entrevista es una técnica de recogida de datos que consiste en realizar preguntas
+                        directamente a una persona para obtener información detallada sobre sus opiniones, actitudes o
+                        experiencias.
+                    </p>
+                    <p class="card-box-p">
+                        Es una conversación planificada entre el entrevistador y el entrevistado, donde ambos realizan
+                        preguntas.
+                    </p>
+                    <p class="card-box-p">
+                        <b>La entrevista se utiliza para conocer más a fondo al consumidor.</b>
+                    </p>
+                    <p class="card-box-p">
+                        Permite descubrir qué piensa de un producto, cómo fue su experiencia de compra o qué espera de
+                        una marca.
+                    </p>
+                    <p class="card-box-p">
+                        <b>En la entrevista hay espacio para profundizar, repreguntar y observar expresiones, lo que
+                            ayuda a entender mejor al cliente.</b>
+                    </p>
+                    <hr><br>
+                    <p class="card-box-p">
+                        <b>¿Cómo pueden ser las entrevistas?</b>
+                    </p>
+                    <p class="card-box-p">
+                        Las entrevistas pueden ser:
+                    <ul>
+                        <li><b>Estructuradas:</b><br> (Preguntas definidas)</li>
+                        <li><b>Semiestructuradas:</b><br> (Preguntas orientadoras)</li>
+                        <li><b>NO Estructuradas:</b><br> (No se preparan preguntas)</li>
+                    </ul>
+                    </p>
+                    <hr><br>
+                    <p class="card-box-p">
+                        <b>¿Cómo se elabora una planilla?</b>
+                    </p>
 
+                    <p class="card-box-p">
+                        <b>Primero: define qué quieres conocer.</b>
+                    </p>
+
+                    <p class="card-box-p">
+                        <b>Por ejemplo:</b> conocer la opinión de los clientes sobre un producto.
+                    </p>
+
+                    <p class="card-box-p">
+                        <b>Segundo: coloca los datos generales.</b>
+                    </p>
+
+                    <ul>
+                        <li>Nombre del entrevistador</li>
+                        <li>Nombre del entrevistado</li>
+                        <li>Fecha</li>
+                        <li>Lugar</li>
+                    </ul>
+
+                    <p class="card-box-p">
+                        <b>Tercero: prepara las preguntas.</b>
+                    </p>
+
+                    <p class="card-box-p">
+                        Las preguntas deben responder lo que quieres conocer.
+                    </p>
+
+                    <p class="card-box-p">
+                        Si la entrevista es <b>estructurada</b>, se escriben todas las preguntas antes de realizarla.
+                    </p>
+
+                    <p class="card-box-p">
+                        Si es <b>semiestructurada</b>, se preparan preguntas orientadoras y se puede repreguntar para
+                        profundizar.
+                    </p>
+
+                    <p class="card-box-p">
+                        <b>Ejemplo de planilla de entrevista:</b>
+                    </p>
+
+                    <div class="interview-card">
+                        <div class="interview-header">
+                            <span class="interview-badge">Plantilla de Entrevista</span>
+
+                        </div>
+
+                        <!-- BLOQUE 1: DATOS DE LA ENTREVISTA -->
+                        <div class="interview-section-label">Datos Generales</div>
+
+                        <div class="interview-row">
+                            <span class="interview-label">Entrevistador:</span>
+                            <div class="interview-line-container">
+                                <div class="interview-line-scroll">
+                                    <span class="dotted-line">______________</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="interview-row">
+                            <span class="interview-label">Entrevistado:</span>
+                            <div class="interview-line-container">
+                                <div class="interview-line-scroll">
+                                    <span class="dotted-line">______________</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="interview-row">
+                            <span class="interview-label">Fecha:</span>
+                            <div class="interview-line-container">
+                                <div class="interview-line-scroll">
+                                    <span class="dotted-line">______________</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="interview-row">
+                            <span class="interview-label">Lugar:</span>
+                            <div class="interview-line-container">
+                                <div class="interview-line-scroll">
+                                    <span class="dotted-line">______________</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="interview-divider"></div>
+
+                        <!-- BLOQUE 2: OBJETIVO -->
+                        <div class="interview-section-label">Objetivo</div>
+
+                        <div class="interview-question-block">
+                            <div class="interview-line-scroll">
+                                <span class="dotted-line"> __________________________</span><br>
+                                <span class="dotted-line"> __________________________</span><br>
+                                <span class="dotted-line"> __________________________</span><br>
+                            </div>
+                        </div>
+
+                        <!-- BLOQUE 3: PREGUNTAS Y RESPUESTAS -->
+                        <div class="interview-section-label">Preguntas</div>
+
+                        <div class="interview-question-block">
+                            <p class="interview-question-text">Pregunta 1: _____________________</p>
+                            <div class="interview-line-scroll">
+                                <span class="dotted-line"> Respuesta 1: _____________</span>
+                            </div>
+                        </div>
+
+                        <!-- BLOQUE 4: CONCLUSIÓN -->
+                        <div class="interview-section-label">conclusión</div>
+
+                        <div class="interview-question-block">
+                            <div class="interview-line-scroll">
+                                <span class="dotted-line"> __________________________</span><br>
+                                <span class="dotted-line"> __________________________</span><br>
+                                <span class="dotted-line"> __________________________</span><br>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <style>
+                        .interview-card {
+                            background-color: #ffffff;
+                            border-radius: 1rem;
+                            padding: 1rem;
+                            border: 1px solid #e2e8f0;
+                            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+                            margin-bottom: 1rem;
+                        }
+
+                        .interview-header {
+                            border-bottom: 2px solid #e2e8f0;
+                            padding-bottom: 0.5rem;
+                            margin-bottom: 0.85rem;
+                        }
+
+                        .interview-badge {
+                            background-color: #1e40af;
+                            color: white;
+                            font-size: 0.625rem;
+                            text-transform: uppercase;
+                            font-weight: 900;
+                            padding: 0.125rem 0.5rem;
+                            border-radius: 9999px;
+                        }
+
+                        .interview-title {
+                            font-weight: bold;
+                            color: #111827;
+                            font-size: 0.95rem;
+                            margin-top: 0.35rem;
+                        }
+
+                        .interview-section-label {
+                            font-size: 0.75rem;
+                            font-weight: 800;
+                            color: #1e40af;
+                            text-transform: uppercase;
+                            margin-bottom: 0.5rem;
+                            letter-spacing: 0.05em;
+                        }
+
+                        .interview-row {
+                            display: flex;
+                            align-items: center;
+                            margin-bottom: 0.6rem;
+                            gap: 0.5rem;
+                        }
+
+                        .interview-label {
+                            font-size: 0.75rem;
+                            font-weight: 700;
+                            color: #334155;
+                            white-space: nowrap;
+                            min-width: 5rem;
+                        }
+
+                        .interview-line-container {
+                            flex: 1;
+                            overflow: hidden;
+                        }
+
+                        .interview-line-scroll {
+                            width: 100%;
+                            overflow-x: auto;
+                            -webkit-overflow-scrolling: touch;
+                            white-space: nowrap;
+                        }
+
+                        /* Ocultar la barra de desplazamiento fea en móviles pero permitir el deslizamiento */
+                        .interview-line-scroll::-webkit-scrollbar {
+                            height: 3px;
+                        }
+
+                        .interview-line-scroll::-webkit-scrollbar-thumb {
+                            background-color: #cbd5e1;
+                            border-radius: 3px;
+                        }
+
+                        .dotted-line {
+                            color: #94a3b8;
+                            font-family: monospace;
+                            font-size: 0.85rem;
+                            letter-spacing: -0.5px;
+                            user-select: none;
+                        }
+
+                        .interview-divider {
+                            height: 1px;
+                            background-color: #f1f5f9;
+                            margin: 1rem 0;
+                        }
+
+                        .interview-question-block {
+                            margin-bottom: 0.85rem;
+                        }
+
+                        .interview-question-text {
+                            font-size: 0.8125rem;
+                            font-weight: 600;
+                            color: #1e293b;
+                            margin-bottom: 0.25rem;
+                            text-align: left;
+                        }
+                    </style>
+                    <p class="card-box-p">
+                        <button type="button" onclick="openQuizModal('UNIDAD 2 - TAREA 3')" class="task-btn-single"
+                            style="background-color: #ef4444; box-shadow: 0 4px 0 #991b1b;">
+                            UNIDAD 2 - TAREA 3 🚀</button>
+                    </p>
+                </div>
+            </section>
+
+            <!-- UNIDAD 3 -->
+            <section id="unidad-distribuciones" class="card-box">
+                <h2 class="table-section-title">3. Distribuciones de Frecuencias</h2>
                 <div class="table-responsive-container">
                     <table class="data-table">
                         <thead>
@@ -569,186 +1333,66 @@
                                 <td>15.0</td>
                                 <td>75.0</td>
                             </tr>
-                            <tr>
-                                <td>[20 - 30)</td>
-                                <td>12</td>
-                                <td>17</td>
-                                <td>25.0</td>
-                                <td>300.0</td>
-                            </tr>
-                            <tr>
-                                <td>[30 - 40)</td>
-                                <td>8</td>
-                                <td>25</td>
-                                <td>35.0</td>
-                                <td>280.0</td>
-                            </tr>
-                            <tr>
-                                <td>[40 - 50)</td>
-                                <td>5</td>
-                                <td>30</td>
-                                <td>45.0</td>
-                                <td>225.0</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
-            </section>
-
-            <!-- SECCIÓN 2: GRÁFICO CAMPANA EXACTO -->
-            <section class="card-box">
-                <h2 style="font-size: 1.125rem; font-weight: bold; color: #111827; margin-bottom: 0.25rem;">Gráfico de
-                    Gauss Exacto</h2>
-                <p style="font-size: 0.75rem; color: #4b5563; margin-bottom: 0.5rem; line-height: 1.25;">Observa cómo
-                    cada punto azul cae <b>exactamente</b> en la intersección de la cuadrícula.</p>
-                <div class="chart-wrapper">
-                    <canvas id="gaussChart"></canvas>
+                <div class="tasks-section-container">
+                    <button type="button" onclick="openQuizModal('Unidad 3')" class="task-btn-single">EVALUACIÓN UNIDAD
+                        3 🚀</button>
                 </div>
             </section>
 
-            <!-- SECCIÓN 3: GRÁFICO PUNTO DE EQUILIBRIO EXACTO -->
-            <section class="card-box">
-                <h2 style="font-size: 1.125rem; font-weight: bold; color: #7c2d12; margin-bottom: 0.25rem;">Punto de
-                    Equilibrio</h2>
-                <p style="font-size: 0.75rem; color: #4b5563; margin-bottom: 0.5rem; line-height: 1.25;">Intersección
-                    exacta entre Costos (Rojo) e Ingresos (Verde).</p>
+            <!-- UNIDAD 4 -->
+            <section id="unidad-tendencia" class="card-box">
+                <h2 class="section-title-green">4. Medidas de Tendencia Central</h2>
+                <div class="tasks-section-container">
+                    <button type="button" onclick="openQuizModal('Unidad 4')" class="task-btn-single">EVALUACIÓN UNIDAD
+                        4 🚀</button>
+                </div>
+            </section>
+
+            <!-- UNIDAD 5 -->
+            <section id="unidad-dispersion" class="card-box">
+                <h2 class="section-title-blue">5. Medidas de Dispersión</h2>
+                <div class="tasks-section-container">
+                    <button type="button" onclick="openQuizModal('Unidad 5')" class="task-btn-single">EVALUACIÓN UNIDAD
+                        5 🚀</button>
+                </div>
+            </section>
+
+            <!-- UNIDAD 6 -->
+            <section id="unidad-regresion" class="card-box">
+                <h2 class="chart-section-title-brown">6. Regresión y Correlación Lineal Simple</h2>
                 <div class="chart-wrapper">
                     <canvas id="equilibrioChart"></canvas>
                 </div>
-            </section>
-
-            <!-- SECCIÓN 4: EJERCICIOS RESUELTOS PASO A PASO (CON FORMATO UNIFORME) -->
-            <section>
-                <h2 class="section-title-green">Ejercicios Resueltos Paso a Paso</h2>
-
-                <!-- Ejercicio 1: Media -->
-                <div class="exercise-card">
-                    <div style="border-bottom: 1px solid #bbf7d0; padding-bottom: 0.5rem; margin-bottom: 0.75rem;">
-                        <span
-                            style="background-color: #15803d; color: white; font-size: 0.625rem; text-transform: uppercase; font-weight: 900; padding: 0.125rem 0.5rem; border-radius: 9999px;">Ejercicio
-                            1</span>
-                        <h3 style="font-weight: bold; color: #111827; font-size: 0.875rem; margin-top: 0.25rem;">Cálculo
-                            de la Media para: {10, 15, 20}</h3>
-                    </div>
-
-                    <div class="exercise-inner">
-                        <div class="math-step">
-                            <span
-                                style="font-family: sans-serif; font-size: 0.6875rem; font-weight: bold; color: #166534;">Paso
-                                1 (Fórmula):</span>
-                            <div style="display: flex; align-items: center; gap: 0.25rem; font-size: 0.875rem;">
-                                <span style="font-style: italic; font-weight: bold;">μ</span> =
-                                <div class="math-fraction">
-                                    <span class="math-numerator">Σ x<sub>i</sub></span>
-                                    <span class="math-denominator">N</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="math-step">
-                            <span
-                                style="font-family: sans-serif; font-size: 0.6875rem; font-weight: bold; color: #166534;">Paso
-                                2 (Sustitución):</span>
-                            <div
-                                style="display: flex; align-items: center; gap: 0.25rem; font-size: 0.875rem; font-family: monospace;">
-                                <span style="font-style: italic; font-family: sans-serif; font-weight: bold;">μ</span> =
-                                <div class="math-fraction">
-                                    <span class="math-numerator">10 + 15 + 20</span>
-                                    <span class="math-denominator">3</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="math-step">
-                            <span
-                                style="font-family: sans-serif; font-size: 0.6875rem; font-weight: bold; color: #166534;">Paso
-                                3 (Resultado):</span>
-                            <div
-                                style="display: flex; align-items: center; gap: 0.25rem; font-size: 0.875rem; font-family: monospace;">
-                                <span style="font-style: italic; font-family: sans-serif; font-weight: bold;">μ</span> =
-                                <div class="math-fraction">
-                                    <span class="math-numerator" style="color: #15803d; font-weight: bold;">45</span>
-                                    <span class="math-denominator" style="color: #15803d; font-weight: bold;">3</span>
-                                </div>
-                                <span style="font-weight: bold; color: #15803d; margin-left: 0.25rem;">= 15</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Ejercicio 2: Mediana -->
-                <div class="exercise-card">
-                    <div style="border-bottom: 1px solid #bbf7d0; padding-bottom: 0.5rem; margin-bottom: 0.75rem;">
-                        <span
-                            style="background-color: #15803d; color: white; font-size: 0.625rem; text-transform: uppercase; font-weight: 900; padding: 0.125rem 0.5rem; border-radius: 9999px;">Ejercicio
-                            2</span>
-                        <h3 style="font-weight: bold; color: #111827; font-size: 0.875rem; margin-top: 0.25rem;">Cálculo
-                            de la Mediana para: {7, 3, 9, 1, 5}</h3>
-                    </div>
-
-                    <div class="exercise-inner">
-                        <div class="math-step">
-                            <span
-                                style="font-family: sans-serif; font-size: 0.6875rem; font-weight: bold; color: #166534;">Paso
-                                1 (Ordenar):</span>
-                            <div style="font-size: 0.8125rem; font-family: monospace;">
-                                {1, 3, <b>5</b>, 7, 9}
-                            </div>
-                        </div>
-
-                        <div class="math-step">
-                            <span
-                                style="font-family: sans-serif; font-size: 0.6875rem; font-weight: bold; color: #166534;">Paso
-                                2 (Posición):</span>
-                            <div style="font-size: 0.8125rem;">
-                                Posición = (N + 1) / 2 = 3
-                            </div>
-                        </div>
-
-                        <div class="math-step">
-                            <span
-                                style="font-family: sans-serif; font-size: 0.6875rem; font-weight: bold; color: #166534;">Paso
-                                3 (Resultado):</span>
-                            <div style="font-weight: bold; color: #15803d; font-size: 0.875rem;">
-                                Mediana = 5
-                            </div>
-                        </div>
-                    </div>
+                <div class="tasks-section-container">
+                    <button type="button" onclick="openQuizModal('Unidad 6')" class="task-btn-single">EVALUACIÓN UNIDAD
+                        6 🚀</button>
                 </div>
             </section>
 
-            <!-- SECCIÓN 5: FÓRMULAS Y MÚLTIPLES BLOQUES DE CÓDIGO JAVA PARA COPIAR -->
-            <section style="margin-top: 1rem;">
+            <!-- UNIDAD 7 -->
+            <section id="unidad-inferencia" class="card-box">
+                <h2 class="section-title-blue">7. Nociones de Inferencia</h2>
+                <div class="tasks-section-container">
+                    <button type="button" onclick="openQuizModal('Unidad 7')" class="task-btn-single">EVALUACIÓN UNIDAD
+                        7 🚀</button>
+                </div>
+            </section>
+
+            <!-- UNIDAD 8 -->
+            <section id="unidad-muestreo" class="card-box">
+                <h2 class="section-title-blue">8. Teoría Elemental del Muestreo</h2>
+                <div class="tasks-section-container">
+                    <button type="button" onclick="openQuizModal('Unidad 8')" class="task-btn-single">EVALUACIÓN UNIDAD
+                        8 🚀</button>
+                </div>
+            </section>
+
+            <!-- FÓRMULAS Y CÓDIGO -->
+            <section id="unidad-formulas" class="card-box" style="margin-top: 1rem;">
                 <h2 class="section-title-purple">Fórmulas y Módulos Java</h2>
-
-                <div class="formula-box">
-                    <div
-                        style="display: flex; align-items: center; gap: 0.5rem; font-family: serif; font-size: 0.875rem; color: #111827;">
-                        <span
-                            style="font-weight: bold; font-family: sans-serif; font-size: 0.625rem; text-transform: uppercase; color: #581c87; width: 4rem;">Media</span>
-                        <span style="font-style: italic; font-size: 1.125rem;">μ</span>
-                        <span>=</span>
-                        <div class="math-fraction" style="font-size: 0.75rem;">
-                            <span class="math-numerator" style="border-bottom: 1px solid #111827;">Σ
-                                x<sub>i</sub></span>
-                            <span class="math-denominator">N</span>
-                        </div>
-                    </div>
-                    <div
-                        style="display: flex; align-items: center; gap: 0.5rem; font-family: serif; font-size: 0.875rem; color: #111827;">
-                        <span
-                            style="font-weight: bold; font-family: sans-serif; font-size: 0.625rem; text-transform: uppercase; color: #581c87; width: 4rem;">Varianza</span>
-                        <span style="font-style: italic; font-size: 1.125rem;">σ²</span>
-                        <span>=</span>
-                        <div class="math-fraction" style="font-size: 0.75rem;">
-                            <span class="math-numerator" style="border-bottom: 1px solid #111827;">Σ (x<sub>i</sub> -
-                                <span style="font-style: italic;">μ</span>)²</span>
-                            <span class="math-denominator">N</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Bloque de Código Java 1: Media y Varianza -->
                 <div class="code-container">
                     <div class="code-header">
                         <div class="code-dots">
@@ -759,161 +1403,10 @@
                         <span class="code-title">EstadisticaBasica.java</span>
                     </div>
                     <div class="code-body">
-                        <pre id="codeBlock1" class="code-pre"><span class="c-comment">/* ==========================================
- * EJERCICIO 1: Media y Varianza Poblacional
- * Datos de entrada: 10.0, 15.0, 20.0
- * ========================================== */</span>
-
-<span class="c-keyword">public</span> <span class="c-keyword">class</span> <span style="color: #fde047;">EstadisticaBasica</span> {
-    
-    <span class="c-keyword">public</span> <span class="c-keyword">static</span> <span class="c-keyword">void</span> <span style="color: #93c5fd;">main</span>(String[] args) {
-        <span class="c-type">double</span>[] notas = {<span class="c-number">10.0</span>, <span class="c-number">15.0</span>, <span class="c-number">20.0</span>};
-        
-        <span class="c-keyword">if</span> (notas == <span class="c-keyword">null</span> || notas.length == <span class="c-number">0</span>) {
-            System.out.println(<span class="c-string">"Error: Sin datos."</span>);
-            <span class="c-keyword">return</span>;
-        }
-        
-        <span class="c-type">double</span> media = <span style="color: #93c5fd;">calcularMedia</span>(notas);
-        <span class="c-type">double</span> varianza = <span style="color: #93c5fd;">calcularVarianza</span>(notas, media);
-        
-        System.out.println(<span class="c-string">"Media: "</span> + media);
-        System.out.println(<span class="c-string">"Varianza: "</span> + varianza);
-    }
-
-    <span class="c-keyword">public</span> <span class="c-keyword">static</span> <span class="c-type">double</span> <span style="color: #93c5fd;">calcularMedia</span>(<span class="c-type">double</span>[] d) {
-        <span class="c-type">double</span> s = <span class="c-number">0.0</span>;
-        <span class="c-keyword">for</span> (<span class="c-type">double</span> val : d) s += val;
-        <span class="c-keyword">return</span> s / d.length;
-    }
-
-    <span class="c-keyword">public</span> <span class="c-keyword">static</span> <span class="c-type">double</span> <span style="color: #93c5fd;">calcularVarianza</span>(<span class="c-type">double</span>[] d, <span class="c-type">double</span> m) {
-        <span class="c-type">double</span> sd = <span class="c-number">0.0</span>;
-        <span class="c-keyword">for</span> (<span class="c-type">double</span> val : d) sd += Math.pow(val - m, <span class="c-number">2</span>);
-        <span class="c-keyword">return</span> sd / d.length;
-    }
-}</pre>
+                        <pre id="codeBlock1"
+                            class="code-pre"><span class="c-keyword">public</span> <span class="c-keyword">class</span> <span style="color: #fde047;">EstadisticaBasica</span> {}</pre>
                     </div>
-                    <button onclick="copiarCodigo('codeBlock1')" class="btn-copy">
-                        <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3">
-                            </path>
-                        </svg>
-                        COPIAR CÓDIGO 1 (MEDIA Y VARIANZA)
-                    </button>
-                </div>
-
-                <!-- Bloque de Código Java 2: Cálculo de Mediana -->
-                <div class="code-container">
-                    <div class="code-header">
-                        <div class="code-dots">
-                            <div class="dot-red"></div>
-                            <div class="dot-yellow"></div>
-                            <div class="dot-green"></div>
-                        </div>
-                        <span class="code-title">CalculadorMediana.java</span>
-                    </div>
-                    <div class="code-body">
-                        <pre id="codeBlock2" class="code-pre"><span class="c-comment">/* ==========================================
- * EJERCICIO 2: Algoritmo para Mediana
- * Ordenamiento previo requerido
- * ========================================== */</span>
-<span class="c-keyword">import</span> java.util.Arrays;
-
-<span class="c-keyword">public</span> <span class="c-keyword">class</span> <span style="color: #fde047;">CalculadorMediana</span> {
-    <span class="c-keyword">public</span> <span class="c-keyword">static</span> <span class="c-keyword">void</span> <span style="color: #93c5fd;">main</span>(String[] args) {
-        <span class="c-type">double</span>[] datos = {<span class="c-number">7.0</span>, <span class="c-number">3.0</span>, <span class="c-number">9.0</span>, <span class="c-number">1.0</span>, <span class="c-number">5.0</span>};
-        Arrays.sort(datos);
-        
-        <span class="c-type">double</span> mediana;
-        <span class="c-keyword">int</span> n = datos.length;
-        <span class="c-keyword">if</span> (n % <span class="c-number">2</span> == <span class="c-number">0</span>) {
-            mediana = (datos[n/<span class="c-number">2</span> - <span class="c-number">1</span>] + datos[n/<span class="c-number">2</span>]) / <span class="c-number">2.0</span>;
-        } <span class="c-keyword">else</span> {
-            mediana = datos[n / <span class="c-number">2</span>];
-        }
-        System.out.println(<span class="c-string">"Mediana calculada: "</span> + mediana);
-    }
-}</pre>
-                    </div>
-                    <button onclick="copiarCodigo('codeBlock2')" class="btn-copy">
-                        <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3">
-                            </path>
-                        </svg>
-                        COPIAR CÓDIGO 2 (MEDIANA)
-                    </button>
-                </div>
-
-                <!-- Bloque de Código Java 3: Punto de Equilibrio -->
-                <div class="code-container">
-                    <div class="code-header">
-                        <div class="code-dots">
-                            <div class="dot-red"></div>
-                            <div class="dot-yellow"></div>
-                            <div class="dot-green"></div>
-                        </div>
-                        <span class="code-title">PuntoEquilibrio.java</span>
-                    </div>
-                    <div class="code-body">
-                        <pre id="codeBlock3" class="code-pre"><span class="c-comment">/* ==========================================
- * EJERCICIO 3: Cálculo del Punto de Equilibrio
- * Costos Fijos / (Precio - Costo Variable)
- * ========================================== */</span>
-<span class="c-keyword">public</span> <span class="c-keyword">class</span> <span style="color: #fde047;">PuntoEquilibrio</span> {
-    <span class="c-keyword">public</span> <span class="c-keyword">static</span> <span class="c-keyword">void</span> <span style="color: #93c5fd;">main</span>(String[] args) {
-        <span class="c-type">double</span> costosFijos = <span class="c-number">5000.0</span>;
-        <span class="c-type">double</span> precioVentaUnitario = <span class="c-number">50.0</span>;
-        <span class="c-type">double</span> costoVariableUnitario = <span class="c-number">30.0</span>;
-        
-        <span class="c-type">double</span> unidadesEq = costosFijos / (precioVentaUnitario - costoVariableUnitario);
-        System.out.println(<span class="c-string">"Unidades en Equilibrio: "</span> + unidadesEq);
-    }
-}</pre>
-                    </div>
-                    <button onclick="copiarCodigo('codeBlock3')" class="btn-copy">
-                        <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3">
-                            </path>
-                        </svg>
-                        COPIAR CÓDIGO 3 (EQUILIBRIO)
-                    </button>
-                </div>
-            </section>
-
-            <!-- SECCIÓN: TAREAS 1 AL 10 -->
-            <section
-                style="margin-top: 1.5rem; margin-bottom: 0.5rem; border-top: 2px dashed #d1d5db; padding-top: 1.25rem; text-align: center;">
-                <h2 style="font-size: 1.25rem; font-weight: 900; color: #581c87; margin-bottom: 0.25rem;">Tareas de
-                    Evaluación</h2>
-                <p style="font-size: 0.75rem; color: #4b5563; margin-bottom: 0.75rem;">Elige una tarea. Cada una
-                    contiene 10 ejercicios.</p>
-
-                <div class="tasks-grid">
-                    <button onclick="openQuizModal('Tarea 1')" class="task-btn"
-                        style="background-color: #ef4444; box-shadow: 0 4px 0 #991b1b;">TAREA 1 🚀</button>
-                    <button onclick="openQuizModal('Tarea 2')" class="task-btn"
-                        style="background-color: #3b82f6; box-shadow: 0 4px 0 #1e40af;">TAREA 2 🚀</button>
-                    <button onclick="openQuizModal('Tarea 3')" class="task-btn"
-                        style="background-color: #facc15; color: #581c87; box-shadow: 0 4px 0 #b45309;">TAREA 3
-                        🚀</button>
-                    <button onclick="openQuizModal('Tarea 4')" class="task-btn"
-                        style="background-color: #22c55e; box-shadow: 0 4px 0 #166534;">TAREA 4 🚀</button>
-                    <button onclick="openQuizModal('Tarea 5')" class="task-btn"
-                        style="background-color: #a855f7; box-shadow: 0 4px 0 #581c87;">TAREA 5 🚀</button>
-                    <button onclick="openQuizModal('Tarea 6')" class="task-btn"
-                        style="background-color: #f97316; box-shadow: 0 4px 0 #c2410c;">TAREA 6 🚀</button>
-                    <button onclick="openQuizModal('Tarea 7')" class="task-btn"
-                        style="background-color: #14b8a6; box-shadow: 0 4px 0 #0f766e;">TAREA 7 🚀</button>
-                    <button onclick="openQuizModal('Tarea 8')" class="task-btn"
-                        style="background-color: #ec4899; box-shadow: 0 4px 0 #be185d;">TAREA 8 🚀</button>
-                    <button onclick="openQuizModal('Tarea 9')" class="task-btn"
-                        style="background-color: #6366f1; box-shadow: 0 4px 0 #3730a3;">TAREA 9 🚀</button>
-                    <button onclick="openQuizModal('Tarea 10')" class="task-btn"
-                        style="background-color: #374151; box-shadow: 0 4px 0 #111827;">TAREA 10 🚀</button>
+                    <button type="button" onclick="copiarCodigo('codeBlock1')" class="btn-copy">COPIAR CÓDIGO</button>
                 </div>
             </section>
         </div>
@@ -921,394 +1414,513 @@
 
     <!-- PANTALLA COMPLETA DEL QUIZ -->
     <div id="quiz-fullscreen">
-        <button onclick="closeQuizModal()"
-            style="position: absolute; top: 0.5rem; right: 0.5rem; color: rgba(255,255,255,0.7); background: rgba(0,0,0,0.2); border: none; border-radius: 9999px; padding: 0.5rem; z-index: 50; cursor: pointer;"
-            aria-label="Cerrar">
+        <button type="button" onclick="closeQuizModal()" class="quiz-close-btn" aria-label="Cerrar">
             <svg style="width: 1.25rem; height: 1.25rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
         </button>
 
         <div class="quiz-wrapper">
-
             <!-- PANTALLA 1: INGRESO -->
-            <div id="quiz-login" style="width: 100%; text-align: center; z-index: 10;">
-                <h2 id="task-title-display"
-                    style="font-size: 1.875rem; font-weight: 900; margin-bottom: 0.25rem; color: #fde047; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                    Tarea 1</h2>
-                <h3 style="font-size: 1.125rem; font-weight: bold; margin-bottom: 0.75rem; color: white;">Ingresa Tu
-                    Nombre</h3>
-                <input type="text" id="studentName" placeholder="Escribe aquí..."
-                    style="width: 100%; text-align: center; padding: 0.5rem; border-radius: 0.5rem; color: #111827; font-weight: bold; font-size: 1rem; border: none; outline: none; margin-bottom: 1rem;"
-                    autocomplete="off">
-                <button onclick="startQuiz()"
-                    style="width: 100%; background-color: #facc15; color: #581c87; font-weight: 900; font-size: 1.125rem; padding: 0.5rem; border-radius: 0.5rem; border: none; box-shadow: 0 4px 0 #b45309; cursor: pointer;">
-                    ¡JUGAR!
-                </button>
+            <div id="quiz-login" class="quiz-login-container">
+                <h2 id="task-title-display" class="quiz-task-title">Evaluación</h2>
+                <h3 class="quiz-login-subtitle">Ingresa Tu Nombre</h3>
+                <div id="studentName" class="name-display" aria-label="Nombre del estudiante">Escribe tu nombre</div>
+                <button type="button" onclick="startQuiz()" class="quiz-play-btn">¡JUGAR!</button>
+                <br><br>
+                <div id="nameKeyboard" class="name-keyboard"></div>
             </div>
 
             <!-- PANTALLA 2: JUEGO -->
-            <div id="quiz-play"
-                style="display: none; width: 100%; flex-direction: column; justify-content: center; height: 100%; z-index: 10;">
-                <div
-                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-shrink: 0;">
-                    <span id="player-name-display"
-                        style="font-weight: bold; color: white; font-size: 0.75rem; background-color: rgba(88, 28, 135, 0.8); padding: 0.125rem 0.5rem; border-radius: 0.25rem; max-width: 60%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Jugador</span>
-                    <span
-                        style="background-color: rgba(88, 28, 135, 0.8); padding: 0.125rem 0.5rem; border-radius: 9999px; font-size: 0.75rem; font-weight: bold; color: white;">
-                        <span id="q-current">1</span>/10
-                    </span>
+            <div id="quiz-play" class="quiz-play-container">
+                <div class="quiz-play-header">
+                    <span id="player-name-display" class="quiz-player-name-badge">Jugador</span>
+                    <span class="quiz-counter-badge"><span id="q-current">1</span>/<span id="q-total">1</span></span>
                 </div>
-
                 <div class="quiz-card-question">
-                    <h3 id="question-text" style="font-size: 0.875rem; font-weight: bold; line-height: 1.25;">¿Pregunta?
-                    </h3>
+                    <h3 id="question-text" class="quiz-question-heading">¿Pregunta?</h3>
                 </div>
-
-                <div class="quiz-options" id="options-container">
-                    <!-- Dinámico -->
-                </div>
-
-                <div style="margin-top: 0.75rem; flex-shrink: 0; height: 2.5rem;">
-                    <button id="next-btn" onclick="nextQuestion()"
-                        style="display: none; width: 100%; height: 100%; background-color: #111827; color: white; font-weight: 900; font-size: 0.875rem; border-radius: 0.5rem; border: none; box-shadow: 0 4px 0 #000; cursor: pointer;">
-                        SIGUIENTE ➔
-                    </button>
+                <div class="quiz-options" id="options-container"></div>
+                <div class="quiz-next-container">
+                    <button type="button" id="next-btn" onclick="nextQuestion()" class="quiz-next-btn">SIGUIENTE
+                        ➔</button>
                 </div>
             </div>
 
             <!-- PANTALLA 3: RESULTADOS -->
-            <div id="quiz-result" style="display: none; width: 100%; text-align: center; z-index: 10;">
-                <h2 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 0.25rem; color: #fde047;">¡Finalizado!
-                </h2>
-
-                <div
-                    style="background-color: white; border-radius: 0.75rem; padding: 1rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); margin-bottom: 0.75rem; margin-top: 0.5rem; border-bottom: 4px solid #e5e7eb; text-align: left;">
-
-                    <p
-                        style="font-size: 0.625rem; color: #6b7280; font-weight: bold; text-transform: uppercase; margin-bottom: 0.125rem;">
-                        Tarea:</p>
-                    <p id="final-task"
-                        style="font-size: 1.125rem; font-weight: 900; color: #1f2937; margin-bottom: 0.5rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.25rem;">
-                    </p>
-
-                    <p
-                        style="font-size: 0.625rem; color: #6b7280; font-weight: bold; text-transform: uppercase; margin-bottom: 0.125rem;">
-                        Estudiante:</p>
-                    <p style="font-size: 1.125rem; font-weight: 900; color: #1f2937; margin-bottom: 0.5rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.25rem;"
-                        id="final-name"></p>
-
-                    <p
-                        style="font-size: 0.625rem; color: #6b7280; font-weight: bold; text-transform: uppercase; margin-bottom: 0.125rem;">
-                        Nota:</p>
-                    <p style="font-size: 2.25rem; font-weight: 900; color: #7e22ce; text-align: center;"><span
-                            id="final-score">100</span><span style="font-size: 1.125rem;"> / 100</span></p>
-
+            <div id="quiz-result" class="quiz-result-container">
+                <h2 class="quiz-result-title">¡Finalizado!</h2>
+                <div class="quiz-result-box">
+                    <p class="quiz-result-label">Evaluación:</p>
+                    <p id="final-task" class="quiz-result-value-main"></p>
+                    <p class="quiz-result-label">Estudiante:</p>
+                    <p class="quiz-result-value-main" id="final-name"></p>
+                    <p class="quiz-result-label">Nota:</p>
+                    <p class="quiz-result-score-number"><span id="final-score">100</span><span
+                            class="quiz-result-score-total"> / 100</span></p>
                 </div>
-
-                <p id="feedback-msg"
-                    style="font-size: 0.875rem; font-weight: bold; margin-bottom: 0.75rem; color: white; line-height: 1.25;">
-                </p>
-
-                <button onclick="resetQuiz()"
-                    style="width: 100%; background-color: white; color: #7e22ce; font-weight: 900; font-size: 0.875rem; padding: 0.5rem; border-radius: 0.5rem; border: none; box-shadow: 0 4px 0 #cbd5e1; cursor: pointer;">
-                    VOLVER A INTENTAR ↺
-                </button>
+                <p id="feedback-msg" class="quiz-feedback-msg"></p>
+                <button type="button" onclick="resetQuiz()" class="quiz-retry-btn">VOLVER A INTENTAR ↺</button>
             </div>
         </div>
     </div>
 
-    <!-- TOAST -->
     <div id="toastMessage">
         <div class="toast-inner">✅ Copiado!</div>
     </div>
 
     <!-- SCRIPTS -->
     <script>
-        // ==========================================
-        // 1. GRÁFICOS MATEMÁTICOS EXACTOS (Chart.js)
-        // ==========================================
+        function toggleSidebar() {
+            const menu = document.getElementById('sidebarMenu');
+            const overlay = document.getElementById('sidebarOverlay');
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
 
-        const gaussCtx = document.getElementById('gaussChart').getContext('2d');
-        new Chart(gaussCtx, {
-            type: 'line',
-            data: {
-                labels: [-3, -2, -1, 0, 1, 2, 3],
-                datasets: [{
-                    label: 'Campana Normal',
-                    data: [0.00, 0.05, 0.25, 0.40, 0.25, 0.05, 0.00],
-                    borderColor: '#1d4ed8', backgroundColor: 'rgba(29, 78, 216, 0.2)',
-                    borderWidth: 3, fill: true, tension: 0.4,
-                    pointRadius: 6, pointBackgroundColor: '#ef4444',
-                    pointBorderColor: '#fff', pointBorderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true, maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    x: {
-                        type: 'linear', min: -3, max: 3,
-                        grid: { display: true, color: '#9ca3af', lineWidth: 1.5 },
-                        ticks: { stepSize: 0.5, font: { size: 10 } }
-                    },
-                    y: {
-                        type: 'linear', min: 0, max: 0.5,
-                        grid: { display: true, color: '#9ca3af', lineWidth: 1.5 },
-                        ticks: { stepSize: 0.05, font: { size: 10 } }
+        window.addEventListener('DOMContentLoaded', () => {
+            const eqCtx = document.getElementById('equilibrioChart').getContext('2d');
+            new Chart(eqCtx, {
+                type: 'line',
+                data: {
+                    labels: [0, 2, 4, 6, 8, 10],
+                    datasets: [
+                        { label: 'Ingresos', data: [0, 20, 40, 60, 80, 100], borderColor: '#16a34a', borderWidth: 3, pointRadius: 5 },
+                        { label: 'Costos', data: [20, 30, 40, 50, 60, 70], borderColor: '#dc2626', borderWidth: 3, pointRadius: 5 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { type: 'linear', min: 0, max: 10, grid: { color: '#9ca3af' } },
+                        y: { type: 'linear', min: 0, max: 100, grid: { color: '#9ca3af' } }
                     }
                 }
-            }
+            });
         });
 
-        const eqCtx = document.getElementById('equilibrioChart').getContext('2d');
-        new Chart(eqCtx, {
-            type: 'line',
-            data: {
-                labels: [0, 2, 4, 6, 8, 10],
-                datasets: [
-                    {
-                        label: 'Ingresos', data: [0, 20, 40, 60, 80, 100],
-                        borderColor: '#16a34a', borderWidth: 3, pointRadius: 5, pointBackgroundColor: '#16a34a'
-                    },
-                    {
-                        label: 'Costos', data: [20, 30, 40, 50, 60, 70],
-                        borderColor: '#dc2626', borderWidth: 3, pointRadius: 5, pointBackgroundColor: '#dc2626'
-                    }
-                ]
-            },
-            options: {
-                responsive: true, maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    x: {
-                        type: 'linear', min: 0, max: 10,
-                        grid: { display: true, color: '#9ca3af', lineWidth: 1.5 },
-                        ticks: { stepSize: 1, font: { size: 10 } }
-                    },
-                    y: {
-                        type: 'linear', min: 0, max: 100,
-                        grid: { display: true, color: '#9ca3af', lineWidth: 1.5 },
-                        ticks: { stepSize: 10, font: { size: 10 } }
-                    }
-                }
-            }
-        });
-
-        // ==========================================
-        // 2. BASE DE DATOS DE PREGUNTAS (50 ítems)
-        // ==========================================
+        // =========================================================================================
+        // BANCO DE PREGUNTAS
+        // -----------------------------------------------------------------------------------------
+        // ¿CÓMO RELACIONAR TUS PREGUNTAS CON EL BOTÓN DE CADA UNIDAD?
+        // 
+        // 1. En el HTML de arriba, cada botón de unidad envía un texto exacto, por ejemplo:
+        //    onclick="openQuizModal('Unidad 1')", onclick="openQuizModal('Unidad 2')", etc.
+        // 
+        // 2. Para asociar tus preguntas a esa unidad, la propiedad 'unidad' (o 'tarea') de cada objeto 
+        //    debe ser EXACTAMENTE igual al texto que le mandas al botón.
+        // 
+        // 3. Puedes poner cuántas preguntas quieras por unidad. El sistema calcula automáticamente 
+        //    la nota final sobre 100 puntos sin importar la cantidad de preguntas que respondas.
+        // =========================================================================================
         const quizDatabase = [
+            // Pregunta 1 de la Unidad 1
             {
-                q: "¿Qué representa la frecuencia absoluta $f_i$?",
+                unidad: "UNIDAD 1 - TAREA 1",
+                q: "Según Levin y Rubín (2004), ¿qué conjunto de acciones forma parte del trabajo de la estadística?",
                 options: [
-                    "Cantidad de veces que aparece un dato",
-                    "Total de datos acumulados",
-                    "Valor central del intervalo",
-                    "Porcentaje de datos"
+                    "Recoger, ordenar, decidir e informar",
+                    "Observar, clasificar, opinar y concluir",
+                    "Recoger, organizar, analizar e interpretar datos",
+                    "Registrar, calcular, explicar y eliminar datos"
+                ],
+                correctIndex: 2
+            },
+
+            // Pregunta 2 de la Unidad 1
+            {
+                unidad: "UNIDAD 1 - TAREA 1",
+                q: "¿Cuál es el propósito de trabajar estadísticamente con un conjunto de datos?",
+                options: [
+                    "Ayudar en la toma de decisiones frente a situaciones de incertidumbre",
+                    "Evitar que existan situaciones de incertidumbre",
+                    "Reemplazar completamente las decisiones de las personas",
+                    "Obtener resultados sin necesidad de interpretar"
                 ],
                 correctIndex: 0
             },
+
+            // Pregunta 3 de la Unidad 1
             {
-                q: "¿Qué representa la frecuencia acumulada $F_i$?",
+                unidad: "UNIDAD 1 - TAREA 1",
+                q: "¿Cuál es la razón principal por la que la estadística es considerada una ciencia?",
                 options: [
-                    "La suma progresiva de las frecuencias",
-                    "La cantidad de intervalos",
-                    "El valor máximo",
-                    "La marca de clase"
+                    "Porque permite usar encuestas y entrevistas",
+                    "Porque siempre obtiene resultados exactos",
+                    "Porque se encarga únicamente de organizar datos",
+                    "Porque utiliza métodos sistemáticos y una metodología rigurosa"
+                ],
+                correctIndex: 3
+            },
+
+            // Pregunta 4 de la Unidad 1
+            {
+                unidad: "UNIDAD 1 - TAREA 1",
+                q: "¿Qué acción corresponde a la etapa de recopilación de datos?",
+                options: [
+                    "Explicar qué indican los resultados obtenidos",
+                    "Obtener datos mediante encuestas, registros u observaciones",
+                    "Presentar los datos de forma comprensible",
+                    "Calcular porcentajes y correlaciones"
+                ],
+                correctIndex: 1
+            },
+
+            // Pregunta 5 de la Unidad 1
+            {
+                unidad: "UNIDAD 1 - TAREA 1",
+                q: "¿Qué ocurre con los datos antes de que puedan ser analizados de mejor manera?",
+                options: [
+                    "Se organizan porque suelen estar desordenados",
+                    "Se interpretan para convertirlos en información",
+                    "Se toman decisiones basadas en opiniones",
+                    "Se reemplazan por resultados de evaluaciones"
                 ],
                 correctIndex: 0
             },
+
+            // Pregunta 6 de la Unidad 1
             {
-                q: "La marca de clase se representa con:",
+                unidad: "UNIDAD 1 - TAREA 1",
+                q: "¿Cuál de las siguientes opciones pertenece a la etapa de análisis de datos?",
                 options: [
-                    "$x_i$",
-                    "$f_i$",
-                    "$F_i$",
-                    "$L_i$"
+                    "Recoger datos por medio de entrevistas",
+                    "Ordenar los datos y presentarlos de forma comprensible",
+                    "Aplicar técnicas estadísticas para encontrar patrones",
+                    "Explicar qué indican los resultados obtenidos"
+                ],
+                correctIndex: 2
+            },
+
+            // Pregunta 7 de la Unidad 1
+            {
+                unidad: "UNIDAD 1 - TAREA 1",
+                q: "¿Cuál de estos elementos se menciona como posible resultado del análisis de datos?",
+                options: [
+                    "Entrevistas y observaciones",
+                    "Promedios, porcentajes, frecuencias, desviaciones estándar o correlaciones",
+                    "Situaciones de incertidumbre",
+                    "Opiniones e intuiciones"
+                ],
+                correctIndex: 1
+            },
+
+            // Pregunta 8 de la Unidad 1
+            {
+                unidad: "UNIDAD 1 - TAREA 1",
+                q: "¿Qué diferencia existe entre organizar e interpretar los datos?",
+                options: [
+                    "Organizar convierte los resultados en información e interpretar encuentra patrones",
+                    "Organizar obtiene datos e interpretar los presenta de forma comprensible",
+                    "Organizar aplica correlaciones e interpretar realiza encuestas",
+                    "Organizar ordena y presenta datos; interpretar explica qué indican los resultados"
+                ],
+                correctIndex: 3
+            },
+
+            // Pregunta 9 de la Unidad 1
+            {
+                unidad: "UNIDAD 1 - TAREA 1",
+                q: "¿En qué etapa los resultados obtenidos se convierten en información?",
+                options: [
+                    "En la recopilación",
+                    "En la organización",
+                    "En la interpretación",
+                    "En la obtención de encuestas"
+                ],
+                correctIndex: 2
+            },
+
+            // Pregunta 10 de la Unidad 1
+            {
+                unidad: "UNIDAD 1 - TAREA 1",
+                q: "¿Cuál es el orden correcto del proceso estadístico explicado en el contenido?",
+                options: [
+                    "Recopilar, organizar, analizar e interpretar",
+                    "Organizar, recopilar, interpretar y analizar",
+                    "Analizar, interpretar, organizar y recopilar",
+                    "Interpretar, analizar, recopilar y organizar"
                 ],
                 correctIndex: 0
             },
+            // *******************************************************************************
+            // *******************************************************************************
+            // *******************************************************************************
+            // *******************************************************************************
+            // Pregunta 1 de la UNIDAD 1 - TAREA 2
             {
-                q: "¿Cuál es la fórmula de la marca de clase?",
+                unidad: "UNIDAD 1 - TAREA 2",
+                q: "¿Cuáles son las dos grandes ramas en las que se divide la estadística?",
                 options: [
-                    "$x_i = \\frac{L_i + L_s}{2}$",
-                    "$x_i = L_s - L_i$",
-                    "$x_i = f_i + F_i$",
-                    "$x_i = L_i \\cdot L_s$"
+                    "Estadística cualitativa y cuantitativa",
+                    "Estadística descriptiva e inferencial",
+                    "Estadística de muestras y poblaciones",
+                    "Estadística de encuestas y registros"
+                ],
+                correctIndex: 1
+            },
+
+            // Pregunta 2 de la UNIDAD 1 - TAREA 2
+            {
+                unidad: "UNIDAD 1 - TAREA 2",
+                q: "¿Qué busca hacer la estadística descriptiva con los datos?",
+                options: [
+                    "Predecir lo que ocurrirá en toda la ciudad",
+                    "Concluir sobre una población usando una muestra",
+                    "Resumir y presentar los datos tal como son",
+                    "Sacar conclusiones más allá de lo observado"
+                ],
+                correctIndex: 2
+            },
+
+            // Pregunta 3 de la UNIDAD 1 - TAREA 2
+            {
+                unidad: "UNIDAD 1 - TAREA 2",
+                q: "¿Cuál de las siguientes afirmaciones corresponde a la estadística descriptiva?",
+                options: [
+                    "De 100 clientes encuestados, 70 prefieren frutilla",
+                    "En toda la ciudad, frutilla sería el sabor más elegido",
+                    "La población completa prefiere frutilla",
+                    "Se predice que todos elegirán frutilla"
                 ],
                 correctIndex: 0
             },
+
+            // Pregunta 4 de la UNIDAD 1 - TAREA 2
             {
-                q: "Si el intervalo es $[10 - 20)$, ¿cuál es su marca de clase $x_i$?",
+                unidad: "UNIDAD 1 - TAREA 2",
+                q: "¿Por qué la afirmación “De 100 clientes, 70 prefieren frutilla” es descriptiva?",
                 options: [
-                    "$15$",
-                    "$10$",
-                    "$20$",
-                    "$30$"
+                    "Porque predice lo que ocurrirá en la ciudad",
+                    "Porque usa métodos inferenciales",
+                    "Porque concluye sobre toda la población",
+                    "Porque muestra lo ocurrido con el grupo encuestado"
+                ],
+                correctIndex: 3
+            },
+
+            // Pregunta 5 de la UNIDAD 1 - TAREA 2
+            {
+                unidad: "UNIDAD 1 - TAREA 2",
+                q: "¿Cuál es el objetivo de la estadística inferencial?",
+                options: [
+                    "Predecir o concluir sobre una población a partir de una muestra",
+                    "Presentar los datos sin sacar conclusiones",
+                    "Resumir solamente los datos observados",
+                    "Mostrar lo ocurrido en un grupo específico"
                 ],
                 correctIndex: 0
             },
+
+            // Pregunta 6 de la UNIDAD 1 - TAREA 2
             {
-                q: "Si $f_1 = 5$ y $f_2 = 12$, ¿cuál es $F_2$?",
+                unidad: "UNIDAD 1 - TAREA 2",
+                q: "En el ejemplo de la preferencia por frutilla, ¿qué representa el grupo de 100 personas encuestadas?",
                 options: [
-                    "$17$",
-                    "$12$",
-                    "$7$",
-                    "$60$"
+                    "La ciudad completa",
+                    "Una muestra",
+                    "Una conclusión",
+                    "Una predicción"
+                ],
+                correctIndex: 1
+            },
+
+            // Pregunta 7 de la UNIDAD 1 - TAREA 2
+            {
+                unidad: "UNIDAD 1 - TAREA 2",
+                q: "¿Cuál afirmación es inferencial?",
+                options: [
+                    "De los 100 encuestados, el 70% prefiere frutilla",
+                    "La encuesta fue realizada a 100 personas",
+                    "Se estima que en toda la ciudad frutilla sería el sabor más elegido",
+                    "Setenta clientes prefieren frutilla"
+                ],
+                correctIndex: 2
+            },
+
+            // Pregunta 8 de la UNIDAD 1 - TAREA 2
+            {
+                unidad: "UNIDAD 1 - TAREA 2",
+                q: "¿Qué pregunta permite identificar si un resultado es descriptivo o inferencial?",
+                options: [
+                    "¿Cuántas personas respondieron la encuesta?",
+                    "¿Qué sabor fue elegido por los clientes?",
+                    "¿Qué método se utilizó para encuestar?",
+                    "¿Habla del grupo encuestado o de un grupo mayor?"
+                ],
+                correctIndex: 3
+            },
+
+            // Pregunta 9 de la UNIDAD 1 - TAREA 2
+            {
+                unidad: "UNIDAD 1 - TAREA 2",
+                q: "Si una conclusión habla únicamente de las personas encuestadas, ¿qué tipo de estadística corresponde?",
+                options: [
+                    "Estadística descriptiva",
+                    "Estadística inferencial",
+                    "Estadística de población",
+                    "Estadística de predicción"
                 ],
                 correctIndex: 0
             },
+
+            // Pregunta 10 de la UNIDAD 1 - TAREA 2
             {
-                q: "Si $f_i = 8$ y $x_i = 35$, ¿cuál es el producto $x_i \\cdot f_i$?",
+                unidad: "UNIDAD 1 - TAREA 2",
+                q: "¿Qué diferencia principal existe entre la estadística descriptiva y la inferencial?",
                 options: [
-                    "$280$",
-                    "$43$",
-                    "$27$",
-                    "$350$"
+                    "La descriptiva usa encuestas y la inferencial no",
+                    "La descriptiva muestra datos observados; la inferencial concluye sobre una población",
+                    "La descriptiva trabaja con ciudades y la inferencial con clientes",
+                    "La descriptiva predice y la inferencial solo presenta datos"
+                ],
+                correctIndex: 1
+            },
+
+            // *******************************************************************************
+            // *******************************************************************************
+            // *******************************************************************************
+            // *******************************************************************************
+
+            // Pregunta 1 de la UNIDAD 2 - TAREA 3
+            {
+                unidad: "UNIDAD 2 - TAREA 3",
+                q: "¿Qué se debe hacer antes de poder aplicar la estadística?",
+                options: [
+                    "Obtener los datos",
+                    "Observar expresiones",
+                    "Preparar preguntas orientadoras",
+                    "Conocer más a fondo al consumidor"
                 ],
                 correctIndex: 0
             },
+
+            // Pregunta 2 de la UNIDAD 2 - TAREA 3
             {
-                q: "En una tabla de frecuencias, la suma de todas las frecuencias absolutas es:",
+                unidad: "UNIDAD 2 - TAREA 3",
+                q: "¿De qué depende la calidad de la información obtenida?",
                 options: [
-                    "$N$",
-                    "$x_i$",
-                    "$L_i$",
-                    "$F_i - f_i$"
+                    "De que ambos realicen preguntas",
+                    "De elegir bien la técnica de recogida de datos",
+                    "De no preparar preguntas",
+                    "De observar expresiones"
+                ],
+                correctIndex: 1
+            },
+
+            // Pregunta 3 de la UNIDAD 2 - TAREA 3
+            {
+                unidad: "UNIDAD 2 - TAREA 3",
+                q: "Según el contenido, ¿qué ocurre si los datos son confiables?",
+                options: [
+                    "Las entrevistas no necesitan preguntas",
+                    "La entrevista se vuelve no estructurada",
+                    "Las decisiones también serán confiables",
+                    "No se necesita conocer al consumidor"
+                ],
+                correctIndex: 2
+            },
+
+            // Pregunta 4 de la UNIDAD 2 - TAREA 3
+            {
+                unidad: "UNIDAD 2 - TAREA 3",
+                q: "¿Cuál de las siguientes opciones presenta las tres técnicas más utilizadas?",
+                options: [
+                    "Entrevista, preguntas y expresiones",
+                    "Observación, opiniones y experiencias",
+                    "Encuesta, consumidor y marca",
+                    "Entrevista, observación y encuesta"
+                ],
+                correctIndex: 3
+            },
+
+            // Pregunta 5 de la UNIDAD 2 - TAREA 3
+            {
+                unidad: "UNIDAD 2 - TAREA 3",
+                q: "¿En qué consiste la entrevista como técnica de recogida de datos?",
+                options: [
+                    "En realizar preguntas directamente a una persona",
+                    "En no preparar ninguna pregunta",
+                    "En presentar los datos obtenidos",
+                    "En elegir una marca"
                 ],
                 correctIndex: 0
             },
+
+            // Pregunta 6 de la UNIDAD 2 - TAREA 3
             {
-                q: "Si la última frecuencia acumulada es $30$, entonces el total de datos es:",
+                unidad: "UNIDAD 2 - TAREA 3",
+                q: "¿Qué se puede obtener mediante una entrevista?",
                 options: [
-                    "$N = 30$",
-                    "$N = 15$",
-                    "$N = 60$",
-                    "$N = 0$"
+                    "Únicamente el nombre del entrevistado",
+                    "Información detallada sobre opiniones, actitudes o experiencias",
+                    "Solo preguntas definidas",
+                    "Únicamente la fecha y el lugar"
+                ],
+                correctIndex: 1
+            },
+
+            // Pregunta 7 de la UNIDAD 2 - TAREA 3
+            {
+                unidad: "UNIDAD 2 - TAREA 3",
+                q: "¿Cómo se describe la entrevista en el contenido?",
+                options: [
+                    "Como una observación sin preguntas",
+                    "Como una encuesta sin entrevistador",
+                    "Como una conversación planificada entre entrevistador y entrevistado",
+                    "Como una planilla con datos generales"
+                ],
+                correctIndex: 2
+            },
+
+            // Pregunta 8 de la UNIDAD 2 - TAREA 3
+            {
+                unidad: "UNIDAD 2 - TAREA 3",
+                q: "¿Para qué se utiliza la entrevista al estudiar al consumidor?",
+                options: [
+                    "Para colocar la fecha y el lugar",
+                    "Para no preparar preguntas",
+                    "Para elegir entre entrevista y encuesta",
+                    "Para conocer más a fondo al consumidor"
+                ],
+                correctIndex: 3
+            },
+
+            // Pregunta 9 de la UNIDAD 2 - TAREA 3
+            {
+                unidad: "UNIDAD 2 - TAREA 3",
+                q: "¿Qué permite descubrir una entrevista sobre un producto o una marca?",
+                options: [
+                    "Qué piensa el consumidor, cómo fue su experiencia de compra o qué espera de una marca",
+                    "El nombre del entrevistador y la fecha",
+                    "Solo las preguntas definidas",
+                    "Únicamente el lugar de la entrevista"
                 ],
                 correctIndex: 0
             },
+
+            // Pregunta 10 de la UNIDAD 2 - TAREA 3
             {
-                q: "¿Cuál es la amplitud del intervalo $[20 - 30)$?",
+                unidad: "UNIDAD 2 - TAREA 3",
+                q: "¿Qué tipo de entrevista se caracteriza por tener preguntas orientadoras?",
                 options: [
-                    "$10$",
-                    "$20$",
-                    "$30$",
-                    "$50$"
+                    "Estructurada",
+                    "Semiestructurada",
+                    "No estructurada",
+                    "Planificada"
                 ],
-                correctIndex: 0
+                correctIndex: 1
             },
-            {
-                q: "Si $L_i = 30$ y $L_s = 40$, entonces $x_i$ es:",
-                options: [
-                    "$35$",
-                    "$10$",
-                    "$40$",
-                    "$70$"
-                ],
-                correctIndex: 0
-            },
-            {
-                q: "¿Cuál expresión representa el producto de una marca de clase por su frecuencia?",
-                options: [
-                    "$x_i \\cdot f_i$",
-                    "$x_i + f_i$",
-                    "$x_i - f_i$",
-                    "$\\frac{x_i}{f_i}$"
-                ],
-                correctIndex: 0
-            },
-            {
-                q: "Si $x_i = 25$ y $f_i = 12$, el producto $x_i \\cdot f_i$ es:",
-                options: [
-                    "$300$",
-                    "$37$",
-                    "$13$",
-                    "$250$"
-                ],
-                correctIndex: 0
-            },
-            {
-                q: "Si $F_1 = 5$ y $f_2 = 12$, ¿cuál es $F_2$?",
-                options: [
-                    "$17$",
-                    "$7$",
-                    "$60$",
-                    "$12$"
-                ],
-                correctIndex: 0
-            },
-            {
-                q: "¿Qué dato se obtiene al sumar todos los valores $x_i \\cdot f_i$?",
-                options: [
-                    "$\\sum x_i f_i$",
-                    "$\\sum L_i$",
-                    "$\\sum F_i$",
-                    "$\\sum x_i$"
-                ],
-                correctIndex: 0
-            },
-            {
-                q: "¿Cuál es la fórmula de la media para datos agrupados?",
-                options: [
-                    "$\\bar{x} = \\frac{\\sum x_i f_i}{N}$",
-                    "$\\bar{x} = \\frac{N}{\\sum x_i f_i}$",
-                    "$\\bar{x} = x_i + f_i$",
-                    "$\\bar{x} = L_s - L_i$"
-                ],
-                correctIndex: 0
-            },
-            {
-                q: "Si $\\sum x_i f_i = 880$ y $N = 30$, la media es aproximadamente:",
-                options: [
-                    "$29.33$",
-                    "$26.67$",
-                    "$850$",
-                    "$910$"
-                ],
-                correctIndex: 0
-            },
-            {
-                q: "En el intervalo $[40 - 50)$, el límite inferior $L_i$ es:",
-                options: [
-                    "$40$",
-                    "$50$",
-                    "$45$",
-                    "$90$"
-                ],
-                correctIndex: 0
-            },
-            {
-                q: "En el intervalo $[40 - 50)$, el límite superior $L_s$ es:",
-                options: [
-                    "$50$",
-                    "$40$",
-                    "$45$",
-                    "$90$"
-                ],
-                correctIndex: 0
-            },
-            {
-                q: "Si las frecuencias son $5$, $12$, $8$ y $5$, el total $N$ es:",
-                options: [
-                    "$30$",
-                    "$25$",
-                    "$20$",
-                    "$35$"
-                ],
-                correctIndex: 0
-            }
+
         ];
 
-        // ==========================================
-        // 3. LÓGICA DEL RETO
-        // ==========================================
         let currentQuestions = [];
         let currentQIndex = 0;
         let score = 0;
         let playerName = "";
         let answered = false;
+        let selectedTaskName = "Unidad 1";
 
         const baseBtnStyles = [
             "background-color: #ef4444; box-shadow: 0 4px 0 #b91c1c;",
@@ -1326,7 +1938,64 @@
             return arr;
         }
 
-        function openQuizModal(taskName = 'Tarea 1') {
+        let typedName = "";
+
+        function buildNameKeyboard() {
+            const keyboard = document.getElementById("nameKeyboard");
+            const rows = [
+                ["A", "B", "C", "D", "E", "F", "G"],
+                ["H", "I", "J", "K", "L", "M", "N"],
+                ["Ñ", "O", "P", "Q", "R", "S", "T"],
+                ["U", "V", "W", "X", "Y", "Z", "←"]
+            ];
+            keyboard.innerHTML = "";
+            rows.forEach(row => {
+                row.forEach(letter => {
+                    const button = document.createElement("button");
+                    button.type = "button";
+                    button.className = "name-key";
+                    if (letter === "←") {
+                        button.textContent = "←";
+                        button.onclick = deleteNameLetter;
+                    } else {
+                        button.textContent = letter;
+                        button.onclick = () => addNameLetter(letter);
+                    }
+                    keyboard.appendChild(button);
+                });
+            });
+            const spaceButton = document.createElement("button");
+            spaceButton.type = "button";
+            spaceButton.className = "name-key name-space";
+            spaceButton.textContent = "ESPACIO";
+            spaceButton.onclick = () => addNameLetter(" ");
+            keyboard.appendChild(spaceButton);
+        }
+
+        function addNameLetter(letter) {
+            if (typedName.length >= 35) return;
+            typedName += letter;
+            updateNameDisplay();
+        }
+
+        function deleteNameLetter() {
+            typedName = typedName.slice(0, -1);
+            updateNameDisplay();
+        }
+
+        function updateNameDisplay() {
+            const display = document.getElementById("studentName");
+            if (typedName.trim() === "") {
+                display.textContent = "Escribe tu nombre";
+                display.classList.add("empty");
+            } else {
+                display.textContent = typedName;
+                display.classList.remove("empty");
+            }
+        }
+
+        function openQuizModal(taskName = 'Unidad 1') {
+            selectedTaskName = taskName;
             document.getElementById('task-title-display').innerText = taskName;
             document.getElementById('quiz-fullscreen').style.display = 'flex';
             document.body.style.overflow = 'hidden';
@@ -1339,16 +2008,33 @@
         }
 
         function startQuiz() {
-            const input = document.getElementById('studentName');
-            if (input.value.trim() === "") {
-                input.style.border = "2px solid #ef4444";
-                setTimeout(() => input.style.border = "none", 400);
+            if (typedName.trim() === "") {
+                const display = document.getElementById("studentName");
+                display.style.border = "3px solid #ef4444";
+                setTimeout(() => display.style.border = "none", 400);
                 return;
             }
-            playerName = input.value.trim();
+
+            playerName = typedName.trim();
             document.getElementById('player-name-display').innerText = playerName;
 
-            currentQuestions = shuffleArray(quizDatabase).slice(0, 10);
+            // Relaciona el botón presionado buscando las preguntas que tengan la misma propiedad 'unidad'
+            let matchedQuestions = quizDatabase.filter(item => item.unidad === selectedTaskName);
+
+            // Respaldo por si una unidad nueva todavía no tiene preguntas agregadas en el banco
+            if (matchedQuestions.length === 0) {
+                matchedQuestions = [
+                    {
+                        unidad: selectedTaskName,
+                        q: "Pregunta temporal (Añade preguntas para " + selectedTaskName + " en el arreglo quizDatabase)",
+                        options: ["Opción correcta", "Opción incorrecta"],
+                        correctIndex: 0
+                    }
+                ];
+            }
+
+            currentQuestions = shuffleArray(matchedQuestions);
+            document.getElementById('q-total').innerText = currentQuestions.length;
 
             document.getElementById('quiz-login').style.display = 'none';
             document.getElementById('quiz-play').style.display = 'flex';
@@ -1377,6 +2063,7 @@
                 const btn = document.createElement('button');
                 const styleCss = baseBtnStyles[uiIndex % 4];
 
+                btn.type = "button";
                 btn.className = "quiz-btn text-white";
                 btn.style.cssText = styleCss;
 
@@ -1385,19 +2072,15 @@
                 }
 
                 btn.innerHTML = `
-            <span style="padding-right: 0.5rem; line-height: 1.25;">
-                ${opt.text}
-            </span>
-            <span style="font-size: 1rem; font-weight: 900; opacity: 0;" class="icon-mark">X</span>
-        `;
+                    <span style="padding-right: 0.5rem; line-height: 1.25;">${opt.text}</span>
+                    <span style="font-size: 1rem; font-weight: 900; opacity: 0;" class="icon-mark">X</span>
+                `;
 
                 btn.dataset.correct = opt.isCorrect;
                 btn.onclick = () => checkAnswer(btn);
-
                 container.appendChild(btn);
             });
 
-            /* Convierte las fórmulas creadas dentro del juego */
             if (window.MathJax && MathJax.typesetPromise) {
                 MathJax.typesetPromise([
                     document.getElementById('question-text'),
@@ -1409,6 +2092,38 @@
         function checkAnswer(selectedBtn) {
             if (answered) return;
             answered = true;
+
+            const isCorrect = selectedBtn.dataset.correct === "true";
+
+            const canvas = document.getElementById("confettiCanvas");
+            const ctx = canvas.getContext("2d");
+            const pieces = [];
+            for (let i = 0; i < 150; i++) {
+                pieces.push({
+                    x: Math.random() * window.innerWidth,
+                    y: -20 - Math.random() * window.innerHeight * 0.35,
+                    size: 6 + Math.random() * 8,
+                    speedY: 4 + Math.random() * 8,
+                    speedX: -3 + Math.random() * 6,
+                    rotation: Math.random() * 360,
+                    rotationSpeed: -8 + Math.random() * 16,
+                    color: isCorrect ? "#22c55e" : "#ef4444"
+                });
+            }
+            let frame = 0;
+            function runConfetti() {
+                ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+                pieces.forEach(p => {
+                    p.y += p.speedY; p.x += p.speedX; p.speedY += 0.08; p.rotation += p.rotationSpeed;
+                    ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rotation * Math.PI / 180);
+                    ctx.fillStyle = p.color; ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                    ctx.restore();
+                });
+                frame++;
+                if (frame < 110) requestAnimationFrame(runConfetti);
+                else ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            }
+            runConfetti();
 
             document.getElementById('next-btn').style.display = 'block';
             const allBtns = document.querySelectorAll('.quiz-btn');
@@ -1446,10 +2161,11 @@
             document.getElementById('quiz-play').style.display = 'none';
             document.getElementById('quiz-result').style.display = 'block';
 
-            document.getElementById('final-task').innerText =
-                document.getElementById('task-title-display').innerText;
+            document.getElementById('final-task').innerText = document.getElementById('task-title-display').innerText;
             document.getElementById('final-name').innerText = playerName;
-            const finalScore = score * 10;
+
+            // Calcula automáticamente la nota final sobre 100 puntos sin importar cuántas preguntas tenga la unidad
+            const finalScore = Math.round((score / currentQuestions.length) * 100);
             document.getElementById('final-score').innerText = finalScore;
 
             let msg = finalScore === 100 ? "¡Perfección absoluta! 🌟" :
@@ -1462,12 +2178,10 @@
             document.getElementById('quiz-result').style.display = 'none';
             document.getElementById('quiz-play').style.display = 'none';
             document.getElementById('quiz-login').style.display = 'block';
-            document.getElementById('studentName').value = "";
+            typedName = "";
+            updateNameDisplay();
         }
 
-        // ==========================================
-        // 4. FUNCIÓN COPIAR CÓDIGO JAVA (Múltiples bloques)
-        // ==========================================
         function copiarCodigo(elementId) {
             const txt = document.getElementById(elementId).innerText;
             const temp = document.createElement("textarea");
@@ -1478,13 +2192,14 @@
                 if (document.execCommand('copy')) {
                     const toast = document.getElementById('toastMessage');
                     toast.style.opacity = "1";
-                    setTimeout(() => {
-                        toast.style.opacity = "0";
-                    }, 2000);
+                    setTimeout(() => { toast.style.opacity = "0"; }, 2000);
                 }
             } catch (e) { }
             document.body.removeChild(temp);
         }
+
+        buildNameKeyboard();
+        updateNameDisplay();
     </script>
 </body>
 
